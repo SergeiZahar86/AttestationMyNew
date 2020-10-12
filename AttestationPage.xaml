@@ -68,9 +68,14 @@
         </Style>
         <!-- ========================== Стили заголовков таблицы ======================= -->
 
+        <!--
         <Style TargetType="DataGridRowHeader">
             <Setter Property="Height" Value="67"/>
         </Style>
+        -->
+        
+        
+        <!--
         <Style TargetType="DataGrid">
             <Setter Property="CellStyle">
                 <Setter.Value>
@@ -95,16 +100,17 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        -->
         <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Background" Value="#FF37474F"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Calibri"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="10"/>
             <Setter Property="Margin" Value="1"/>
+            <!--
             <Setter Property="LayoutTransform">
                 <Setter.Value>
                     <TransformGroup>
@@ -113,45 +119,27 @@
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
+            -->
         </Style>
     </Page.Resources>
 
     <Grid >
         <!--  Разметка грида  -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <!-- ========================== Панель видеоплееров  ======================= -->
-        <Border Background="#222222" Grid.Row="0" Grid.Column="0" BorderThickness="0" BorderBrush="gray"  >
-            <MediaElement Grid.Row="0"  Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="1"  Name="VideoControl1"
-                    Source="http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg" 
-                    Width="608" Height="320" />
-        </Border>
-        <Border Background="#222222" Grid.Row="0" Grid.Column="1" BorderThickness="0" BorderBrush="gray" >
-            <MediaElement Name="VideoControl2" Source="http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg"
-                    Width="608" Height="320" />
-        </Border>
-        <Border Background="#222222" Grid.Row="0" Grid.Column="2" BorderThickness="0" BorderBrush="gray"  >
-            <MediaElement Name="VideoControl3" Source="http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg"
-                    Width="608" Height="320" />
-        </Border>
-
         <!-- ========================== DataGrid ======================= -->
-        <DataGrid x:Name="DataGridMain" Grid.Row="1" Grid.RowSpan="3" Padding="10" Grid.ColumnSpan="3"
+        <DataGrid x:Name="DataGridMain"  Padding="2" ColumnWidth="*"
                   AutoGenerateColumns="False" ItemsSource="{Binding}"
-                  VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="14"
+                  VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="14"
                   FontFamily="Calibri" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                  Width="650" Height="1980" Loaded="DataGridMain_Loaded" BorderThickness="0"
+                  Width="750" Height="980" Loaded="DataGridMain_Loaded" BorderThickness="0"
                   SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="White"
-                  RenderTransformOrigin="0.5,0.5" BorderBrush="White" Background="White" 
+                   BorderBrush="White" Background="White" 
                   GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0"  >
 
             <DataGrid.Resources>
@@ -175,7 +163,7 @@
             <!--  ============================ Описание полей ===================================-->
             <DataGrid.Columns>
                 
-                <DataGridTemplateColumn x:Name="id" Header="пп №" Width="40"
+                <DataGridTemplateColumn x:Name="id" Header="пп №" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -195,20 +183,21 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <!-- isOK -->
-                <DataGridTemplateColumn x:Name="isOk" Header="Аттестован" Width="40"
+                <DataGridTemplateColumn x:Name="isOk" Header="Аттестован" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
-                    <DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            <Button x:Name="Change_isOk" BorderThickness="0" Background="White" Click="Change_isOk">
-                                <Button.Content>
+                            <Button x:Name="Change_isOk" Height="30" Width="50" BorderThickness="0"
+                                    FontSize="12" Background="White" Click="Change_isOk">
+                                <Button.Content >
                                     <fa:ImageAwesome x:Name="Icon"  Icon="{Binding isOk}" Margin="5"/>
                                 </Button.Content>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn x:Name="VagNum" Header="Номер" Width="40" 
+
+                <DataGridTemplateColumn x:Name="VagNum" Header="Номер"  
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
@@ -227,8 +216,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn x:Name="Tara" Header="Тара, т" Width="40"
+
+                <DataGridTemplateColumn x:Name="Tara" Header="Тара, т" 
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -246,7 +235,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <DataGridTemplateColumn x:Name="TaraNSI" Header="Тара НСИ,т" Width="40"
+                <DataGridTemplateColumn x:Name="TaraNSI" Header="Тара НСИ,т" 
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -264,7 +253,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т" Width="40"
+                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate  >
                         <DataTemplate>
@@ -282,14 +271,14 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <!-- VideoButton -->
-                <DataGridTemplateColumn x:Name="VideoButton" Header="Фото/видео" Width="40"
+                <DataGridTemplateColumn x:Name="VideoButton" Header="Фото/видео" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
                             <Border>
                                 <Button Style="{StaticResource GrayButton}"
-                                        fa:Awesome.Content="VideoCamera" Width="30"
-                                    Height="25" Click="Button_Click"/>
+                                        fa:Awesome.Content="VideoCamera" Width="20"
+                                    Height="15" Click="Button_Click"/>
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
