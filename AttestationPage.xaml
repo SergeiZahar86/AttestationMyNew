@@ -1,0 +1,300 @@
+﻿<Page x:Class="Attestation.AttestationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:local="clr-namespace:Attestation"
+      xmlns:fa5="http://schemas.fontawesome.com/icons/"
+      mc:Ignorable="d" d:DesignHeight="1200" d:DesignWidth="1980"
+      Title="AttestationPage">
+
+    <Page.Resources>
+        <!-- .......................... Стили......................................................-->
+        <!-- ......................Стиль CheckBox ...................................-->
+        <Style  x:Key="CheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#AA009933"/>
+            <Setter Property="Background" Value="#AA009933"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <!-- ......................Стиль зеленой кнопки ...................................-->
+        <Style  x:Key="GreenButton" TargetType="Button">
+            <Setter Property="Background" Value="#AA009933" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="4,0,4,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#5522B222"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ......................Стиль серой кнопки ...................................-->
+        <Style  x:Key="GrayButton" TargetType="Button">
+            <Setter Property="Background" Value="#AAAAAAAA" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="4,0,4,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#5522B222"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ========================== Стили заголовков таблицы ======================= -->
+
+        <Style TargetType="DataGridRowHeader">
+            <Setter Property="Height" Value="67"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style  TargetType="DataGridCell">
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <TransformGroup>
+                                    <RotateTransform Angle="-90"/>
+                                    <ScaleTransform ScaleX="1" ScaleY="-1" />
+                                </TransformGroup>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <RotateTransform Angle="90"/>
+                        <MatrixTransform Matrix="-1,0,0,1,0,0"/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FF37474F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <RotateTransform Angle="-90"/>
+                        <ScaleTransform ScaleX="1" ScaleY="-1" />
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid >
+        <!--  Разметка грида  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ========================== Панель видеоплееров  ======================= -->
+        <Border Background="#222222" Grid.Row="0" Grid.Column="0" BorderThickness="0" BorderBrush="gray"  >
+            <MediaElement Grid.Row="0"  Grid.Column="0"  Grid.RowSpan="1" Grid.ColumnSpan="1"  Name="VideoControl1"
+                    Source="http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg" 
+                    Width="608" Height="320" />
+        </Border>
+        <Border Background="#222222" Grid.Row="0" Grid.Column="1" BorderThickness="0" BorderBrush="gray" >
+            <MediaElement Name="VideoControl2" Source="http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg"
+                    Width="608" Height="320" />
+        </Border>
+        <Border Background="#222222" Grid.Row="0" Grid.Column="2" BorderThickness="0" BorderBrush="gray"  >
+            <MediaElement Name="VideoControl3" Source="http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg"
+                    Width="608" Height="320" />
+        </Border>
+
+        <!-- ========================== DataGrid ======================= -->
+        <DataGrid x:Name="DataGridMain" Grid.Row="1" Grid.RowSpan="3" Padding="10" Grid.ColumnSpan="3"
+                  AutoGenerateColumns="False" ItemsSource="{Binding}"
+                  VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="14"
+                  FontFamily="Calibri" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                  Width="650" Height="1980" Loaded="DataGridMain_Loaded" BorderThickness="0"
+                  SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="White"
+                  RenderTransformOrigin="0.5,0.5" BorderBrush="White" Background="White" 
+                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0"  >
+
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="#AAFF0000"/>
+            </DataGrid.Resources>
+            <!-- ========================== Стиль строки ======================= -->
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="White" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <!--  ============================ Описание полей ===================================-->
+            <DataGrid.Columns>
+                
+                <DataGridTemplateColumn x:Name="id" Header="пп №" Width="40"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="Aqua">
+                                <TextBlock Text="{Binding Id}"  HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                                       >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Id}" FontSize="30" Foreground="Black" 
+                                                    Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- isOK -->
+                <DataGridTemplateColumn x:Name="isOk" Header="Аттестован" Width="40"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Button x:Name="Change_isOk" BorderThickness="0" Background="White" Click="Change_isOk">
+                                <Button.Content>
+                                    <fa:ImageAwesome x:Name="Icon"  Icon="{Binding isOk}" Margin="5"/>
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn x:Name="VagNum" Header="Номер" Width="40" 
+                                    HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Button Click="Change_VagNum" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                    BorderThickness="0" Background="White">
+                                <TextBlock Text="{Binding VagNum}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding VagNum}" FontSize="30" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn x:Name="Tara" Header="Тара, т" Width="40"
+                                    HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Tara}"  HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                                       >
+                                <TextBlock.ToolTip >
+                                    <ToolTip>
+                                        <TextBlock Text="{Binding Tara}" FontSize="30" Foreground="Black" 
+                                                    Background="White" />
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn x:Name="TaraNSI" Header="Тара НСИ,т" Width="40"
+                                    HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TaraNSI}"  HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                                       >
+                                <TextBlock.ToolTip >
+                                    <ToolTip>
+                                        <TextBlock Text="{Binding TaraNSI}" FontSize="30" Foreground="Black" 
+                                                    Background="White" />
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т" Width="40"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                    <DataGridTemplateColumn.CellTemplate  >
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TaraDelta}"  HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                                       >
+                                <TextBlock.ToolTip >
+                                    <ToolTip>
+                                        <TextBlock Text="{Binding TaraDelta}" FontSize="30" Foreground="Black" 
+                                                    Background="White" />
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- VideoButton -->
+                <DataGridTemplateColumn x:Name="VideoButton" Header="Фото/видео" Width="40"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Border>
+                                <Button Style="{StaticResource GrayButton}"
+                                        fa:Awesome.Content="VideoCamera" Width="30"
+                                    Height="25" Click="Button_Click"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

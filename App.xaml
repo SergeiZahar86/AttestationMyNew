@@ -1,0 +1,11 @@
+﻿<Application x:Class="TestWPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TestWPF"
+             xmlns:fa="http://schemas.fontawesome.io/icons/" 
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <fa:CssClassNameConverter Mode="FromIconToString" x:Key="FromIconClassNameConverter" />
+        <fa:CssClassNameConverter Mode="FromStringToIcon" x:Key="FromStringClassNameConverter" />
+   </Application.Resources>
+</Application>

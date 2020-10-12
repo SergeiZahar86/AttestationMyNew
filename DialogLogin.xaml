@@ -1,0 +1,129 @@
+﻿<Window x:Class="Attestation.DialogLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:Attestation"
+        mc:Ignorable="d"  Height="290" Width="344.031" WindowStyle="None" WindowStartupLocation="CenterScreen" Top="-200"
+        MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
+        ResizeMode="CanResizeWithGrip" AllowsTransparency="true"  >
+
+
+    <Window.Resources>
+        <!-- .......................... Стили......................................................-->
+        <Style  x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,8,0,0"/>
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#555555"/>
+        </Style>
+        <Style  x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Background" Value="LightGray" />
+        </Style>
+        <Style  x:Key="PasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="PasswordChar" Value="*" />
+        </Style>
+        <!-- ......................Красная кнопка ...................................-->
+        <Style  x:Key="RedButton" TargetType="Button">
+            <Setter Property="Background" Value="#AAB22222" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="4,0,4,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#CB0000"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ......................Зеленая кнопка ...................................-->
+ 
+        <Style  x:Key="GreenButton" TargetType="Button">
+            <Setter Property="Background" Value="#AA009933" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="4,0,4,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#22B222"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+
+    <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
+        <Canvas HorizontalAlignment="Center" Width="343" Margin="0,0,0,0" >
+            <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#B22222" Height="30" Width="343">
+                <TextBlock HorizontalAlignment="Left" Foreground="White" FontFamily="Calibry" FontSize="16" 
+                           Margin="8,6,15,4">Смена пароля</TextBlock>
+                <Button x:Name="CloseButton" HorizontalAlignment="right" fa:Awesome.Content="Times" FontSize="20"
+                        DockPanel.Dock="Right"  Style="{StaticResource RedButton}"  
+                                       Width="28" RenderTransformOrigin="0.51,0.5" Margin="4,1,4,2.714" Height="Auto" Click="ok_Click"/>
+            </DockPanel>
+
+
+            <Grid Margin="40" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"  Style="{StaticResource TextBlockStyle}">Старый пароль:</TextBlock>
+
+               
+                <PasswordBox  x:Name="tbLogin" Grid.Row="1" Style="{StaticResource PasswordBoxStyle}" MinWidth="250" ></PasswordBox>
+            
+                
+                
+                
+                <TextBlock Grid.Row="2" Style="{StaticResource TextBlockStyle}">Новый пароль:</TextBlock>
+                <PasswordBox   Grid.Row="3" Style="{StaticResource PasswordBoxStyle}"  MinWidth="250"></PasswordBox>
+                <TextBlock Grid.Row="4" Style="{StaticResource TextBlockStyle}">Подтверждение нового пароля:</TextBlock>
+                <PasswordBox   Grid.Row="5" Style="{StaticResource PasswordBoxStyle}"  MinWidth="250"></PasswordBox>
+                <TextBlock Grid.Row="6" Style="{StaticResource TextBlockStyle}">Код пропуска:</TextBlock>
+                <TextBox   Grid.Row="7" Style="{StaticResource TextBoxStyle}" IsEnabled="False"  MinWidth="250"></TextBox>
+                <WrapPanel Grid.Row="8" HorizontalAlignment="Center" Margin="0,15,0,0">
+                    <Button  Style="{StaticResource GreenButton}"  Width="95" ToolTip="Выход" Click="ExitButton_Click">Отменить</Button>
+                    <Button x:Name="ok" IsDefault="True" Style="{StaticResource RedButton}" Click="ok_Click" Width="95" ToolTip="Выход">Применить</Button>
+                </WrapPanel>
+
+            </Grid>
+        </Canvas>
+    </Border>
+
+</Window>
