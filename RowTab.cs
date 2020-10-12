@@ -11,7 +11,7 @@ namespace Attestation
     public class RowTab
     {
         public RowTab(int Id, string isOk, string VagNum, float Tara, float TaraNSI,
-            float TaraDelta, byte[] LeftFoto, byte[] RightFoto, byte[] TopFoto)
+            float TaraDelta, byte[] LeftFoto, byte[] RightFoto, byte[] TopFoto, List<String> Reason)
 
             /*
             public RowTab(int Id, bool isOk, string VagNum, float Tara, float TaraNSI,
@@ -28,6 +28,7 @@ namespace Attestation
             this.LeftFoto = LeftFoto;
             this.RightFoto = RightFoto;
             this.TopFoto = TopFoto;
+            this.Reason = Reason;
         }
         public int Id { get; set; }
         public string isOk { get; set; }
@@ -44,6 +45,7 @@ namespace Attestation
         public byte[] LeftFoto { get; set; }
         public byte[] RightFoto { get; set; }
         public byte[] TopFoto { get; set; }
+        public List<String> Reason { get; set; }
     }
 }
 

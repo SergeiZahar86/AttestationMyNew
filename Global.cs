@@ -12,16 +12,22 @@ namespace Attestation
     {
         private static Global instance;
         public List<RowTab> DATA;
+        public List<String> Reason;
 
         byte[] leftFoto;
         byte[] rightFoto;
         byte[] topFoto;
 
-
         public int Idx { set; get; }
 
         private Global()
         {
+            Reason = new List<string>();
+            Reason.Add("Причина №1");
+            Reason.Add("Причина №2");
+            Reason.Add("Причина №3");
+            Reason.Add("Причина №4");
+
             DATA = new List<RowTab>();
             for (int i = 0; i < 26; i++)
             {
@@ -42,7 +48,7 @@ namespace Attestation
                 */
                 DATA.Add(new RowTab(i + 1, c, (88345634 + i).ToString(), (float)(i + 0.5),
                     (float)(i + 1.5), (float)(i + 2.5), leftFoto,
-                    rightFoto, topFoto));
+                    rightFoto, topFoto, Reason));
             }
         }
         public static Global getInstance()//*******
