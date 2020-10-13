@@ -11,6 +11,18 @@
 
     <Page.Resources>
         <!-- .......................... Стили......................................................-->
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <!-- ......................Стиль CheckBox ...................................-->
         <Style  x:Key="CheckBoxStyle" TargetType="CheckBox">
             <Setter Property="FontSize" Value="16" />
@@ -74,14 +86,16 @@
                     <Setter Property="FontSize" Value="35"/>
                     <Setter Property="BorderThickness" Value="0"/>
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 
+        <!-- ......................Стиль кнопок аттестации и номера вагона ...................................-->
         <Style  x:Key="SomeButton" TargetType="Button">
             <Style.Setters>
-                <Setter Property="Button.Foreground" Value="#98DA9A" />
                 <Setter Property="Button.FontFamily" Value="Verdana" />
-                <Setter Property="FontSize" Value="25"/>
                 <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Template">
@@ -103,47 +117,11 @@
             </Style.Setters>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#04AD01"/>
-                    <Setter Property="FontSize" Value="35"/>
                     <Setter Property="BorderThickness" Value="0"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
         <!-- ========================== Стили заголовков таблицы ======================= -->
-
-        <!--
-        <Style TargetType="DataGridRowHeader">
-            <Setter Property="Height" Value="67"/>
-        </Style>
-        -->
-        
-        
-        <!--
-        <Style TargetType="DataGrid">
-            <Setter Property="CellStyle">
-                <Setter.Value>
-                    <Style  TargetType="DataGridCell">
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <TransformGroup>
-                                    <RotateTransform Angle="-90"/>
-                                    <ScaleTransform ScaleX="1" ScaleY="-1" />
-                                </TransformGroup>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="LayoutTransform">
-                <Setter.Value>
-                    <TransformGroup>
-                        <RotateTransform Angle="90"/>
-                        <MatrixTransform Matrix="-1,0,0,1,0,0"/>
-                    </TransformGroup>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        -->
         <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Background" Value="#FF37474F"/>
@@ -153,16 +131,6 @@
             <Setter Property="Height" Value="40"/>
             <Setter Property="Padding" Value="1"/>
             <Setter Property="Margin" Value="1"/>
-            <!--
-            <Setter Property="LayoutTransform">
-                <Setter.Value>
-                    <TransformGroup>
-                        <RotateTransform Angle="-90"/>
-                        <ScaleTransform ScaleX="1" ScaleY="-1" />
-                    </TransformGroup>
-                </Setter.Value>
-            </Setter>
-            -->
         </Style>
     </Page.Resources>
 
@@ -207,7 +175,7 @@
             <!--  ============================ Описание полей ===================================-->
             <DataGrid.Columns>
                 
-                <DataGridTemplateColumn x:Name="id" Header="пп №" 
+                <DataGridTemplateColumn x:Name="id" Header="пп №" Width="60"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -229,14 +197,12 @@
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            
-                            <Button x:Name="Change_isOk" Height="30" BorderThickness="0" 
+                            <Button x:Name="Change_isOk" Height="30" BorderThickness="0" Style="{StaticResource SomeButton}"
                                     FontSize="12" Background="Transparent" Click="Change_isOk"
                                     BorderBrush="White" >
                                 <Button.Content >
                                     <fa:ImageAwesome x:Name="Icon"  Icon="{Binding isOk}" Margin="5"/>
                                 </Button.Content>
-                               
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -258,7 +224,7 @@
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
                             <Button Click="Change_VagNum" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    BorderThickness="0" Background="Transparent">
+                                    BorderThickness="0" Background="Transparent" Style="{StaticResource SomeButton}">
                                 <TextBlock Text="{Binding VagNum}"  HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
                                     <TextBlock.ToolTip >
@@ -319,17 +285,13 @@
                                 <TextBlock.ToolTip >
                                     <ToolTip>
                                         <TextBlock Text="{Binding TaraDelta}" FontSize="30" Foreground="Black" 
-                                                    Background="White" />
+                                                    Background="White"/>
                                     </ToolTip>
                                 </TextBlock.ToolTip>
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
-                
-                
-                
                 <!-- VideoButton -->
                 <DataGridTemplateColumn x:Name="VideoButton" Header="Фото/видео" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
@@ -342,6 +304,10 @@
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="Zona" Header="Зона"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>

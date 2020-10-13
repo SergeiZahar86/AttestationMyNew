@@ -20,15 +20,24 @@ namespace Attestation
     public partial class DialogLogin : Window
     {
         public string Login;
+        private Global global;
         public DialogLogin()
         {
             InitializeComponent();
+            global = Global.getInstance();
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-            Login = tbLogin.Password;
+
+            //Login = tbLogin.Password;
             this.DialogResult = true;
+
+            //String FIO = global.chLogin("oper","oper", null);
+            //List<cause_t> list = global.getCauses();
+            part_t part = global.getPart(1);
+            //photo_t photo = global.getPhoto(24, 4);
             this.Close();
+
         }
         
         private void ExitButton_Click(object sender, RoutedEventArgs e)
