@@ -34,8 +34,8 @@ namespace Attestation
 
             //String FIO = global.chLogin("oper","oper", null);
             //List<cause_t> list = global.getCauses();
-            part_t part = global.getPart(1);
-            //photo_t photo = global.getPhoto(24, 4);
+            //part_t part = global.getPart(1);
+            photo_t photo = global.getPhoto(1, 1);
             this.Close();
 
         }

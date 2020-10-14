@@ -50,6 +50,24 @@ namespace Attestation
         }
         private void Foto_Click(object sender, RoutedEventArgs e)
         {
+            global.Idx = DataGridMain.SelectedIndex;
+            global.photo = global.getPhoto(global.part.Part_id, global.DATA[global.Idx].Car_id);
+            if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
+            {
+                ShowPhotos showPhotos = new ShowPhotos();
+                showPhotos.image1.Source = ByteArraytoBitmap(global.photo.Left);
+                showPhotos.image2.Source = ByteArraytoBitmap(global.photo.Right);
+                showPhotos.image3.Source = ByteArraytoBitmap(global.photo.Top);
+                showPhotos.ShowDialog();
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("У строки " + global.DATA[idx].Car_id.ToString() + " нет фотографий");
+
+            }
+
+
+
             /*
             global.Idx = DataGridMain.SelectedIndex;
             RowTab row = global.DATA[global.Idx];

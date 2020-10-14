@@ -15,6 +15,8 @@ namespace Attestation
     {
         private static Global instance;
         public List<car_t> DATA;
+        public photo_t photo;
+        public part_t part;
         
         public List<String> Reason;
 
@@ -33,9 +35,10 @@ namespace Attestation
             transport.Open();
             this.client = new DataProviderService.Client(proto);
 
-            part_t part = getPart(1);
+            part = getPart(1);
             DATA = part.Cars;
-            
+
+            photo = new photo_t();
 
 
 
