@@ -11,7 +11,41 @@
 
     <Page.Resources>
         <!-- .......................... Стили......................................................-->
-        <!-- ......................Стиль CheckBox ...................................-->
+        <!-- ......................Стиль кнопка начала аттестации ...................................-->
+        <Style x:Key="startAttestation" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="#98DA9A"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontFamily" Value="Calibri"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="border" BorderThickness="0" BorderBrush="Black"
+                                        Background="{TemplateBinding Background}" CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#04AD01"/>
+                    <Setter Property="FontSize" Value="23"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Foreground" Value="#04AD01"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ...................... Стиль CheckBox ...................................-->
         <Style  x:Key="CheckBoxStyle" TargetType="CheckBox">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Foreground" Value="#AA009933"/>
@@ -125,22 +159,34 @@
     <Grid >
         <!--  Разметка грида  -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.13*"/>
+            <RowDefinition Height="0.07*"/>
+            <RowDefinition Height="0.07*" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <Button x:Name="StartAttestation" Grid.Column="0" Grid.Row="0" Height="50" Width="200" 
+                Content="Начать аттестацию" Style="{StaticResource startAttestation}"/>
+
         <!-- ========================== DataGrid ======================= -->
-        <DataGrid x:Name="DataGridMain" Grid.Row="1" Padding="2" ColumnWidth="*" 
+        <DataGrid x:Name="DataGridMain" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="8" Padding="2" ColumnWidth="*" 
                   AutoGenerateColumns="False" ItemsSource="{Binding}"
                   VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="14" 
                   FontFamily="Calibri" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                   Width="1700"  Loaded="DataGridMain_Loaded" BorderThickness="0"
                   SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="#FFD0DEE4"
                    BorderBrush="White" Background="White" 
-                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,50,0"  >
+                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,10,0"  >
            
 
             <DataGrid.Resources>
