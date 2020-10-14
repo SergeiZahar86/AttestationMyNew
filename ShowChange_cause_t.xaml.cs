@@ -37,5 +37,9 @@ namespace Attestation
         {
             this.Close();
         }
+        private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

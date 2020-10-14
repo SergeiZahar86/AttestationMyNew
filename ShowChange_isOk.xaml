@@ -82,12 +82,12 @@
              <Grid>
                 <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Content="Выбор значения:" 
                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <ComboBox x:Name="isOk_Value" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="20,0"
-                      Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
-                      FontSize="14" SelectionChanged="isOk_Value_SelectionChanged">
-                <ComboBoxItem Name="no"  Content="Не аттестован"/>
-                <ComboBoxItem Name="ok" Content="Аттестован"/>
-                <ComboBoxItem Name="nothing" Content="Неизвестно"/>
+                <ComboBox x:Name="isOk_Value" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="20,0"
+                          Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
+                          FontSize="14" SelectionChanged="isOk_Value_SelectionChanged">
+                    <ComboBoxItem Name="no"  Content="Не аттестован"/>
+                    <ComboBoxItem Name="ok" Content="Аттестован"/>
+                    <ComboBoxItem Name="nothing" Content="Неизвестно"/>
             </ComboBox>
 
             <!--

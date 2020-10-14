@@ -23,7 +23,7 @@ namespace Attestation
         public List<car_t> DATA;
         public photo_t photo;
         public part_t part;
-        public cause_t cause;
+        public List<cause_t> cause;
         
         TTransport transport;
         DataProviderService.Client client;
@@ -40,7 +40,7 @@ namespace Attestation
             part = getPart(1);
             DATA = part.Cars;
             photo = new photo_t();
-            cause = new cause_t();
+            cause = getCauses();
 
         }
         public static Global getInstance()//*******
