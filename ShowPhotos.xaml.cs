@@ -27,10 +27,11 @@ namespace Attestation
         public ShowPhotos()
         {
             InitializeComponent();
+            /*
             global = Global.getInstance();
             idx = global.Idx;
             DATA = global.DATA;
-            //image1.Source = DATA[idx].LeftFoto;
+            */
         }
 
 

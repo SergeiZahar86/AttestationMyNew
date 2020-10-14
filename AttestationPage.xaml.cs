@@ -48,49 +48,17 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Foto_Click(object sender, RoutedEventArgs e)
         {
-            /* 
-            * Удаление строки из DataGrid 
-            */
             /*
-            RowTab row = (RowTab)DataGridMain.SelectedItem;
-            int idx = DataGridMain.SelectedIndex;
-            System.Windows.MessageBox.Show(row.Id.ToString());
-            //DataGridMain.Items.RemoveAt(DataGridMain.SelectedIndex);
-            this.DATA.RemoveAt(idx);
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = this.DATA;
-            */
             global.Idx = DataGridMain.SelectedIndex;
             RowTab row = global.DATA[global.Idx];
             if(row.LeftFoto != null & row.RightFoto != null & row.TopFoto != null)
             {
                 ShowPhotos showPhotos = new ShowPhotos();
-                /*
-                //showPhotos.image1. = row.LeftFoto;
-                row.LeftFoto.Save(Image1FromRowTab, System.Drawing.Imaging.ImageFormat.Jpeg); // запись в файл
-                row.RightFoto.Save(Image2FromRowTab, System.Drawing.Imaging.ImageFormat.Jpeg);
-                row.TopFoto.Save(Image3FromRowTab, System.Drawing.Imaging.ImageFormat.Jpeg);
-                showPhotos.image1.Source = new BitmapImage(new Uri(Image1FromRowTab)); // передача из файла в элемент Image
-                showPhotos.image2.Source = new BitmapImage(new Uri(Image2FromRowTab));
-                showPhotos.image3.Source = new BitmapImage(new Uri(Image3FromRowTab));
-                */
-
-
-                /*
-                byte[] bytes1 = ImageToByteArray(row.LeftFoto);
-                byte[] bytes2 = ImageToByteArray(row.RightFoto);
-                byte[] bytes3 = ImageToByteArray(row.TopFoto);
-                showPhotos.image1.Source = ByteArraytoBitmap(bytes1);
-                showPhotos.image2.Source = ByteArraytoBitmap(bytes2);
-                showPhotos.image3.Source = ByteArraytoBitmap(bytes3);
-                */
                 showPhotos.image1.Source = ByteArraytoBitmap(row.LeftFoto);
                 showPhotos.image2.Source = ByteArraytoBitmap(row.RightFoto);
                 showPhotos.image3.Source = ByteArraytoBitmap(row.TopFoto);
-
-
                 showPhotos.ShowDialog();
             }
             else
@@ -98,6 +66,7 @@ namespace Attestation
                 System.Windows.MessageBox.Show("У строки " + row.Id.ToString() + " нет фотографий");
                 
             }
+            */
         }
         public static BitmapImage ByteArraytoBitmap(Byte[] byteArray)
         {
@@ -127,7 +96,7 @@ namespace Attestation
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
             global.Idx = DataGridMain.SelectedIndex;
-            showChange_VagNum.oldVagNum.Content = global.DATA[global.Idx].VagNum;
+            //showChange_VagNum.oldVagNum.Content = global.DATA[global.Idx].VagNum;
 
 
 

@@ -29,8 +29,9 @@ namespace Attestation
 
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
+
             String vag = textboxVag.Text;
-            global.DATA[global.Idx].VagNum = vag;
+            global.DATA[global.Idx].Num = vag;
             
             this.Close();
         }

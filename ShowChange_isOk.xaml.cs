@@ -42,7 +42,7 @@ namespace Attestation
 
         private void isOk_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            /*
             ComboBox comboBox = (ComboBox)sender;
             String key = ((ComboBoxItem)comboBox.SelectedItem).Name;
             if(key == ok.Name)
@@ -59,7 +59,7 @@ namespace Attestation
             {
                 global.DATA[global.Idx].isOk = cloce;
             }
-            
+            */
         }
     }
 }
