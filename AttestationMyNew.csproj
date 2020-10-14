@@ -212,6 +212,9 @@
     </Compile>
     <Compile Include="RowCar.cs" />
     <Compile Include="RowTab.cs" />
+    <Compile Include="ShowChange_cause_t.xaml.cs">
+      <DependentUpon>ShowChange_cause_t.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowChange_isOk.xaml.cs">
       <DependentUpon>ShowChange_isOk.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DialogLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowChange_cause_t.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

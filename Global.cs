@@ -13,16 +13,18 @@ namespace Attestation
 {
     class Global
     {
+        /*
+        public List<String> Reason;
+        byte[] leftFoto;
+        byte[] rightFoto;
+        byte[] topFoto;
+        */
         private static Global instance;
         public List<car_t> DATA;
         public photo_t photo;
         public part_t part;
+        public cause_t cause;
         
-        public List<String> Reason;
-
-        byte[] leftFoto;
-        byte[] rightFoto;
-        byte[] topFoto;
         TTransport transport;
         DataProviderService.Client client;
 
@@ -37,63 +39,8 @@ namespace Attestation
 
             part = getPart(1);
             DATA = part.Cars;
-
             photo = new photo_t();
-
-
-
-
-
-
-            for (int i = 0; i < 25; i++)
-            {
-
-
-
-
-                /*
-                int Part_id = part.Cars[i].Part_id;
-                int Car_id = part.Cars[i].Car_id;
-                string Num = part.Cars[i].Num;
-                int Att_code = part.Cars[i].Att_code;
-                double Tara = part.Cars[i].Tara;
-                int Zone_e = part.Cars[i].Zone_e;
-                int Cause_id = part.Cars[i].Cause_id;
-                string Cause_name = part.Cars[i].Cause_name;
-                double Carrying = part.Cars[i].Carrying;
-                string Att_time = part.Cars[i].Att_time;
-
-                DATA.Add(new RowTab(Part_id, Car_id, Num, Att_code, Tara, Zone_e, Cause_id, Cause_name, Carrying, Att_time));
-                
-                DATA.Add(new RowTab(part.Cars[i].Part_id, part.Cars[i].Car_id, part.Cars[i].Num), part.Cars[i].Att_code,
-                    part.Cars[i].Tara, part.Cars[i].Zone_e, part.Cars[i].Cause_id, part.Cars[i].Cause_name,
-                    part.Cars[i].Carrying, part.Cars[i].Att_time);
-                */
-            }
-
-            /*
-            Reason = new List<string>();
-            Reason.Add("Причина №1");
-            Reason.Add("Причина №2");
-            Reason.Add("Причина №3");
-            Reason.Add("Причина №4");
-
-            DATA = new List<RowTab>();
-            for (int i = 0; i < 25; i++)
-            {
-                string c = "Question";
-                //string c = "CheckCircle";
-                //string c = "WindowClose";
-                leftFoto = ImageToByteArray(System.Drawing.Image.FromFile("C:/VisualStudioProject/AttestationHorizontal/Resources/pexels-mark-plötz-2790396.jpg"));
-                rightFoto = ImageToByteArray(System.Drawing.Image.FromFile("C:/VisualStudioProject/AttestationHorizontal/Resources/pexels-pixabay-258455.jpg"));
-                topFoto = ImageToByteArray(System.Drawing.Image.FromFile("C:/VisualStudioProject/AttestationHorizontal/Resources/pexels-sergio-souza-3197995.jpg"));
-                DATA.Add(new RowTab(i + 1, c, (88345634 + i).ToString(), (float)(i + 0.5),
-                    (float)(i + 1.5), (float)(i + 2.5), leftFoto,
-                    rightFoto, topFoto, Reason));
-            }
-            */
-
-
+            cause = new cause_t();
 
         }
         public static Global getInstance()//*******

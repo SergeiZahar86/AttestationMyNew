@@ -15,7 +15,7 @@
         <Style x:Key="startAttestation" TargetType="Button">
             <Style.Setters>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Background" Value="#98DA9A"/>
+                <Setter Property="Background" Value="#FF6BDA6F"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontSize" Value="22"/>
                 <Setter Property="FontFamily" Value="Calibri"/>
@@ -80,9 +80,9 @@
         <!-- ......................Стиль кнопки Foto ...................................-->
         <Style  x:Key="Foto" TargetType="Button">
             <Style.Setters>
-                <Setter Property="Button.Foreground" Value="#98DA9A" />
+                <Setter Property="Button.Foreground" Value="#FF6BDA6F" />
                 <Setter Property="Button.FontFamily" Value="Verdana" />
-                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontSize" Value="23"/>
                 <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Template">
@@ -96,6 +96,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="border" Property="Background" Value="transparent"/>
                                     <Setter Property="Opacity" Value="0.91" />
+
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -105,7 +106,7 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="#04AD01"/>
-                    <Setter Property="FontSize" Value="35"/>
+                    <Setter Property="FontSize" Value="27"/>
                     <Setter Property="BorderThickness" Value="0"/>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="True">
@@ -359,7 +360,7 @@
                             <Border>
                                 <Button Style="{StaticResource Foto}" 
                                         fa5:Awesome.Content="Solid_Image" Width="50" 
-                                    Height="30" Click="Foto_Click" FontSize="20"/>
+                                    Height="30" Click="Foto_Click" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -372,7 +373,8 @@
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            <Button x:Name="Change_isOk" Height="30" BorderThickness="0" Style="{StaticResource SomeButton}"
+                            <Button x:Name="Change_isOk" Height="30" BorderThickness="0"
+                                    Style="{StaticResource SomeButton}"
                                     FontSize="12" Background="Transparent" Click="Change_isOk"
                                     BorderBrush="White" >
                                 <Button.Content >
@@ -383,13 +385,24 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <DataGridTemplateColumn x:Name="ReasonForNonCertification" Header="Причина неаттестации"
-                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="300" >
-                    <DataGridTemplateColumn.CellTemplate  >
+                
+                <DataGridTemplateColumn x:Name="cause_button" Header="Причина неаттестации" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                    <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            <ComboBox ItemsSource="{Binding Cause_name}" BorderBrush="White"  >
-                                
-                            </ComboBox>
+                            <Button x:Name="CauseButton" Height="30" BorderThickness="0" Style="{StaticResource Foto}"
+                                    Background="Transparent" Click="CauseButton_Click"
+                                    BorderBrush="White"  >
+                                <TextBlock Text="{Binding Cause_name}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Cause_name}" FontSize="30" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

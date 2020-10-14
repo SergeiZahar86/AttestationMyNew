@@ -21,26 +21,12 @@ namespace Attestation
 {
     public partial class AttestationPage : Page
     {
-        //System.Drawing.Image leftFoto;
-        //System.Drawing.Image rightFoto;
-        //System.Drawing.Image topFoto;
-        byte[] leftFoto;
-        byte[] rightFoto;
-        byte[] topFoto;
-        //public string Image1FromRowTab { set; get; }
-        //public string Image2FromRowTab { set; get; }
-        //public string Image3FromRowTab { set; get; }
         public int idx; // индекс строки
         private Global global;
         public AttestationPage()
         {
             InitializeComponent();
             global = Global.getInstance();
-            //Image1FromRowTab = "C:/Projects/АРМ_ОТК/ImageFromRowTab/Bitmap1.bmp";
-            //Image2FromRowTab = "C:/Projects/АРМ_ОТК/ImageFromRowTab/Bitmap2.bmp";
-            //Image3FromRowTab = "C:/Projects/АРМ_ОТК/ImageFromRowTab/Bitmap3.bmp";
-            
-
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
         данных в DataGrid*/
@@ -65,28 +51,7 @@ namespace Attestation
             else
             {
                 System.Windows.MessageBox.Show("У строки " + global.DATA[idx].Car_id.ToString() + " нет фотографий");
-
             }
-
-
-
-            /*
-            global.Idx = DataGridMain.SelectedIndex;
-            RowTab row = global.DATA[global.Idx];
-            if(row.LeftFoto != null & row.RightFoto != null & row.TopFoto != null)
-            {
-                ShowPhotos showPhotos = new ShowPhotos();
-                showPhotos.image1.Source = ByteArraytoBitmap(row.LeftFoto);
-                showPhotos.image2.Source = ByteArraytoBitmap(row.RightFoto);
-                showPhotos.image3.Source = ByteArraytoBitmap(row.TopFoto);
-                showPhotos.ShowDialog();
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("У строки " + row.Id.ToString() + " нет фотографий");
-                
-            }
-            */
         }
         public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет
         передавать картинки в виде массивов байт в объект Image окна*/
@@ -98,7 +63,6 @@ namespace Attestation
             bitmapImage.EndInit();
             return bitmapImage;
         }
-        
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
             /*
@@ -107,12 +71,10 @@ namespace Attestation
             DataGridMain.ItemsSource = this.DATA;
             */
         }
-
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void Change_VagNum(object sender, RoutedEventArgs e)
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
@@ -122,7 +84,6 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
-
         private void Change_isOk(object sender, RoutedEventArgs e)
         {
             ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
@@ -130,7 +91,11 @@ namespace Attestation
             showChange_IsOk.ShowDialog();
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
-            
+        }
+        private void CauseButton_Click (object sender, RoutedEventArgs e)
+        {
+            ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
+            showChange_Cause_T.ShowDialog();
         }
     }
 }

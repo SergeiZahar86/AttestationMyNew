@@ -19,9 +19,11 @@ namespace Attestation
     /// </summary>
     public partial class ShowChange_isOk : Window
     {
+        /*
         String cloce = "WindowClose";
         String check = "CheckCircle";
         String question = "Question";
+        */
         private Global global;
         public ShowChange_isOk()
         {
