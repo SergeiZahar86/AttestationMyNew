@@ -42,13 +42,15 @@ namespace Attestation
             
 
         }
-        private void DataGridMain_Loaded(object sender, RoutedEventArgs e)
+        private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
+        данных в DataGrid*/
         {
             //global.DATA.Clear();
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
-        private void Foto_Click(object sender, RoutedEventArgs e)
+        private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
+        с фотографиями вагонов */
         {
             global.Idx = DataGridMain.SelectedIndex;
             global.photo = global.getPhoto(global.part.Part_id, global.DATA[global.Idx].Car_id);
@@ -86,7 +88,8 @@ namespace Attestation
             }
             */
         }
-        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray)
+        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет
+        передавать картинки в виде массивов байт в объект Image окна*/
         {
             MemoryStream stream = new MemoryStream(byteArray);
             BitmapImage bitmapImage = new BitmapImage();
@@ -114,10 +117,7 @@ namespace Attestation
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
             global.Idx = DataGridMain.SelectedIndex;
-            //showChange_VagNum.oldVagNum.Content = global.DATA[global.Idx].VagNum;
-
-
-
+            showChange_VagNum.oldVagNum.Content = global.DATA[global.Idx].Num;
             showChange_VagNum.ShowDialog();
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
