@@ -176,8 +176,18 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="StartAttestation" Grid.Column="0" Grid.Row="0" Height="50" Width="200" 
-                Content="Начать аттестацию" Style="{StaticResource startAttestation}"/>
+        <Button x:Name="StartAttestation" Grid.Column="0" Grid.Row="0" Height="55" Width="130" 
+                 Style="{StaticResource startAttestation}" HorizontalAlignment="Left" Margin="15,0,0,0">
+            <Grid>
+                <TextBlock Grid.Row="0" Text="Начать" Padding="2,2,2,0" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="аттестацию"  
+                           Padding="2,0,2,5" HorizontalAlignment="Center"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Button>
 
         <!-- ========================== DataGrid ======================= -->
         <DataGrid x:Name="DataGridMain" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="8" Padding="2" ColumnWidth="*" 
@@ -236,8 +246,10 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            <Button Click="Change_VagNum" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    BorderThickness="0" Background="Transparent" Style="{StaticResource SomeButton}">
+                            <Button Click="Change_VagNum" VerticalContentAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    BorderThickness="0" Background="Transparent"
+                                    Style="{StaticResource SomeButton}">
                                 <TextBlock Text="{Binding Num}"  HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
                                     <TextBlock.ToolTip >
@@ -377,9 +389,16 @@
                                     Style="{StaticResource SomeButton}"
                                     FontSize="12" Background="Transparent" Click="Change_isOk"
                                     BorderBrush="White" >
-                                <Button.Content >
-                                    <fa:ImageAwesome x:Name="Icon"  Icon="{Binding Att_code}" Margin="5"/>
-                                </Button.Content>
+                                <TextBlock x:Name="TextBlock_Change_isOk" Text="{Binding Att_code}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Att_code}" FontSize="30" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -387,10 +406,11 @@
                 
                 
                 <DataGridTemplateColumn x:Name="cause_button" Header="Причина неаттестации" 
-                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="300">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            <Button x:Name="CauseButton" Height="30" BorderThickness="0" Style="{StaticResource Foto}"
+                            <Button x:Name="CauseButton" Height="30" BorderThickness="0"
+                                    Style="{StaticResource SomeButton}"
                                     Background="Transparent" Click="CauseButton_Click"
                                     BorderBrush="White"  >
                                 <TextBlock Text="{Binding Cause_name}"  HorizontalAlignment="Center"

@@ -74,13 +74,17 @@
                        FontSize="24" Margin="4,4,15,4" Text="Indas Cube"/>
 
             <!--  .............................  Меню ....................................................................-->
-            <Border BorderThickness="0 0 0 6" BorderBrush="#CC0000" x:Name="BorderAttestation" Cursor="Hand">
-                <TextBlock HorizontalAlignment="Left" Foreground="White"  PreviewMouseDown="Attestation_Click"
+            <Border BorderThickness="0 0 0 6" BorderBrush="#CC0000" x:Name="BorderAttestation" Cursor="Hand" >
+                <TextBlock HorizontalAlignment="Center"  Foreground="White"  PreviewMouseDown="Attestation_Click"
                            FontFamily="Calibry" FontSize="16" Margin="30,10,15,4">Аттестация</TextBlock>
             </Border>
             <Border BorderThickness="0 0 0 6" BorderBrush="#37474F" x:Name="BorderReport" Cursor="Hand">
-                <TextBlock HorizontalAlignment="Left" Foreground="White" PreviewMouseDown="Report_Click" FontFamily="Calibry"
-                           FontSize="16" Margin="4,10,15,4">Отчеты</TextBlock>
+                <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Report_Click" FontFamily="Calibry"
+                           FontSize="16" Margin="15,10,15,4">Отчеты</TextBlock>
+            </Border>
+            <Border BorderThickness="0 0 0 6" BorderBrush="#37474F" x:Name="BorderArchive" Cursor="Hand">
+                <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Archive_Click" FontFamily="Calibry"
+                           FontSize="16" Margin="15,10,15,4">Архив</TextBlock>
             </Border>
             <DockPanel HorizontalAlignment="right">
                 <TextBlock HorizontalAlignment="Right" Margin="4,10,15,4" Cursor="Hand"

@@ -20,16 +20,16 @@ namespace Attestation
     public partial class ShowChange_cause_t : Window
     {
         private Global global;
+        private List<cause_t> Cause;
         public ShowChange_cause_t()
         {
             InitializeComponent();
             global = Global.getInstance();
+            Cause = global.cause;
+            cause_Value.ItemsSource = Cause;
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-
-           
-
             this.Close();
         }
 
@@ -39,7 +39,7 @@ namespace Attestation
         }
         private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            global.DATA[global.Idx].Cause_name = Cause[cause_Value.SelectedIndex].Name; ;
         }
     }
 }

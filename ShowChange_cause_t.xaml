@@ -88,7 +88,9 @@
                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <ComboBox x:Name="cause_Value" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
-                          FontSize="14" SelectionChanged="cause_Value_SelectionChanged" ItemsSource="{Binding cause}">
+                          FontSize="14" SelectionChanged="cause_Value_SelectionChanged"
+                      ItemsSource="{Binding Path=Cause}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                      SelectedValue="{Binding Path=cause_t}">
                 <!--
                 <ComboBoxItem Name="no"  Content="Не аттестован"/>
                 <ComboBoxItem Name="ok" Content="Аттестован"/>

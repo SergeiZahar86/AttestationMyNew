@@ -21,6 +21,7 @@ namespace Attestation
     {
         public string Login;
         private Global global;
+        private List<cause_t> Cause;
         public DialogLogin()
         {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace Attestation
             //List<cause_t> list = global.getCauses();
             //part_t part = global.getPart(1);
             //photo_t photo = global.getPhoto(1, 1);
+            //Cause = global.getCauses();
             this.Close();
 
         }

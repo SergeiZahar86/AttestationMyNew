@@ -1,6 +1,7 @@
 ﻿using Attestation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,15 +14,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace Attestation
 {
     // Главный класс приложения
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
+
             InitializeComponent();
+
         }
 
         // Обработка события кнопок
@@ -44,6 +50,7 @@ namespace Attestation
             var converter = new System.Windows.Media.BrushConverter();
             BorderReport.BorderBrush= (Brush)converter.ConvertFromString("#37474F");
             BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
+            BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
             //BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#00CC00");
             AttestationPage p = new AttestationPage();
             MainFrame.Navigate(p);
@@ -55,10 +62,21 @@ namespace Attestation
             var converter = new System.Windows.Media.BrushConverter();
             BorderReport.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
             BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
-            
+            BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
+
             ReportPage p = new ReportPage();
             MainFrame.Navigate(p);
             user.Text = "Ok";
+        }
+        private void Archive_Click(object sender, MouseButtonEventArgs e)
+        {
+            var converter = new System.Windows.Media.BrushConverter();
+            BorderReport.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
+            BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
+            BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
+
+            Archive p = new Archive();
+            MainFrame.Navigate(p);
         }
 
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e)

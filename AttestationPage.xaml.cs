@@ -75,7 +75,7 @@ namespace Attestation
         {
 
         }
-        private void Change_VagNum(object sender, RoutedEventArgs e)
+        private void Change_VagNum(object sender, RoutedEventArgs e)/* Изменение номера вагона*/
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
             global.Idx = DataGridMain.SelectedIndex;
@@ -84,7 +84,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
-        private void Change_isOk(object sender, RoutedEventArgs e)
+        private void Change_isOk(object sender, RoutedEventArgs e)/* Изменение итогов аттестации*/
         {
             ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
             global.Idx = DataGridMain.SelectedIndex;
@@ -92,10 +92,13 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
-        private void CauseButton_Click (object sender, RoutedEventArgs e)
+        private void CauseButton_Click (object sender, RoutedEventArgs e)/* Установить причину неаттестации*/
         {
             ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
+            global.Idx = DataGridMain.SelectedIndex;
             showChange_Cause_T.ShowDialog();
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.DATA;
         }
     }
 }

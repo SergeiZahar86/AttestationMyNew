@@ -8,11 +8,26 @@ using System.IO;
 using Thrift.Transport;
 using Thrift.Protocol;
 using iTextSharp.text;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
+using System.Diagnostics;
+using System.Windows;
 
 namespace Attestation
 {
     class Global
     {
+        /*
+        MqttClient clientMQTT;
+        void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
+        {
+            
+            Debug.WriteLine("Подписан на id = " + e.MessageId);
+            MessageBox.Show(e.ToString());
+        }
+        */
+
+
         /*
         public List<String> Reason;
         byte[] leftFoto;
@@ -41,6 +56,24 @@ namespace Attestation
             DATA = part.Cars;
             photo = new photo_t();
             cause = getCauses();
+
+            /*
+            try
+            {
+                String id = Guid.NewGuid().ToString();
+                clientMQTT = new MqttClient("10.90.90.5");
+                
+                clientMQTT.MqttMsgSubscribed += client_MqttMsgSubscribed;
+                ushort msgId = clientMQTT.Subscribe(new string[] { "/my_topic" },
+                    new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                byte code = clientMQTT.Connect(id, "root", "root");
+            }
+            catch (Exception a)
+            {
+
+            }
+            */
+
 
         }
         public static Global getInstance()//*******
