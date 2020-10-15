@@ -329,5 +329,8 @@
   <ItemGroup>
     <Resource Include="ImageNull\Bitmap33.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\309058-512 %281%29.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

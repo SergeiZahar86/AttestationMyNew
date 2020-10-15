@@ -22,8 +22,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
-        
+
+
         <!-- ......................Красная кнопка ...................................-->
         <Style  x:Key="RedButton" TargetType="Button">
             <Setter Property="Background" Value="#B22222" />
@@ -54,7 +54,7 @@
         <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#FF37474F" Height="40px">
 
             <!--  .............................. Кнопки панели управления .........................................-->
-          
+
             <Button x:Name="CloseButton" fa:Awesome.Content="SignOut"  Click="CloseButton_Click"   DockPanel.Dock="Right"
                     Style="{StaticResource RedButton}"  Width="40" ToolTip="Выход"  IsCancel="True"/>
 
@@ -86,12 +86,23 @@
                 <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Archive_Click" FontFamily="Calibry"
                            FontSize="16" Margin="15,10,15,4">Архив</TextBlock>
             </Border>
+            <Menu  Width="140" BorderBrush="#37474F"  Background="Transparent" >
+                <MenuItem Background="Transparent" Width="140" Height="40" >
+                    <MenuItem.Icon >
+                        <Image Source="Resources\309058-512 (1).png" Height="32" Width="25" VerticalAlignment="Top" Margin="0,-7,-9,-9"></Image>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock Text="File" FontSize="20" Width="82" Foreground="White" HorizontalAlignment="Right"/>
+                    </MenuItem.Header>
+                </MenuItem>
+            </Menu>
             <DockPanel HorizontalAlignment="right">
                 <TextBlock HorizontalAlignment="Right" Margin="4,10,15,4" Cursor="Hand"
                            Style="{StaticResource TextblockHead}">Аттестация вагонов</TextBlock>
                 <TextBlock  x:Name="user" HorizontalAlignment="Right" Margin="4,10,15,4"
                             Cursor="Hand" Style="{StaticResource TextblockHead}">admin</TextBlock>
             </DockPanel>
+
         </DockPanel>
         <Border Background="#EEEEEE">
             <Frame x:Name="MainFrame"  Height="1020" Margin="0,10,0,0" VerticalAlignment="Top" Width="1920" NavigationUIVisibility="Hidden"/>
