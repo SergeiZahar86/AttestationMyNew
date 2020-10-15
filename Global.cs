@@ -47,6 +47,7 @@ namespace Attestation
 
         private Global()
         {
+            
             this.transport = new TSocket("10.90.90.5", 9090);
             TProtocol proto = new TBinaryProtocol(transport);
             transport.Open();
