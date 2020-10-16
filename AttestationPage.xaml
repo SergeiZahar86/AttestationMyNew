@@ -17,7 +17,7 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="Background" Value="#FF6BDA6F"/>
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontSize" Value="18"/>
                 <Setter Property="FontFamily" Value="Calibri"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -176,7 +176,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="StartAttestation" Grid.Column="0" Grid.Row="0" Height="55" Width="130" 
+        <Button x:Name="StartAttestation" Grid.Column="0" Grid.Row="0" Height="50" Width="110" 
                  Style="{StaticResource startAttestation}" HorizontalAlignment="Left" Margin="15,0,0,0">
             <Grid>
                 <TextBlock Grid.Row="0" Text="Начать" Padding="2,2,2,0" HorizontalAlignment="Center"/>
@@ -389,6 +389,10 @@
                                     Style="{StaticResource SomeButton}"
                                     FontSize="12" Background="Transparent" Click="Change_isOk"
                                     BorderBrush="White" >
+                                <Button.Content>
+                                    <fa:ImageAwesome x:Name="Icon"  Icon="{Binding Att}"   Margin="5"/>
+                                </Button.Content>
+                                <!--
                                 <TextBlock x:Name="TextBlock_Change_isOk" Text="{Binding Att_code}"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
@@ -399,6 +403,7 @@
                                         </ToolTip>
                                     </TextBlock.ToolTip>
                                 </TextBlock>
+                                -->
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

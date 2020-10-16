@@ -39,6 +39,9 @@ namespace Attestation
         public photo_t photo;
         public part_t part;
         public List<cause_t> cause;
+
+        public List<String> Att;
+
         
         TTransport transport;
         DataProviderService.Client client;
@@ -52,12 +55,29 @@ namespace Attestation
             TProtocol proto = new TBinaryProtocol(transport);
             transport.Open();
             this.client = new DataProviderService.Client(proto);
-
+            
             part = getPart(1);
+           
+
+
             DATA = part.Cars;
             photo = new photo_t();
             cause = getCauses();
 
+            Att = new List<string>();
+            foreach (car_t cars in DATA)
+            {
+                switch (cars.Att_code)
+                {
+                    case 0: Att.Add("CheckCircle"); break;
+                    case 1: Att.Add("Times"); break;
+                    default: Att.Add("Asterisk"); break;
+                }
+                
+            }
+
+
+            
             /*
             try
             {

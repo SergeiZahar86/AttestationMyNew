@@ -23,10 +23,12 @@ namespace Attestation
     {
         public int idx; // индекс строки
         private Global global;
+        private List<String> att;
         public AttestationPage()
         {
             InitializeComponent();
             global = Global.getInstance();
+            att = global.Att;
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
         данных в DataGrid*/

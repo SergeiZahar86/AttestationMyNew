@@ -207,14 +207,17 @@
     <Compile Include="cause_t.cs" />
     <Compile Include="DataProviderException.cs" />
     <Compile Include="DataProviderService.cs" />
+    <Compile Include="exitLogin.xaml.cs">
+      <DependentUpon>exitLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="part_t.cs" />
     <Compile Include="photo_t.cs" />
     <Compile Include="ReportPage.xaml.cs">
       <DependentUpon>ReportPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogLogin.xaml.cs">
-      <DependentUpon>DialogLogin.xaml</DependentUpon>
+    <Compile Include="changePassword.xaml.cs">
+      <DependentUpon>changePassword.xaml</DependentUpon>
     </Compile>
     <Compile Include="RowCar.cs" />
     <Compile Include="RowTab.cs" />
@@ -230,12 +233,19 @@
     <Compile Include="ShowPhotos.xaml.cs">
       <DependentUpon>ShowPhotos.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SignIn.xaml.cs">
+      <DependentUpon>SignIn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VideoData.cs" />
     <Page Include="Archive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AttestationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="exitLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,7 +265,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DialogLogin.xaml">
+    <Page Include="changePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,6 +282,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowPhotos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignIn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -328,9 +342,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageNull\Bitmap33.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\309058-512 %281%29.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Key.png" />

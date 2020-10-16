@@ -56,12 +56,20 @@
             <!--  .............................. Кнопки панели управления .........................................-->
 
             <Button x:Name="CloseButton" fa:Awesome.Content="SignOut"  Click="CloseButton_Click"   DockPanel.Dock="Right"
-                    Style="{StaticResource RedButton}"  Width="40" ToolTip="Выход"  IsCancel="True"/>
+                    Style="{StaticResource RedButton}"  Width="40"  IsCancel="True">
+                <Button.ToolTip>
+                    <ToolTip Content="Закончить работу" FontSize="16" Foreground="Black" Background="White"/>
+                </Button.ToolTip>
+            </Button>
 
 
             <Button x:Name="MinButton"   fa:Awesome.Content="ArrowsAlt"  Click="MinButton_Click"  DockPanel.Dock="Right"
-                    Style="{StaticResource RedButton}"   Width="40" ToolTip="Сворачивание окна"/>
-
+                    Style="{StaticResource RedButton}"   Width="40">
+                <Button.ToolTip>
+                    <ToolTip Content="Свернуть окно" FontSize="16" Foreground="Black" Background="White"/>
+                </Button.ToolTip>
+            </Button>
+            <!--
             <Menu DockPanel.Dock="Right" Width="80" BorderBrush="#37474F"  Background="Transparent" Margin="0,0,30,0" >
                 <MenuItem Background="Transparent" Width="80" Height="50" >
                     <MenuItem.Icon >
@@ -72,14 +80,29 @@
                         <TextBlock Text="Вход" FontSize="16"  Foreground="White" HorizontalAlignment="Right"
                                    Margin="4,0,0,15" FontFamily="Calibri"/>
                     </MenuItem.Header>
-                    <MenuItem Header="Войти" Height="35" FontSize="18" Foreground="Black"></MenuItem>
-                    <MenuItem Header="Поменять пароль" Height="35" FontSize="18" Foreground="Black"></MenuItem>
+                    <MenuItem Header="Войти" Height="35" FontSize="18" Foreground="Black" Click="signIn_Click"></MenuItem>
+                    <MenuItem Header="Поменять пароль" Height="35" FontSize="18" Foreground="Black"
+                              Click="changePassword_Click"></MenuItem>
                 </MenuItem>
             </Menu>
-            <!--
-            <Button x:Name="LoginButton"   Click="LoginButton_Click"  DockPanel.Dock="Right" Style="{StaticResource RedButton}"
-                    fa:Awesome.Content="Key"  Width="60" ToolTip="Учетные данные" Margin="4,0,50,0"/>
-            -->
+             -->
+            
+            <Button x:Name="passwordButton"   Click="changePassword_Click"  DockPanel.Dock="Right" Style="{StaticResource RedButton}"
+                    fa5:Awesome.Content="Solid_Key"  Width="50"  Margin="4,0,80,0">
+                <Button.ToolTip>
+                    <ToolTip Content="Смена пароля" FontSize="16" Foreground="Black" Background="White"/>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="exitLoginButton" DockPanel.Dock="Right" Style="{StaticResource RedButton}"
+                    fa5:Awesome.Content="Solid_SignOutAlt"  Width="50"  Margin="4,0,5,0" Click="exitLoginButton_Click">
+                
+            </Button>
+            <Button x:Name="LoginButton" DockPanel.Dock="Right" Style="{StaticResource RedButton}"
+                        fa5:Awesome.Content="Solid_User" Click="signIn_Click" Width="50"  Margin="4,0,5,0">
+                <Button.ToolTip>
+                    <ToolTip Content="Войти в учётную запись" FontSize="16" Foreground="Black" Background="White"/>
+                </Button.ToolTip>
+            </Button>
 
             <!-- .................................    Логотип ............................ -->
             <Image Width="30" Margin="8,4,0,4">

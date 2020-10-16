@@ -37,7 +37,7 @@ struct part_t {
   7:string end_time        # Окончание атткстации
 }
 
-struct photo_t {             # Массив фотографий
+struct Photo {             # Массив фотографий
   1:binary left,           # Фотография левого борта вагона   
   2:binary right,          # Фотография правого борта вагона
   3:binary top             # Фотография сверху
@@ -45,7 +45,7 @@ struct photo_t {             # Массив фотографий
 
 service DataProviderService
 {
-      photo_t getPhoto(1:int part_id, 2:int car_id) throws (1:DataProviderException ex),                       # Получение фотографий вагона
+      Photo getPhoto(1:int part_id, 2:int car_id) throws (1:DataProviderException ex),                       # Получение фотографий вагона
       list<cause_t> getCauses() throws (1:DataProviderException ex),                                         # Запрос справочника причин неаттестации
       part_t getPart(1:int id) throws (1:DataProviderException ex),                                          # Запрос партии вагонов   
       string chLogin(1:string user, 2:string password, 3:string empl_id) throws (1:DataProviderException ex),# Идентификация пользователя

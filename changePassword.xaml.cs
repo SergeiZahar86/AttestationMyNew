@@ -17,12 +17,12 @@ namespace Attestation
     /// <summary>
     /// Логика взаимодействия для TestDialog.xaml
     /// </summary>
-    public partial class DialogLogin : Window
+    public partial class changePassword : Window
     {
         public string Login;
         private Global global;
         private List<cause_t> Cause;
-        public DialogLogin()
+        public changePassword()
         {
             InitializeComponent();
             global = Global.getInstance();

@@ -32,8 +32,9 @@ namespace Attestation
 
         // Обработка события кнопок
         private void CloseButton_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
-        private void LoginButton_Click(object sender, RoutedEventArgs e) {
-            DialogLogin dialog = new DialogLogin();
+
+        private void changePassword_Click(object sender, RoutedEventArgs e) {
+            changePassword dialog = new changePassword();
             dialog.ShowDialog();
             bool? ret = dialog.DialogResult;
             if (ret == true)
@@ -83,6 +84,18 @@ namespace Attestation
         {
             AttestationPage p = new AttestationPage();
             MainFrame.Navigate(p);
+        }
+
+        private void signIn_Click(object sender, RoutedEventArgs e)
+        {
+            SignIn signIn = new SignIn();
+            signIn.ShowDialog();
+        }
+
+        private void exitLoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            exitLogin exit = new exitLogin();
+            exit.ShowDialog();
         }
     }
 }
