@@ -25,11 +25,17 @@ namespace Attestation
         public int idx; // индекс строки
         private Global global;
         private List<String> att;
+
+
         public AttestationPage()
         {
             InitializeComponent();
             global = Global.getInstance();
             att = global.Att;
+
+            StartAttestation.Background = global.currentColor;
+            startRow_1.Text = global.mainButtonAttestation;
+
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
         данных в DataGrid*/
@@ -38,13 +44,29 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
-        private void StartAttestation_Click(object sender, RoutedEventArgs e)
+        private void StartAttestation_Click(object sender, RoutedEventArgs e) /* Кнопка начала аттестации*/
         {
             input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
             inputOf.ShowDialog();
-            var a = StartAttestation.Background;
-            var converter = new System.Windows.Media.BrushConverter();
-            StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(100, 55, 71, 79));
+            //currentColor = StartAttestation.Background;
+            if(global.isColor) // проверяем флаг
+            {
+                // записываем цвет и текст в одиночку
+                StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); // красный
+                global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); 
+                startRow_1.Text = "Закончить";
+                global.mainButtonAttestation = "Закончить";
+                global.isColor = false;
+            }
+            else
+            {
+                StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); // зеленый
+                global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));
+                startRow_1.Text = "Начать";
+                global.mainButtonAttestation = "Начать";
+                global.isColor = true;
+            }
+            //StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb( 255, 75, 64));
         }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
         с фотографиями вагонов */

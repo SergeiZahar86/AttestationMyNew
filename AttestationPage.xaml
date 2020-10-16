@@ -15,7 +15,7 @@
         <Style x:Key="startAttestation" TargetType="Button">
             <Style.Setters>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Background" Value="#FF6BDA6F"/>
+                <Setter Property="Background" Value="#04AD01"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="FontFamily" Value="Calibri"/>
@@ -40,7 +40,7 @@
                     <Setter Property="BorderThickness" Value="0"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Foreground" Value="#04AD01"/>
+                    <Setter Property="Foreground" Value="black"/>
                     <Setter Property="Background" Value="Transparent"/>
                 </Trigger>
             </Style.Triggers>

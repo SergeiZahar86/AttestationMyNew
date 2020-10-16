@@ -12,11 +12,15 @@ using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Attestation
 {
     class Global
     {
+        public bool isColor; // для кнопки начала и завершения аттестации
+        public string mainButtonAttestation; // для кнопки начала и завершения аттестации
+        public System.Windows.Media.SolidColorBrush currentColor; // для кнопки начала и завершения аттестации
         /*
         MqttClient clientMQTT;
         void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
@@ -50,7 +54,13 @@ namespace Attestation
 
         private Global()
         {
-            /*
+            isColor = true; // для кнопки начала и завершения аттестации
+            mainButtonAttestation = "Начать"; // для кнопки начала и завершения аттестации
+            //зеленый, для кнопки начала и завершения аттестации
+            currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); 
+
+
+            
             this.transport = new TSocket("10.90.90.5", 9090);
             TProtocol proto = new TBinaryProtocol(transport);
             transport.Open();
@@ -75,9 +85,9 @@ namespace Attestation
                 }
                 
             }
-            */
-
             
+
+
             /*
             try
             {
