@@ -205,12 +205,17 @@
     </Compile>
     <Compile Include="car_t.cs" />
     <Compile Include="cause_t.cs" />
+    <Compile Include="contractor_t.cs" />
     <Compile Include="DataProviderException.cs" />
     <Compile Include="DataProviderService.cs" />
     <Compile Include="exitLogin.xaml.cs">
       <DependentUpon>exitLogin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="input_Of_Initial_Data.xaml.cs">
+      <DependentUpon>input_Of_Initial_Data.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="mat_t.cs" />
     <Compile Include="part_t.cs" />
     <Compile Include="photo_t.cs" />
     <Compile Include="ReportPage.xaml.cs">
@@ -246,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="exitLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="input_Of_Initial_Data.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

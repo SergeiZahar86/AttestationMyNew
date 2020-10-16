@@ -15,17 +15,13 @@ using System.Windows.Shapes;
 namespace Attestation
 {
     /// <summary>
-    /// Логика взаимодействия для SignIn.xaml
+    /// Логика взаимодействия для input_Of_Initial_Data.xaml
     /// </summary>
-    public partial class SignIn : Window
+    public partial class input_Of_Initial_Data : Window
     {
-        public SignIn()
+        public input_Of_Initial_Data()
         {
             InitializeComponent();
-        }
-        private void ok_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
         private void close_Click(object sender, RoutedEventArgs e)
         {

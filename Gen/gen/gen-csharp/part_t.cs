@@ -23,8 +23,9 @@ public partial class part_t : TBase
 {
   private int _part_id;
   private string _oper;
-  private string _shipper;
-  private string _consignee;
+  private int _shipper;
+  private int _consignee;
+  private int _mat;
   private List<car_t> _cars;
   private string _start_time;
   private string _end_time;
@@ -55,7 +56,7 @@ public partial class part_t : TBase
     }
   }
 
-  public string Shipper
+  public int Shipper
   {
     get
     {
@@ -68,7 +69,7 @@ public partial class part_t : TBase
     }
   }
 
-  public string Consignee
+  public int Consignee
   {
     get
     {
@@ -78,6 +79,19 @@ public partial class part_t : TBase
     {
       __isset.consignee = true;
       this._consignee = value;
+    }
+  }
+
+  public int Mat
+  {
+    get
+    {
+      return _mat;
+    }
+    set
+    {
+      __isset.mat = true;
+      this._mat = value;
     }
   }
 
@@ -130,6 +144,7 @@ public partial class part_t : TBase
     public bool oper;
     public bool shipper;
     public bool consignee;
+    public bool mat;
     public bool cars;
     public bool start_time;
     public bool end_time;
@@ -168,20 +183,27 @@ public partial class part_t : TBase
             }
             break;
           case 3:
-            if (field.Type == TType.String) {
-              Shipper = iprot.ReadString();
+            if (field.Type == TType.I32) {
+              Shipper = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 4:
-            if (field.Type == TType.String) {
-              Consignee = iprot.ReadString();
+            if (field.Type == TType.I32) {
+              Consignee = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 5:
+            if (field.Type == TType.I32) {
+              Mat = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 6:
             if (field.Type == TType.List) {
               {
                 Cars = new List<car_t>();
@@ -199,14 +221,14 @@ public partial class part_t : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 6:
+          case 7:
             if (field.Type == TType.String) {
               Start_time = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 7:
+          case 8:
             if (field.Type == TType.String) {
               End_time = iprot.ReadString();
             } else { 
@@ -250,26 +272,34 @@ public partial class part_t : TBase
         oprot.WriteString(Oper);
         oprot.WriteFieldEnd();
       }
-      if (Shipper != null && __isset.shipper) {
+      if (__isset.shipper) {
         field.Name = "shipper";
-        field.Type = TType.String;
+        field.Type = TType.I32;
         field.ID = 3;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Shipper);
+        oprot.WriteI32(Shipper);
         oprot.WriteFieldEnd();
       }
-      if (Consignee != null && __isset.consignee) {
+      if (__isset.consignee) {
         field.Name = "consignee";
-        field.Type = TType.String;
+        field.Type = TType.I32;
         field.ID = 4;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Consignee);
+        oprot.WriteI32(Consignee);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.mat) {
+        field.Name = "mat";
+        field.Type = TType.I32;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(Mat);
         oprot.WriteFieldEnd();
       }
       if (Cars != null && __isset.cars) {
         field.Name = "cars";
         field.Type = TType.List;
-        field.ID = 5;
+        field.ID = 6;
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, Cars.Count));
@@ -284,7 +314,7 @@ public partial class part_t : TBase
       if (Start_time != null && __isset.start_time) {
         field.Name = "start_time";
         field.Type = TType.String;
-        field.ID = 6;
+        field.ID = 7;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Start_time);
         oprot.WriteFieldEnd();
@@ -292,7 +322,7 @@ public partial class part_t : TBase
       if (End_time != null && __isset.end_time) {
         field.Name = "end_time";
         field.Type = TType.String;
-        field.ID = 7;
+        field.ID = 8;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(End_time);
         oprot.WriteFieldEnd();
@@ -321,17 +351,23 @@ public partial class part_t : TBase
       __sb.Append("Oper: ");
       __sb.Append(Oper);
     }
-    if (Shipper != null && __isset.shipper) {
+    if (__isset.shipper) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
       __sb.Append("Shipper: ");
       __sb.Append(Shipper);
     }
-    if (Consignee != null && __isset.consignee) {
+    if (__isset.consignee) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
       __sb.Append("Consignee: ");
       __sb.Append(Consignee);
+    }
+    if (__isset.mat) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Mat: ");
+      __sb.Append(Mat);
     }
     if (Cars != null && __isset.cars) {
       if(!__first) { __sb.Append(", "); }

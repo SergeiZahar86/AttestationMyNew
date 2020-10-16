@@ -39,7 +39,7 @@ namespace Attestation
         }
         private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.DATA[global.Idx].Cause_name = Cause[cause_Value.SelectedIndex].Name; ;
+            //global.DATA[global.Idx].Cause_name = Cause[cause_Value.SelectedIndex].Name; ;
         }
     }
 }

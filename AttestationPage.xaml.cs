@@ -37,6 +37,11 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
+        private void StartAttestation_Click(object sender, RoutedEventArgs e)
+        {
+            input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
+            inputOf.ShowDialog();
+        }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
         с фотографиями вагонов */
         {
@@ -102,5 +107,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.DATA;
         }
+
+        
     }
 }

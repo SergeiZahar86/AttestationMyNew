@@ -50,7 +50,7 @@ namespace Attestation
 
         private Global()
         {
-            
+            /*
             this.transport = new TSocket("10.90.90.5", 9090);
             TProtocol proto = new TBinaryProtocol(transport);
             transport.Open();
@@ -75,7 +75,7 @@ namespace Attestation
                 }
                 
             }
-
+            */
 
             
             /*
@@ -116,7 +116,7 @@ namespace Attestation
 
         public String chLogin(String Login, String Password, String Emple_id)
         {
-            return this.client.chLogin(Login, Password, Emple_id);
+            return this.client.getUser(Login, Password, Emple_id);
         }
         public List<cause_t> getCauses()
         {

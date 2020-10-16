@@ -94,7 +94,7 @@ namespace Attestation
 
         private void exitLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            exitLogin exit = new exitLogin();
+            SignIn exit = new SignIn();
             exit.ShowDialog();
         }
     }

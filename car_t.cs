@@ -26,9 +26,9 @@ public partial class car_t : TBase
   private string _num;
   private int _att_code;
   private double _tara;
+  private double _tara_e;
   private int _zone_e;
   private int _cause_id;
-  private string _cause_name;
   private double _carrying;
   private string _att_time;
 
@@ -97,6 +97,19 @@ public partial class car_t : TBase
     }
   }
 
+  public double Tara_e
+  {
+    get
+    {
+      return _tara_e;
+    }
+    set
+    {
+      __isset.tara_e = true;
+      this._tara_e = value;
+    }
+  }
+
   public int Zone_e
   {
     get
@@ -120,19 +133,6 @@ public partial class car_t : TBase
     {
       __isset.cause_id = true;
       this._cause_id = value;
-    }
-  }
-
-  public string Cause_name
-  {
-    get
-    {
-      return _cause_name;
-    }
-    set
-    {
-      __isset.cause_name = true;
-      this._cause_name = value;
     }
   }
 
@@ -173,9 +173,9 @@ public partial class car_t : TBase
     public bool num;
     public bool att_code;
     public bool tara;
+    public bool tara_e;
     public bool zone_e;
     public bool cause_id;
-    public bool cause_name;
     public bool carrying;
     public bool att_time;
   }
@@ -234,22 +234,22 @@ public partial class car_t : TBase
             }
             break;
           case 6:
-            if (field.Type == TType.I32) {
-              Zone_e = iprot.ReadI32();
+            if (field.Type == TType.Double) {
+              Tara_e = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 7:
             if (field.Type == TType.I32) {
-              Cause_id = iprot.ReadI32();
+              Zone_e = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 8:
-            if (field.Type == TType.String) {
-              Cause_name = iprot.ReadString();
+            if (field.Type == TType.I32) {
+              Cause_id = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -329,10 +329,18 @@ public partial class car_t : TBase
         oprot.WriteDouble(Tara);
         oprot.WriteFieldEnd();
       }
+      if (__isset.tara_e) {
+        field.Name = "tara_e";
+        field.Type = TType.Double;
+        field.ID = 6;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Tara_e);
+        oprot.WriteFieldEnd();
+      }
       if (__isset.zone_e) {
         field.Name = "zone_e";
         field.Type = TType.I32;
-        field.ID = 6;
+        field.ID = 7;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Zone_e);
         oprot.WriteFieldEnd();
@@ -340,17 +348,9 @@ public partial class car_t : TBase
       if (__isset.cause_id) {
         field.Name = "cause_id";
         field.Type = TType.I32;
-        field.ID = 7;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Cause_id);
-        oprot.WriteFieldEnd();
-      }
-      if (Cause_name != null && __isset.cause_name) {
-        field.Name = "cause_name";
-        field.Type = TType.String;
         field.ID = 8;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Cause_name);
+        oprot.WriteI32(Cause_id);
         oprot.WriteFieldEnd();
       }
       if (__isset.carrying) {
@@ -411,6 +411,12 @@ public partial class car_t : TBase
       __sb.Append("Tara: ");
       __sb.Append(Tara);
     }
+    if (__isset.tara_e) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Tara_e: ");
+      __sb.Append(Tara_e);
+    }
     if (__isset.zone_e) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
@@ -422,12 +428,6 @@ public partial class car_t : TBase
       __first = false;
       __sb.Append("Cause_id: ");
       __sb.Append(Cause_id);
-    }
-    if (Cause_name != null && __isset.cause_name) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Cause_name: ");
-      __sb.Append(Cause_name);
     }
     if (__isset.carrying) {
       if(!__first) { __sb.Append(", "); }
