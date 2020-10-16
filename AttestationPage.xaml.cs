@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
+
 using iTextSharp.text;
 using System.Drawing.Imaging;
 
@@ -41,6 +42,9 @@ namespace Attestation
         {
             input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
             inputOf.ShowDialog();
+            var a = StartAttestation.Background;
+            var converter = new System.Windows.Media.BrushConverter();
+            StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(100, 55, 71, 79));
         }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
         с фотографиями вагонов */
