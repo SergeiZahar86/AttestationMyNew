@@ -46,11 +46,12 @@ namespace Attestation
         }
         private void StartAttestation_Click(object sender, RoutedEventArgs e) /* Кнопка начала аттестации*/
         {
-            input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
-            inputOf.ShowDialog();
+            
             //currentColor = StartAttestation.Background;
             if(global.isColor) // проверяем флаг
             {
+                input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
+                inputOf.ShowDialog();
                 // записываем цвет и текст в одиночку
                 StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); // красный
                 global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); 
@@ -76,9 +77,9 @@ namespace Attestation
             if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
             {
                 ShowPhotos showPhotos = new ShowPhotos();
-                showPhotos.image1.Source = ByteArraytoBitmap(global.photo.Left);
-                showPhotos.image2.Source = ByteArraytoBitmap(global.photo.Right);
-                showPhotos.image3.Source = ByteArraytoBitmap(global.photo.Top);
+                showPhotos.image1.Source = Global.ByteArraytoBitmap(global.photo.Left);
+                showPhotos.image2.Source = Global.ByteArraytoBitmap(global.photo.Right);
+                showPhotos.image3.Source = Global.ByteArraytoBitmap(global.photo.Top);
                 showPhotos.ShowDialog();
             }
             else
@@ -86,16 +87,7 @@ namespace Attestation
                 System.Windows.MessageBox.Show("У строки " + global.DATA[idx].Car_id.ToString() + " нет фотографий");
             }
         }
-        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет
-        передавать картинки в виде массивов байт в объект Image окна*/
-        {
-            MemoryStream stream = new MemoryStream(byteArray);
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = stream;
-            bitmapImage.EndInit();
-            return bitmapImage;
-        }
+        
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
             /*

@@ -17,7 +17,7 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="Background" Value="#04AD01"/>
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontSize" Value="14"/>
                 <Setter Property="FontFamily" Value="Calibri"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -33,7 +33,7 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#04AD01"/>
-                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontSize" Value="16"/>
                     <Setter Property="BorderThickness" Value="0"/>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="True">
@@ -176,7 +176,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="StartAttestation" Click="StartAttestation_Click"  Grid.Column="0" Grid.Row="0" Height="50" Width="110" 
+        <Button x:Name="StartAttestation" Click="StartAttestation_Click"  Grid.Column="0" Grid.Row="0" Height="44" Width="90" 
                  Style="{StaticResource startAttestation}" HorizontalAlignment="Left" Margin="15,0,0,0">
             <Grid>
                 <TextBlock x:Name="startRow_1"  Grid.Row="0" Text="Начать" Padding="2,2,2,0" HorizontalAlignment="Center"/>
