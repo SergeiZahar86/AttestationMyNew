@@ -22,12 +22,13 @@ namespace Attestation
     // Главный класс приложения
     public partial class MainWindow : Window
     {
-        
+        private Global global;
+
         public MainWindow()
         {
 
             InitializeComponent();
-
+            global = Global.getInstance();
         }
 
         // Обработка события кнопок
@@ -82,20 +83,39 @@ namespace Attestation
 
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            AttestationPage p = new AttestationPage();
-            MainFrame.Navigate(p);
+            GetSignIn();
+            if (global.user.Length > 0)
+            {
+                 AttestationPage p = new AttestationPage();
+                 MainFrame.Navigate(p);
+                 global.isLoadAttestation = false;
+            }
         }
 
-        private void signIn_Click(object sender, RoutedEventArgs e)
+        private void signIn_Click(object sender, RoutedEventArgs e) // кнопка авторизации
         {
-            SignIn signIn = new SignIn();
-            signIn.ShowDialog();
+            GetSignIn();
         }
-
-        private void exitLoginButton_Click(object sender, RoutedEventArgs e)
+        /*
+        private void exitLoginButton_Click(object sender, RoutedEventArgs e)// кнопка выхода из учетной записи
         {
             SignIn exit = new SignIn();
             exit.ShowDialog();
         }
+        */
+        private void GetSignIn() // Авторизация
+        {
+            SignIn signIn = new SignIn();
+            signIn.ShowDialog();
+            try
+            {
+                label_fio.Content = Global.ShortName(global.user);
+            }
+            catch
+            {
+
+            }
+        }
+
     }
 }

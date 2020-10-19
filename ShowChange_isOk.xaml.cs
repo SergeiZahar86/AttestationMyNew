@@ -25,17 +25,15 @@ namespace Attestation
         String question = "Question";
         */
         private Global global;
-        private List<String> IsOk_Val;
+        private List<String> isOk_Val;
 
         public ShowChange_isOk()
         {
             InitializeComponent();
             global = Global.getInstance();
-            IsOk_Val = new List<string>();
-            IsOk_Val.Add("Аттестован");
-            IsOk_Val.Add("Не аттестован");
-            IsOk_Val.Add("Условно аттестован");
-            isOk_Value.ItemsSource = IsOk_Val;
+            isOk_Val = global.IsOk_Val;
+            
+            isOk_Value.ItemsSource = isOk_Val;
             //IsOk_Val = new List<string> { "Аттестован", "Не аттестован", "Условно аттестован" };
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
@@ -54,6 +52,7 @@ namespace Attestation
         {
             // = IsOk_Val[isOk_Value.SelectedIndex] ;
             global.DATA[global.Idx].Att_code = isOk_Value.SelectedIndex;
+            global.ROWS[global.Idx].Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
 
 
 

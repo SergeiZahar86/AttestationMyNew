@@ -31,7 +31,6 @@ namespace Attestation
         {
             InitializeComponent();
             global = Global.getInstance();
-            att = global.Att;
 
             StartAttestation.Background = global.currentColor;
             startRow_1.Text = global.mainButtonAttestation;
@@ -42,12 +41,10 @@ namespace Attestation
         {
             //global.DATA.Clear();
             DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.DATA;
+            DataGridMain.ItemsSource = global.ROWS;
         }
         private void StartAttestation_Click(object sender, RoutedEventArgs e) /* Кнопка начала аттестации*/
         {
-            
-            //currentColor = StartAttestation.Background;
             if(global.isColor) // проверяем флаг
             {
                 input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
@@ -67,13 +64,12 @@ namespace Attestation
                 global.mainButtonAttestation = "Начать";
                 global.isColor = true;
             }
-            //StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb( 255, 75, 64));
         }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
         с фотографиями вагонов */
         {
             global.Idx = DataGridMain.SelectedIndex;
-            global.photo = global.getPhoto(global.part.Part_id, global.DATA[global.Idx].Car_id);
+            global.photo = global.getPhoto(global.part.Part_id, global.ROWS[global.Idx].Car_id);
             if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
             {
                 ShowPhotos showPhotos = new ShowPhotos();
@@ -84,7 +80,7 @@ namespace Attestation
             }
             else
             {
-                System.Windows.MessageBox.Show("У строки " + global.DATA[idx].Car_id.ToString() + " нет фотографий");
+                System.Windows.MessageBox.Show("У строки " + global.ROWS[idx].Car_id.ToString() + " нет фотографий");
             }
         }
         
@@ -104,10 +100,10 @@ namespace Attestation
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
             global.Idx = DataGridMain.SelectedIndex;
-            showChange_VagNum.oldVagNum.Content = global.DATA[global.Idx].Num;
+            showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
             showChange_VagNum.ShowDialog();
             DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.DATA;
+            DataGridMain.ItemsSource = global.ROWS;
         }
         private void Change_isOk(object sender, RoutedEventArgs e)/* Изменение итогов аттестации*/
         {
@@ -115,7 +111,7 @@ namespace Attestation
             global.Idx = DataGridMain.SelectedIndex;
             showChange_IsOk.ShowDialog();
             DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.DATA;
+            DataGridMain.ItemsSource = global.ROWS;
         }
         private void CauseButton_Click (object sender, RoutedEventArgs e)/* Установить причину неаттестации*/
         {
@@ -123,7 +119,7 @@ namespace Attestation
             global.Idx = DataGridMain.SelectedIndex;
             showChange_Cause_T.ShowDialog();
             DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.DATA;
+            DataGridMain.ItemsSource = global.ROWS;
         }
 
         

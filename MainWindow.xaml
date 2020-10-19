@@ -55,7 +55,7 @@
 
             <!--  .............................. Кнопки панели управления .........................................-->
 
-            <Button x:Name="CloseButton" fa:Awesome.Content="SignOut"  Click="CloseButton_Click"   DockPanel.Dock="Right"
+            <Button x:Name="CloseButton" fa5:Awesome.Content="Solid_Times"  Click="CloseButton_Click"   DockPanel.Dock="Right"
                     Style="{StaticResource RedButton}"  Width="40"  IsCancel="True">
                 <Button.ToolTip>
                     <ToolTip Content="Закончить работу" FontSize="16" Foreground="Black" Background="White"/>
@@ -63,7 +63,7 @@
             </Button>
 
 
-            <Button x:Name="MinButton"   fa:Awesome.Content="ArrowsAlt"  Click="MinButton_Click"  DockPanel.Dock="Right"
+            <Button x:Name="MinButton"   fa5:Awesome.Content="Solid_Minus"  Click="MinButton_Click"  DockPanel.Dock="Right"
                     Style="{StaticResource RedButton}"   Width="40">
                 <Button.ToolTip>
                     <ToolTip Content="Свернуть окно" FontSize="16" Foreground="Black" Background="White"/>
@@ -94,17 +94,19 @@
                 </Button.ToolTip>
             </Button>
             <Button x:Name="exitLoginButton" DockPanel.Dock="Right" Style="{StaticResource RedButton}"
-                    fa5:Awesome.Content="Solid_SignOutAlt"  Width="50"  Margin="4,0,5,0" Click="exitLoginButton_Click">
+                    fa5:Awesome.Content="Solid_SignOutAlt"  Width="50"  Margin="4,0,5,0" Click="signIn_Click">
                 <Button.ToolTip>
                     <ToolTip Content="Выйти из учётной записи" FontSize="16" Foreground="Black" Background="White"/>
                 </Button.ToolTip>
             </Button>
+            <!--
             <Button x:Name="LoginButton" DockPanel.Dock="Right" Style="{StaticResource RedButton}"
                         fa5:Awesome.Content="Solid_User" Click="signIn_Click" Width="50"  Margin="4,0,5,0">
                 <Button.ToolTip>
                     <ToolTip Content="Войти в учётную запись" FontSize="16" Foreground="Black" Background="White"/>
                 </Button.ToolTip>
             </Button>
+            -->
 
             <!-- .................................    Логотип ............................ -->
             <Image Width="30" Margin="8,4,0,4">
@@ -130,13 +132,18 @@
                            FontFamily="Calibry"
                            FontSize="16" Margin="15,10,15,4">Архив</TextBlock>
             </Border>
-           
+            <Label x:Name="label_fio" Content="{Binding SomeValueString}"  Height="30" Width="400"
+                   VerticalAlignment="Center" FontSize="20" HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center" 
+                   FontFamily="Calibry" Foreground="Black" Background="#FFD0DEE4" Margin="50,0,0,0"/>
             <DockPanel HorizontalAlignment="right" Margin="0,0,20,0">
                 <TextBlock HorizontalAlignment="Right" Margin="4,10,15,4" Cursor="Hand"
                            Style="{StaticResource TextblockHead}">Аттестация вагонов</TextBlock>
                 <TextBlock  x:Name="user" HorizontalAlignment="Right" Margin="4,10,15,4"
                             Cursor="Hand" Style="{StaticResource TextblockHead}">admin</TextBlock>
+                
             </DockPanel>
+            
 
         </DockPanel>
         <Border Background="#EEEEEE">

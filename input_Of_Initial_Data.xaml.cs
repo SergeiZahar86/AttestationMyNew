@@ -27,5 +27,9 @@ namespace Attestation
         {
             this.Close();
         }
+        private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

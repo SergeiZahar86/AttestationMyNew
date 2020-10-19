@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        Title="input_Of_Initial_Data" Height="450" Width="800" WindowStyle="None"
+        Title="input_Of_Initial_Data" Height="300" Width="800" WindowStyle="None"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" AllowsTransparency="true">
     <Window.Resources>
         <!-- .......................... Стили......................................................-->
@@ -85,16 +85,29 @@
                 <RowDefinition  />
                 <RowDefinition  />
                 <RowDefinition  />
-                <RowDefinition  />
-                <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
-            <DockPanel x:Name="TitleBar" Grid.Row="0" VerticalAlignment="Top" Background="#B22222" Height="30" >
-                <TextBlock HorizontalAlignment="Left" Text="Данные по партии" Foreground="White" FontFamily="Calibry" FontSize="16" 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <DockPanel x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                       VerticalAlignment="Top" Background="#B22222" Height="30" >
+                <TextBlock HorizontalAlignment="Left" Text="Данные по партии" Foreground="White"
+                           FontFamily="Calibry" FontSize="16" 
                            Margin="8,6,15,4"/>
                 <Button x:Name="CloseButton" Click="close_Click" HorizontalAlignment="right" fa:Awesome.Content="Times"
                             FontSize="20" DockPanel.Dock="Right"  Style="{StaticResource RedButton}" Width="28"
                             RenderTransformOrigin="0.51,0.5" Margin="4,1,4,2.714" Height="Auto"/>
+                
             </DockPanel>
+            <Label Content="Грузоотправитель" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="Грузополучатель" Grid.Row="2" Grid.Column="0"/>
+            <Label Content="Вид материалов" Grid.Row="3" Grid.Column="0"/>
+            <ComboBox x:Name="shipper_Value" Grid.Row="1" Grid.Column="1" 
+                          Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
+                          FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
+                          ItemsSource="{Binding IsOk_Val}"/>
+
         </Grid>
     </Border>
 </Window>

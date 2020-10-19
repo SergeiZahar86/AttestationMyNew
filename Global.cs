@@ -5,11 +5,14 @@ using Thrift.Transport;
 using Thrift.Protocol;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Web.UI.WebControls.WebParts;
 
 namespace Attestation
 {
     class Global
     {
+        public bool isLoadAttestation; // флаг для загрузки страницы аттестации
+
         public bool isColor; // флаг для кнопки начала и завершения аттестации
         public string mainButtonAttestation; // для кнопки начала и завершения аттестации
         public System.Windows.Media.SolidColorBrush currentColor; // цвет для кнопки начала и завершения аттестации
@@ -24,8 +27,10 @@ namespace Attestation
         public List<cause_t> cause; // справочник причин неаттестации
         public List<contractor_t> contractors; // справочник контрагентов
         public List<mat_t> mats; // справочник материалов
+        public List<string> IsOk_Val; // справочник итогов аттестации
+        public List<string> Att_codeFonts; // справочник элементов шрифта для итогов аттестации
 
-        public List<String> Att;
+        public List<RowTab> ROWS; // внутренний список вагонов 
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
@@ -41,33 +46,21 @@ namespace Attestation
             transport.Open();
             this.client = new DataProviderService.Client(proto);
             ///////////////////////////////////////////////////////////////////////////////
-            
+
+            isLoadAttestation = true;
+
             cause = getCauses(); // Запрос справочника причин неаттестации
             contractors = getContractors(); // Запрос справочника контрагентов
             mats = getMat(); // Запрос справочника материалов
+            IsOk_Val = GetIsOk_Val(); // справочник итогов аттестации
+            Att_codeFonts = GetAtt_codeFonts(); // справочник элементов шрифта для итогов аттестации
 
             photo = new photo_t();
-            part = getPart(1); // партии вагонов
-            DATA = part.Cars; // Данные по вагонам
             user = ""; // имя пользователя
 
-
-
-
-
-
-            Att = new List<string>();
-            foreach (car_t cars in DATA)
-            {
-                switch (cars.Att_code)
-                {
-                    case 0: Att.Add("CheckCircle"); break;
-                    case 1: Att.Add("Times"); break;
-                    default: Att.Add("Asterisk"); break;
-                }
-                
-            }
-
+            part = getPart(1); // партии вагонов
+            DATA = part.Cars; // Данные по вагонам
+            ROWS = GetRows(); // внутренний список вагонов 
 
             /////////////////////////////////////////////////////////////////////////////////////////////
             isColor = true;                   // для кнопки начала и завершения аттестации
@@ -77,11 +70,62 @@ namespace Attestation
             ///////////////////////////////////////////////////////////////////////////////////////////////
 
         }
+        public void GetGlobalPart()
+        {
+
+        }
         public static Global getInstance() // возвращает singleton объекта Global
         {
             if (instance == null)
                 instance = new Global();
             return instance;
+        }
+        public List<RowTab> GetRows() // внутренний список вагонов 
+        {
+            List<RowTab> rows = new List<RowTab>();
+            foreach (car_t cars in DATA)
+            {
+                int Part_id__ = cars.Part_id;
+                int Car_id__ = cars.Car_id;
+                string Num__ = cars.Num;
+                int Att_code__ = cars.Att_code;
+                string Att_codeString__ = "";
+                double Tara__ = cars.Tara;
+                double Tara_e__ = cars.Tara_e;
+                double Tara_delta__ = Math.Round((Tara__ - Tara_e__),3, MidpointRounding.AwayFromZero);
+                int Zone_e__ = cars.Zone_e;
+                string Zone_eString__ = "";
+                switch (cars.Zone_e)
+                {
+                    case 0: Zone_eString__ = "Зелёная"; break;
+                    case 1: Zone_eString__ = "Жёлтая"; break;
+                    default: Zone_eString__ = "Красная"; break;
+                }
+                int Cause_id__ = cars.Cause_id;
+                string Cause_idString__ = "";
+                double Carrying__ = cars.Carrying;
+                string Att_time__ = cars.Att_time;
+                rows.Add(new RowTab(Part_id__, Car_id__, Num__, Att_code__,
+                    Att_codeString__, Tara__, Tara_e__, Tara_delta__, Zone_e__, Zone_eString__,
+                    Cause_id__, Cause_idString__, Carrying__, Att_time__));
+            }
+            return rows;
+        }
+        public List<string> GetIsOk_Val() // справочник итогов аттестации
+        {
+            List<String> str = new List<string>(); 
+            str.Add("Аттестован");
+            str.Add("Не аттестован");
+            str.Add("Условно аттестован");
+            return str;
+        }
+        public List<string> GetAtt_codeFonts()
+        {
+            List<string> fonts = new List<string>();
+            fonts.Add("CheckCircle");
+            fonts.Add("WindowClose");
+            fonts.Add("Asterisk");
+            return fonts;
         }
         public byte[] ImageToByteArray(System.Drawing.Image imageIn) // преобразует картинку в массив байтов
         {
@@ -100,6 +144,13 @@ namespace Attestation
             bitmapImage.StreamSource = stream;
             bitmapImage.EndInit();
             return bitmapImage;
+        }
+        public static string ShortName(string fio) // из полного "Фамилии Имени, Отчества" получить "Фамилию, инициалы"
+        {
+                string[] str = new string[3];
+                str = fio.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                //if (str.Length != 3)  throw new ArgumentException("ФИО задано в неверно формате");
+                return string.Format("{0} {1}. {2}.", str[0], str[1][0], str[2][0]);
         }
 
         ///////////////////////////////////////////// Справочники ////////////////////////////////////////////////////////////////////////////////

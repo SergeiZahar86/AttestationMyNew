@@ -190,11 +190,11 @@
         </Button>
 
         <!-- ========================== DataGrid ======================= -->
-        <DataGrid x:Name="DataGridMain" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="8" Padding="2" ColumnWidth="*" 
+        <DataGrid x:Name="DataGridMain" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Padding="2" ColumnWidth="*" 
                   AutoGenerateColumns="False" ItemsSource="{Binding}"
-                  VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="14" 
+                  VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="14" 
                   FontFamily="Calibri" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                  Width="1700"  Loaded="DataGridMain_Loaded" BorderThickness="0"
+                  Width="1870"  Loaded="DataGridMain_Loaded" BorderThickness="0"
                   SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="#FFD0DEE4"
                    BorderBrush="White" Background="White" 
                   GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,10,0"  >
@@ -221,7 +221,7 @@
             <!--  ============================ Описание полей ===================================-->
             <DataGrid.Columns>
                 
-                <DataGridTemplateColumn x:Name="id" Header="пп №" Width="60"
+                <DataGridTemplateColumn x:Name="id" Header="пп №" Width="50"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -284,36 +284,34 @@
                 
                 <DataGridTemplateColumn x:Name="TaraNSI" Header="Тара НСИ,т" 
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
-                <!--   
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TaraNSI}"  HorizontalAlignment="Center"
+                            <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Center"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
                                        >
                                 <TextBlock.ToolTip >
                                     <ToolTip>
-                                        <TextBlock Text="{Binding TaraNSI}" FontSize="30" Foreground="Black" 
+                                        <TextBlock Text="{Binding Tara_e}" FontSize="30" Foreground="Black" 
                                                     Background="White" />
                                     </ToolTip>
                                 </TextBlock.ToolTip>
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                 -->    
                 </DataGridTemplateColumn>
                 
-                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т" 
+                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т (Тара - ТараНСИ)" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
-                <!--   
+                
                     <DataGridTemplateColumn.CellTemplate  >
                         
                         <DataTemplate>
-                            <TextBlock Text="{Binding TaraDelta}"  HorizontalAlignment="Center"
+                            <TextBlock Text="{Binding Tara_delta}"  HorizontalAlignment="Center"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
                                        >
                                 <TextBlock.ToolTip >
                                     <ToolTip>
-                                        <TextBlock Text="{Binding TaraDelta}" FontSize="30" Foreground="Black" 
+                                        <TextBlock Text="{Binding Tara_delta}" FontSize="30" Foreground="Black" 
                                                     Background="White"/>
                                     </ToolTip>
                                 </TextBlock.ToolTip>
@@ -321,7 +319,7 @@
                         </DataTemplate>
                         
                     </DataGridTemplateColumn.CellTemplate> 
-                -->      
+                     
                 </DataGridTemplateColumn>
 
                 <DataGridTemplateColumn x:Name="Capacity" Header="Грузоподъемность"
@@ -349,12 +347,12 @@
                     <DataGridTemplateColumn.CellTemplate  >
 
                         <DataTemplate>
-                            <TextBlock Text="{Binding Zone_e}"  HorizontalAlignment="Center"
+                            <TextBlock Text="{Binding Zone_eString}"  HorizontalAlignment="Center"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
                                        >
                                 <TextBlock.ToolTip >
                                     <ToolTip>
-                                        <TextBlock Text="{Binding Zone_e}" FontSize="30" Foreground="Black" 
+                                        <TextBlock Text="{Binding Zone_eString}" FontSize="30" Foreground="Black" 
                                                     Background="White"/>
                                     </ToolTip>
                                 </TextBlock.ToolTip>
@@ -390,7 +388,7 @@
                                     FontSize="12" Background="Transparent" Click="Change_isOk"
                                     BorderBrush="White" >
                                 <Button.Content>
-                                    <fa:ImageAwesome x:Name="Icon"  Icon="{Binding Att}"   Margin="5"/>
+                                    <fa:ImageAwesome x:Name="Icon" Foreground="#FF37474F"  Icon="{Binding Att_codeString}"   Margin="5"/>
                                 </Button.Content>
                                 <!--
                                 <TextBlock x:Name="TextBlock_Change_isOk" Text="{Binding Att_code}"
@@ -411,18 +409,18 @@
                 
                 
                 <DataGridTemplateColumn x:Name="cause_button" Header="Причина неаттестации" 
-                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="300">
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="400">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
                             <Button x:Name="CauseButton" Height="30" BorderThickness="0"
                                     Style="{StaticResource SomeButton}"
                                     Background="Transparent" Click="CauseButton_Click"
                                     BorderBrush="White"  >
-                                <TextBlock Text="{Binding Cause_name}"  HorizontalAlignment="Center"
+                                <TextBlock Text="{Binding Cause_idString}"  HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
-                                            <TextBlock Text="{Binding Cause_name}" FontSize="30" Foreground="Black" 
+                                            <TextBlock Text="{Binding Cause_idString}" FontSize="30" Foreground="Black" 
                                                         Background="White" />
                                         </ToolTip>
                                     </TextBlock.ToolTip>
