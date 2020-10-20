@@ -245,6 +245,12 @@
     <Compile Include="SignIn.xaml.cs">
       <DependentUpon>SignIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VerificationCloseProgram .xaml.cs">
+      <DependentUpon>VerificationCloseProgram .xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VerificationEndAttestation.xaml.cs">
+      <DependentUpon>VerificationEndAttestation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VideoData.cs" />
     <Page Include="Archive.xaml">
       <SubType>Designer</SubType>
@@ -299,6 +305,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SignIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VerificationCloseProgram .xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VerificationEndAttestation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

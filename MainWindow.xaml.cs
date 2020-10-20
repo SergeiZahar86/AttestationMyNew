@@ -1,21 +1,6 @@
-﻿using Attestation;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace Attestation
 {
@@ -87,9 +72,6 @@ namespace Attestation
         {
             AttestationPage p = new AttestationPage();
             MainFrame.Navigate(p);
-
-
-
             /*
             GetSignIn();
             if (global.user.Length > 0)
@@ -105,13 +87,6 @@ namespace Attestation
         {
             GetSignIn();
         }
-        /*
-        private void exitLoginButton_Click(object sender, RoutedEventArgs e)// кнопка выхода из учетной записи
-        {
-            SignIn exit = new SignIn();
-            exit.ShowDialog();
-        }
-        */
         private void GetSignIn() // Авторизация
         {
             SignIn signIn = new SignIn();

@@ -5,7 +5,6 @@ using Thrift.Transport;
 using Thrift.Protocol;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Web.UI.WebControls.WebParts;
 
 namespace Attestation
 {
@@ -66,18 +65,8 @@ namespace Attestation
             IdShipper = null;
             IdMat = null;
 
-
-
-
-
-
             photo = new photo_t();
             user = ""; // имя пользователя
-            /*
-            part = getPart(1); // партии вагонов
-            DATA = part.Cars; // Данные по вагонам
-            ROWS = GetRows(); // внутренний список вагонов 
-            */
             /////////////////////////////////////////////////////////////////////////////////////////////
             isColor = true;                   // для кнопки начала и завершения аттестации
             mainButtonAttestation = "Начать"; // для кнопки начала и завершения аттестации

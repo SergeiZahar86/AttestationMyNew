@@ -1,46 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Drawing;
-
-namespace Attestation
+﻿namespace Attestation
 {
     public class RowTab
     {
-        /*
-        public RowTab(int Id, string isOk, string VagNum, float Tara, float TaraNSI,
-            float TaraDelta, byte[] LeftFoto, byte[] RightFoto, byte[] TopFoto, List<String> Reason)
-        {
-            this.Id = Id;
-            this.isOk = isOk;
-            this.VagNum = VagNum;
-            this.Tara = Tara;
-            this.TaraNSI = TaraNSI;
-            this.TaraDelta = TaraDelta;
-            this.Video = "Ok";
-            this.LeftFoto = LeftFoto;
-            this.RightFoto = RightFoto;
-            this.TopFoto = TopFoto;
-            this.Reason = Reason;
-        }
         
-        public int Id { get; set; }
-        public string isOk { get; set; }
-        public string VagNum { get; set; }
-        public float Tara { get; set; }
-        public float TaraNSI { get; set; }
-        public float TaraDelta { get; set; }
-        public string Video { get; set; }
-        public byte[] LeftFoto { get; set; }
-        public byte[] RightFoto { get; set; }
-        public byte[] TopFoto { get; set; }
-        public List<String> Reason { get; set; }
-        */
-        ///////////////////////////////////////////////////////////////////////
-
         public RowTab(int part_id, int car_id, string num, int att_code, string att_codeString,
             double tara, double tara_e, double tara_delta, int zone_e, string zone_eString, int cause_id,
             string cause_idString, double carrying, string att_time)

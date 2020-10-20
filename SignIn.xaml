@@ -113,9 +113,9 @@
 
             <WrapPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
                     <Button  Style="{StaticResource GreenButton}"  Width="95" ToolTip="Выход" 
-                             Click="ok_Click" >Применить</Button>
+                             Click="ok_Click" IsDefault="True" >Применить</Button>
 
-                <Button x:Name="ok" Click="close_Click" IsDefault="True" Style="{StaticResource RedButton}"
+                <Button x:Name="ok" Click="close_Click" Style="{StaticResource RedButton}"
                             Width="95" ToolTip="Выход">
                     <Grid>
                         <Grid.RowDefinitions>

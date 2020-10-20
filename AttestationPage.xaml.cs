@@ -1,22 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Drawing;
-
-using iTextSharp.text;
-using System.Drawing.Imaging;
 
 namespace Attestation
 {
@@ -24,11 +8,13 @@ namespace Attestation
     {
         public int idx; // индекс строки
         private Global global;
+        public static bool isVerification; // флаг для подтверждения окончания аттестации
 
         public AttestationPage()
         {
             InitializeComponent();
             global = Global.getInstance();
+            isVerification = false;
 
             StartAttestation.Background = global.currentColor; // цвет кнопки аттестации
             startRow_1.Text = global.mainButtonAttestation; // текст в кнопке аттестации
@@ -37,7 +23,6 @@ namespace Attestation
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
         данных в DataGrid*/
         {
-            //global.DATA.Clear();
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
@@ -49,12 +34,10 @@ namespace Attestation
                 inputOf.ShowDialog();
                 if (global.IdConsignee != null && global.IdShipper != null && global.IdMat != null)
                 {
-                    DataGridMain.IsEnabled = true;
+                    isVerification = false; // флаг для подтверждения окончания аттестации
+
+                    DataGridMain.IsEnabled = true; // разрешаю кликабельность в datagrid
                     global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsignee, (int)global.IdMat, global.user);
-
-
-
-
 
                     // записываем цвет и текст в одиночку
                     StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); // красный
@@ -73,13 +56,17 @@ namespace Attestation
             }
             else
             {
-                StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); // зеленый
-                global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));
-                startRow_1.Text = "Начать";
-                global.mainButtonAttestation = "Начать";
-                global.isColor = true;
-                DataGridMain.IsEnabled = false;
-
+                VerificationEndAttestation ver = new VerificationEndAttestation(); // окно подтверждения окончания аттестации
+                ver.ShowDialog();
+                if (isVerification)
+                {
+                    StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); // зеленый
+                    global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));
+                    startRow_1.Text = "Начать";
+                    global.mainButtonAttestation = "Начать";
+                    global.isColor = true;
+                    DataGridMain.IsEnabled = false; // убирается кликабельность с datagrid
+                }
             }
         }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
@@ -101,18 +88,6 @@ namespace Attestation
             }
         }
         
-        private void button_add_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-            this.DATA.Add(new RowTab( 1, true, (88345634).ToString(), (float)(2), (float)(2), (float)(2)));
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = this.DATA;
-            */
-        }
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void Change_VagNum(object sender, RoutedEventArgs e)/* Изменение номера вагона*/
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
