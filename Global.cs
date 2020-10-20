@@ -18,10 +18,12 @@ namespace Attestation
         
         private static Global instance;
 
-        public string startTime; // Начало аттестации партии вагонов
-        public string endTime; //  Окончание аттестации
-        public string deltaTime; // Продолжительность прохождения аттестации
-        public DateTime timeGlobal; // текущее время
+        public string startTimeStr; // Начало аттестации партии вагонов (String)
+        public string endTimeStr; //  Окончание аттестации (String)
+        public string deltaTimeStr; // Продолжительность прохождения аттестации (String)
+        public DateTime startTime; // Начало аттестации партии вагонов
+        public DateTime endTime; // Окончание аттестации 
+        public TimeSpan deltaTime; // Продолжительность прохождения аттестации
 
         public List<car_t> DATA; // Данные по вагонам
         public photo_t photo; // класс содержащий поля фотографий вагонов

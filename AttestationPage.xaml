@@ -194,8 +194,9 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="timeStart" Grid.Row="0" FontSize="16" TextAlignment="Center"/>
-
+            <TextBlock x:Name="timeStart" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="timeEnd" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="timeDelta" Grid.Row="2" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
         </Grid>
 
         <Button x:Name="StartAttestation" Click="StartAttestation_Click"  Grid.Column="0" Grid.Row="0" Height="44" Width="90" 

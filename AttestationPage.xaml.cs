@@ -21,8 +21,9 @@ namespace Attestation
 
             StartAttestation.Background = global.currentColor; // цвет кнопки аттестации
             startRow_1.Text = global.mainButtonAttestation; // текст в кнопке аттестации
-            timeStart.Text = global.startTime;
-            
+            timeStart.Text = global.startTimeStr;
+            timeEnd.Text = global.endTimeStr;
+            timeDelta.Text = global.deltaTimeStr;
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
         данных в DataGrid*/
@@ -38,10 +39,12 @@ namespace Attestation
                 inputOf.ShowDialog();
                 if (global.IdConsignee != null && global.IdShipper != null && global.IdMat != null)
                 {
-                    global.timeGlobal = DateTime.Now;
-                    global.startTime = null;
-                    global.startTime = global.timeGlobal.ToString();
-                    timeStart.Text = global.startTime;
+                    global.startTime = DateTime.Now;
+                    global.startTimeStr = null;
+                    global.endTimeStr = null;
+                    global.deltaTimeStr = null;
+                    global.startTimeStr = global.startTime.ToString();
+                    timeStart.Text = global.startTimeStr;
 
                     isVerification = false; // флаг для подтверждения окончания аттестации
 
@@ -69,6 +72,14 @@ namespace Attestation
                 ver.ShowDialog();
                 if (isVerification)
                 {
+                    global.endTime = DateTime.Now;
+                    global.endTimeStr = null;
+                    global.endTimeStr = global.endTime.ToString();
+                    timeEnd.Text = global.endTimeStr;
+                    global.deltaTime = global.endTime.Subtract(global.startTime);
+
+                    timeDelta.Text = global.deltaTime.ToString(@"dd\.hh\:mm\:ss");
+
                     StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); // зеленый
                     global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));
                     startRow_1.Text = "Начать";
