@@ -11,7 +11,7 @@ namespace Attestation
 {
     class Global
     {
-        public bool isLoadAttestation; // флаг для загрузки страницы аттестации
+        //public bool isLoadAttestation; // флаг для загрузки страницы аттестации
 
         public bool isColor; // флаг для кнопки начала и завершения аттестации
         public string mainButtonAttestation; // для кнопки начала и завершения аттестации
@@ -52,7 +52,7 @@ namespace Attestation
             this.client = new DataProviderService.Client(proto);
             ///////////////////////////////////////////////////////////////////////////////
 
-            isLoadAttestation = true;
+            //isLoadAttestation = true;
 
             cause = getCauses(); // Запрос справочника причин неаттестации
             contractors = getContractors(); // Запрос справочника контрагентов

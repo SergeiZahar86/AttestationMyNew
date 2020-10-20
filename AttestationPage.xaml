@@ -246,7 +246,7 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            <Button Click="Change_VagNum" VerticalContentAlignment="Stretch"
+                            <Button x:Name="button_Change_VagNum" Click="Change_VagNum" VerticalContentAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
                                     BorderThickness="0" Background="Transparent"
                                     Style="{StaticResource SomeButton}">

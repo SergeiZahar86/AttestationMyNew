@@ -85,13 +85,20 @@ namespace Attestation
 
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
+            AttestationPage p = new AttestationPage();
+            MainFrame.Navigate(p);
+
+
+
+            /*
             GetSignIn();
             if (global.user.Length > 0)
             {
                  AttestationPage p = new AttestationPage();
                  MainFrame.Navigate(p);
-                 global.isLoadAttestation = false;
+                 //global.isLoadAttestation = false;
             }
+            */
         }
 
         private void signIn_Click(object sender, RoutedEventArgs e) // кнопка авторизации

@@ -45,14 +45,25 @@ namespace Attestation
         {
             if(global.isColor) // проверяем флаг
             {
+                DataGridMain.IsEnabled = true;
                 input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
                 inputOf.ShowDialog();
+
+                global.GetGlobalPart(global.IdShipper, global.IdConsignee, global.IdMat, global.user);
+
+
+
+
+
                 // записываем цвет и текст в одиночку
                 StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); // красный
                 global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); 
                 startRow_1.Text = "Закончить";
                 global.mainButtonAttestation = "Закончить";
                 global.isColor = false;
+
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
             }
             else
             {
@@ -61,6 +72,7 @@ namespace Attestation
                 startRow_1.Text = "Начать";
                 global.mainButtonAttestation = "Начать";
                 global.isColor = true;
+                DataGridMain.IsEnabled = false;
             }
         }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
