@@ -17,7 +17,12 @@ namespace Attestation
         public System.Windows.Media.SolidColorBrush currentColor; // цвет для кнопки начала и завершения аттестации
         
         private static Global instance;
-        
+
+        public string startTime; // Начало аттестации партии вагонов
+        public string endTime; //  Окончание аттестации
+        public string deltaTime; // Продолжительность прохождения аттестации
+        public DateTime timeGlobal; // текущее время
+
         public List<car_t> DATA; // Данные по вагонам
         public photo_t photo; // класс содержащий поля фотографий вагонов
         public part_t part; // партии вагонов
@@ -52,6 +57,7 @@ namespace Attestation
             ///////////////////////////////////////////////////////////////////////////////
 
             //isLoadAttestation = true;
+
 
             cause = getCauses(); // Запрос справочника причин неаттестации
             contractors = getContractors(); // Запрос справочника контрагентов

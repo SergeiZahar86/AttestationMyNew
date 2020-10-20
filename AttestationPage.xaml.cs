@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -9,16 +10,19 @@ namespace Attestation
         public int idx; // индекс строки
         private Global global;
         public static bool isVerification; // флаг для подтверждения окончания аттестации
+        //public DateTime time;
 
         public AttestationPage()
         {
             InitializeComponent();
             global = Global.getInstance();
+            //time = global.timeGlobal;
             isVerification = false;
 
             StartAttestation.Background = global.currentColor; // цвет кнопки аттестации
             startRow_1.Text = global.mainButtonAttestation; // текст в кнопке аттестации
-
+            timeStart.Text = global.startTime;
+            
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
         данных в DataGrid*/
@@ -34,6 +38,11 @@ namespace Attestation
                 inputOf.ShowDialog();
                 if (global.IdConsignee != null && global.IdShipper != null && global.IdMat != null)
                 {
+                    global.timeGlobal = DateTime.Now;
+                    global.startTime = null;
+                    global.startTime = global.timeGlobal.ToString();
+                    timeStart.Text = global.startTime;
+
                     isVerification = false; // флаг для подтверждения окончания аттестации
 
                     DataGridMain.IsEnabled = true; // разрешаю кликабельность в datagrid
