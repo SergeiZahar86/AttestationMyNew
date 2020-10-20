@@ -56,9 +56,8 @@ namespace Attestation
             mats = getMat(); // Запрос справочника материалов
             IsOk_Val = GetIsOk_Val(); // справочник итогов аттестации
             Att_codeFonts = GetAtt_codeFonts(); // справочник элементов шрифта для итогов аттестации
-
             GetShippers(contractors); // получение справочника Грузоотправителей
-
+            GetConsignees(contractors); // получение справочника Грузополучателя
 
 
 
@@ -90,6 +89,18 @@ namespace Attestation
                 if (contractor_.Shipper)
                 {
                     shippers.Add(new Shippers(contractor_.Id, contractor_.Name));
+                }
+            }
+        }
+
+        public void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
+        {
+            consignees = new List<Consignees>();
+            foreach (contractor_t contractor_ in contr)
+            {
+                if (contractor_.Consignee)
+                {
+                    consignees.Add(new Consignees(contractor_.Id, contractor_.Name));
                 }
             }
         }
