@@ -24,16 +24,14 @@ namespace Attestation
     {
         public int idx; // индекс строки
         private Global global;
-        private List<String> att;
-
 
         public AttestationPage()
         {
             InitializeComponent();
             global = Global.getInstance();
 
-            StartAttestation.Background = global.currentColor;
-            startRow_1.Text = global.mainButtonAttestation;
+            StartAttestation.Background = global.currentColor; // цвет кнопки аттестации
+            startRow_1.Text = global.mainButtonAttestation; // текст в кнопке аттестации
 
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 

@@ -25,9 +25,8 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
         }
-        private void ok_Click(object sender, RoutedEventArgs e)
+        private void ok_Click(object sender, RoutedEventArgs e) // кнопка Применить
         { 
-            
             try
             {
                 string login = tbLogin.Text;
@@ -48,13 +47,9 @@ namespace Attestation
             {
                 mistake.Text = "Логин или пароль введён неверно";
             }
-            
-
-
         }
         private void close_Click(object sender, RoutedEventArgs e)
-        {
-            //this.Close();
-        }
+             => Application.Current.Shutdown(); // закрыть программу
+        
     }
 }

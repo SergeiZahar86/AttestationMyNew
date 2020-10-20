@@ -32,9 +32,11 @@ namespace Attestation
         }
 
         // Обработка события кнопок
-        private void CloseButton_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+            => Application.Current.Shutdown(); // выход из программы
 
-        private void changePassword_Click(object sender, RoutedEventArgs e) {
+        private void changePassword_Click(object sender, RoutedEventArgs e) // изменение пароля
+        {
             changePassword dialog = new changePassword();
             dialog.ShowDialog();
             bool? ret = dialog.DialogResult;
@@ -47,7 +49,7 @@ namespace Attestation
         private void MinButton_Click(object sender, RoutedEventArgs e) =>  this.WindowState = WindowState.Minimized;
 
 
-        private void Attestation_Click(object sender, MouseButtonEventArgs e)
+        private void Attestation_Click(object sender, MouseButtonEventArgs e) // страница аттестации
         {
             var converter = new System.Windows.Media.BrushConverter();
             BorderReport.BorderBrush= (Brush)converter.ConvertFromString("#37474F");
@@ -59,7 +61,7 @@ namespace Attestation
             
 
         }
-        private void Report_Click(object sender, MouseButtonEventArgs e)
+        private void Report_Click(object sender, MouseButtonEventArgs e) // страница отчетов
         {
             var converter = new System.Windows.Media.BrushConverter();
             BorderReport.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
@@ -70,7 +72,7 @@ namespace Attestation
             MainFrame.Navigate(p);
             user.Text = "Ok";
         }
-        private void Archive_Click(object sender, MouseButtonEventArgs e)
+        private void Archive_Click(object sender, MouseButtonEventArgs e) // страница архивов
         {
             var converter = new System.Windows.Media.BrushConverter();
             BorderReport.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
@@ -81,7 +83,7 @@ namespace Attestation
             MainFrame.Navigate(p);
         }
 
-        private void GlobalWindow_Loaded(object sender, RoutedEventArgs e)
+        private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
             GetSignIn();
             if (global.user.Length > 0)
@@ -113,7 +115,6 @@ namespace Attestation
             }
             catch
             {
-
             }
         }
 

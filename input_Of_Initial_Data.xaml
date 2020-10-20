@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        Title="input_Of_Initial_Data" Height="300" Width="800" WindowStyle="None"
+        Title="input_Of_Initial_Data" Height="200" Width="800" WindowStyle="None"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" AllowsTransparency="true">
     <Window.Resources>
         <!-- .......................... Стили......................................................-->
@@ -87,8 +87,8 @@
                 <RowDefinition  />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <DockPanel x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                        VerticalAlignment="Top" Background="#B22222" Height="30" >
@@ -100,14 +100,24 @@
                             RenderTransformOrigin="0.51,0.5" Margin="4,1,4,2.714" Height="Auto"/>
                 
             </DockPanel>
-            <Label Content="Грузоотправитель" Grid.Row="1" Grid.Column="0"/>
-            <Label Content="Грузополучатель" Grid.Row="2" Grid.Column="0"/>
-            <Label Content="Вид материалов" Grid.Row="3" Grid.Column="0"/>
-            <ComboBox x:Name="shipper_Value" Grid.Row="1" Grid.Column="1" 
+            <Label Content="Грузоотправитель" Grid.Row="1" Grid.Column="0" FontSize="16"
+                   FontFamily="Calibry" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+            <Label Content="Грузополучатель" Grid.Row="2" Grid.Column="0" FontSize="16"
+                   FontFamily="Calibry" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+            <Label Content="Вид материалов" Grid.Row="3" Grid.Column="0" FontSize="16" 
+                   FontFamily="Calibry" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+            <ComboBox x:Name="shipper_Value" Grid.Row="1" Grid.Column="1" Margin="0,0,20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
                           FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
-                          ItemsSource="{Binding IsOk_Val}"/>
-
+                          ItemsSource="{Binding isOk_Val}" />
+            <ComboBox x:Name="consignee_Value" Grid.Row="2" Grid.Column="1" Margin="0,0,20,0"
+                          Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
+                          FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
+                          ItemsSource="{Binding isOk_Val}"/>
+            <ComboBox x:Name="mat_Value" Grid.Row="3" Grid.Column="1" Margin="0,0,20,0"
+                          Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
+                          FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
+                          ItemsSource="{Binding isOk_Val}"/>
         </Grid>
     </Border>
 </Window>

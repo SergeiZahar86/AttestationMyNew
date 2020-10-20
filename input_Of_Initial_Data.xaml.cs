@@ -19,9 +19,14 @@ namespace Attestation
     /// </summary>
     public partial class input_Of_Initial_Data : Window
     {
+        public List<string> isOk_Val;
+        private Global global;
         public input_Of_Initial_Data()
         {
             InitializeComponent();
+            global = Global.getInstance();
+            isOk_Val = global.IsOk_Val;
+
         }
         private void close_Click(object sender, RoutedEventArgs e)
         {

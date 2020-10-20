@@ -26,6 +26,8 @@ namespace Attestation
 
         public List<cause_t> cause; // справочник причин неаттестации
         public List<contractor_t> contractors; // справочник контрагентов
+        public List<Shippers> shippers; // справочник Грузоотправителя
+        public List<Consignees> consignees; // справочник Грузополучателя
         public List<mat_t> mats; // справочник материалов
         public List<string> IsOk_Val; // справочник итогов аттестации
         public List<string> Att_codeFonts; // справочник элементов шрифта для итогов аттестации
@@ -55,6 +57,16 @@ namespace Attestation
             IsOk_Val = GetIsOk_Val(); // справочник итогов аттестации
             Att_codeFonts = GetAtt_codeFonts(); // справочник элементов шрифта для итогов аттестации
 
+            GetShippers(contractors); // получение справочника Грузоотправителей
+
+
+
+
+
+
+
+
+
             photo = new photo_t();
             user = ""; // имя пользователя
 
@@ -68,18 +80,33 @@ namespace Attestation
                                               //зеленый, для кнопки начала и завершения аттестации
             currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); 
             ///////////////////////////////////////////////////////////////////////////////////////////////
-
         }
-        public void GetGlobalPart()
+
+        public void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
         {
-
+            shippers = new List<Shippers>();
+            foreach(contractor_t contractor_ in contr)
+            {
+                if (contractor_.Shipper)
+                {
+                    shippers.Add(new Shippers(contractor_.Id, contractor_.Name));
+                }
+            }
         }
+
+        public void GetGlobalPart(int shipper, int consignee, int mat, string user) /* Получение партии
+                                                                                     * вагонов перед Началом аттестации */
+        {
+            part = beginAtt(shipper, consignee, mat, user);
+        }
+
         public static Global getInstance() // возвращает singleton объекта Global
         {
             if (instance == null)
                 instance = new Global();
             return instance;
         }
+
         public List<RowTab> GetRows() // внутренний список вагонов 
         {
             List<RowTab> rows = new List<RowTab>();
@@ -111,6 +138,7 @@ namespace Attestation
             }
             return rows;
         }
+
         public List<string> GetIsOk_Val() // справочник итогов аттестации
         {
             List<String> str = new List<string>(); 
@@ -119,14 +147,16 @@ namespace Attestation
             str.Add("Условно аттестован");
             return str;
         }
+
         public List<string> GetAtt_codeFonts()
         {
-            List<string> fonts = new List<string>();
+            List<string> fonts = new List<string>(); // справочник элементов шрифта для итогов аттестации
             fonts.Add("CheckCircle");
             fonts.Add("WindowClose");
             fonts.Add("Asterisk");
             return fonts;
         }
+
         public byte[] ImageToByteArray(System.Drawing.Image imageIn) // преобразует картинку в массив байтов
         {
             using (var ms = new MemoryStream())
@@ -135,6 +165,7 @@ namespace Attestation
                 return ms.ToArray();
             }
         }
+
         public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет
         передавать картинки в виде массивов байт в объект Image окна*/
         {
@@ -145,6 +176,7 @@ namespace Attestation
             bitmapImage.EndInit();
             return bitmapImage;
         }
+
         public static string ShortName(string fio) // из полного "Фамилии Имени, Отчества" получить "Фамилию, инициалы"
         {
                 string[] str = new string[3];
