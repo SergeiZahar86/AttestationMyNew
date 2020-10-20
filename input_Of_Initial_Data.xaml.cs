@@ -19,13 +19,23 @@ namespace Attestation
     /// </summary>
     public partial class input_Of_Initial_Data : Window
     {
-        public List<string> isOk_Val;
         private Global global;
+        private List<Shippers> shipp; // справочник Грузоотправителя
+        private List<Consignees> consig; // справочник Грузополучателя
+        private List<mat_t> mats_input; // справочник материалов
         public input_Of_Initial_Data()
         {
             InitializeComponent();
             global = Global.getInstance();
-            isOk_Val = global.IsOk_Val;
+
+            shipp = global.shippers;
+            shipper_Value.ItemsSource = shipp;
+
+            consig = global.consignees;
+            consignee_Value.ItemsSource = consig;
+
+            mats_input = global.mats;
+            mat_Value.ItemsSource = mats_input;
 
         }
         private void close_Click(object sender, RoutedEventArgs e)
@@ -34,7 +44,15 @@ namespace Attestation
         }
         private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            global.IdShipper = shipp[shipper_Value.SelectedIndex].Id;
+        }
+        private void consignee_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            global.IdConsignee = consig[consignee_Value.SelectedIndex].Id;
+        }
+        private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            global.IdMat = mats_input[mat_Value.SelectedIndex].Id;
         }
     }
 }

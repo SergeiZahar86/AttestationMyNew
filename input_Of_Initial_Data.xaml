@@ -109,15 +109,18 @@
             <ComboBox x:Name="shipper_Value" Grid.Row="1" Grid.Column="1" Margin="0,0,20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
                           FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
-                          ItemsSource="{Binding isOk_Val}" />
+                          ItemsSource="{Binding Path=shipp}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                          SelectedValue="{Binding Path=Shippers}"/>
             <ComboBox x:Name="consignee_Value" Grid.Row="2" Grid.Column="1" Margin="0,0,20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
-                          FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
-                          ItemsSource="{Binding isOk_Val}"/>
+                          FontSize="14" SelectionChanged="consignee_Value_SelectionChanged"
+                          ItemsSource="{Binding Path=consig}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                          SelectedValue="{Binding Path=Consignees}"/>
             <ComboBox x:Name="mat_Value" Grid.Row="3" Grid.Column="1" Margin="0,0,20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
-                          FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
-                          ItemsSource="{Binding isOk_Val}"/>
+                          FontSize="14" SelectionChanged="mat_Value_SelectionChanged"
+                          ItemsSource="{Binding Path=mats_input}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                          SelectedValue="{Binding Path=mat_t}"/>
         </Grid>
     </Border>
 </Window>

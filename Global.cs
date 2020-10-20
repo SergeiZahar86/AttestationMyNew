@@ -23,6 +23,9 @@ namespace Attestation
         public photo_t photo; // класс содержащий поля фотографий вагонов
         public part_t part; // партии вагонов
         public string user; // имя пользователя
+        public int IdShipper; // id Грузоотправителя
+        public int IdConsignee; // id Грузополучателя
+        public int IdMat; // id материала
 
         public List<cause_t> cause; // справочник причин неаттестации
         public List<contractor_t> contractors; // справочник контрагентов
@@ -68,11 +71,11 @@ namespace Attestation
 
             photo = new photo_t();
             user = ""; // имя пользователя
-
+            /*
             part = getPart(1); // партии вагонов
             DATA = part.Cars; // Данные по вагонам
             ROWS = GetRows(); // внутренний список вагонов 
-
+            */
             /////////////////////////////////////////////////////////////////////////////////////////////
             isColor = true;                   // для кнопки начала и завершения аттестации
             mainButtonAttestation = "Начать"; // для кнопки начала и завершения аттестации
@@ -109,6 +112,8 @@ namespace Attestation
                                                                                      * вагонов перед Началом аттестации */
         {
             part = beginAtt(shipper, consignee, mat, user);
+            DATA = part.Cars;
+            ROWS = GetRows();
         }
 
         public static Global getInstance() // возвращает singleton объекта Global
