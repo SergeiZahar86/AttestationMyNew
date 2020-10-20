@@ -23,9 +23,9 @@ namespace Attestation
         public photo_t photo; // класс содержащий поля фотографий вагонов
         public part_t part; // партии вагонов
         public string user; // имя пользователя
-        public int IdShipper; // id Грузоотправителя
-        public int IdConsignee; // id Грузополучателя
-        public int IdMat; // id материала
+        public int? IdShipper; // id Грузоотправителя
+        public int? IdConsignee; // id Грузополучателя
+        public int? IdMat; // id материала
 
         public List<cause_t> cause; // справочник причин неаттестации
         public List<contractor_t> contractors; // справочник контрагентов
@@ -62,7 +62,9 @@ namespace Attestation
             GetShippers(contractors); // получение справочника Грузоотправителей
             GetConsignees(contractors); // получение справочника Грузополучателя
 
-
+            IdShipper = null;
+            IdShipper = null;
+            IdMat = null;
 
 
 

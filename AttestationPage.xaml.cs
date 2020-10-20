@@ -45,25 +45,31 @@ namespace Attestation
         {
             if(global.isColor) // проверяем флаг
             {
-                DataGridMain.IsEnabled = true;
                 input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
                 inputOf.ShowDialog();
+                if (global.IdConsignee != null && global.IdShipper != null && global.IdMat != null)
+                {
+                    DataGridMain.IsEnabled = true;
+                    global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsignee, (int)global.IdMat, global.user);
 
-                global.GetGlobalPart(global.IdShipper, global.IdConsignee, global.IdMat, global.user);
 
 
 
 
+                    // записываем цвет и текст в одиночку
+                    StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); // красный
+                    global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23));
+                    startRow_1.Text = "Закончить";
+                    global.mainButtonAttestation = "Закончить";
+                    global.isColor = false;
 
-                // записываем цвет и текст в одиночку
-                StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); // красный
-                global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); 
-                startRow_1.Text = "Закончить";
-                global.mainButtonAttestation = "Закончить";
-                global.isColor = false;
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
 
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                    global.IdConsignee = null;
+                    global.IdShipper = null;
+                    global.IdMat = null;
+                }
             }
             else
             {
@@ -73,6 +79,7 @@ namespace Attestation
                 global.mainButtonAttestation = "Начать";
                 global.isColor = true;
                 DataGridMain.IsEnabled = false;
+
             }
         }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
