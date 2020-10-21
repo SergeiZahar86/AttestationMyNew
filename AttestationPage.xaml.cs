@@ -169,6 +169,14 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
+        private void Change_Zone_eString(object sender, RoutedEventArgs e) // изменение Зоны вагонов
+        {
+            ShowChange_Zone_eString showChange_Zone_eString = new ShowChange_Zone_eString();
+            global.Idx = DataGridMain.SelectedIndex;
+            showChange_Zone_eString.ShowDialog();
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
+        }
 
     }
 }

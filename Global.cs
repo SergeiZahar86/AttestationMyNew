@@ -44,6 +44,7 @@ namespace Attestation
         public List<mat_t> mats; // справочник материалов
         public List<string> IsOk_Val; // справочник итогов аттестации
         public List<string> Att_codeFonts; // справочник элементов шрифта для итогов аттестации
+        public List<Zona> zonas; // справочник Зоны вагонов
 
         public List<RowTab> ROWS; // внутренний список вагонов 
 
@@ -72,6 +73,7 @@ namespace Attestation
             Att_codeFonts = GetAtt_codeFonts(); // справочник элементов шрифта для итогов аттестации
             GetShippers(contractors); // получение справочника Грузоотправителей
             GetConsignees(contractors); // получение справочника Грузополучателя
+            GetZonas(); // получение справочника Зоны вагонов
 
             IdShipper = null; // Инициализация для проверки на  Null
             IdShipper = null; // Инициализация для проверки на  Null
@@ -206,6 +208,13 @@ namespace Attestation
                 str = fio.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 //if (str.Length != 3)  throw new ArgumentException("ФИО задано в неверно формате");
                 return string.Format("{0} {1}. {2}.", str[0], str[1][0], str[2][0]);
+        }
+        public void GetZonas() // получение справочника Зоны вагонов
+        {
+            zonas = new List<Zona>();
+            zonas.Add(new Zona(1, "Зелёная"));
+            zonas.Add(new Zona(2, "Жёлтая"));
+            zonas.Add(new Zona(3, "Красная"));
         }
 
         ///////////////////////////////////////////// Справочники ////////////////////////////////////////////////////////////////////////////////

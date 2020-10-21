@@ -245,6 +245,9 @@
     <Compile Include="ShowChange_VagNum.xaml.cs">
       <DependentUpon>ShowChange_VagNum.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShowChange_Zone_eString.xaml.cs">
+      <DependentUpon>ShowChange_Zone_eString.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowPhotos.xaml.cs">
       <DependentUpon>ShowPhotos.xaml</DependentUpon>
     </Compile>
@@ -258,6 +261,7 @@
       <DependentUpon>VerificationEndAttestation.xaml</DependentUpon>
     </Compile>
     <Compile Include="VideoData.cs" />
+    <Compile Include="Zona.cs" />
     <Page Include="Archive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowChange_VagNum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowChange_Zone_eString.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

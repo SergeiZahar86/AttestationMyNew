@@ -415,18 +415,6 @@
                                     </TextBlock.ToolTip>
                                 </TextBlock>
                             </Button>
-                            <!--
-                            <TextBlock Text="{Binding Carrying}"  HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
-                                       >
-                                <TextBlock.ToolTip >
-                                    <ToolTip>
-                                        <TextBlock Text="{Binding Carrying}" FontSize="30" Foreground="Black" 
-                                                    Background="White"/>
-                                    </ToolTip>
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            -->
                         </DataTemplate>
 
                     </DataGridTemplateColumn.CellTemplate>
@@ -435,8 +423,22 @@
                 <DataGridTemplateColumn x:Name="Zona" Header="Зона"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate  >
-
                         <DataTemplate>
+                            <Button x:Name="button_Change_Zone_eString" Click="Change_Zone_eString" VerticalContentAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    BorderThickness="0" Background="Transparent"
+                                    Style="{StaticResource SomeButton}">
+                                <TextBlock Text="{Binding Zone_eString}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Zone_eString}" FontSize="30" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
+                            <!--
                             <TextBlock Text="{Binding Zone_eString}"  HorizontalAlignment="Center"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
                                        >
@@ -447,6 +449,7 @@
                                     </ToolTip>
                                 </TextBlock.ToolTip>
                             </TextBlock>
+                            -->
                         </DataTemplate>
 
                     </DataGridTemplateColumn.CellTemplate>
