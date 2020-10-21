@@ -40,7 +40,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                        <Border Background="{TemplateBinding Background}"  BorderThickness="0" CornerRadius="4">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -64,7 +64,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                        <Border Background="{TemplateBinding Background}"  BorderThickness="0" CornerRadius="4">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -76,14 +76,10 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
     </Window.Resources>
 
-
     <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
-            
             <Grid>
-                
                 <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Content="Действующее значение:" 
                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <Label x:Name="oldVagNum" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontSize="30"
@@ -118,7 +114,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="1.8*"/>
                 </Grid.RowDefinitions>  
             </Grid>
     </Border>

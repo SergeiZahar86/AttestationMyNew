@@ -37,9 +37,9 @@ namespace Attestation
         {
             if (idMa != null && idCon != null && idSh != null)
             {
-                global.IdShipper = (int)idSh;
-                global.IdConsignee = (int)idCon;
-                global.IdMat = (int)idMa;
+                global.IdShipper = idSh;
+                global.IdConsignee = idCon;
+                global.IdMat = idMa;
                 this.Close();
             }
             else
@@ -55,16 +55,19 @@ namespace Attestation
         {
             //global.IdShipper = shipp[shipper_Value.SelectedIndex].Id;
             idSh = shipp[shipper_Value.SelectedIndex].Id;
+            global.Shipper = shipp[shipper_Value.SelectedIndex].Name;
         }
         private void consignee_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //global.IdConsignee = consig[consignee_Value.SelectedIndex].Id;
             idCon = consig[consignee_Value.SelectedIndex].Id;
+            global.Consignee = consig[consignee_Value.SelectedIndex].Name;
         }
         private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //global.IdMat = mats_input[mat_Value.SelectedIndex].Id;
             idMa = mats_input[mat_Value.SelectedIndex].Id;
+            global.MatName = mats_input[mat_Value.SelectedIndex].Name;
         }
     }
 }

@@ -32,6 +32,10 @@ namespace Attestation
         public int? IdShipper; // id Грузоотправителя
         public int? IdConsignee; // id Грузополучателя
         public int? IdMat; // id материала
+        public string MatName; // Название материала
+        public string PartId; // Номер партии вагонов для страницы Аттестации
+        public string Shipper; // Грузоотправитель
+        public string Consignee; // Грузополучатель
 
         public List<cause_t> cause; // справочник причин неаттестации
         public List<contractor_t> contractors; // справочник контрагентов
@@ -48,7 +52,7 @@ namespace Attestation
         DataProviderService.Client client;
         /// /////////////////////////////////////////////////////
         /// 
-        public int Idx { set; get; }
+        public int Idx { set; get; } // для получения номера строки datagrid и combobox
 
         private Global()
         {
@@ -69,17 +73,21 @@ namespace Attestation
             GetShippers(contractors); // получение справочника Грузоотправителей
             GetConsignees(contractors); // получение справочника Грузополучателя
 
-            IdShipper = null;
-            IdShipper = null;
-            IdMat = null;
+            IdShipper = null; // Инициализация для проверки на  Null
+            IdShipper = null; // Инициализация для проверки на  Null
+            IdMat = null; // Инициализация для проверки на  Null
 
             photo = new photo_t();
             user = ""; // имя пользователя
+            MatName = ""; // Название материал
+            PartId = ""; // Номер партии вагонов для страницы Аттестации
+            Shipper = ""; // Грузоотправитель
+            Consignee = ""; // Грузополучатель
             /////////////////////////////////////////////////////////////////////////////////////////////
             isColor = true;                   // для кнопки начала и завершения аттестации
             mainButtonAttestation = "Начать"; // для кнопки начала и завершения аттестации
-                                              //зеленый, для кнопки начала и завершения аттестации
-            currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); 
+            currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));  /*зеленый, для кнопки
+                                                                                                 * начала и завершения аттестации */
             ///////////////////////////////////////////////////////////////////////////////////////////////
         }
 
