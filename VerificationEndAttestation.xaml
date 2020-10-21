@@ -104,9 +104,9 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="1.8*"/>
             </Grid.RowDefinitions>
         </Grid>
     </Border>
