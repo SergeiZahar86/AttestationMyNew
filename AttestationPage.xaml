@@ -356,16 +356,20 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
-                                       >
-                                <TextBlock.ToolTip >
-                                    <ToolTip>
-                                        <TextBlock Text="{Binding Tara_e}" FontSize="30" Foreground="Black" 
-                                                    Background="White" />
-                                    </ToolTip>
-                                </TextBlock.ToolTip>
-                            </TextBlock>
+                            <Button x:Name="button_Change_Tara_e" Click="Change_Tara_e" VerticalContentAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    BorderThickness="0" Background="Transparent"
+                                    Style="{StaticResource SomeButton}">
+                                <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Tara_e}" FontSize="30" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

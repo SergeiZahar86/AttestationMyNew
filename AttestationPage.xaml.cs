@@ -151,7 +151,16 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
+        private void Change_Tara_e(object sender, RoutedEventArgs e) // изменение Тара НСИ
+        {
+            ShowChange_Tara_e showChange_Tara_e = new ShowChange_Tara_e();
+            global.Idx = DataGridMain.SelectedIndex;
+            showChange_Tara_e.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
+            showChange_Tara_e.ShowDialog();
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
+        }
 
-        
+
     }
 }

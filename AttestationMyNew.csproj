@@ -236,6 +236,9 @@
     <Compile Include="ShowChange_isOk.xaml.cs">
       <DependentUpon>ShowChange_isOk.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShowChange_Tara_e.xaml.cs">
+      <DependentUpon>ShowChange_Tara_e.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowChange_VagNum.xaml.cs">
       <DependentUpon>ShowChange_VagNum.xaml</DependentUpon>
     </Compile>
@@ -293,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowChange_isOk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowChange_Tara_e.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
