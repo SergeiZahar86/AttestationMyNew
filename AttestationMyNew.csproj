@@ -211,6 +211,9 @@
     <Compile Include="contractor_t.cs" />
     <Compile Include="DataProviderException.cs" />
     <Compile Include="DataProviderService.cs" />
+    <Compile Include="DatePickerWindow.xaml.cs">
+      <DependentUpon>DatePickerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="exitLogin.xaml.cs">
       <DependentUpon>exitLogin.xaml</DependentUpon>
     </Compile>
@@ -267,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AttestationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DatePickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

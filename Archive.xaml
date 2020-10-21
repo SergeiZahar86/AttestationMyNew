@@ -15,7 +15,7 @@
         <Style x:Key="startAttestation" TargetType="Button">
             <Style.Setters>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Background" Value="#04AD01"/>
+                <Setter Property="Background" Value="#FF628191"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="FontFamily" Value="Calibri"/>
@@ -244,12 +244,12 @@
         </Grid>
 
 
-        <!--
-        <Button x:Name="StartAttestation" Click="StartAttestation_Click"  Grid.Column="0" Grid.Row="0" Height="44" Width="90" 
+
+        <Button x:Name="GetArchive" Click="GetArchive_Click"  Grid.Column="0" Grid.Row="0" Height="44" Width="90" 
                  Style="{StaticResource startAttestation}" HorizontalAlignment="Left" Margin="25,0,0,0">
             <Grid>
-                <TextBlock x:Name="startRow_1"  Grid.Row="0" Text="Начать" Padding="2,2,2,0" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="startRow_2" Grid.Row="1" Text="аттестацию"  
+                <TextBlock x:Name="startRow_1"  Grid.Row="0" Text="Выбрать из" Padding="2,2,2,0" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="startRow_2" Grid.Row="1" Text="архива"  
                            Padding="2,0,2,5" HorizontalAlignment="Center"/>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -257,7 +257,7 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Button>
-        -->
+        
 
         <!-- ========================== DataGrid ======================= -->
         <DataGrid x:Name="DataGridArchive" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Padding="2" ColumnWidth="*" 

@@ -44,5 +44,10 @@ namespace Attestation
                 System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
             }
         }
+        private void GetArchive_Click(object sender, RoutedEventArgs e)
+        {
+            DatePickerWindow datePicker = new DatePickerWindow();
+            datePicker.ShowDialog();
+        }
     }
 }
