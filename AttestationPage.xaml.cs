@@ -100,6 +100,7 @@ namespace Attestation
                     global.deltaTime = global.endTime.Subtract(global.startTime);
 
                     timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");
+                    global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");
 
                     StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); // зеленый
                     global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));
