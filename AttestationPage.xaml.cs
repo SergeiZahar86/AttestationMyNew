@@ -164,7 +164,7 @@ namespace Attestation
         {
             ShowChange_Carrying showChange_Carrying = new ShowChange_Carrying();
             global.Idx = DataGridMain.SelectedIndex;
-            //showChange_Carrying.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
+            showChange_Carrying.oldCarrying.Content = global.ROWS[global.Idx].Tara_e;
             showChange_Carrying.ShowDialog();
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
