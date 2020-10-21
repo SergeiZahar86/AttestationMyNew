@@ -401,6 +401,21 @@
                     <DataGridTemplateColumn.CellTemplate  >
 
                         <DataTemplate>
+                            <Button x:Name="button_Change_Carrying" Click="Change_Carrying" VerticalContentAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    BorderThickness="0" Background="Transparent"
+                                    Style="{StaticResource SomeButton}">
+                                <TextBlock Text="{Binding Carrying}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Carrying}" FontSize="30" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
+                            <!--
                             <TextBlock Text="{Binding Carrying}"  HorizontalAlignment="Center"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
                                        >
@@ -411,6 +426,7 @@
                                     </ToolTip>
                                 </TextBlock.ToolTip>
                             </TextBlock>
+                            -->
                         </DataTemplate>
 
                     </DataGridTemplateColumn.CellTemplate>

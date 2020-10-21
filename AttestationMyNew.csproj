@@ -230,6 +230,9 @@
     <Compile Include="RowCar.cs" />
     <Compile Include="RowTab.cs" />
     <Compile Include="Shippers.cs" />
+    <Compile Include="ShowChange_Carrying.xaml.cs">
+      <DependentUpon>ShowChange_Carrying.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowChange_cause_t.xaml.cs">
       <DependentUpon>ShowChange_cause_t.xaml</DependentUpon>
     </Compile>
@@ -288,6 +291,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="changePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowChange_Carrying.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
