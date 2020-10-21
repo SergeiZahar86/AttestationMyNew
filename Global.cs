@@ -15,7 +15,9 @@ namespace Attestation
         public bool isColor; // флаг для кнопки начала и завершения аттестации
         public string mainButtonAttestation; // для кнопки начала и завершения аттестации
         public System.Windows.Media.SolidColorBrush currentColor; // цвет для кнопки начала и завершения аттестации
-        
+        public bool isEnabled; // флаг кликабельности datagrid
+
+
         private static Global instance;
 
         public string startTimeStr; // Начало аттестации партии вагонов (String)
@@ -85,6 +87,7 @@ namespace Attestation
             PartId = ""; // Номер партии вагонов для страницы Аттестации
             Shipper = ""; // Грузоотправитель
             Consignee = ""; // Грузополучатель
+            isEnabled = true; // флаг кликабельности datagrid
             /////////////////////////////////////////////////////////////////////////////////////////////
             isColor = true;                   // для кнопки начала и завершения аттестации
             mainButtonAttestation = "Начать"; // для кнопки начала и завершения аттестации

@@ -3,12 +3,468 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
       xmlns:local="clr-namespace:Attestation"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:fa5="http://schemas.fontawesome.com/icons/"
+      mc:Ignorable="d" d:DesignHeight="1200" d:DesignWidth="1980"
       Title="Archive">
 
-    <Grid>
-        
+    <Page.Resources>
+        <!-- .......................... Стили......................................................-->
+        <!-- ......................Стиль кнопка начала аттестации ...................................-->
+        <Style x:Key="startAttestation" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="#04AD01"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontFamily" Value="Calibri"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="border" BorderThickness="0" BorderBrush="Black"
+                                        Background="{TemplateBinding Background}" CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#04AD01"/>
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Foreground" Value="black"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ...................... Стиль CheckBox ...................................-->
+        <Style  x:Key="CheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#AA009933"/>
+            <Setter Property="Background" Value="#AA009933"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <!-- ......................Стиль зеленой кнопки ...................................-->
+        <Style  x:Key="GreenButton" TargetType="Button">
+            <Setter Property="Background" Value="#AA009933" />
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="4,0,4,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#5522B222"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ......................Стиль кнопки Foto ...................................-->
+        <Style  x:Key="Foto" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Button.Foreground" Value="#FF6BDA6F" />
+                <Setter Property="Button.FontFamily" Value="Verdana" />
+                <Setter Property="FontSize" Value="23"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="border" BorderThickness="0" BorderBrush="Black"
+                                    Background="{TemplateBinding Background}" CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="transparent"/>
+                                    <Setter Property="Opacity" Value="0.91" />
+
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#04AD01"/>
+                    <Setter Property="FontSize" Value="27"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ......................Стиль кнопок аттестации и номера вагона ...................................-->
+        <Style  x:Key="SomeButton" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Button.FontFamily" Value="Verdana" />
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="border" BorderThickness="0" BorderBrush="Black"
+                                    Background="{TemplateBinding Background}" CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="transparent"/>
+                                    <Setter Property="Opacity" Value="0.91" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- ========================== Стили заголовков таблицы ======================= -->
+        <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FF37474F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid >
+        <!--  Разметка грида  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.10*"/>
+            <RowDefinition Height="0.04*" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.9*"/>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="grid_2" Grid.Row="0" Grid.Column="1" Background="#EEEEEE">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Время начала аттестации:" Grid.Row="0" FontSize="16" 
+                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            <TextBlock Text="Время окончания аттестации:" Grid.Row="1" FontSize="16"
+                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            <TextBlock Text="Продолжительность аттестации:" Grid.Row="2" FontSize="16"
+                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+        </Grid>
+        <Grid x:Name="grid_3" Grid.Row="0" Grid.Column="2" Background="#EEEEEE">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="timeStart" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="timeEnd" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="timeDelta" Grid.Row="2" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+        </Grid>
+
+        <Grid x:Name="grid_4" Grid.Row="0" Grid.Column="4" Background="#EEEEEE">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Номер партии:" Grid.Row="0" FontSize="16" 
+                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            <TextBlock Text="Вид материала:" Grid.Row="1" FontSize="16"
+                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+
+        </Grid>
+        <Grid x:Name="grid_5" Grid.Row="0" Grid.Column="5" Background="#EEEEEE">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="part_idTextBlock" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="matTextBlock" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+        </Grid>
+
+        <Grid x:Name="grid_6" Grid.Row="0" Grid.Column="7" Background="#EEEEEE">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Грузоотправитель:" Grid.Row="0" FontSize="16" 
+                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            <TextBlock Text="Грузополучатель:" Grid.Row="1" FontSize="16"
+                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+
+        </Grid>
+        <Grid x:Name="grid_7" Grid.Row="0" Grid.Column="8" Background="#EEEEEE">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="shippersTextBlock" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="consigneesTextBlock" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+        </Grid>
+
+
+        <!--
+        <Button x:Name="StartAttestation" Click="StartAttestation_Click"  Grid.Column="0" Grid.Row="0" Height="44" Width="90" 
+                 Style="{StaticResource startAttestation}" HorizontalAlignment="Left" Margin="25,0,0,0">
+            <Grid>
+                <TextBlock x:Name="startRow_1"  Grid.Row="0" Text="Начать" Padding="2,2,2,0" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="startRow_2" Grid.Row="1" Text="аттестацию"  
+                           Padding="2,0,2,5" HorizontalAlignment="Center"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Button>
+        -->
+
+        <!-- ========================== DataGrid ======================= -->
+        <DataGrid x:Name="DataGridArchive" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Padding="2" ColumnWidth="*" 
+                  AutoGenerateColumns="False" ItemsSource="{Binding}"
+                  VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="14" 
+                  FontFamily="Calibri" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                  Width="1870"  Loaded="DataGridMain_Loaded" BorderThickness="0"
+                  SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="#FFD0DEE4"
+                   BorderBrush="White" Background="White" 
+                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,10,0"  >
+
+
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="#AAFF0000"/>
+            </DataGrid.Resources>
+            <!-- ========================== Стиль строки ======================= -->
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="White" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <!--  ============================ Описание полей ===================================-->
+            <DataGrid.Columns>
+
+                <DataGridTemplateColumn x:Name="id" Header="пп №" Width="50"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Car_id}"  HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                                       >
+                                <TextBlock.ToolTip >
+                                    <ToolTip>
+                                        <TextBlock Text="{Binding Car_id}" FontSize="22" Foreground="Black" 
+                                                    Background="White" />
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                                </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+
+
+                <DataGridTemplateColumn x:Name="VagNum" Header="Номер вагона"  
+                                    HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Num}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Num}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="Tara" Header="Тара, т" 
+                                    HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Tara}"  HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                                       >
+                                <TextBlock.ToolTip >
+                                    <ToolTip>
+                                        <TextBlock Text="{Binding Tara}" FontSize="22" Foreground="Black" 
+                                                    Background="White" />
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="TaraNSI" Header="Тара НСИ,т" 
+                                    HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Tara_e}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т (Тара - ТараНСИ)" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                    <DataGridTemplateColumn.CellTemplate  >
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Tara_delta}"  HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                                       >
+                                <TextBlock.ToolTip >
+                                    <ToolTip>
+                                        <TextBlock Text="{Binding Tara_delta}" FontSize="22" Foreground="Black" 
+                                                    Background="White"/>
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="Capacity" Header="Грузоподъемность"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate  >
+
+                        <DataTemplate>
+                                <TextBlock Text="{Binding Carrying}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Carrying}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="Zona" Header="Зона"
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate  >
+                        <DataTemplate>
+                                <TextBlock Text="{Binding Zone_eString}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Zone_eString}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- FotoButton -->
+                <DataGridTemplateColumn x:Name="FotoButton" Header="Фото" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <Border>
+                                <Button Style="{StaticResource Foto}" 
+                                        fa5:Awesome.Content="Solid_Image" Width="50" 
+                                    Height="30" Click="Foto_Click" />
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- isOK -->
+                <DataGridTemplateColumn x:Name="isOk" Header="Итог аттестации" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
+                            <Button x:Name="Change_isOk" Height="30" BorderThickness="0"
+                                    Style="{StaticResource SomeButton}"
+                                    FontSize="12" Background="Transparent" 
+                                    BorderBrush="White" IsEnabled="False" >
+                                <Button.Content>
+                                    <fa:ImageAwesome x:Name="Icon" Foreground="#FF37474F"  Icon="{Binding Att_codeString}"   Margin="5"/>
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="cause_button" Header="Причина неаттестации" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="400">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
+                                <TextBlock Text="{Binding Cause_idString}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Cause_idString}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

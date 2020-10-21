@@ -19,6 +19,7 @@ namespace Attestation
             global = Global.getInstance();
             //time = global.timeGlobal;
             isVerification = false;
+            DataGridMain.IsEnabled = global.isEnabled;
 
             StartAttestation.Background = global.currentColor; // цвет кнопки аттестации
             startRow_1.Text = global.mainButtonAttestation; // текст в кнопке аттестации
@@ -51,12 +52,14 @@ namespace Attestation
                     global.startTimeStr = null;
                     global.endTimeStr = null;
                     global.deltaTimeStr = null;
+                    timeEnd.Text = global.endTimeStr;
                     global.startTimeStr = global.startTime.ToString();
                     timeStart.Text = global.startTimeStr;
                     ///////////////////////////////////////////////////////////////////////
                     
                     isVerification = false; // флаг для подтверждения окончания аттестации
                     DataGridMain.IsEnabled = true; // разрешаю кликабельность в datagrid
+                    global.isEnabled = true; // флаг кликабельности datagrid
 
                     /* Запрос партии вагонов */
                     global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsignee, (int)global.IdMat, global.user);
@@ -104,6 +107,7 @@ namespace Attestation
                     global.mainButtonAttestation = "Начать";
                     global.isColor = true;
                     DataGridMain.IsEnabled = false; // убирается кликабельность с datagrid
+                    global.isEnabled = false; // флаг кликабельности datagrid
                 }
             }
         }
@@ -122,7 +126,7 @@ namespace Attestation
             }
             else
             {
-                System.Windows.MessageBox.Show("У строки " + global.ROWS[idx].Car_id.ToString() + " нет фотографий");
+                System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
             }
         }
         
