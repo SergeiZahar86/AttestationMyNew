@@ -78,11 +78,33 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Canvas HorizontalAlignment="Left" Height="990" VerticalAlignment="Top" Width="1980">
-        <Button x:Name="LoginButton"  Style="{StaticResource RedButton}" Content="Excel"  Width="65" Canvas.Left="478" Margin="0"
-                RenderTransformOrigin="1.416,3.631" Canvas.Top="45" />
-        <Button x:Name="OpenDialog"  Style="{StaticResource GreenButton}" Content="PDF"  Width="65" Canvas.Left="392" Margin="0" Canvas.Top="45" />
-        <ComboBox Canvas.Left="63" Canvas.Top="45" Height="30" Width="286"/>
-    </Canvas>
+    <Grid HorizontalAlignment="Left" Height="990" VerticalAlignment="Top" Width="1980">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="LoginButton" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right"
+                Style="{StaticResource RedButton}" Content="Excel"  Width="65"  Margin="0"
+                 Click="LoginButton_Click" />
+        <Button x:Name="OpenDialog" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Style="{StaticResource GreenButton}" Content="PDF"  Width="65"  Margin="0"  />
+        <ComboBox  Height="30" Width="286" Grid.Column="0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TextBlock" Grid.Column="1" Grid.Row="1" Background="White" />
+
+    </Grid>
 
 </Page>
