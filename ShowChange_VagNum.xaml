@@ -87,7 +87,9 @@
                 <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Content="Введите новое значение:" 
                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="textboxVag" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" FontSize="22"  
-                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                         PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+                
             <Button x:Name="Ok" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Style="{StaticResource GreenButton}"
                     Width="95" ToolTip="Выход" Click="Ok_Click" IsDefault="True">Применить</Button>
             <Button x:Name="Close" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5" Style="{StaticResource RedButton}"

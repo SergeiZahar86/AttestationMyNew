@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Attestation
 {
@@ -11,7 +12,23 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
         }
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e) // Валидация ввода, можно только цифры
+        {
+            if (!(Char.IsDigit(e.Text, 0) || (e.Text == ".")
+               && (!textboxCarrying.Text.Contains(".")
+               && textboxCarrying.Text.Length != 0)))
+            {
+                e.Handled = true; // отклоняем ввод
+            }
+        }
 
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e) // Валидация ввода, нельзя пробел
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true; // если пробел, отклоняем ввод
+            }
+        }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             String car = textboxCarrying.Text;
