@@ -31,17 +31,11 @@ namespace Attestation
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             String tar = textboxVag.Text;
-            try
-            {
-                global.ROWS[global.Idx].Tara_e = Convert.ToDouble(tar);
-                global.ROWS[global.Idx].Tara_delta = Math.Round((global.ROWS[global.Idx].Tara - global.ROWS[global.Idx].Tara_e),
-                    3, MidpointRounding.AwayFromZero);
-                this.Close();
-            }
-            catch
-            {
-                result.Text = "Вы ввели не число";
-            }
+            string tarRepl = tar.Replace(".", ",");
+            global.ROWS[global.Idx].Tara_e = Convert.ToDouble(tarRepl);
+            global.ROWS[global.Idx].Tara_delta = Math.Round((global.ROWS[global.Idx].Tara - global.ROWS[global.Idx].Tara_e),
+                3, MidpointRounding.AwayFromZero);
+            this.Close();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)

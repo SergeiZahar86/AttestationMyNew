@@ -32,15 +32,9 @@ namespace Attestation
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             String car = textboxCarrying.Text;
-            try
-            {
-                global.ROWS[global.Idx].Carrying = Convert.ToDouble(car);
-                this.Close();
-            }
-            catch
-            {
-                result.Text = "Вы ввели не число";
-            }
+            string carRepl = car.Replace(".", ",");
+            global.ROWS[global.Idx].Carrying = Convert.ToDouble(carRepl);
+            this.Close();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
