@@ -24,7 +24,7 @@ namespace Attestation
             if(oldPassword.Length > 0 && newPassword.Length > 0 &&
                 newPasswordRepead.Length > 0 && newPassword == newPasswordRepead)
             {
-                if(global.changePass(oldPassword, newPassword, null))
+                if(global.changePass(global.Login, oldPassword, newPassword, null))
                 {
                     this.Close();
                 }

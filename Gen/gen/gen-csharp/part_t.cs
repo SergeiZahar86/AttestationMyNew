@@ -24,7 +24,7 @@ public partial class part_t : TBase
   private int _part_id;
   private string _oper;
   private int _shipper;
-  private int _consignee;
+  private int _consigner;
   private int _mat;
   private List<car_t> _cars;
   private string _start_time;
@@ -69,16 +69,16 @@ public partial class part_t : TBase
     }
   }
 
-  public int Consignee
+  public int Consigner
   {
     get
     {
-      return _consignee;
+      return _consigner;
     }
     set
     {
-      __isset.consignee = true;
-      this._consignee = value;
+      __isset.consigner = true;
+      this._consigner = value;
     }
   }
 
@@ -143,7 +143,7 @@ public partial class part_t : TBase
     public bool part_id;
     public bool oper;
     public bool shipper;
-    public bool consignee;
+    public bool consigner;
     public bool mat;
     public bool cars;
     public bool start_time;
@@ -191,7 +191,7 @@ public partial class part_t : TBase
             break;
           case 4:
             if (field.Type == TType.I32) {
-              Consignee = iprot.ReadI32();
+              Consigner = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -280,12 +280,12 @@ public partial class part_t : TBase
         oprot.WriteI32(Shipper);
         oprot.WriteFieldEnd();
       }
-      if (__isset.consignee) {
-        field.Name = "consignee";
+      if (__isset.consigner) {
+        field.Name = "consigner";
         field.Type = TType.I32;
         field.ID = 4;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Consignee);
+        oprot.WriteI32(Consigner);
         oprot.WriteFieldEnd();
       }
       if (__isset.mat) {
@@ -357,11 +357,11 @@ public partial class part_t : TBase
       __sb.Append("Shipper: ");
       __sb.Append(Shipper);
     }
-    if (__isset.consignee) {
+    if (__isset.consigner) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Consignee: ");
-      __sb.Append(Consignee);
+      __sb.Append("Consigner: ");
+      __sb.Append(Consigner);
     }
     if (__isset.mat) {
       if(!__first) { __sb.Append(", "); }

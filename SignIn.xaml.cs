@@ -16,9 +16,9 @@ namespace Attestation
         { 
             try
             {
-                string login = tbLogin.Text;
+                global.Login = tbLogin.Text;
                 string password = passwordBox.Password;
-                global.user = global.getUser(login, password, null);
+                global.user = global.getUser(global.Login, password, ""); // Global.getUser (261)
                 //global.someValueString = global.getUser("oper", "oper", null);
            
                 if (global.user.Length > 0)

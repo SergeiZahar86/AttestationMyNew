@@ -29,7 +29,7 @@ public partial class car_t : TBase
   private double _tara_e;
   private int _zone_e;
   private int _cause_id;
-  private double _carrying;
+  private double _carrying_e;
   private string _att_time;
 
   public int Part_id
@@ -136,16 +136,16 @@ public partial class car_t : TBase
     }
   }
 
-  public double Carrying
+  public double Carrying_e
   {
     get
     {
-      return _carrying;
+      return _carrying_e;
     }
     set
     {
-      __isset.carrying = true;
-      this._carrying = value;
+      __isset.carrying_e = true;
+      this._carrying_e = value;
     }
   }
 
@@ -176,7 +176,7 @@ public partial class car_t : TBase
     public bool tara_e;
     public bool zone_e;
     public bool cause_id;
-    public bool carrying;
+    public bool carrying_e;
     public bool att_time;
   }
 
@@ -256,7 +256,7 @@ public partial class car_t : TBase
             break;
           case 9:
             if (field.Type == TType.Double) {
-              Carrying = iprot.ReadDouble();
+              Carrying_e = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -353,12 +353,12 @@ public partial class car_t : TBase
         oprot.WriteI32(Cause_id);
         oprot.WriteFieldEnd();
       }
-      if (__isset.carrying) {
-        field.Name = "carrying";
+      if (__isset.carrying_e) {
+        field.Name = "carrying_e";
         field.Type = TType.Double;
         field.ID = 9;
         oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Carrying);
+        oprot.WriteDouble(Carrying_e);
         oprot.WriteFieldEnd();
       }
       if (Att_time != null && __isset.att_time) {
@@ -429,11 +429,11 @@ public partial class car_t : TBase
       __sb.Append("Cause_id: ");
       __sb.Append(Cause_id);
     }
-    if (__isset.carrying) {
+    if (__isset.carrying_e) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Carrying: ");
-      __sb.Append(Carrying);
+      __sb.Append("Carrying_e: ");
+      __sb.Append(Carrying_e);
     }
     if (Att_time != null && __isset.att_time) {
       if(!__first) { __sb.Append(", "); }

@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace Attestation
 {
-    /// <summary>
-    /// Логика взаимодействия для input_Of_Initial_Data.xaml
-    /// </summary>
     public partial class input_Of_Initial_Data : Window
     {
         private Global global;

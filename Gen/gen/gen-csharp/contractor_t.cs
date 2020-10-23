@@ -24,7 +24,7 @@ public partial class contractor_t : TBase
   private int _id;
   private string _name;
   private bool _shipper;
-  private bool _consignee;
+  private bool _consigner;
 
   public int Id
   {
@@ -65,16 +65,16 @@ public partial class contractor_t : TBase
     }
   }
 
-  public bool Consignee
+  public bool Consigner
   {
     get
     {
-      return _consignee;
+      return _consigner;
     }
     set
     {
-      __isset.consignee = true;
-      this._consignee = value;
+      __isset.consigner = true;
+      this._consigner = value;
     }
   }
 
@@ -87,7 +87,7 @@ public partial class contractor_t : TBase
     public bool id;
     public bool name;
     public bool shipper;
-    public bool consignee;
+    public bool consigner;
   }
 
   public contractor_t() {
@@ -131,7 +131,7 @@ public partial class contractor_t : TBase
             break;
           case 4:
             if (field.Type == TType.Bool) {
-              Consignee = iprot.ReadBool();
+              Consigner = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -181,12 +181,12 @@ public partial class contractor_t : TBase
         oprot.WriteBool(Shipper);
         oprot.WriteFieldEnd();
       }
-      if (__isset.consignee) {
-        field.Name = "consignee";
+      if (__isset.consigner) {
+        field.Name = "consigner";
         field.Type = TType.Bool;
         field.ID = 4;
         oprot.WriteFieldBegin(field);
-        oprot.WriteBool(Consignee);
+        oprot.WriteBool(Consigner);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -219,11 +219,11 @@ public partial class contractor_t : TBase
       __sb.Append("Shipper: ");
       __sb.Append(Shipper);
     }
-    if (__isset.consignee) {
+    if (__isset.consigner) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Consignee: ");
-      __sb.Append(Consignee);
+      __sb.Append("Consigner: ");
+      __sb.Append(Consigner);
     }
     __sb.Append(")");
     return __sb.ToString();

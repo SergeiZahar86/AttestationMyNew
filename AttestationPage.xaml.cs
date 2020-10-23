@@ -62,7 +62,8 @@ namespace Attestation
                     global.isEnabled = true; // флаг кликабельности datagrid
 
                     /* Запрос партии вагонов */
-                    global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsignee, (int)global.IdMat, global.user);
+                    global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsignee, (int)global.IdMat, global.user); /* Начало аттестации
+                                                                                                             *   и получение партии вагонов */
 
                     global.PartId = global.part.Part_id.ToString(); // Номер партии
                     part_idTextBlock.Text = global.part.Part_id.ToString(); // Номер партии

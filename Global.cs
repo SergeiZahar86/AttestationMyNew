@@ -20,9 +20,9 @@ namespace Attestation
 
         private static Global instance;
 
-        public string startTimeStr; // Начало аттестации партии вагонов (String)
-        public string endTimeStr; //  Окончание аттестации (String)
-        public string deltaTimeStr; // Продолжительность прохождения аттестации (String)
+        public string startTimeStr; // Начало аттестации партии вагонов (String) для страницы Аттестации
+        public string endTimeStr; //  Окончание аттестации (String) для страницы Аттестации
+        public string deltaTimeStr; // Продолжительность прохождения аттестации (String) для страницы Аттестации
         public DateTime startTime; // Начало аттестации партии вагонов
         public DateTime endTime; // Окончание аттестации 
         public TimeSpan deltaTime; // Продолжительность прохождения аттестации
@@ -30,14 +30,16 @@ namespace Attestation
         public List<car_t> DATA; // Данные по вагонам
         public photo_t photo; // класс содержащий поля фотографий вагонов
         public part_t part; // партии вагонов
-        public string user; // имя пользователя
-        public int? IdShipper; // id Грузоотправителя
-        public int? IdConsignee; // id Грузополучателя
-        public int? IdMat; // id материала
-        public string MatName; // Название материала
-        public string PartId; // Номер партии вагонов для страницы Аттестации
-        public string Shipper; // Грузоотправитель
-        public string Consignee; // Грузополучатель
+        public string user; // имя пользователя (ФИО)
+        public string Login; // 
+        public int? IdShipper;       // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
+        public int? IdConsignee;     // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
+        public int? IdMat;           // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
+        public string MatName;    // Название материала для страницы Аттестации
+        public string PartId;     // Номер партии вагонов для страницы Аттестации
+        public string Shipper;    // Грузоотправитель для страницы Аттестации
+        public string Consignee;  // Грузополучатель для страницы Аттестации
+
 
         public List<cause_t> cause; // справочник причин неаттестации
         public List<contractor_t> contractors; // справочник контрагентов
@@ -52,7 +54,7 @@ namespace Attestation
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
-        DataProviderService.Client client;
+        public DataProviderService.Client client;
         /// /////////////////////////////////////////////////////
         /// 
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
@@ -68,14 +70,14 @@ namespace Attestation
             //isLoadAttestation = true;
 
 
-            cause = getCauses(); // Запрос справочника причин неаттестации
-            contractors = getContractors(); // Запрос справочника контрагентов
-            mats = getMat(); // Запрос справочника материалов
-            IsOk_Val = GetIsOk_Val(); // справочник итогов аттестации
-            Att_codeFonts = GetAtt_codeFonts(); // справочник элементов шрифта для итогов аттестации
-            GetShippers(contractors); // получение справочника Грузоотправителей
-            GetConsignees(contractors); // получение справочника Грузополучателя
-            GetZonas(); // получение справочника Зоны вагонов
+            //cause = getCauses(); // Запрос справочника причин неаттестации
+            //contractors = getContractors(); // Запрос справочника контрагентов
+            //mats = getMat(); // Запрос справочника материалов
+            //IsOk_Val = GetIsOk_Val(); // справочник итогов аттестации
+            //Att_codeFonts = GetAtt_codeFonts(); // справочник элементов шрифта для итогов аттестации
+            //GetShippers(contractors); // получение справочника Грузоотправителей
+            //GetConsignees(contractors); // получение справочника Грузополучателя
+            //GetZonas(); // получение справочника Зоны вагонов
 
             IdShipper = null; // Инициализация для проверки на  Null
             IdShipper = null; // Инициализация для проверки на  Null
@@ -96,29 +98,6 @@ namespace Attestation
             ///////////////////////////////////////////////////////////////////////////////////////////////
         }
 
-        public void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
-        {
-            shippers = new List<Shippers>();
-            foreach(contractor_t contractor_ in contr)
-            {
-                if (contractor_.Shipper)
-                {
-                    shippers.Add(new Shippers(contractor_.Id, contractor_.Name));
-                }
-            }
-        }
-
-        public void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
-        {
-            consignees = new List<Consignees>();
-            foreach (contractor_t contractor_ in contr)
-            {
-                if (contractor_.Consignee)
-                {
-                    consignees.Add(new Consignees(contractor_.Id, contractor_.Name));
-                }
-            }
-        }
 
         public void GetGlobalPart(int shipper, int consignee, int mat, string user) /* Получение партии
                                                                                      * вагонов перед Началом аттестации */
@@ -158,31 +137,13 @@ namespace Attestation
                 }
                 int Cause_id__ = cars.Cause_id;
                 string Cause_idString__ = "";
-                double Carrying__ = cars.Carrying;
+                double Carrying__ = cars.Carrying_e;
                 string Att_time__ = cars.Att_time;
                 rows.Add(new RowTab(Part_id__, Car_id__, Num__, Att_code__,
                     Att_codeString__, Tara__, Tara_e__, Tara_delta__, Zone_e__, Zone_eString__,
                     Cause_id__, Cause_idString__, Carrying__, Att_time__));
             }
             return rows;
-        }
-
-        public List<string> GetIsOk_Val() // справочник итогов аттестации
-        {
-            List<String> str = new List<string>(); 
-            str.Add("Аттестован");
-            str.Add("Не аттестован");
-            str.Add("Условно аттестован");
-            return str;
-        }
-
-        public List<string> GetAtt_codeFonts()
-        {
-            List<string> fonts = new List<string>(); // справочник элементов шрифта для итогов аттестации
-            fonts.Add("CheckCircle");
-            fonts.Add("WindowClose");
-            fonts.Add("Asterisk");
-            return fonts;
         }
 
         public byte[] ImageToByteArray(System.Drawing.Image imageIn) // преобразует картинку в массив байтов
@@ -212,27 +173,9 @@ namespace Attestation
                 //if (str.Length != 3)  throw new ArgumentException("ФИО задано в неверно формате");
                 return string.Format("{0} {1}. {2}.", str[0], str[1][0], str[2][0]);
         }
-        public void GetZonas() // получение справочника Зоны вагонов
-        {
-            zonas = new List<Zona>();
-            zonas.Add(new Zona(1, "Зелёная"));
-            zonas.Add(new Zona(2, "Жёлтая"));
-            zonas.Add(new Zona(3, "Красная"));
-        }
 
         ///////////////////////////////////////////// Справочники ////////////////////////////////////////////////////////////////////////////////
-        public List<cause_t> getCauses() // Запрос справочника причин неаттестации
-        {
-            return this.client.getCauses();
-        }
-        public List<contractor_t> getContractors() // Запрос справочника контрагентов
-        {
-            return this.client.getContractors();
-        }
-        public List<mat_t> getMat() // Запрос справочника материалов
-        {
-            return this.client.getMat();
-        }
+        
         /// ////////////////////////////////////////// Запрос данных ///////////////////////////////////////////////////////////////////////////////
         public part_t getPart(int id) // Запрос партии вагонов
         {
@@ -251,9 +194,9 @@ namespace Attestation
         {
             return this.client.setNum( part_id, car_id, num);
         }
-        public bool setAtt(int att_code) // Корректировка признака аттестации
+        public bool setAtt(int part_id, int car_id, int att_code) // Корректировка признака аттестации
         {
-            return this.client.setAtt(att_code);
+            return this.client.setAtt(part_id, car_id, att_code);
         }
         public bool setUser(string user) // запись имени оператора
         {
@@ -264,13 +207,13 @@ namespace Attestation
         {
             return this.client.exitAtt();
         }
-        public part_t beginAtt(int shipper, int consignee, int mat, string user) // Начало аттестации 
+        public part_t beginAtt(int shipper, int consignee, int mat, string user) // Начало аттестации и получение партии вагонов
         {
             return this.client.beginAtt(shipper, consignee, mat, user);
         }
-        public bool changePass(string oldPass, string newPass, string newEmpl_id) // Смена данных учетной записи 
+        public bool changePass(string login, string oldPass, string newPass, string newEmpl_id) // Смена данных учетной записи 
         {
-            return this.client.changePass(oldPass, newPass, newEmpl_id);
+            return this.client.changePass(login, oldPass, newPass, newEmpl_id);
         }
     }
 }
