@@ -9,7 +9,7 @@ namespace Attestation
     {
         public int idx; // индекс строки
         private Global global;
-        public static bool isVerification; // флаг для подтверждения окончания аттестации
+        //public static bool isVerification; // флаг для подтверждения окончания аттестации
 
         //public DateTime time;
 
@@ -18,20 +18,25 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
             //time = global.timeGlobal;
-            isVerification = false;
-            DataGridMain.IsEnabled = global.isEnabled;
+            //isVerification = false;                                     // флаг для подтверждения окончания аттестации
+            DataGridMain.IsEnabled = global.isEnabled;                    // флаг кликабельности datagrid
 
-            StartAttestation.Background = global.currentColor; // цвет кнопки аттестации
-            startRow_1.Text = global.mainButtonAttestation; // текст в кнопке аттестации
+            //StartAttestation.Background = global.currentColorStart;     // цвет кнопки аттестации
+            if (global.isColor)
+            {
+                global.mainButtonAttestation = "Закончить";
+                startRow_1.Text = global.mainButtonAttestation;               // текст в кнопке аттестации
 
-            timeStart.Text = global.startTimeStr; // время начала
-            timeEnd.Text = global.endTimeStr; // Время окончания
-            timeDelta.Text = global.deltaTimeStr; // Время затраченное на аттестации
+            }
 
-            part_idTextBlock.Text = global.PartId; // Номер партии
-            matTextBlock.Text = global.MatName; // Название материала
-            shippersTextBlock.Text = global.Shipper; // Грузоотправитель
-            consigneesTextBlock.Text = global.Consignee; // Грузополучатель
+            timeStart.Text = global.startTimeStr;                         // время начала
+            timeEnd.Text = global.endTimeStr;                             // Время окончания
+            timeDelta.Text = global.deltaTimeStr;                         // Время затраченное на аттестации
+
+            part_idTextBlock.Text = global.PartId;                        // Номер партии
+            matTextBlock.Text = global.MatName;                           // Название материала
+            shippersTextBlock.Text = global.Shipper;                      // Грузоотправитель
+            consigneesTextBlock.Text = global.Consignee;                  // Грузополучатель
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
         данных в DataGrid*/
@@ -57,65 +62,70 @@ namespace Attestation
                     timeStart.Text = global.startTimeStr;
                     ///////////////////////////////////////////////////////////////////////
                     
-                    isVerification = false; // флаг для подтверждения окончания аттестации
-                    DataGridMain.IsEnabled = true; // разрешаю кликабельность в datagrid
-                    global.isEnabled = true; // флаг кликабельности datagrid
+                    //isVerification = false;                    // флаг для подтверждения окончания аттестации
+                    global.isEnabled = true;                     // флаг кликабельности datagrid
+                    DataGridMain.IsEnabled = global.isEnabled;     // разрешаю кликабельность в datagrid
 
                     /* Запрос партии вагонов */
                     global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsignee, (int)global.IdMat, global.user); /* Начало аттестации
                                                                                                              *   и получение партии вагонов */
 
-                    global.PartId = global.part.Part_id.ToString(); // Номер партии
-                    part_idTextBlock.Text = global.part.Part_id.ToString(); // Номер партии
-                    shippersTextBlock.Text = global.Shipper; // Грузоотправитель
-                    consigneesTextBlock.Text = global.Consignee; // Грузополучатель
+                    global.PartId = global.part.Part_id.ToString();              // Номер партии
+                    part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
+                    shippersTextBlock.Text = global.Shipper;                     // Грузоотправитель
+                    consigneesTextBlock.Text = global.Consignee;                 // Грузополучатель
 
 
-                    matTextBlock.Text = global.MatName; // Название материала
+                    matTextBlock.Text = global.MatName;                          // Название материала
 
-                    // записываем цвет и текст в одиночку
-                    StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); // красный
-                    global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23));
-                    startRow_1.Text = "Закончить";
+                    StartAttestation.Background = global.RedColorEnd;            // красный
+
                     global.mainButtonAttestation = "Закончить";
-                    global.isColor = false;
+                    startRow_1.Text = global.mainButtonAttestation;
 
                     DataGridMain.ItemsSource = null;
-                    DataGridMain.ItemsSource = global.ROWS;
+                    DataGridMain.ItemsSource = global.ROWS;     // Привязка вагонов к datagrid
 
-                    global.IdConsignee = null;
-                    global.IdShipper = null;
-                    global.IdMat = null;
+                    global.IdConsignee = null;                  // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
+                    global.IdShipper = null;                    // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
+                    global.IdMat = null;                        // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
+
+                    global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
                 }
             }
             else
             {
                 VerificationEndAttestation ver = new VerificationEndAttestation(); // окно подтверждения окончания аттестации
                 ver.ShowDialog();
-                if (isVerification)
+                if (global.exitAtt(global.part.Part_id))
                 {
-                    global.endTime = DateTime.Now;
-                    global.endTimeStr = null;
+
+                    global.endTime = DateTime.Now;                                  // Окончание аттестации 
+                    global.endTimeStr = null;                                       // Окончание аттестации (String) для страницы Аттестации
                     global.endTimeStr = global.endTime.ToString();
                     timeEnd.Text = global.endTimeStr;
-                    global.deltaTime = global.endTime.Subtract(global.startTime);
+                    global.deltaTime = global.endTime.Subtract(global.startTime);   // продолжительность аттестации
 
                     timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");
                     global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");
 
-                    StartAttestation.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1)); // зеленый
-                    global.currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));
-                    startRow_1.Text = "Начать";
+                    StartAttestation.Background = global.GreenColorStart;                  // зеленый
+
                     global.mainButtonAttestation = "Начать";
-                    global.isColor = true;
-                    DataGridMain.IsEnabled = false; // убирается кликабельность с datagrid
-                    global.isEnabled = false; // флаг кликабельности datagrid
+                    startRow_1.Text = global.mainButtonAttestation;
+
+                    global.isColor = true;                                               // флаг для кнопки начала и завершения аттестации
+                    global.isEnabled = false;                                            // флаг кликабельности datagrid
+                    DataGridMain.IsEnabled = global.isEnabled;                           // убирается кликабельность с datagrid
+
+
                 }
             }
         }
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
         с фотографиями вагонов */
         {
+            /*
             global.Idx = DataGridMain.SelectedIndex;
             global.photo = global.getPhoto(global.part.Part_id, global.ROWS[global.Idx].Car_id);
             if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
@@ -130,6 +140,7 @@ namespace Attestation
             {
                 System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
             }
+            */
         }
         
         private void Change_VagNum(object sender, RoutedEventArgs e)/* Изменение номера вагона*/

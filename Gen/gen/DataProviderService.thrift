@@ -45,7 +45,7 @@ struct car_t {
 
 #данные по партии
 struct part_t {
-  1:int part_id,           # Номер партии
+  1:string part_id,        # Номер партии
   2:string oper,           # ФИО оператора ОТК 
   3:int shipper,           # Грузоотправитель  
   4:int consigner,         # Грузополучатель
@@ -70,18 +70,19 @@ service DataProviderService
       
       # Запрос данных	  
       photo_t getPhoto(1:int part_id, 2:int car_id) throws (1:DataProviderException ex),                      # Получение фотографий вагона
-      part_t getPart(1:int id) throws (1:DataProviderException ex),                                           # Запрос партии вагонов   
+      part_t getPart(1:string part_id) throws (1:DataProviderException ex),                                   # Запрос партии вагонов   
       string getUser(1:string login, 2:string password, 3:string empl_id) throws (1:DataProviderException ex),# Получение имени пользователя
-	  string getNum(1:int part_id, 2:int car_id) throws (1:DataProviderException ex),                         # Получение номера вагона
+	  string getNum(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                         # Получение номера вагона
+	  string getOldPart() throws (1:DataProviderException ex),                                                # Получение номера последней незакрытой партии
     
 	  # запись значенией
-  	  bool setNum(1:int part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	
-      bool setAtt(1:int part_id, 2:int car_id, 3:int att_code) throws (1:DataProviderException ex),           # Корректировка признака аттестации
-	  bool setUser(1:int part_id,2:string user) throws (1:DataProviderException ex),                          # запись имени оператора
+  	  bool setNum(1:string part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	
+      bool setAtt(1:string part_id, 2:int car_id, 3:int att_code) throws (1:DataProviderException ex),           # Корректировка признака аттестации
+	  bool setUser(1:string part_id,2:string user) throws (1:DataProviderException ex),                          # запись имени оператора
 	  
 	  # Сервисные функции 
-	  bool exitAtt() throws (1:DataProviderException ex),                                                           # Завершение аттестации
-	  part_t beginAtt(1:int shipper, 2:int consignee, 3:int mat, 4:string user) throws (1:DataProviderException ex),# Начало аттестации 
+	  part_t startAtt(1:int shipper, 2:int consigner, 3:int mat, 4:string user) throws (1:DataProviderException ex),# Начало аттестации 
+	  bool endAtt(1:string part_id) throws (1:DataProviderException ex),                                                           # Завершение аттестации
 	  bool changePass(1:string login, 2:string oldPass, 3:string newPass, 4:string newEmpl_id) throws (1:DataProviderException ex)  # Смена данных учетной записи 
 }
 

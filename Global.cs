@@ -12,45 +12,47 @@ namespace Attestation
     {
         //public bool isLoadAttestation; // флаг для загрузки страницы аттестации
 
-        public bool isColor; // флаг для кнопки начала и завершения аттестации
-        public string mainButtonAttestation; // для кнопки начала и завершения аттестации
-        public System.Windows.Media.SolidColorBrush currentColor; // цвет для кнопки начала и завершения аттестации
-        public bool isEnabled; // флаг кликабельности datagrid
+        public bool isColor;                                                 // флаг для кнопки начала и завершения аттестации
+        public string OldPart;                                               // результат вызова метода getOldPart()
+        public string mainButtonAttestation;                                 // для кнопки начала и завершения аттестации
+        public System.Windows.Media.SolidColorBrush GreenColorStart;         // цвет для кнопки начала и завершения аттестации
+        public System.Windows.Media.SolidColorBrush RedColorEnd;             // цвет для кнопки начала и завершения аттестации
+        public bool isEnabled;                                               // флаг кликабельности datagrid
 
 
         private static Global instance;
 
-        public string startTimeStr; // Начало аттестации партии вагонов (String) для страницы Аттестации
-        public string endTimeStr; //  Окончание аттестации (String) для страницы Аттестации
-        public string deltaTimeStr; // Продолжительность прохождения аттестации (String) для страницы Аттестации
-        public DateTime startTime; // Начало аттестации партии вагонов
-        public DateTime endTime; // Окончание аттестации 
-        public TimeSpan deltaTime; // Продолжительность прохождения аттестации
+        public string startTimeStr;                     // Начало аттестации партии вагонов (String) для страницы Аттестации
+        public string endTimeStr;                       //  Окончание аттестации (String) для страницы Аттестации
+        public string deltaTimeStr;                     // Продолжительность прохождения аттестации (String) для страницы Аттестации 
+        public DateTime startTime;                      // Начало аттестации партии вагонов
+        public DateTime endTime;                        // Окончание аттестации 
+        public TimeSpan deltaTime;                      // Продолжительность прохождения аттестации
 
-        public List<car_t> DATA; // Данные по вагонам
-        public photo_t photo; // класс содержащий поля фотографий вагонов
-        public part_t part; // партии вагонов
-        public string user; // имя пользователя (ФИО)
-        public string Login; // 
-        public int? IdShipper;       // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
-        public int? IdConsignee;     // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
-        public int? IdMat;           // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
-        public string MatName;    // Название материала для страницы Аттестации
-        public string PartId;     // Номер партии вагонов для страницы Аттестации
-        public string Shipper;    // Грузоотправитель для страницы Аттестации
-        public string Consignee;  // Грузополучатель для страницы Аттестации
+        public List<car_t> DATA;                        // Данные по вагонам
+        public photo_t photo;                           // класс содержащий поля фотографий вагонов
+        public part_t part;                             // партии вагонов
+        public string user;                             // имя пользователя (ФИО)
+        public string Login; 
+        public int? IdShipper;               // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
+        public int? IdConsignee;             // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
+        public int? IdMat;                   // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
+        public string MatName;               // Название материала для страницы Аттестации
+        public string PartId;                // Номер партии вагонов для страницы Аттестации
+        public string Shipper;               // Грузоотправитель для страницы Аттестации
+        public string Consignee;             // Грузополучатель для страницы Аттестации
 
 
-        public List<cause_t> cause; // справочник причин неаттестации
-        public List<contractor_t> contractors; // справочник контрагентов
-        public List<Shippers> shippers; // справочник Грузоотправителя
-        public List<Consignees> consignees; // справочник Грузополучателя
-        public List<mat_t> mats; // справочник материалов
-        public List<string> IsOk_Val; // справочник итогов аттестации
-        public List<string> Att_codeFonts; // справочник элементов шрифта для итогов аттестации
-        public List<Zona> zonas; // справочник Зоны вагонов
+        public List<cause_t> cause;                     // справочник причин неаттестации
+        public List<contractor_t> contractors;          // справочник контрагентов
+        public List<Shippers> shippers;                 // справочник Грузоотправителя
+        public List<Consignees> consignees;             // справочник Грузополучателя
+        public List<mat_t> mats;                        // справочник материалов
+        public List<string> IsOk_Val;                   // справочник итогов аттестации
+        public List<string> Att_codeFonts;              // справочник элементов шрифта для итогов аттестации
+        public List<Zona> zonas;                        // справочник Зоны вагонов
 
-        public List<RowTab> ROWS; // внутренний список вагонов 
+        public List<RowTab> ROWS;                       // внутренний список вагонов 
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
@@ -79,31 +81,36 @@ namespace Attestation
             //GetConsignees(contractors); // получение справочника Грузополучателя
             //GetZonas(); // получение справочника Зоны вагонов
 
-            IdShipper = null; // Инициализация для проверки на  Null
-            IdShipper = null; // Инициализация для проверки на  Null
-            IdMat = null; // Инициализация для проверки на  Null
+            IdShipper = null;     // Инициализация для проверки на  Null
+            IdShipper = null;     // Инициализация для проверки на  Null
+            IdMat = null;         // Инициализация для проверки на  Null
 
             photo = new photo_t();
-            user = ""; // имя пользователя
-            MatName = ""; // Название материал
-            PartId = ""; // Номер партии вагонов для страницы Аттестации
-            Shipper = ""; // Грузоотправитель
-            Consignee = ""; // Грузополучатель
-            isEnabled = true; // флаг кликабельности datagrid
+            user = "";                 // имя пользователя
+            MatName = "";              // Название материал
+            PartId = "";               // Номер партии вагонов для страницы Аттестации
+            Shipper = "";              // Грузоотправитель
+            Consignee = "";            // Грузополучатель
+            isEnabled = true;          // флаг кликабельности datagrid
             /////////////////////////////////////////////////////////////////////////////////////////////
-            isColor = true;                   // для кнопки начала и завершения аттестации
-            mainButtonAttestation = "Начать"; // для кнопки начала и завершения аттестации
-            currentColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));  /*зеленый, для кнопки
+            isColor = true;                      // для кнопки начала и завершения аттестации
+            mainButtonAttestation = "Начать";    // для кнопки начала и завершения аттестации
+            GreenColorStart = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));  /*зеленый, для кнопки
                                                                                                  * начала и завершения аттестации */
+            RedColorEnd = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); /* красный, для кнопки
+                                                                                                     * начала и завершения аттестации*/
             ///////////////////////////////////////////////////////////////////////////////////////////////
         }
 
 
         public void GetGlobalPart(int shipper, int consignee, int mat, string user) /* Получение партии
                                                                                      * вагонов перед Началом аттестации */
-        {
+            {
             part = beginAtt(shipper, consignee, mat, user);
-            DATA = part.Cars;
+
+
+            if (part.Cars != null) DATA = part.Cars;
+            else DATA = new List<car_t>();
             ROWS = GetRows();
         }
 
@@ -177,24 +184,27 @@ namespace Attestation
         ///////////////////////////////////////////// Справочники ////////////////////////////////////////////////////////////////////////////////
         
         /// ////////////////////////////////////////// Запрос данных ///////////////////////////////////////////////////////////////////////////////
-        public part_t getPart(int id) // Запрос партии вагонов
+        public part_t getPart(string part_id) // Запрос партии вагонов
         {
-            return this.client.getPart(id);
+            return this.client.getPart(part_id);
         }
-        public photo_t getPhoto(int part_id, int car_id) // Получение фотографий вагона
+        /*
+        public photo_t getPhoto(string part_id, int car_id) // Получение фотографий вагона
         {
             return this.client.getPhoto(part_id, car_id);
         }
+        */
+        
         public String getUser(String Login, String Password, String Emple_id) // Получение имени пользователя
         {
             return this.client.getUser(Login, Password, Emple_id);
         }
         ///////////////////////////////////////////////// запись значений ////////////////////////////////////////////////////////////////////////////////
-        public bool setNum(int part_id, int car_id, string num) // Корректировка номера вагона	
+        public bool setNum(string part_id, int car_id, string num) // Корректировка номера вагона	
         {
             return this.client.setNum( part_id, car_id, num);
         }
-        public bool setAtt(int part_id, int car_id, int att_code) // Корректировка признака аттестации
+        public bool setAtt(string part_id, int car_id, int att_code) // Корректировка признака аттестации
         {
             return this.client.setAtt(part_id, car_id, att_code);
         }
@@ -203,17 +213,18 @@ namespace Attestation
             return this.setUser(user); 
         }
         //////////////////////////////////////////////////// Функции  //////////////////////////////////////////////////////////////////////////
-        public bool exitAtt() // Завершение аттестации
+        public bool exitAtt(string part_id) // Завершение аттестации
         {
-            return this.client.exitAtt();
+            return this.client.endAtt(part_id);
         }
         public part_t beginAtt(int shipper, int consignee, int mat, string user) // Начало аттестации и получение партии вагонов
         {
-            return this.client.beginAtt(shipper, consignee, mat, user);
+            return this.client.startAtt(shipper, consignee, mat, user);
         }
         public bool changePass(string login, string oldPass, string newPass, string newEmpl_id) // Смена данных учетной записи 
         {
             return this.client.changePass(login, oldPass, newPass, newEmpl_id);
         }
+
     }
 }

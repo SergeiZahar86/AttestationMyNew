@@ -29,6 +29,7 @@ namespace Attestation
         private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
         с фотографиями вагонов */
         {
+            /*
             global.Idx = DataGridArchive.SelectedIndex;
             global.photo = global.getPhoto(global.part.Part_id, global.ROWS[global.Idx].Car_id);
             if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
@@ -43,6 +44,7 @@ namespace Attestation
             {
                 System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
             }
+            */
         }
         private void GetArchive_Click(object sender, RoutedEventArgs e)
         {

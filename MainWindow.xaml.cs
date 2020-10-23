@@ -10,7 +10,6 @@ namespace Attestation
     public partial class MainWindow : Window
     {
         private Global global;
-
         public MainWindow()
         {
 
@@ -118,9 +117,6 @@ namespace Attestation
 
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
-            //AttestationPage p = new AttestationPage();
-            //MainFrame.Navigate(p);
-            
             GetSignIn();
             if (global.user.Length > 0)
             {
@@ -132,6 +128,13 @@ namespace Attestation
                 GetZonas();                                             // получение справочника Зоны вагонов
                 global.IsOk_Val = GetIsOk_Val();                        // справочник итогов аттестации
                 global.Att_codeFonts = GetAtt_codeFonts();              // справочник элементов шрифта для итогов аттестации
+
+                global.OldPart = global.client.getOldPart();                   // проверяем наличие незавершенных аттестаций
+                if(global.OldPart.Length > 0)
+                {
+                    global.part = global.client.getPart(global.OldPart);       // получаем незавершенную партию
+                    global.isColor = false;                                    // для кнопки начала и завершения аттестации 
+                }
 
                 AttestationPage p = new AttestationPage();
                 MainFrame.Navigate(p);

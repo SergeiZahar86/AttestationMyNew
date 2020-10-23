@@ -21,14 +21,15 @@ public partial class DataProviderService {
     List<contractor_t> getContractors();
     List<mat_t> getMat();
     photo_t getPhoto(int part_id, int car_id);
-    part_t getPart(int id);
+    part_t getPart(string part_id);
     string getUser(string login, string password, string empl_id);
-    string getNum(int part_id, int car_id);
-    bool setNum(int part_id, int car_id, string num);
-    bool setAtt(int part_id, int car_id, int att_code);
-    bool setUser(int part_id, string user);
-    bool exitAtt();
-    part_t beginAtt(int shipper, int consignee, int mat, string user);
+    string getNum(string part_id, int car_id);
+    string getOldPart();
+    bool setNum(string part_id, int car_id, string num);
+    bool setAtt(string part_id, int car_id, int att_code);
+    bool setUser(string part_id, string user);
+    part_t startAtt(int shipper, int consigner, int mat, string user);
+    bool endAtt(string part_id);
     bool changePass(string login, string oldPass, string newPass, string newEmpl_id);
   }
 
@@ -50,7 +51,7 @@ public partial class DataProviderService {
     photo_t End_getPhoto(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_getPart(AsyncCallback callback, object state, int id);
+    IAsyncResult Begin_getPart(AsyncCallback callback, object state, string part_id);
     part_t End_getPart(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
@@ -58,28 +59,32 @@ public partial class DataProviderService {
     string End_getUser(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_getNum(AsyncCallback callback, object state, int part_id, int car_id);
+    IAsyncResult Begin_getNum(AsyncCallback callback, object state, string part_id, int car_id);
     string End_getNum(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_setNum(AsyncCallback callback, object state, int part_id, int car_id, string num);
+    IAsyncResult Begin_getOldPart(AsyncCallback callback, object state);
+    string End_getOldPart(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_setNum(AsyncCallback callback, object state, string part_id, int car_id, string num);
     bool End_setNum(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_setAtt(AsyncCallback callback, object state, int part_id, int car_id, int att_code);
+    IAsyncResult Begin_setAtt(AsyncCallback callback, object state, string part_id, int car_id, int att_code);
     bool End_setAtt(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_setUser(AsyncCallback callback, object state, int part_id, string user);
+    IAsyncResult Begin_setUser(AsyncCallback callback, object state, string part_id, string user);
     bool End_setUser(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_exitAtt(AsyncCallback callback, object state);
-    bool End_exitAtt(IAsyncResult asyncResult);
+    IAsyncResult Begin_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user);
+    part_t End_startAtt(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_beginAtt(AsyncCallback callback, object state, int shipper, int consignee, int mat, string user);
-    part_t End_beginAtt(IAsyncResult asyncResult);
+    IAsyncResult Begin_endAtt(AsyncCallback callback, object state, string part_id);
+    bool End_endAtt(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
     IAsyncResult Begin_changePass(AsyncCallback callback, object state, string login, string oldPass, string newPass, string newEmpl_id);
@@ -430,9 +435,9 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_getPart(AsyncCallback callback, object state, int id)
+    public IAsyncResult Begin_getPart(AsyncCallback callback, object state, string part_id)
     {
-      return send_getPart(callback, state, id);
+      return send_getPart(callback, state, part_id);
     }
 
     public part_t End_getPart(IAsyncResult asyncResult)
@@ -443,24 +448,24 @@ public partial class DataProviderService {
 
     #endif
 
-    public part_t getPart(int id)
+    public part_t getPart(string part_id)
     {
       #if SILVERLIGHT
-      var asyncResult = Begin_getPart(null, null, id);
+      var asyncResult = Begin_getPart(null, null, part_id);
       return End_getPart(asyncResult);
 
       #else
-      send_getPart(id);
+      send_getPart(part_id);
       return recv_getPart();
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_getPart(AsyncCallback callback, object state, int id)
+    public IAsyncResult send_getPart(AsyncCallback callback, object state, string part_id)
     {
       oprot_.WriteMessageBegin(new TMessage("getPart", TMessageType.Call, seqid_));
       getPart_args args = new getPart_args();
-      args.Id = id;
+      args.Part_id = part_id;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       return oprot_.Transport.BeginFlush(callback, state);
@@ -468,11 +473,11 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_getPart(int id)
+    public void send_getPart(string part_id)
     {
       oprot_.WriteMessageBegin(new TMessage("getPart", TMessageType.Call, seqid_));
       getPart_args args = new getPart_args();
-      args.Id = id;
+      args.Part_id = part_id;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       oprot_.Transport.Flush();
@@ -578,7 +583,7 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_getNum(AsyncCallback callback, object state, int part_id, int car_id)
+    public IAsyncResult Begin_getNum(AsyncCallback callback, object state, string part_id, int car_id)
     {
       return send_getNum(callback, state, part_id, car_id);
     }
@@ -591,7 +596,7 @@ public partial class DataProviderService {
 
     #endif
 
-    public string getNum(int part_id, int car_id)
+    public string getNum(string part_id, int car_id)
     {
       #if SILVERLIGHT
       var asyncResult = Begin_getNum(null, null, part_id, car_id);
@@ -604,7 +609,7 @@ public partial class DataProviderService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_getNum(AsyncCallback callback, object state, int part_id, int car_id)
+    public IAsyncResult send_getNum(AsyncCallback callback, object state, string part_id, int car_id)
     {
       oprot_.WriteMessageBegin(new TMessage("getNum", TMessageType.Call, seqid_));
       getNum_args args = new getNum_args();
@@ -617,7 +622,7 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_getNum(int part_id, int car_id)
+    public void send_getNum(string part_id, int car_id)
     {
       oprot_.WriteMessageBegin(new TMessage("getNum", TMessageType.Call, seqid_));
       getNum_args args = new getNum_args();
@@ -652,7 +657,77 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_setNum(AsyncCallback callback, object state, int part_id, int car_id, string num)
+    public IAsyncResult Begin_getOldPart(AsyncCallback callback, object state)
+    {
+      return send_getOldPart(callback, state);
+    }
+
+    public string End_getOldPart(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_getOldPart();
+    }
+
+    #endif
+
+    public string getOldPart()
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_getOldPart(null, null);
+      return End_getOldPart(asyncResult);
+
+      #else
+      send_getOldPart();
+      return recv_getOldPart();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_getOldPart(AsyncCallback callback, object state)
+    {
+      oprot_.WriteMessageBegin(new TMessage("getOldPart", TMessageType.Call, seqid_));
+      getOldPart_args args = new getOldPart_args();
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_getOldPart()
+    {
+      oprot_.WriteMessageBegin(new TMessage("getOldPart", TMessageType.Call, seqid_));
+      getOldPart_args args = new getOldPart_args();
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public string recv_getOldPart()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      getOldPart_result result = new getOldPart_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "getOldPart failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_setNum(AsyncCallback callback, object state, string part_id, int car_id, string num)
     {
       return send_setNum(callback, state, part_id, car_id, num);
     }
@@ -665,7 +740,7 @@ public partial class DataProviderService {
 
     #endif
 
-    public bool setNum(int part_id, int car_id, string num)
+    public bool setNum(string part_id, int car_id, string num)
     {
       #if SILVERLIGHT
       var asyncResult = Begin_setNum(null, null, part_id, car_id, num);
@@ -678,7 +753,7 @@ public partial class DataProviderService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_setNum(AsyncCallback callback, object state, int part_id, int car_id, string num)
+    public IAsyncResult send_setNum(AsyncCallback callback, object state, string part_id, int car_id, string num)
     {
       oprot_.WriteMessageBegin(new TMessage("setNum", TMessageType.Call, seqid_));
       setNum_args args = new setNum_args();
@@ -692,7 +767,7 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_setNum(int part_id, int car_id, string num)
+    public void send_setNum(string part_id, int car_id, string num)
     {
       oprot_.WriteMessageBegin(new TMessage("setNum", TMessageType.Call, seqid_));
       setNum_args args = new setNum_args();
@@ -728,7 +803,7 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_setAtt(AsyncCallback callback, object state, int part_id, int car_id, int att_code)
+    public IAsyncResult Begin_setAtt(AsyncCallback callback, object state, string part_id, int car_id, int att_code)
     {
       return send_setAtt(callback, state, part_id, car_id, att_code);
     }
@@ -741,7 +816,7 @@ public partial class DataProviderService {
 
     #endif
 
-    public bool setAtt(int part_id, int car_id, int att_code)
+    public bool setAtt(string part_id, int car_id, int att_code)
     {
       #if SILVERLIGHT
       var asyncResult = Begin_setAtt(null, null, part_id, car_id, att_code);
@@ -754,7 +829,7 @@ public partial class DataProviderService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_setAtt(AsyncCallback callback, object state, int part_id, int car_id, int att_code)
+    public IAsyncResult send_setAtt(AsyncCallback callback, object state, string part_id, int car_id, int att_code)
     {
       oprot_.WriteMessageBegin(new TMessage("setAtt", TMessageType.Call, seqid_));
       setAtt_args args = new setAtt_args();
@@ -768,7 +843,7 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_setAtt(int part_id, int car_id, int att_code)
+    public void send_setAtt(string part_id, int car_id, int att_code)
     {
       oprot_.WriteMessageBegin(new TMessage("setAtt", TMessageType.Call, seqid_));
       setAtt_args args = new setAtt_args();
@@ -804,7 +879,7 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_setUser(AsyncCallback callback, object state, int part_id, string user)
+    public IAsyncResult Begin_setUser(AsyncCallback callback, object state, string part_id, string user)
     {
       return send_setUser(callback, state, part_id, user);
     }
@@ -817,7 +892,7 @@ public partial class DataProviderService {
 
     #endif
 
-    public bool setUser(int part_id, string user)
+    public bool setUser(string part_id, string user)
     {
       #if SILVERLIGHT
       var asyncResult = Begin_setUser(null, null, part_id, user);
@@ -830,7 +905,7 @@ public partial class DataProviderService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_setUser(AsyncCallback callback, object state, int part_id, string user)
+    public IAsyncResult send_setUser(AsyncCallback callback, object state, string part_id, string user)
     {
       oprot_.WriteMessageBegin(new TMessage("setUser", TMessageType.Call, seqid_));
       setUser_args args = new setUser_args();
@@ -843,7 +918,7 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_setUser(int part_id, string user)
+    public void send_setUser(string part_id, string user)
     {
       oprot_.WriteMessageBegin(new TMessage("setUser", TMessageType.Call, seqid_));
       setUser_args args = new setUser_args();
@@ -878,108 +953,38 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_exitAtt(AsyncCallback callback, object state)
+    public IAsyncResult Begin_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user)
     {
-      return send_exitAtt(callback, state);
+      return send_startAtt(callback, state, shipper, consigner, mat, user);
     }
 
-    public bool End_exitAtt(IAsyncResult asyncResult)
+    public part_t End_startAtt(IAsyncResult asyncResult)
     {
       oprot_.Transport.EndFlush(asyncResult);
-      return recv_exitAtt();
+      return recv_startAtt();
     }
 
     #endif
 
-    public bool exitAtt()
+    public part_t startAtt(int shipper, int consigner, int mat, string user)
     {
       #if SILVERLIGHT
-      var asyncResult = Begin_exitAtt(null, null);
-      return End_exitAtt(asyncResult);
+      var asyncResult = Begin_startAtt(null, null, shipper, consigner, mat, user);
+      return End_startAtt(asyncResult);
 
       #else
-      send_exitAtt();
-      return recv_exitAtt();
+      send_startAtt(shipper, consigner, mat, user);
+      return recv_startAtt();
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_exitAtt(AsyncCallback callback, object state)
+    public IAsyncResult send_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user)
     {
-      oprot_.WriteMessageBegin(new TMessage("exitAtt", TMessageType.Call, seqid_));
-      exitAtt_args args = new exitAtt_args();
-      args.Write(oprot_);
-      oprot_.WriteMessageEnd();
-      return oprot_.Transport.BeginFlush(callback, state);
-    }
-
-    #else
-
-    public void send_exitAtt()
-    {
-      oprot_.WriteMessageBegin(new TMessage("exitAtt", TMessageType.Call, seqid_));
-      exitAtt_args args = new exitAtt_args();
-      args.Write(oprot_);
-      oprot_.WriteMessageEnd();
-      oprot_.Transport.Flush();
-    }
-    #endif
-
-    public bool recv_exitAtt()
-    {
-      TMessage msg = iprot_.ReadMessageBegin();
-      if (msg.Type == TMessageType.Exception) {
-        TApplicationException x = TApplicationException.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        throw x;
-      }
-      exitAtt_result result = new exitAtt_result();
-      result.Read(iprot_);
-      iprot_.ReadMessageEnd();
-      if (result.__isset.success) {
-        return result.Success;
-      }
-      if (result.__isset.ex) {
-        throw result.Ex;
-      }
-      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "exitAtt failed: unknown result");
-    }
-
-    
-    #if SILVERLIGHT
-    
-    public IAsyncResult Begin_beginAtt(AsyncCallback callback, object state, int shipper, int consignee, int mat, string user)
-    {
-      return send_beginAtt(callback, state, shipper, consignee, mat, user);
-    }
-
-    public part_t End_beginAtt(IAsyncResult asyncResult)
-    {
-      oprot_.Transport.EndFlush(asyncResult);
-      return recv_beginAtt();
-    }
-
-    #endif
-
-    public part_t beginAtt(int shipper, int consignee, int mat, string user)
-    {
-      #if SILVERLIGHT
-      var asyncResult = Begin_beginAtt(null, null, shipper, consignee, mat, user);
-      return End_beginAtt(asyncResult);
-
-      #else
-      send_beginAtt(shipper, consignee, mat, user);
-      return recv_beginAtt();
-
-      #endif
-    }
-    #if SILVERLIGHT
-    public IAsyncResult send_beginAtt(AsyncCallback callback, object state, int shipper, int consignee, int mat, string user)
-    {
-      oprot_.WriteMessageBegin(new TMessage("beginAtt", TMessageType.Call, seqid_));
-      beginAtt_args args = new beginAtt_args();
+      oprot_.WriteMessageBegin(new TMessage("startAtt", TMessageType.Call, seqid_));
+      startAtt_args args = new startAtt_args();
       args.Shipper = shipper;
-      args.Consignee = consignee;
+      args.Consigner = consigner;
       args.Mat = mat;
       args.User = user;
       args.Write(oprot_);
@@ -989,12 +994,12 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_beginAtt(int shipper, int consignee, int mat, string user)
+    public void send_startAtt(int shipper, int consigner, int mat, string user)
     {
-      oprot_.WriteMessageBegin(new TMessage("beginAtt", TMessageType.Call, seqid_));
-      beginAtt_args args = new beginAtt_args();
+      oprot_.WriteMessageBegin(new TMessage("startAtt", TMessageType.Call, seqid_));
+      startAtt_args args = new startAtt_args();
       args.Shipper = shipper;
-      args.Consignee = consignee;
+      args.Consigner = consigner;
       args.Mat = mat;
       args.User = user;
       args.Write(oprot_);
@@ -1003,7 +1008,7 @@ public partial class DataProviderService {
     }
     #endif
 
-    public part_t recv_beginAtt()
+    public part_t recv_startAtt()
     {
       TMessage msg = iprot_.ReadMessageBegin();
       if (msg.Type == TMessageType.Exception) {
@@ -1011,7 +1016,7 @@ public partial class DataProviderService {
         iprot_.ReadMessageEnd();
         throw x;
       }
-      beginAtt_result result = new beginAtt_result();
+      startAtt_result result = new startAtt_result();
       result.Read(iprot_);
       iprot_.ReadMessageEnd();
       if (result.__isset.success) {
@@ -1020,7 +1025,79 @@ public partial class DataProviderService {
       if (result.__isset.ex) {
         throw result.Ex;
       }
-      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "beginAtt failed: unknown result");
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "startAtt failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_endAtt(AsyncCallback callback, object state, string part_id)
+    {
+      return send_endAtt(callback, state, part_id);
+    }
+
+    public bool End_endAtt(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_endAtt();
+    }
+
+    #endif
+
+    public bool endAtt(string part_id)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_endAtt(null, null, part_id);
+      return End_endAtt(asyncResult);
+
+      #else
+      send_endAtt(part_id);
+      return recv_endAtt();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_endAtt(AsyncCallback callback, object state, string part_id)
+    {
+      oprot_.WriteMessageBegin(new TMessage("endAtt", TMessageType.Call, seqid_));
+      endAtt_args args = new endAtt_args();
+      args.Part_id = part_id;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_endAtt(string part_id)
+    {
+      oprot_.WriteMessageBegin(new TMessage("endAtt", TMessageType.Call, seqid_));
+      endAtt_args args = new endAtt_args();
+      args.Part_id = part_id;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_endAtt()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      endAtt_result result = new endAtt_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "endAtt failed: unknown result");
     }
 
     
@@ -1113,11 +1190,12 @@ public partial class DataProviderService {
       processMap_["getPart"] = getPart_Process;
       processMap_["getUser"] = getUser_Process;
       processMap_["getNum"] = getNum_Process;
+      processMap_["getOldPart"] = getOldPart_Process;
       processMap_["setNum"] = setNum_Process;
       processMap_["setAtt"] = setAtt_Process;
       processMap_["setUser"] = setUser_Process;
-      processMap_["exitAtt"] = exitAtt_Process;
-      processMap_["beginAtt"] = beginAtt_Process;
+      processMap_["startAtt"] = startAtt_Process;
+      processMap_["endAtt"] = endAtt_Process;
       processMap_["changePass"] = changePass_Process;
     }
 
@@ -1301,7 +1379,7 @@ public partial class DataProviderService {
       {
         try
         {
-          result.Success = iface_.getPart(args.Id);
+          result.Success = iface_.getPart(args.Part_id);
         }
         catch (DataProviderException ex)
         {
@@ -1390,6 +1468,41 @@ public partial class DataProviderService {
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
         oprot.WriteMessageBegin(new TMessage("getNum", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void getOldPart_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      getOldPart_args args = new getOldPart_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      getOldPart_result result = new getOldPart_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.getOldPart();
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("getOldPart", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("getOldPart", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -1501,23 +1614,23 @@ public partial class DataProviderService {
       oprot.Transport.Flush();
     }
 
-    public void exitAtt_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    public void startAtt_Process(int seqid, TProtocol iprot, TProtocol oprot)
     {
-      exitAtt_args args = new exitAtt_args();
+      startAtt_args args = new startAtt_args();
       args.Read(iprot);
       iprot.ReadMessageEnd();
-      exitAtt_result result = new exitAtt_result();
+      startAtt_result result = new startAtt_result();
       try
       {
         try
         {
-          result.Success = iface_.exitAtt();
+          result.Success = iface_.startAtt(args.Shipper, args.Consigner, args.Mat, args.User);
         }
         catch (DataProviderException ex)
         {
           result.Ex = ex;
         }
-        oprot.WriteMessageBegin(new TMessage("exitAtt", TMessageType.Reply, seqid)); 
+        oprot.WriteMessageBegin(new TMessage("startAtt", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
       catch (TTransportException)
@@ -1529,30 +1642,30 @@ public partial class DataProviderService {
         Console.Error.WriteLine("Error occurred in processor:");
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
-        oprot.WriteMessageBegin(new TMessage("exitAtt", TMessageType.Exception, seqid));
+        oprot.WriteMessageBegin(new TMessage("startAtt", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
       oprot.Transport.Flush();
     }
 
-    public void beginAtt_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    public void endAtt_Process(int seqid, TProtocol iprot, TProtocol oprot)
     {
-      beginAtt_args args = new beginAtt_args();
+      endAtt_args args = new endAtt_args();
       args.Read(iprot);
       iprot.ReadMessageEnd();
-      beginAtt_result result = new beginAtt_result();
+      endAtt_result result = new endAtt_result();
       try
       {
         try
         {
-          result.Success = iface_.beginAtt(args.Shipper, args.Consignee, args.Mat, args.User);
+          result.Success = iface_.endAtt(args.Part_id);
         }
         catch (DataProviderException ex)
         {
           result.Ex = ex;
         }
-        oprot.WriteMessageBegin(new TMessage("beginAtt", TMessageType.Reply, seqid)); 
+        oprot.WriteMessageBegin(new TMessage("endAtt", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
       catch (TTransportException)
@@ -1564,7 +1677,7 @@ public partial class DataProviderService {
         Console.Error.WriteLine("Error occurred in processor:");
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
-        oprot.WriteMessageBegin(new TMessage("beginAtt", TMessageType.Exception, seqid));
+        oprot.WriteMessageBegin(new TMessage("endAtt", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -2595,18 +2708,18 @@ public partial class DataProviderService {
   #endif
   public partial class getPart_args : TBase
   {
-    private int _id;
+    private string _part_id;
 
-    public int Id
+    public string Part_id
     {
       get
       {
-        return _id;
+        return _part_id;
       }
       set
       {
-        __isset.id = true;
-        this._id = value;
+        __isset.part_id = true;
+        this._part_id = value;
       }
     }
 
@@ -2616,7 +2729,7 @@ public partial class DataProviderService {
     [Serializable]
     #endif
     public struct Isset {
-      public bool id;
+      public bool part_id;
     }
 
     public getPart_args() {
@@ -2638,8 +2751,8 @@ public partial class DataProviderService {
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Id = iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -2665,12 +2778,12 @@ public partial class DataProviderService {
         TStruct struc = new TStruct("getPart_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.id) {
-          field.Name = "id";
-          field.Type = TType.I32;
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Id);
+          oprot.WriteString(Part_id);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -2685,11 +2798,11 @@ public partial class DataProviderService {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("getPart_args(");
       bool __first = true;
-      if (__isset.id) {
+      if (Part_id != null && __isset.part_id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Id: ");
-        __sb.Append(Id);
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -3182,10 +3295,10 @@ public partial class DataProviderService {
   #endif
   public partial class getNum_args : TBase
   {
-    private int _part_id;
+    private string _part_id;
     private int _car_id;
 
-    public int Part_id
+    public string Part_id
     {
       get
       {
@@ -3240,8 +3353,8 @@ public partial class DataProviderService {
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Part_id = iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -3274,12 +3387,12 @@ public partial class DataProviderService {
         TStruct struc = new TStruct("getNum_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.part_id) {
+        if (Part_id != null && __isset.part_id) {
           field.Name = "part_id";
-          field.Type = TType.I32;
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Part_id);
+          oprot.WriteString(Part_id);
           oprot.WriteFieldEnd();
         }
         if (__isset.car_id) {
@@ -3302,7 +3415,7 @@ public partial class DataProviderService {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("getNum_args(");
       bool __first = true;
-      if (__isset.part_id) {
+      if (Part_id != null && __isset.part_id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Part_id: ");
@@ -3473,13 +3586,224 @@ public partial class DataProviderService {
   #if !SILVERLIGHT
   [Serializable]
   #endif
+  public partial class getOldPart_args : TBase
+  {
+
+    public getOldPart_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("getOldPart_args");
+        oprot.WriteStructBegin(struc);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("getOldPart_args(");
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class getOldPart_result : TBase
+  {
+    private string _success;
+    private DataProviderException _ex;
+
+    public string Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public getOldPart_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.String) {
+                Success = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("getOldPart_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.String;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Success);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("getOldPart_result(");
+      bool __first = true;
+      if (Success != null && __isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class setNum_args : TBase
   {
-    private int _part_id;
+    private string _part_id;
     private int _car_id;
     private string _num;
 
-    public int Part_id
+    public string Part_id
     {
       get
       {
@@ -3548,8 +3872,8 @@ public partial class DataProviderService {
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Part_id = iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -3589,12 +3913,12 @@ public partial class DataProviderService {
         TStruct struc = new TStruct("setNum_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.part_id) {
+        if (Part_id != null && __isset.part_id) {
           field.Name = "part_id";
-          field.Type = TType.I32;
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Part_id);
+          oprot.WriteString(Part_id);
           oprot.WriteFieldEnd();
         }
         if (__isset.car_id) {
@@ -3625,7 +3949,7 @@ public partial class DataProviderService {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("setNum_args(");
       bool __first = true;
-      if (__isset.part_id) {
+      if (Part_id != null && __isset.part_id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Part_id: ");
@@ -3802,11 +4126,11 @@ public partial class DataProviderService {
   #endif
   public partial class setAtt_args : TBase
   {
-    private int _part_id;
+    private string _part_id;
     private int _car_id;
     private int _att_code;
 
-    public int Part_id
+    public string Part_id
     {
       get
       {
@@ -3875,8 +4199,8 @@ public partial class DataProviderService {
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Part_id = iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -3916,12 +4240,12 @@ public partial class DataProviderService {
         TStruct struc = new TStruct("setAtt_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.part_id) {
+        if (Part_id != null && __isset.part_id) {
           field.Name = "part_id";
-          field.Type = TType.I32;
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Part_id);
+          oprot.WriteString(Part_id);
           oprot.WriteFieldEnd();
         }
         if (__isset.car_id) {
@@ -3952,7 +4276,7 @@ public partial class DataProviderService {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("setAtt_args(");
       bool __first = true;
-      if (__isset.part_id) {
+      if (Part_id != null && __isset.part_id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Part_id: ");
@@ -4129,10 +4453,10 @@ public partial class DataProviderService {
   #endif
   public partial class setUser_args : TBase
   {
-    private int _part_id;
+    private string _part_id;
     private string _user;
 
-    public int Part_id
+    public string Part_id
     {
       get
       {
@@ -4187,8 +4511,8 @@ public partial class DataProviderService {
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Part_id = iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -4221,12 +4545,12 @@ public partial class DataProviderService {
         TStruct struc = new TStruct("setUser_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.part_id) {
+        if (Part_id != null && __isset.part_id) {
           field.Name = "part_id";
-          field.Type = TType.I32;
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Part_id);
+          oprot.WriteString(Part_id);
           oprot.WriteFieldEnd();
         }
         if (User != null && __isset.user) {
@@ -4249,7 +4573,7 @@ public partial class DataProviderService {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("setUser_args(");
       bool __first = true;
-      if (__isset.part_id) {
+      if (Part_id != null && __isset.part_id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Part_id: ");
@@ -4418,219 +4742,10 @@ public partial class DataProviderService {
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class exitAtt_args : TBase
-  {
-
-    public exitAtt_args() {
-    }
-
-    public void Read (TProtocol iprot)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        iprot.ReadStructBegin();
-        while (true)
-        {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
-            break;
-          }
-          switch (field.ID)
-          {
-            default: 
-              TProtocolUtil.Skip(iprot, field.Type);
-              break;
-          }
-          iprot.ReadFieldEnd();
-        }
-        iprot.ReadStructEnd();
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public void Write(TProtocol oprot) {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        TStruct struc = new TStruct("exitAtt_args");
-        oprot.WriteStructBegin(struc);
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
-
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("exitAtt_args(");
-      __sb.Append(")");
-      return __sb.ToString();
-    }
-
-  }
-
-
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
-  public partial class exitAtt_result : TBase
-  {
-    private bool _success;
-    private DataProviderException _ex;
-
-    public bool Success
-    {
-      get
-      {
-        return _success;
-      }
-      set
-      {
-        __isset.success = true;
-        this._success = value;
-      }
-    }
-
-    public DataProviderException Ex
-    {
-      get
-      {
-        return _ex;
-      }
-      set
-      {
-        __isset.ex = true;
-        this._ex = value;
-      }
-    }
-
-
-    public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
-      public bool success;
-      public bool ex;
-    }
-
-    public exitAtt_result() {
-    }
-
-    public void Read (TProtocol iprot)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        iprot.ReadStructBegin();
-        while (true)
-        {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
-            break;
-          }
-          switch (field.ID)
-          {
-            case 0:
-              if (field.Type == TType.Bool) {
-                Success = iprot.ReadBool();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 1:
-              if (field.Type == TType.Struct) {
-                Ex = new DataProviderException();
-                Ex.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            default: 
-              TProtocolUtil.Skip(iprot, field.Type);
-              break;
-          }
-          iprot.ReadFieldEnd();
-        }
-        iprot.ReadStructEnd();
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public void Write(TProtocol oprot) {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        TStruct struc = new TStruct("exitAtt_result");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-
-        if (this.__isset.success) {
-          field.Name = "Success";
-          field.Type = TType.Bool;
-          field.ID = 0;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteBool(Success);
-          oprot.WriteFieldEnd();
-        } else if (this.__isset.ex) {
-          if (Ex != null) {
-            field.Name = "Ex";
-            field.Type = TType.Struct;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            Ex.Write(oprot);
-            oprot.WriteFieldEnd();
-          }
-        }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
-
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("exitAtt_result(");
-      bool __first = true;
-      if (__isset.success) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Success: ");
-        __sb.Append(Success);
-      }
-      if (Ex != null && __isset.ex) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Ex: ");
-        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
-      }
-      __sb.Append(")");
-      return __sb.ToString();
-    }
-
-  }
-
-
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
-  public partial class beginAtt_args : TBase
+  public partial class startAtt_args : TBase
   {
     private int _shipper;
-    private int _consignee;
+    private int _consigner;
     private int _mat;
     private string _user;
 
@@ -4647,16 +4762,16 @@ public partial class DataProviderService {
       }
     }
 
-    public int Consignee
+    public int Consigner
     {
       get
       {
-        return _consignee;
+        return _consigner;
       }
       set
       {
-        __isset.consignee = true;
-        this._consignee = value;
+        __isset.consigner = true;
+        this._consigner = value;
       }
     }
 
@@ -4693,12 +4808,12 @@ public partial class DataProviderService {
     #endif
     public struct Isset {
       public bool shipper;
-      public bool consignee;
+      public bool consigner;
       public bool mat;
       public bool user;
     }
 
-    public beginAtt_args() {
+    public startAtt_args() {
     }
 
     public void Read (TProtocol iprot)
@@ -4725,7 +4840,7 @@ public partial class DataProviderService {
               break;
             case 2:
               if (field.Type == TType.I32) {
-                Consignee = iprot.ReadI32();
+                Consigner = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -4762,7 +4877,7 @@ public partial class DataProviderService {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("beginAtt_args");
+        TStruct struc = new TStruct("startAtt_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (__isset.shipper) {
@@ -4773,12 +4888,12 @@ public partial class DataProviderService {
           oprot.WriteI32(Shipper);
           oprot.WriteFieldEnd();
         }
-        if (__isset.consignee) {
-          field.Name = "consignee";
+        if (__isset.consigner) {
+          field.Name = "consigner";
           field.Type = TType.I32;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Consignee);
+          oprot.WriteI32(Consigner);
           oprot.WriteFieldEnd();
         }
         if (__isset.mat) {
@@ -4807,7 +4922,7 @@ public partial class DataProviderService {
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("beginAtt_args(");
+      StringBuilder __sb = new StringBuilder("startAtt_args(");
       bool __first = true;
       if (__isset.shipper) {
         if(!__first) { __sb.Append(", "); }
@@ -4815,11 +4930,11 @@ public partial class DataProviderService {
         __sb.Append("Shipper: ");
         __sb.Append(Shipper);
       }
-      if (__isset.consignee) {
+      if (__isset.consigner) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Consignee: ");
-        __sb.Append(Consignee);
+        __sb.Append("Consigner: ");
+        __sb.Append(Consigner);
       }
       if (__isset.mat) {
         if(!__first) { __sb.Append(", "); }
@@ -4843,7 +4958,7 @@ public partial class DataProviderService {
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class beginAtt_result : TBase
+  public partial class startAtt_result : TBase
   {
     private part_t _success;
     private DataProviderException _ex;
@@ -4884,7 +4999,7 @@ public partial class DataProviderService {
       public bool ex;
     }
 
-    public beginAtt_result() {
+    public startAtt_result() {
     }
 
     public void Read (TProtocol iprot)
@@ -4936,7 +5051,7 @@ public partial class DataProviderService {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("beginAtt_result");
+        TStruct struc = new TStruct("startAtt_result");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
 
@@ -4969,13 +5084,268 @@ public partial class DataProviderService {
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("beginAtt_result(");
+      StringBuilder __sb = new StringBuilder("startAtt_result(");
       bool __first = true;
       if (Success != null && __isset.success) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success== null ? "<null>" : Success.ToString());
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class endAtt_args : TBase
+  {
+    private string _part_id;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+    }
+
+    public endAtt_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("endAtt_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("endAtt_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class endAtt_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public endAtt_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("endAtt_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("endAtt_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
       }
       if (Ex != null && __isset.ex) {
         if(!__first) { __sb.Append(", "); }
