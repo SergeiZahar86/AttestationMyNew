@@ -71,16 +71,6 @@ namespace Attestation
 
             //isLoadAttestation = true;
 
-
-            //cause = getCauses(); // Запрос справочника причин неаттестации
-            //contractors = getContractors(); // Запрос справочника контрагентов
-            //mats = getMat(); // Запрос справочника материалов
-            //IsOk_Val = GetIsOk_Val(); // справочник итогов аттестации
-            //Att_codeFonts = GetAtt_codeFonts(); // справочник элементов шрифта для итогов аттестации
-            //GetShippers(contractors); // получение справочника Грузоотправителей
-            //GetConsignees(contractors); // получение справочника Грузополучателя
-            //GetZonas(); // получение справочника Зоны вагонов
-
             IdShipper = null;     // Инициализация для проверки на  Null
             IdShipper = null;     // Инициализация для проверки на  Null
             IdMat = null;         // Инициализация для проверки на  Null
@@ -126,7 +116,7 @@ namespace Attestation
             List<RowTab> rows = new List<RowTab>();
             foreach (car_t cars in DATA)
             {
-                string Part_id__ = cars.Part_id;                         // ?
+                string Part_id__ = cars.Part_id;                        
                 int Car_id__ = cars.Car_id;
                 string Num__ = cars.Num;
                 int Att_code__ = cars.Att_code;

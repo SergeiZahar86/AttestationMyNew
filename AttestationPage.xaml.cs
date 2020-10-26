@@ -9,7 +9,7 @@ namespace Attestation
     {
         public int idx; // индекс строки
         private Global global;
-        public static bool isVerification;                                // флаг для подтверждения окончания аттестации
+        public static bool isVerification;             // флаг для подтверждения окончания аттестации
 
         //public DateTime time;
 

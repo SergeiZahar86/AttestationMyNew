@@ -27,10 +27,12 @@ namespace Attestation
                 e.Handled = true; // если пробел, отклоняем ввод
             }
         }
-        private void Ok_Click(object sender, RoutedEventArgs e)
+        private void Ok_Click(object sender, RoutedEventArgs e) // Корректировка номера вагона
         {
             String vag = textboxVag.Text;
             global.ROWS[global.Idx].Num = vag;
+
+            global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, vag);   // Корректировка номера вагона на сервере	
             this.Close();
         }
 
