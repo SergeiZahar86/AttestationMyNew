@@ -51,20 +51,20 @@ namespace Attestation
         private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //global.IdShipper = shipp[shipper_Value.SelectedIndex].Id;
-            idSh = shipp[shipper_Value.SelectedIndex].Id - 1;
-            global.Shipper = shipp[shipper_Value.SelectedIndex].Name;
+            idSh = global.shippers[shipper_Value.SelectedIndex].Id - 1;
+            global.Shipper = global.shippers[shipper_Value.SelectedIndex].Name;
         }
         private void consignee_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //global.IdConsignee = consig[consignee_Value.SelectedIndex].Id;
-            idCon = consig[consignee_Value.SelectedIndex].Id - 1;
-            global.Consignee = consig[consignee_Value.SelectedIndex].Name;
+            idCon = global.consigners[consignee_Value.SelectedIndex].Id - 1;
+            global.Consignee = global.consigners[consignee_Value.SelectedIndex].Name;
         }
         private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //global.IdMat = mats_input[mat_Value.SelectedIndex].Id;
-            idMa = mats_input[mat_Value.SelectedIndex].Id - 1;
-            global.MatName = mats_input[mat_Value.SelectedIndex].Name;
+            idMa = global.mats[mat_Value.SelectedIndex].Id - 1;
+            global.MatName = global.mats[mat_Value.SelectedIndex].Name;
         }
     }
 }

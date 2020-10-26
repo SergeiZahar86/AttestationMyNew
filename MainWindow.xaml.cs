@@ -25,8 +25,8 @@ namespace Attestation
                 if (contractor_.Shipper)
                 {
                     global.shippers.Add(new Shippers(i, contractor_.Name));
-                }
                 i++;
+                }
             }
         }
         private void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
@@ -38,8 +38,8 @@ namespace Attestation
                 if (contractor_.Consigner)
                 {
                     global.consigners.Add(new Consigners(i, contractor_.Name));
-                }
                 i++;
+                }
             }
         }
         private void GetZonas() // получение справочника Зоны вагонов
@@ -59,9 +59,9 @@ namespace Attestation
             };
             return str;
         }
-        private List<string> GetAtt_codeFonts()
+        private List<string> GetAtt_codeFonts() // справочник элементов шрифта для итогов аттестации
         {
-            List<string> fonts = new List<string>(); // справочник элементов шрифта для итогов аттестации
+            List<string> fonts = new List<string>(); 
             fonts.Add("CheckCircle");
             fonts.Add("WindowClose");
             fonts.Add("Asterisk");
