@@ -87,7 +87,7 @@
             <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Content="Введите новое значение:" 
                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <TextBox x:Name="textboxVag" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" FontSize="22"  
-                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                      PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
             
             <TextBlock x:Name="result" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Foreground="#B22222"

@@ -109,6 +109,7 @@ namespace Attestation
                     timeEnd.Text = global.endTimeStr;
                     global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
 
+                    //timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
                     timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
                     global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
 
