@@ -3,7 +3,7 @@
     public class RowTab
     {
         
-        public RowTab(int part_id, int car_id, string num, int att_code, string att_codeString,
+        public RowTab(string part_id, int car_id, string num, int att_code, string att_codeString,
             double tara, double tara_e, double tara_delta, int zone_e, string zone_eString, int cause_id,
             string cause_idString, double carrying, string att_time)
         {
@@ -23,7 +23,7 @@
             this.Att_time = att_time;
         }
 
-        public int Part_id { get; set; }  // Номер партии
+        public string Part_id { get; set; }  // Номер партии
         public int Car_id { get; set; } // Порядковый номер вагона в партии 
         public string Num { get; set; } // Номер вагона
         public int Att_code { get; set; } // Признак аттестации (аттестован, не аттестован, условно аттестован)

@@ -21,7 +21,7 @@ using Thrift.Transport;
 #endif
 public partial class car_t : TBase
 {
-  private int _part_id;
+  private string _part_id;
   private int _car_id;
   private string _num;
   private int _att_code;
@@ -32,7 +32,7 @@ public partial class car_t : TBase
   private double _carrying_e;
   private string _att_time;
 
-  public int Part_id
+  public string Part_id
   {
     get
     {
@@ -199,8 +199,8 @@ public partial class car_t : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.I32) {
-              Part_id = iprot.ReadI32();
+            if (field.Type == TType.String) {
+              Part_id = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -289,12 +289,12 @@ public partial class car_t : TBase
       TStruct struc = new TStruct("car_t");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (__isset.part_id) {
+      if (Part_id != null && __isset.part_id) {
         field.Name = "part_id";
-        field.Type = TType.I32;
+        field.Type = TType.String;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Part_id);
+        oprot.WriteString(Part_id);
         oprot.WriteFieldEnd();
       }
       if (__isset.car_id) {
@@ -381,7 +381,7 @@ public partial class car_t : TBase
   public override string ToString() {
     StringBuilder __sb = new StringBuilder("car_t(");
     bool __first = true;
-    if (__isset.part_id) {
+    if (Part_id != null && __isset.part_id) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
       __sb.Append("Part_id: ");

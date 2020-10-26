@@ -19,23 +19,27 @@ namespace Attestation
         private void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
         {
             global.shippers = new List<Shippers>();
+            int i = 1;
             foreach (contractor_t contractor_ in contr)
             {
                 if (contractor_.Shipper)
                 {
-                    global.shippers.Add(new Shippers(contractor_.Id, contractor_.Name));
+                    global.shippers.Add(new Shippers(i, contractor_.Name));
                 }
+                i++;
             }
         }
         private void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
         {
-            global.consignees = new List<Consignees>();
+            global.consigners = new List<Consigners>();
+            int i = 1;
             foreach (contractor_t contractor_ in contr)
             {
                 if (contractor_.Consigner)
                 {
-                    global.consignees.Add(new Consignees(contractor_.Id, contractor_.Name));
+                    global.consigners.Add(new Consigners(i, contractor_.Name));
                 }
+                i++;
             }
         }
         private void GetZonas() // получение справочника Зоны вагонов
@@ -129,11 +133,20 @@ namespace Attestation
                 global.IsOk_Val = GetIsOk_Val();                        // справочник итогов аттестации
                 global.Att_codeFonts = GetAtt_codeFonts();              // справочник элементов шрифта для итогов аттестации
 
-                global.OldPart = global.client.getOldPart();                   // проверяем наличие незавершенных аттестаций
+                global.OldPart = global.client.getOldPart();                   // проверяем наличие незавершенных аттестаций(метод с сервера)
                 if(global.OldPart.Length > 0)
                 {
-                    global.part = global.client.getPart(global.OldPart);       // получаем незавершенную партию
-                    global.isColor = false;                                    // для кнопки начала и завершения аттестации 
+                    global.part = global.client.getPart(global.OldPart);                 // получаем незавершенную партию
+                    global.startTimeStr = global.part.Start_time;                        // получение времени начала аттестации
+                    global.Shipper = global.shippers[global.part.Shipper].Name;          // получение  Грузоотправителя
+                    global.Consignee = global.consigners[global.part.Consigner].Name;    // получение Грузополучателя
+                    global.PartId = global.part.Part_id;                                 // получение номера партии
+                    global.MatName = global.mats[global.part.Mat].Name;                  // получение названия материала
+
+                    global.isColor = false;                                              // для кнопки начала и завершения аттестации 
+
+                    ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
+                    ofAttestation.ShowDialog();
                 }
 
                 AttestationPage p = new AttestationPage();

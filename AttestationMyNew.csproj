@@ -207,7 +207,10 @@
     </Compile>
     <Compile Include="car_t.cs" />
     <Compile Include="cause_t.cs" />
-    <Compile Include="Consignees.cs" />
+    <Compile Include="Consigners.cs" />
+    <Compile Include="ContinuationOfAttestation.xaml.cs">
+      <DependentUpon>ContinuationOfAttestation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="contractor_t.cs" />
     <Compile Include="DataProviderException.cs" />
     <Compile Include="DataProviderService.cs" />
@@ -270,6 +273,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AttestationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContinuationOfAttestation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

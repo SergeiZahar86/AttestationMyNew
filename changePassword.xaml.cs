@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace Attestation
@@ -24,18 +25,21 @@ namespace Attestation
             if(oldPassword.Length > 0 && newPassword.Length > 0 &&
                 newPasswordRepead.Length > 0 && newPassword == newPasswordRepead)
             {
-                if(global.changePass(global.Login, oldPassword, newPassword, null))
+                bool ret=false;
+                try
                 {
-                    this.Close();
-                }
-                else
+                    ret = global.changePass(global.Login, oldPassword, newPassword, null); // changePass() - Смена данных учетной записи 
+                } catch(DataProviderException ex)
                 {
-                    result.Text = "Старый пароль введен неверно";
+                    string t=ex.Message;
                 }
+                  if(ret) this.Close();
+                     else result.Text = "Старый пароль введен неверно";
+                
             }
             else
             {
-                result.Text = "Пароль введен некорректно";
+                result.Text = "Новый или старый пароль введен некорректно";
             }
         }
         

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Attestation
 {
-    class Consignees
+    class Consigners
     {
         public int Id { get; set; } // Порядковый номер 
         public string Name { get; set; } // Название грузополучателя
-        public Consignees( int id, string name)
+        public Consigners( int id, string name)
         {
             this.Id = id;
             this.Name = name;

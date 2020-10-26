@@ -9,7 +9,7 @@ namespace Attestation
     {
         public int idx; // индекс строки
         private Global global;
-        //public static bool isVerification; // флаг для подтверждения окончания аттестации
+        public static bool isVerification;                                // флаг для подтверждения окончания аттестации
 
         //public DateTime time;
 
@@ -18,20 +18,21 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
             //time = global.timeGlobal;
-            //isVerification = false;                                     // флаг для подтверждения окончания аттестации
+            isVerification = false;                                       // флаг для подтверждения окончания аттестации
             DataGridMain.IsEnabled = global.isEnabled;                    // флаг кликабельности datagrid
 
             //StartAttestation.Background = global.currentColorStart;     // цвет кнопки аттестации
-            if (global.isColor)
+            if (!global.isColor)
             {
                 global.mainButtonAttestation = "Закончить";
                 startRow_1.Text = global.mainButtonAttestation;               // текст в кнопке аттестации
+                StartAttestation.Background = global.RedColorEnd;             // красный
 
             }
 
             timeStart.Text = global.startTimeStr;                         // время начала
             timeEnd.Text = global.endTimeStr;                             // Время окончания
-            timeDelta.Text = global.deltaTimeStr;                         // Время затраченное на аттестации
+            timeDelta.Text = global.deltaTimeStr;                         // Время затраченное на аттестации (продолжительность)
 
             part_idTextBlock.Text = global.PartId;                        // Номер партии
             matTextBlock.Text = global.MatName;                           // Название материала
@@ -50,24 +51,25 @@ namespace Attestation
             {
                 input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
                 inputOf.ShowDialog();
-                if (global.IdConsignee != null && global.IdShipper != null && global.IdMat != null)
+                if (global.IdConsigner != null && global.IdShipper != null && global.IdMat != null)
                 {
                     //////////// Установка времени ///////////////////////////////////////////////////////
-                    global.startTime = DateTime.Now;
-                    global.startTimeStr = null;
-                    global.endTimeStr = null;
-                    global.deltaTimeStr = null;
-                    timeEnd.Text = global.endTimeStr;
-                    global.startTimeStr = global.startTime.ToString();
-                    timeStart.Text = global.startTimeStr;
+                    global.startTime = DateTime.Now;                       // Запись текущего времени
+                    global.startTimeStr = null;                            // Начало аттестации партии вагонов для страницы Аттестации
+                    global.endTimeStr = null;                              // Окончание аттестации для страницы Аттестации
+                    global.deltaTimeStr = null;                            // Продолжительность прохождения аттестации для страницы Аттестации 
+                    timeDelta.Text = global.deltaTimeStr;                  // Время затраченное на аттестации (продолжительность) (вверху страницы)
+                    timeEnd.Text = global.endTimeStr;                      // Время окончания аттестации (вверху страницы)
+                    global.startTimeStr = global.startTime.ToString();     // Время начала аттестации (глобал)
+                    timeStart.Text = global.startTimeStr;                  // Время начала аттестации (вверху страницы)
                     ///////////////////////////////////////////////////////////////////////
                     
-                    //isVerification = false;                    // флаг для подтверждения окончания аттестации
-                    global.isEnabled = true;                     // флаг кликабельности datagrid
-                    DataGridMain.IsEnabled = global.isEnabled;     // разрешаю кликабельность в datagrid
+                    //isVerification = false;                              // флаг для подтверждения окончания аттестации
+                    global.isEnabled = true;                               // флаг кликабельности datagrid
+                    DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
 
                     /* Запрос партии вагонов */
-                    global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsignee, (int)global.IdMat, global.user); /* Начало аттестации
+                    global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsigner, (int)global.IdMat, global.user); /* Начало аттестации
                                                                                                              *   и получение партии вагонов */
 
                     global.PartId = global.part.Part_id.ToString();              // Номер партии
@@ -86,7 +88,7 @@ namespace Attestation
                     DataGridMain.ItemsSource = null;
                     DataGridMain.ItemsSource = global.ROWS;     // Привязка вагонов к datagrid
 
-                    global.IdConsignee = null;                  // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
+                    global.IdConsigner = null;                  // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
                     global.IdShipper = null;                    // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
                     global.IdMat = null;                        // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
 
@@ -95,28 +97,29 @@ namespace Attestation
             }
             else
             {
-                VerificationEndAttestation ver = new VerificationEndAttestation(); // окно подтверждения окончания аттестации
+                VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
                 ver.ShowDialog();
-                if (global.exitAtt(global.part.Part_id))
+                if (global.exitAtt(global.part.Part_id) && isVerification)            // метод bool exitAtt() подтверждение окончания аттестации
                 {
 
-                    global.endTime = DateTime.Now;                                  // Окончание аттестации 
-                    global.endTimeStr = null;                                       // Окончание аттестации (String) для страницы Аттестации
-                    global.endTimeStr = global.endTime.ToString();
+                    global.endTime = DateTime.Now;                                    // Окончание аттестации 
+                    global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
+                    global.endTimeStr = global.endTime.ToString();                    /* Перезапись времени окончания в Глобал в виде строки 
+                                                                                       для дальнейшей записи в объект car_t и передачи на сервер*/
                     timeEnd.Text = global.endTimeStr;
-                    global.deltaTime = global.endTime.Subtract(global.startTime);   // продолжительность аттестации
+                    global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
 
-                    timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");
-                    global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");
+                    timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
+                    global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
 
-                    StartAttestation.Background = global.GreenColorStart;                  // зеленый
+                    StartAttestation.Background = global.GreenColorStart;             // зеленый
 
                     global.mainButtonAttestation = "Начать";
                     startRow_1.Text = global.mainButtonAttestation;
 
-                    global.isColor = true;                                               // флаг для кнопки начала и завершения аттестации
-                    global.isEnabled = false;                                            // флаг кликабельности datagrid
-                    DataGridMain.IsEnabled = global.isEnabled;                           // убирается кликабельность с datagrid
+                    global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
+                    global.isEnabled = false;                                         // флаг кликабельности datagrid
+                    DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
 
 
                 }

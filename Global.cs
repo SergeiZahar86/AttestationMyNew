@@ -35,7 +35,7 @@ namespace Attestation
         public string user;                             // имя пользователя (ФИО)
         public string Login; 
         public int? IdShipper;               // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
-        public int? IdConsignee;             // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
+        public int? IdConsigner;             // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
         public int? IdMat;                   // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
         public string MatName;               // Название материала для страницы Аттестации
         public string PartId;                // Номер партии вагонов для страницы Аттестации
@@ -46,7 +46,7 @@ namespace Attestation
         public List<cause_t> cause;                     // справочник причин неаттестации
         public List<contractor_t> contractors;          // справочник контрагентов
         public List<Shippers> shippers;                 // справочник Грузоотправителя
-        public List<Consignees> consignees;             // справочник Грузополучателя
+        public List<Consigners> consigners;             // справочник Грузополучателя
         public List<mat_t> mats;                        // справочник материалов
         public List<string> IsOk_Val;                   // справочник итогов аттестации
         public List<string> Att_codeFonts;              // справочник элементов шрифта для итогов аттестации
@@ -126,7 +126,7 @@ namespace Attestation
             List<RowTab> rows = new List<RowTab>();
             foreach (car_t cars in DATA)
             {
-                int Part_id__ = cars.Part_id;
+                string Part_id__ = cars.Part_id;                         // ?
                 int Car_id__ = cars.Car_id;
                 string Num__ = cars.Num;
                 int Att_code__ = cars.Att_code;
@@ -146,9 +146,16 @@ namespace Attestation
                 string Cause_idString__ = "";
                 double Carrying__ = cars.Carrying_e;
                 string Att_time__ = cars.Att_time;
-                rows.Add(new RowTab(Part_id__, Car_id__, Num__, Att_code__,
-                    Att_codeString__, Tara__, Tara_e__, Tara_delta__, Zone_e__, Zone_eString__,
-                    Cause_id__, Cause_idString__, Carrying__, Att_time__));
+                if (DATA.Count > 0)
+                {
+                    rows.Add(new RowTab(Part_id__, Car_id__, Num__, Att_code__,
+                        Att_codeString__, Tara__, Tara_e__, Tara_delta__, Zone_e__, Zone_eString__,
+                        Cause_id__, Cause_idString__, Carrying__, Att_time__));
+                }
+                else
+                {
+                    //rows.Add(new RowTab())
+                }
             }
             return rows;
         }
