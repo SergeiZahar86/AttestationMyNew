@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Attestation"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        mc:Ignorable="d"  Title="" Height="1080" Width="1980"  WindowState="Maximized"  WindowStyle="None"  WindowStartupLocation="CenterScreen"
-         Loaded="GlobalWindow_Loaded">
+        mc:Ignorable="d"  Title="" Height="1080" Width="1980"  WindowState="Maximized"
+        WindowStyle="None"  WindowStartupLocation="CenterScreen"
+        Loaded="GlobalWindow_Loaded">
 
     <Window.Resources>
         <!-- .......................... Стили......................................................-->
