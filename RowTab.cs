@@ -2,7 +2,6 @@
 {
     public class RowTab
     {
-        
         public RowTab(string part_id, int car_id, string num, int att_code, string att_codeString,
             double tara, double tara_e, double tara_delta, int zone_e, string zone_eString, int cause_id,
             string cause_idString, double carrying, string att_time)

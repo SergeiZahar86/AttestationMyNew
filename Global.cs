@@ -58,7 +58,6 @@ namespace Attestation
         TTransport transport;
         public DataProviderService.Client client;
         /// /////////////////////////////////////////////////////
-        /// 
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
 
         private Global()
@@ -68,8 +67,6 @@ namespace Attestation
             transport.Open();
             this.client = new DataProviderService.Client(proto);
             ///////////////////////////////////////////////////////////////////////////////
-
-            //isLoadAttestation = true;
 
             IdShipper = null;     // Инициализация для проверки на  Null
             IdShipper = null;     // Инициализация для проверки на  Null
@@ -91,8 +88,6 @@ namespace Attestation
                                                                                                      * начала и завершения аттестации*/
             ///////////////////////////////////////////////////////////////////////////////////////////////
         }
-
-
         public void GetGlobalPart(int shipper, int consignee, int mat, string user) /* Получение партии
                                                                                      * вагонов перед Началом аттестации */
             {
@@ -103,14 +98,12 @@ namespace Attestation
             else DATA = new List<car_t>();
             ROWS = GetRows();
         }
-
         public static Global getInstance() // возвращает singleton объекта Global
         {
             if (instance == null)
                 instance = new Global();
             return instance;
         }
-
         public List<RowTab> GetRows() // внутренний список вагонов 
         {
             List<RowTab> rows = new List<RowTab>();
@@ -149,7 +142,6 @@ namespace Attestation
             }
             return rows;
         }
-
         public byte[] ImageToByteArray(System.Drawing.Image imageIn) // преобразует картинку в массив байтов
         {
             using (var ms = new MemoryStream())
@@ -158,9 +150,8 @@ namespace Attestation
                 return ms.ToArray();
             }
         }
-
-        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет
-        передавать картинки в виде массивов байт в объект Image окна*/
+        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет передавать картинки в виде
+                                                                       * массивов байт в объект Image окна*/
         {
             MemoryStream stream = new MemoryStream(byteArray);
             BitmapImage bitmapImage = new BitmapImage();
@@ -169,7 +160,6 @@ namespace Attestation
             bitmapImage.EndInit();
             return bitmapImage;
         }
-
         public static string ShortName(string fio) // из полного "Фамилии Имени, Отчества" получить "Фамилию, инициалы"
         {
                 string[] str = new string[3];
@@ -177,9 +167,6 @@ namespace Attestation
                 //if (str.Length != 3)  throw new ArgumentException("ФИО задано в неверно формате");
                 return string.Format("{0} {1}. {2}.", str[0], str[1][0], str[2][0]);
         }
-
-        ///////////////////////////////////////////// Справочники ////////////////////////////////////////////////////////////////////////////////
-        
         /// ////////////////////////////////////////// Запрос данных ///////////////////////////////////////////////////////////////////////////////
         public part_t getPart(string part_id) // Запрос партии вагонов
         {
@@ -191,7 +178,6 @@ namespace Attestation
             return this.client.getPhoto(part_id, car_id);
         }
         */
-        
         public String getUser(String Login, String Password, String Emple_id) // Получение имени пользователя
         {
             return this.client.getUser(Login, Password, Emple_id);

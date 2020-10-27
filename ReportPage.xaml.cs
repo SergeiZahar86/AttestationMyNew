@@ -10,7 +10,6 @@ namespace Attestation
         {
             InitializeComponent();
         }
-
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             Guid s = Guid.NewGuid();

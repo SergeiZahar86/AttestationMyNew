@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Attestation
 {
@@ -35,14 +33,12 @@ namespace Attestation
                 }
                   if(ret) this.Close();
                      else result.Text = "Старый пароль введен неверно";
-                
             }
             else
             {
                 result.Text = "Новый или старый пароль введен некорректно";
             }
         }
-        
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

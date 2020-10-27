@@ -11,25 +11,19 @@ namespace Attestation
         private Global global;
         public static bool isVerification;             // флаг для подтверждения окончания аттестации
 
-        //public DateTime time;
-
-        public AttestationPage()
+        public AttestationPage() // конструктор
         {
             InitializeComponent();
             global = Global.getInstance();
-            //time = global.timeGlobal;
             isVerification = false;                                       // флаг для подтверждения окончания аттестации
             DataGridMain.IsEnabled = global.isEnabled;                    // флаг кликабельности datagrid
 
-            //StartAttestation.Background = global.currentColorStart;     // цвет кнопки аттестации
             if (!global.isColor)
             {
                 global.mainButtonAttestation = "Закончить";
                 startRow_1.Text = global.mainButtonAttestation;               // текст в кнопке аттестации
                 StartAttestation.Background = global.RedColorEnd;             // красный
-
             }
-
             timeStart.Text = global.startTimeStr;                         // время начала
             timeEnd.Text = global.endTimeStr;                             // Время окончания
             timeDelta.Text = global.deltaTimeStr;                         // Время затраченное на аттестации (продолжительность)
@@ -39,13 +33,12 @@ namespace Attestation
             shippersTextBlock.Text = global.Shipper;                      // Грузоотправитель
             consigneesTextBlock.Text = global.Consignee;                  // Грузополучатель
         }
-        private void DataGridMain_Loaded(object sender, RoutedEventArgs e) /* загрузка 
-        данных в DataGrid*/
+        private void DataGridMain_Loaded(object sender, RoutedEventArgs e) // загрузка данных в DataGrid
         {
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void StartAttestation_Click(object sender, RoutedEventArgs e) /* Кнопка начала аттестации*/
+        private void StartAttestation_Click(object sender, RoutedEventArgs e) // Кнопка начала аттестации
         {
             if(global.isColor) // проверяем флаг
             {
@@ -108,10 +101,8 @@ namespace Attestation
                                                                                        для дальнейшей записи в объект car_t и передачи на сервер*/
                     timeEnd.Text = global.endTimeStr;
                     global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
-
-                    //timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
-                    timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
                     global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
+                    timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
 
                     StartAttestation.Background = global.GreenColorStart;             // зеленый
 
@@ -122,12 +113,11 @@ namespace Attestation
                     global.isEnabled = false;                                         // флаг кликабельности datagrid
                     DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
 
-
+                    global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
                 }
             }
         }
-        private void Foto_Click(object sender, RoutedEventArgs e) /* выводит окно
-        с фотографиями вагонов */
+        private void Foto_Click(object sender, RoutedEventArgs e) // выводит окно с фотографиями вагонов
         {
             /*
             global.Idx = DataGridMain.SelectedIndex;
@@ -146,8 +136,7 @@ namespace Attestation
             }
             */
         }
-        
-        private void Change_VagNum(object sender, RoutedEventArgs e)/* Изменение номера вагона*/
+        private void Change_VagNum(object sender, RoutedEventArgs e) // Изменение номера вагона
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
             global.Idx = DataGridMain.SelectedIndex;
@@ -156,7 +145,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void Change_isOk(object sender, RoutedEventArgs e)/* Изменение итогов аттестации*/
+        private void Change_isOk(object sender, RoutedEventArgs e) // Изменение итогов аттестации
         {
             ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
             global.Idx = DataGridMain.SelectedIndex;
@@ -164,7 +153,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void CauseButton_Click (object sender, RoutedEventArgs e)/* Установить причину неаттестации*/
+        private void CauseButton_Click (object sender, RoutedEventArgs e) // Установить причину неаттестации
         {
             ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
             global.Idx = DataGridMain.SelectedIndex;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Attestation
 {
-    class Shippers
+    class Shippers // справочник Грузоотправителя
     {
         public int Id { get; set; } // Порядковый номер 
         public string Name { get; set; } // Название грузоотправителя

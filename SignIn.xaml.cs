@@ -19,8 +19,6 @@ namespace Attestation
                 global.Login = tbLogin.Text;
                 string password = passwordBox.Password;
                 global.user = global.getUser(global.Login, password, ""); // Global.getUser (261)
-                //global.someValueString = global.getUser("oper", "oper", null);
-           
                 if (global.user.Length > 0)
                 {
                     this.Close();
@@ -35,11 +33,9 @@ namespace Attestation
                 mistake.Text = "Логин или пароль введён неверно";
             }
         }
-        private void close_Click(object sender, RoutedEventArgs e)
+        private void close_Click(object sender, RoutedEventArgs e) // закрыть программу
         {
             isCloseProgram = false;
-            // => Application.Current.Shutdown(); // закрыть программу
-
             VerificationCloseProgram closeProgram = new VerificationCloseProgram();
             closeProgram.ShowDialog();
             if (isCloseProgram)

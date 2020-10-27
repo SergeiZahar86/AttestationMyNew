@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace Attestation
 {
-    /// <summary>
-    /// Логика взаимодействия для ShowChange_cause_t.xaml
-    /// </summary>
     public partial class ShowChange_cause_t : Window
     {
         private Global global;
@@ -22,7 +19,6 @@ namespace Attestation
         {
             this.Close();
         }
-
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

@@ -21,7 +21,6 @@ namespace Attestation
                 e.Handled = true; // отклоняем ввод
             }
         }
-
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e) // Валидация ввода, нельзя пробел
         {
             if (e.Key == Key.Space)
@@ -36,7 +35,6 @@ namespace Attestation
             global.ROWS[global.Idx].Carrying = Convert.ToDouble(carRepl);
             this.Close();
         }
-
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

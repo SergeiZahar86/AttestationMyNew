@@ -12,9 +12,43 @@ namespace Attestation
         private Global global;
         public MainWindow()
         {
-
             InitializeComponent();
             global = Global.getInstance();
+        }
+        private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
+        {
+            GetSignIn();
+            if (global.user.Length > 0)
+            {
+                global.cause = global.client.getCauses();               // Запрос справочника причин неаттестации
+                global.contractors = global.client.getContractors();    // Запрос справочника контрагентов
+                global.mats = global.client.getMat();                   // Запрос справочника материалов
+                GetConsignees(global.contractors);                      // получение справочника Грузополучателя
+                GetShippers(global.contractors);                        // получение справочника Грузоотправителей
+                GetZonas();                                             // получение справочника Зоны вагонов
+                global.IsOk_Val = GetIsOk_Val();                        // справочник итогов аттестации
+                global.Att_codeFonts = GetAtt_codeFonts();              // справочник элементов шрифта для итогов аттестации
+
+                global.OldPart = global.client.getOldPart();                   // проверяем наличие незавершенных аттестаций(метод с сервера)
+                if(global.OldPart.Length > 0)
+                {
+                    global.part = global.client.getPart(global.OldPart);                 // получаем незавершенную партию
+                    global.startTimeStr = global.part.Start_time;                        // получение времени начала аттестации
+                    global.Shipper = global.shippers[global.part.Shipper].Name;          // получение  Грузоотправителя
+                    global.Consignee = global.consigners[global.part.Consigner].Name;    // получение Грузополучателя
+                    global.PartId = global.part.Part_id;                                 // получение номера партии
+                    global.MatName = global.mats[global.part.Mat].Name;                  // получение названия материала
+
+                    global.isColor = false;                                              // для кнопки начала и завершения аттестации 
+
+                    ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
+                    ofAttestation.ShowDialog();
+                }
+
+                AttestationPage p = new AttestationPage();
+                MainFrame.Navigate(p);
+            }
+            
         }
         private void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
         {
@@ -70,7 +104,6 @@ namespace Attestation
         // Обработка события кнопок
         private void CloseButton_Click(object sender, RoutedEventArgs e)
             => Application.Current.Shutdown(); // выход из программы
-
         private void changePassword_Click(object sender, RoutedEventArgs e) // изменение пароля
         {
             changePassword dialog = new changePassword();
@@ -82,9 +115,10 @@ namespace Attestation
 
             }
         }
-        private void MinButton_Click(object sender, RoutedEventArgs e) =>  this.WindowState = WindowState.Minimized;
-
-
+        private void MinButton_Click(object sender, RoutedEventArgs e) // сворачивание окна
+        { 
+            this.WindowState = WindowState.Minimized;
+        }
         private void Attestation_Click(object sender, MouseButtonEventArgs e) // страница аттестации
         {
             var converter = new System.Windows.Media.BrushConverter();
@@ -118,43 +152,6 @@ namespace Attestation
             Archive p = new Archive();
             MainFrame.Navigate(p);
         }
-
-        private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
-        {
-            GetSignIn();
-            if (global.user.Length > 0)
-            {
-                global.cause = global.client.getCauses();               // Запрос справочника причин неаттестации
-                global.contractors = global.client.getContractors();    // Запрос справочника контрагентов
-                global.mats = global.client.getMat();                   // Запрос справочника материалов
-                GetConsignees(global.contractors);                      // получение справочника Грузополучателя
-                GetShippers(global.contractors);                        // получение справочника Грузоотправителей
-                GetZonas();                                             // получение справочника Зоны вагонов
-                global.IsOk_Val = GetIsOk_Val();                        // справочник итогов аттестации
-                global.Att_codeFonts = GetAtt_codeFonts();              // справочник элементов шрифта для итогов аттестации
-
-                global.OldPart = global.client.getOldPart();                   // проверяем наличие незавершенных аттестаций(метод с сервера)
-                if(global.OldPart.Length > 0)
-                {
-                    global.part = global.client.getPart(global.OldPart);                 // получаем незавершенную партию
-                    global.startTimeStr = global.part.Start_time;                        // получение времени начала аттестации
-                    global.Shipper = global.shippers[global.part.Shipper].Name;          // получение  Грузоотправителя
-                    global.Consignee = global.consigners[global.part.Consigner].Name;    // получение Грузополучателя
-                    global.PartId = global.part.Part_id;                                 // получение номера партии
-                    global.MatName = global.mats[global.part.Mat].Name;                  // получение названия материала
-
-                    global.isColor = false;                                              // для кнопки начала и завершения аттестации 
-
-                    ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
-                    ofAttestation.ShowDialog();
-                }
-
-                AttestationPage p = new AttestationPage();
-                MainFrame.Navigate(p);
-            }
-            
-        }
-
         private void signIn_Click(object sender, RoutedEventArgs e) // кнопка авторизации
         {
             GetSignIn();

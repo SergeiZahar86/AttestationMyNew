@@ -37,7 +37,6 @@ namespace Attestation
                 3, MidpointRounding.AwayFromZero);
             this.Close();
         }
-
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
