@@ -20,7 +20,7 @@ public partial class DataProviderService {
     List<cause_t> getCauses();
     List<contractor_t> getContractors();
     List<mat_t> getMat();
-    photo_t getPhoto(int part_id, int car_id);
+    photo_t getPhoto(string part_id, int car_id);
     part_t getPart(string part_id);
     string getUser(string login, string password, string empl_id);
     string getNum(string part_id, int car_id);
@@ -28,6 +28,9 @@ public partial class DataProviderService {
     bool setNum(string part_id, int car_id, string num);
     bool setAtt(string part_id, int car_id, int att_code);
     bool setUser(string part_id, string user);
+    bool setTara(string part_id, int car_id, double tara);
+    bool setZone(string part_id, int car_id, int zone);
+    bool setCarry(string part_id, int car_id, double carry);
     part_t startAtt(int shipper, int consigner, int mat, string user);
     bool endAtt(string part_id);
     bool changePass(string login, string oldPass, string newPass, string newEmpl_id);
@@ -47,7 +50,7 @@ public partial class DataProviderService {
     List<mat_t> End_getMat(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_getPhoto(AsyncCallback callback, object state, int part_id, int car_id);
+    IAsyncResult Begin_getPhoto(AsyncCallback callback, object state, string part_id, int car_id);
     photo_t End_getPhoto(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
@@ -77,6 +80,18 @@ public partial class DataProviderService {
     #if SILVERLIGHT
     IAsyncResult Begin_setUser(AsyncCallback callback, object state, string part_id, string user);
     bool End_setUser(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_setTara(AsyncCallback callback, object state, string part_id, int car_id, double tara);
+    bool End_setTara(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_setZone(AsyncCallback callback, object state, string part_id, int car_id, int zone);
+    bool End_setZone(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_setCarry(AsyncCallback callback, object state, string part_id, int car_id, double carry);
+    bool End_setCarry(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
     IAsyncResult Begin_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user);
@@ -361,7 +376,7 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_getPhoto(AsyncCallback callback, object state, int part_id, int car_id)
+    public IAsyncResult Begin_getPhoto(AsyncCallback callback, object state, string part_id, int car_id)
     {
       return send_getPhoto(callback, state, part_id, car_id);
     }
@@ -374,7 +389,7 @@ public partial class DataProviderService {
 
     #endif
 
-    public photo_t getPhoto(int part_id, int car_id)
+    public photo_t getPhoto(string part_id, int car_id)
     {
       #if SILVERLIGHT
       var asyncResult = Begin_getPhoto(null, null, part_id, car_id);
@@ -387,7 +402,7 @@ public partial class DataProviderService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_getPhoto(AsyncCallback callback, object state, int part_id, int car_id)
+    public IAsyncResult send_getPhoto(AsyncCallback callback, object state, string part_id, int car_id)
     {
       oprot_.WriteMessageBegin(new TMessage("getPhoto", TMessageType.Call, seqid_));
       getPhoto_args args = new getPhoto_args();
@@ -400,7 +415,7 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_getPhoto(int part_id, int car_id)
+    public void send_getPhoto(string part_id, int car_id)
     {
       oprot_.WriteMessageBegin(new TMessage("getPhoto", TMessageType.Call, seqid_));
       getPhoto_args args = new getPhoto_args();
@@ -953,6 +968,234 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
+    public IAsyncResult Begin_setTara(AsyncCallback callback, object state, string part_id, int car_id, double tara)
+    {
+      return send_setTara(callback, state, part_id, car_id, tara);
+    }
+
+    public bool End_setTara(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_setTara();
+    }
+
+    #endif
+
+    public bool setTara(string part_id, int car_id, double tara)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_setTara(null, null, part_id, car_id, tara);
+      return End_setTara(asyncResult);
+
+      #else
+      send_setTara(part_id, car_id, tara);
+      return recv_setTara();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_setTara(AsyncCallback callback, object state, string part_id, int car_id, double tara)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setTara", TMessageType.Call, seqid_));
+      setTara_args args = new setTara_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Tara = tara;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_setTara(string part_id, int car_id, double tara)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setTara", TMessageType.Call, seqid_));
+      setTara_args args = new setTara_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Tara = tara;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_setTara()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      setTara_result result = new setTara_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setTara failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_setZone(AsyncCallback callback, object state, string part_id, int car_id, int zone)
+    {
+      return send_setZone(callback, state, part_id, car_id, zone);
+    }
+
+    public bool End_setZone(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_setZone();
+    }
+
+    #endif
+
+    public bool setZone(string part_id, int car_id, int zone)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_setZone(null, null, part_id, car_id, zone);
+      return End_setZone(asyncResult);
+
+      #else
+      send_setZone(part_id, car_id, zone);
+      return recv_setZone();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_setZone(AsyncCallback callback, object state, string part_id, int car_id, int zone)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setZone", TMessageType.Call, seqid_));
+      setZone_args args = new setZone_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Zone = zone;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_setZone(string part_id, int car_id, int zone)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setZone", TMessageType.Call, seqid_));
+      setZone_args args = new setZone_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Zone = zone;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_setZone()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      setZone_result result = new setZone_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setZone failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_setCarry(AsyncCallback callback, object state, string part_id, int car_id, double carry)
+    {
+      return send_setCarry(callback, state, part_id, car_id, carry);
+    }
+
+    public bool End_setCarry(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_setCarry();
+    }
+
+    #endif
+
+    public bool setCarry(string part_id, int car_id, double carry)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_setCarry(null, null, part_id, car_id, carry);
+      return End_setCarry(asyncResult);
+
+      #else
+      send_setCarry(part_id, car_id, carry);
+      return recv_setCarry();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_setCarry(AsyncCallback callback, object state, string part_id, int car_id, double carry)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setCarry", TMessageType.Call, seqid_));
+      setCarry_args args = new setCarry_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Carry = carry;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_setCarry(string part_id, int car_id, double carry)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setCarry", TMessageType.Call, seqid_));
+      setCarry_args args = new setCarry_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Carry = carry;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_setCarry()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      setCarry_result result = new setCarry_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setCarry failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
     public IAsyncResult Begin_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user)
     {
       return send_startAtt(callback, state, shipper, consigner, mat, user);
@@ -1194,6 +1437,9 @@ public partial class DataProviderService {
       processMap_["setNum"] = setNum_Process;
       processMap_["setAtt"] = setAtt_Process;
       processMap_["setUser"] = setUser_Process;
+      processMap_["setTara"] = setTara_Process;
+      processMap_["setZone"] = setZone_Process;
+      processMap_["setCarry"] = setCarry_Process;
       processMap_["startAtt"] = startAtt_Process;
       processMap_["endAtt"] = endAtt_Process;
       processMap_["changePass"] = changePass_Process;
@@ -1608,6 +1854,111 @@ public partial class DataProviderService {
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
         oprot.WriteMessageBegin(new TMessage("setUser", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void setTara_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      setTara_args args = new setTara_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      setTara_result result = new setTara_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.setTara(args.Part_id, args.Car_id, args.Tara);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("setTara", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("setTara", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void setZone_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      setZone_args args = new setZone_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      setZone_result result = new setZone_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.setZone(args.Part_id, args.Car_id, args.Zone);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("setZone", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("setZone", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void setCarry_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      setCarry_args args = new setCarry_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      setCarry_result result = new setCarry_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.setCarry(args.Part_id, args.Car_id, args.Carry);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("setCarry", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("setCarry", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -2414,10 +2765,10 @@ public partial class DataProviderService {
   #endif
   public partial class getPhoto_args : TBase
   {
-    private int _part_id;
+    private string _part_id;
     private int _car_id;
 
-    public int Part_id
+    public string Part_id
     {
       get
       {
@@ -2472,8 +2823,8 @@ public partial class DataProviderService {
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Part_id = iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -2506,12 +2857,12 @@ public partial class DataProviderService {
         TStruct struc = new TStruct("getPhoto_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.part_id) {
+        if (Part_id != null && __isset.part_id) {
           field.Name = "part_id";
-          field.Type = TType.I32;
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Part_id);
+          oprot.WriteString(Part_id);
           oprot.WriteFieldEnd();
         }
         if (__isset.car_id) {
@@ -2534,7 +2885,7 @@ public partial class DataProviderService {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("getPhoto_args(");
       bool __first = true;
-      if (__isset.part_id) {
+      if (Part_id != null && __isset.part_id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Part_id: ");
@@ -4719,6 +5070,987 @@ public partial class DataProviderService {
 
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("setUser_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setTara_args : TBase
+  {
+    private string _part_id;
+    private int _car_id;
+    private double _tara;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+    public int Car_id
+    {
+      get
+      {
+        return _car_id;
+      }
+      set
+      {
+        __isset.car_id = true;
+        this._car_id = value;
+      }
+    }
+
+    public double Tara
+    {
+      get
+      {
+        return _tara;
+      }
+      set
+      {
+        __isset.tara = true;
+        this._tara = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+      public bool car_id;
+      public bool tara;
+    }
+
+    public setTara_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Car_id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Double) {
+                Tara = iprot.ReadDouble();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setTara_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.car_id) {
+          field.Name = "car_id";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Car_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.tara) {
+          field.Name = "tara";
+          field.Type = TType.Double;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteDouble(Tara);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setTara_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      if (__isset.car_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car_id: ");
+        __sb.Append(Car_id);
+      }
+      if (__isset.tara) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Tara: ");
+        __sb.Append(Tara);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setTara_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public setTara_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setTara_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setTara_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setZone_args : TBase
+  {
+    private string _part_id;
+    private int _car_id;
+    private int _zone;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+    public int Car_id
+    {
+      get
+      {
+        return _car_id;
+      }
+      set
+      {
+        __isset.car_id = true;
+        this._car_id = value;
+      }
+    }
+
+    public int Zone
+    {
+      get
+      {
+        return _zone;
+      }
+      set
+      {
+        __isset.zone = true;
+        this._zone = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+      public bool car_id;
+      public bool zone;
+    }
+
+    public setZone_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Car_id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32) {
+                Zone = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setZone_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.car_id) {
+          field.Name = "car_id";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Car_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.zone) {
+          field.Name = "zone";
+          field.Type = TType.I32;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Zone);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setZone_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      if (__isset.car_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car_id: ");
+        __sb.Append(Car_id);
+      }
+      if (__isset.zone) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Zone: ");
+        __sb.Append(Zone);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setZone_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public setZone_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setZone_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setZone_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setCarry_args : TBase
+  {
+    private string _part_id;
+    private int _car_id;
+    private double _carry;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+    public int Car_id
+    {
+      get
+      {
+        return _car_id;
+      }
+      set
+      {
+        __isset.car_id = true;
+        this._car_id = value;
+      }
+    }
+
+    public double Carry
+    {
+      get
+      {
+        return _carry;
+      }
+      set
+      {
+        __isset.carry = true;
+        this._carry = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+      public bool car_id;
+      public bool carry;
+    }
+
+    public setCarry_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Car_id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Double) {
+                Carry = iprot.ReadDouble();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setCarry_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.car_id) {
+          field.Name = "car_id";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Car_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.carry) {
+          field.Name = "carry";
+          field.Type = TType.Double;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteDouble(Carry);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setCarry_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      if (__isset.car_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car_id: ");
+        __sb.Append(Car_id);
+      }
+      if (__isset.carry) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Carry: ");
+        __sb.Append(Carry);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setCarry_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public setCarry_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setCarry_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setCarry_result(");
       bool __first = true;
       if (__isset.success) {
         if(!__first) { __sb.Append(", "); }

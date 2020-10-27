@@ -19,8 +19,10 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e) // Корректировка признака аттестации на сервере
         {
-            global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Att_code); 
-            this.Close();
+            if (global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Att_code))
+            {
+                this.Close();
+            }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {

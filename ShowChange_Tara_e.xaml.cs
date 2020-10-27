@@ -35,7 +35,10 @@ namespace Attestation
             global.ROWS[global.Idx].Tara_e = Convert.ToDouble(tarRepl);
             global.ROWS[global.Idx].Tara_delta = Math.Round((global.ROWS[global.Idx].Tara - global.ROWS[global.Idx].Tara_e),
                 3, MidpointRounding.AwayFromZero);
-            this.Close();
+            if (global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Tara_e))
+            {
+                this.Close();
+            }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {

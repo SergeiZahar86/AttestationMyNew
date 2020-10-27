@@ -92,7 +92,7 @@ namespace Attestation
             {
                 VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
                 ver.ShowDialog();
-                if (global.exitAtt(global.part.Part_id) && isVerification)            // метод bool exitAtt() подтверждение окончания аттестации
+                if (global.exitAtt(global.part.Part_id) && isVerification && global.client.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
                 {
 
                     global.endTime = DateTime.Now;                                    // Окончание аттестации 

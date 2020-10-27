@@ -18,7 +18,10 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Zone_e))
+            {
+                this.Close();
+            }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {

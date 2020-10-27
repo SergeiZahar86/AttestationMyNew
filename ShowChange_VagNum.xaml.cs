@@ -32,8 +32,10 @@ namespace Attestation
             String vag = textboxVag.Text;
             global.ROWS[global.Idx].Num = vag;
 
-            global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, vag);   // Корректировка номера вагона на сервере	
-            this.Close();
+            if (global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, vag)) // Корректировка номера вагона на сервере	
+            {   
+                this.Close();
+            }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {

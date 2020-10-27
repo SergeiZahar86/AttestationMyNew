@@ -107,6 +107,15 @@ namespace Attestation
         public List<RowTab> GetRows() // внутренний список вагонов 
         {
             List<RowTab> rows = new List<RowTab>();
+
+            for(int i = 0; i<25; i++)
+            {
+                double Tar = 33.3;
+                double Tar_e = 43.3;
+                double Tar_delta = Math.Round((Tar - Tar_e), 3, MidpointRounding.AwayFromZero);
+                rows.Add(new RowTab("hello", 1, "345", 1, "", Tar, Tar_e, Tar_delta, 1, "", 1, "", 55, ""));
+            }
+            /*
             foreach (car_t cars in DATA)
             {
                 string Part_id__ = cars.Part_id;                        
@@ -129,17 +138,12 @@ namespace Attestation
                 string Cause_idString__ = "";
                 double Carrying__ = cars.Carrying_e;
                 string Att_time__ = cars.Att_time;
-                if (DATA.Count > 0)
-                {
+                
                     rows.Add(new RowTab(Part_id__, Car_id__, Num__, Att_code__,
                         Att_codeString__, Tara__, Tara_e__, Tara_delta__, Zone_e__, Zone_eString__,
                         Cause_id__, Cause_idString__, Carrying__, Att_time__));
-                }
-                else
-                {
-                    //rows.Add(new RowTab())
-                }
             }
+            */
             return rows;
         }
         public byte[] ImageToByteArray(System.Drawing.Image imageIn) // преобразует картинку в массив байтов
