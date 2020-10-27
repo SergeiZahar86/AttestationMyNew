@@ -122,11 +122,13 @@
                 <TextBlock HorizontalAlignment="Center"  Foreground="White"  PreviewMouseDown="Attestation_Click"
                            FontFamily="Calibry" FontSize="16" Margin="30,10,15,4">Аттестация</TextBlock>
             </Border>
+            <!--
             <Border BorderThickness="0 0 0 6" BorderBrush="#37474F" x:Name="BorderReport" Cursor="Hand">
                 <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Report_Click"
                            FontFamily="Calibry"
                            FontSize="16" Margin="15,10,15,4">Отчеты</TextBlock>
             </Border>
+            -->
             <Border BorderThickness="0 0 0 6" BorderBrush="#37474F" x:Name="BorderArchive" Cursor="Hand">
                 <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Archive_Click"
                            FontFamily="Calibry"
