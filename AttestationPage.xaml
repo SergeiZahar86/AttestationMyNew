@@ -470,6 +470,7 @@
 
                 <DataGridTemplateColumn x:Name="Zona" Header="Зона" Width="50"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    
                     <DataGridTemplateColumn.CellTemplate  >
                         <DataTemplate>
                             <Button x:Name="button_Change_Zone_eString" Click="Change_Zone_eString" VerticalContentAlignment="Stretch"

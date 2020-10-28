@@ -84,7 +84,7 @@
                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <ComboBox x:Name="consigner_Value" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
-                          FontSize="14" SelectionChanged="zona_Value_SelectionChanged"
+                          FontSize="14" SelectionChanged="consigner_Value_SelectionChanged"
                           ItemsSource="{Binding Path=zona_Val}" DisplayMemberPath="Name" SelectedValuePath="Name"
                           SelectedValue="{Binding Path=Zona}">
                 <!--

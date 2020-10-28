@@ -263,6 +263,9 @@
     <Compile Include="ShowChange_isOk.xaml.cs">
       <DependentUpon>ShowChange_isOk.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShowChange_Mat_String.xaml.cs">
+      <DependentUpon>ShowChange_Mat_String.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowChange_Shipper_String.xaml.cs">
       <DependentUpon>ShowChange_Shipper_String.xaml</DependentUpon>
     </Compile>
@@ -346,6 +349,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowChange_isOk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowChange_Mat_String.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

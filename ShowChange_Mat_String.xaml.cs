@@ -4,17 +4,17 @@ using System.Windows.Controls;
 
 namespace Attestation
 {
-    public partial class ShowChange_Shipper_String : Window
+    public partial class ShowChange_Mat_String : Window
     {
         private Global global;
-        private List<Shippers> shippersVal;
+        private List<mat_t> matsVal;
 
-        public ShowChange_Shipper_String()
+        public ShowChange_Mat_String()
         {
             InitializeComponent();
             global = Global.getInstance();
-            shippersVal = global.shippers;
-            shipper_Value.ItemsSource = shippersVal;
+            matsVal = global.mats;
+            mat_Value.ItemsSource = matsVal;
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
@@ -27,10 +27,10 @@ namespace Attestation
         {
             this.Close();
         }
-        private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.ROWS[global.Idx].Shipper = global.shippers[shipper_Value.SelectedIndex].Id - 1;
-            global.ROWS[global.Idx].Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
+            global.ROWS[global.Idx].Mat = global.mats[mat_Value.SelectedIndex].Id - 1;
+            global.ROWS[global.Idx].Mat_String = global.mats[mat_Value.SelectedIndex].Name;
 
         }
     }

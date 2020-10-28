@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Attestation
 {
@@ -28,7 +18,7 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+            if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
             {
                 this.Close();
             }
@@ -37,7 +27,7 @@ namespace Attestation
         {
             this.Close();
         }
-        private void zona_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void consigner_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             global.ROWS[global.Idx].Consigner = global.consigners[consigner_Value.SelectedIndex].Id - 1;
             global.ROWS[global.Idx].Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;

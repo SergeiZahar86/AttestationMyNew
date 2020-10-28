@@ -211,7 +211,11 @@ namespace Attestation
         }
         private void matButton_Click(object sender, RoutedEventArgs e) // изменение материала 
         {
-
+            ShowChange_Mat_String Change_Mat_String = new ShowChange_Mat_String();
+            global.Idx = DataGridMain.SelectedIndex;
+            Change_Mat_String.ShowDialog();
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
         }
 
 

@@ -1,11 +1,11 @@
-﻿<Window x:Class="Attestation.ShowChange_Shipper_String"
+﻿<Window x:Class="Attestation.ShowChange_Mat_String"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Attestation"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
-        Title="ShowChange_Shipper_String" 
+        Title="ShowChange_Mat_String" 
         mc:Ignorable="d"  Height="290" Width="344.031" WindowStyle="None" WindowStartupLocation="CenterScreen" Top="-200"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
@@ -82,9 +82,9 @@
         <Grid>
             <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Content="Выбор значения:" 
                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <ComboBox x:Name="shipper_Value" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="20,0"
+            <ComboBox x:Name="mat_Value" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
-                          FontSize="14" SelectionChanged="shipper_Value_SelectionChanged"
+                          FontSize="14" SelectionChanged="mat_Value_SelectionChanged"
                           ItemsSource="{Binding Path=zona_Val}" DisplayMemberPath="Name" SelectedValuePath="Name"
                           SelectedValue="{Binding Path=Zona}">
                 <!--
