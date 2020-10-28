@@ -257,8 +257,14 @@
     <Compile Include="ShowChange_cause_t.xaml.cs">
       <DependentUpon>ShowChange_cause_t.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShowChange_Consigner_String.xaml.cs">
+      <DependentUpon>ShowChange_Consigner_String.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowChange_isOk.xaml.cs">
       <DependentUpon>ShowChange_isOk.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowChange_Shipper_String.xaml.cs">
+      <DependentUpon>ShowChange_Shipper_String.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShowChange_Tara_e.xaml.cs">
       <DependentUpon>ShowChange_Tara_e.xaml</DependentUpon>
@@ -335,7 +341,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ShowChange_Consigner_String.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ShowChange_isOk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowChange_Shipper_String.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

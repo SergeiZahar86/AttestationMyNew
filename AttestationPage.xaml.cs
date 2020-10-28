@@ -194,13 +194,22 @@ namespace Attestation
         }
         private void shipperButton_Click(object sender, RoutedEventArgs e) // изменение Грузоотправителя
         {
+            ShowChange_Shipper_String Change_Shipper_String = new ShowChange_Shipper_String();
+            global.Idx = DataGridMain.SelectedIndex;
+            Change_Shipper_String.ShowDialog();
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
 
         }
-        private void consignerButton_Click(object sender, RoutedEventArgs e) // изменение Грузоотправителя
+        private void consignerButton_Click(object sender, RoutedEventArgs e) // изменение Грузополучателя
         {
-
+            ShowChange_Consigner_String Change_Consigner_String = new ShowChange_Consigner_String();
+            global.Idx = DataGridMain.SelectedIndex;
+            Change_Consigner_String.ShowDialog();
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
         }
-        private void matButton_Click(object sender, RoutedEventArgs e) // изменение Грузоотправителя
+        private void matButton_Click(object sender, RoutedEventArgs e) // изменение материала 
         {
 
         }

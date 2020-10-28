@@ -504,11 +504,11 @@
                                     Style="{StaticResource SomeButton}"
                                     Background="Transparent" Click="shipperButton_Click"
                                     BorderBrush="White"  >
-                                <TextBlock Text="{Binding Shipper}"  HorizontalAlignment="Center"
+                                <TextBlock Text="{Binding Shipper_String}"  HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
-                                            <TextBlock Text="{Binding Shipper}" FontSize="22" Foreground="Black" 
+                                            <TextBlock Text="{Binding Shipper_String}" FontSize="22" Foreground="Black" 
                                                         Background="White" />
                                         </ToolTip>
                                     </TextBlock.ToolTip>
@@ -526,11 +526,11 @@
                                     Style="{StaticResource SomeButton}"
                                     Background="Transparent" Click="consignerButton_Click"
                                     BorderBrush="White"  >
-                                <TextBlock Text="{Binding Consigner}"  HorizontalAlignment="Center"
+                                <TextBlock Text="{Binding Consigner_String}"  HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
-                                            <TextBlock Text="{Binding Consigner}" FontSize="22" Foreground="Black" 
+                                            <TextBlock Text="{Binding Consigner_String}" FontSize="22" Foreground="Black" 
                                                         Background="White" />
                                         </ToolTip>
                                     </TextBlock.ToolTip>
@@ -548,11 +548,11 @@
                                     Style="{StaticResource SomeButton}"
                                     Background="Transparent" Click="matButton_Click"
                                     BorderBrush="White"  >
-                                <TextBlock Text="{Binding Mat}"  HorizontalAlignment="Center"
+                                <TextBlock Text="{Binding Mat_String}"  HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
-                                            <TextBlock Text="{Binding Mat}" FontSize="22" Foreground="Black" 
+                                            <TextBlock Text="{Binding Mat_String}" FontSize="22" Foreground="Black" 
                                                         Background="White" />
                                         </ToolTip>
                                     </TextBlock.ToolTip>
