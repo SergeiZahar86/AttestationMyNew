@@ -25,6 +25,9 @@
         public string Part_id { get; set; }  // Номер партии
         public int Car_id { get; set; } // Порядковый номер вагона в партии 
         public string Num { get; set; } // Номер вагона
+        public int Shipper { get; set; } // Грузоотправитель
+        public int Consigner { get; set; } // Грузополучатель
+        public int Mat { get; set; } // Код материала 
         public int Att_code { get; set; } // Признак аттестации (аттестован, не аттестован, условно аттестован)
         public string Att_codeString { get; set; } // (изменено) Признак аттестации (аттестован, не аттестован, условно аттестован)
         public double Tara { get; set; } // Вес тары

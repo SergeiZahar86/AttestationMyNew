@@ -34,10 +34,10 @@ namespace Attestation
                 {
                     global.part = global.client.getPart(global.OldPart);                 // получаем незавершенную партию
                     global.startTimeStr = global.part.Start_time;                        // получение времени начала аттестации
-                    global.Shipper = global.shippers[global.part.Shipper].Name;          // получение  Грузоотправителя
-                    global.Consignee = global.consigners[global.part.Consigner].Name;    // получение Грузополучателя
+                    //global.Shipper = global.shippers[global.part.Shipper].Name;          // получение  Грузоотправителя
+                    //global.Consignee = global.consigners[global.part.Consigner].Name;    // получение Грузополучателя
                     global.PartId = global.part.Part_id;                                 // получение номера партии
-                    global.MatName = global.mats[global.part.Mat].Name;                  // получение названия материала
+                    //global.MatName = global.mats[global.part.Mat].Name;                  // получение названия материала
 
                     global.isColor = false;                                              // для кнопки начала и завершения аттестации 
 

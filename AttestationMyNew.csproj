@@ -442,5 +442,8 @@
   <ItemGroup>
     <SplashScreen Include="Resources\logo — копия.png" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

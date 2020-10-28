@@ -31,7 +31,11 @@ public partial class DataProviderService {
     bool setTara(string part_id, int car_id, double tara);
     bool setZone(string part_id, int car_id, int zone);
     bool setCarry(string part_id, int car_id, double carry);
-    part_t startAtt(int shipper, int consigner, int mat, string user);
+    bool setShipper(string part_id, int car_id, int shipper);
+    bool setConsigner(string part_id, int car_id, int consigner);
+    bool setMat(string part_id, int car_id, int mat);
+    bool setCar(string part_id, int car_id, car_t car);
+    part_t startAtt(string user);
     bool endAtt(string part_id);
     bool changePass(string login, string oldPass, string newPass, string newEmpl_id);
   }
@@ -94,7 +98,23 @@ public partial class DataProviderService {
     bool End_setCarry(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user);
+    IAsyncResult Begin_setShipper(AsyncCallback callback, object state, string part_id, int car_id, int shipper);
+    bool End_setShipper(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_setConsigner(AsyncCallback callback, object state, string part_id, int car_id, int consigner);
+    bool End_setConsigner(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_setMat(AsyncCallback callback, object state, string part_id, int car_id, int mat);
+    bool End_setMat(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_setCar(AsyncCallback callback, object state, string part_id, int car_id, car_t car);
+    bool End_setCar(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_startAtt(AsyncCallback callback, object state, string user);
     part_t End_startAtt(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
@@ -1196,9 +1216,313 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user)
+    public IAsyncResult Begin_setShipper(AsyncCallback callback, object state, string part_id, int car_id, int shipper)
     {
-      return send_startAtt(callback, state, shipper, consigner, mat, user);
+      return send_setShipper(callback, state, part_id, car_id, shipper);
+    }
+
+    public bool End_setShipper(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_setShipper();
+    }
+
+    #endif
+
+    public bool setShipper(string part_id, int car_id, int shipper)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_setShipper(null, null, part_id, car_id, shipper);
+      return End_setShipper(asyncResult);
+
+      #else
+      send_setShipper(part_id, car_id, shipper);
+      return recv_setShipper();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_setShipper(AsyncCallback callback, object state, string part_id, int car_id, int shipper)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setShipper", TMessageType.Call, seqid_));
+      setShipper_args args = new setShipper_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Shipper = shipper;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_setShipper(string part_id, int car_id, int shipper)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setShipper", TMessageType.Call, seqid_));
+      setShipper_args args = new setShipper_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Shipper = shipper;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_setShipper()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      setShipper_result result = new setShipper_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setShipper failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_setConsigner(AsyncCallback callback, object state, string part_id, int car_id, int consigner)
+    {
+      return send_setConsigner(callback, state, part_id, car_id, consigner);
+    }
+
+    public bool End_setConsigner(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_setConsigner();
+    }
+
+    #endif
+
+    public bool setConsigner(string part_id, int car_id, int consigner)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_setConsigner(null, null, part_id, car_id, consigner);
+      return End_setConsigner(asyncResult);
+
+      #else
+      send_setConsigner(part_id, car_id, consigner);
+      return recv_setConsigner();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_setConsigner(AsyncCallback callback, object state, string part_id, int car_id, int consigner)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setConsigner", TMessageType.Call, seqid_));
+      setConsigner_args args = new setConsigner_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Consigner = consigner;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_setConsigner(string part_id, int car_id, int consigner)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setConsigner", TMessageType.Call, seqid_));
+      setConsigner_args args = new setConsigner_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Consigner = consigner;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_setConsigner()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      setConsigner_result result = new setConsigner_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setConsigner failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_setMat(AsyncCallback callback, object state, string part_id, int car_id, int mat)
+    {
+      return send_setMat(callback, state, part_id, car_id, mat);
+    }
+
+    public bool End_setMat(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_setMat();
+    }
+
+    #endif
+
+    public bool setMat(string part_id, int car_id, int mat)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_setMat(null, null, part_id, car_id, mat);
+      return End_setMat(asyncResult);
+
+      #else
+      send_setMat(part_id, car_id, mat);
+      return recv_setMat();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_setMat(AsyncCallback callback, object state, string part_id, int car_id, int mat)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setMat", TMessageType.Call, seqid_));
+      setMat_args args = new setMat_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Mat = mat;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_setMat(string part_id, int car_id, int mat)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setMat", TMessageType.Call, seqid_));
+      setMat_args args = new setMat_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Mat = mat;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_setMat()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      setMat_result result = new setMat_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setMat failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_setCar(AsyncCallback callback, object state, string part_id, int car_id, car_t car)
+    {
+      return send_setCar(callback, state, part_id, car_id, car);
+    }
+
+    public bool End_setCar(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_setCar();
+    }
+
+    #endif
+
+    public bool setCar(string part_id, int car_id, car_t car)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_setCar(null, null, part_id, car_id, car);
+      return End_setCar(asyncResult);
+
+      #else
+      send_setCar(part_id, car_id, car);
+      return recv_setCar();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_setCar(AsyncCallback callback, object state, string part_id, int car_id, car_t car)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setCar", TMessageType.Call, seqid_));
+      setCar_args args = new setCar_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Car = car;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_setCar(string part_id, int car_id, car_t car)
+    {
+      oprot_.WriteMessageBegin(new TMessage("setCar", TMessageType.Call, seqid_));
+      setCar_args args = new setCar_args();
+      args.Part_id = part_id;
+      args.Car_id = car_id;
+      args.Car = car;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_setCar()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      setCar_result result = new setCar_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "setCar failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_startAtt(AsyncCallback callback, object state, string user)
+    {
+      return send_startAtt(callback, state, user);
     }
 
     public part_t End_startAtt(IAsyncResult asyncResult)
@@ -1209,26 +1533,23 @@ public partial class DataProviderService {
 
     #endif
 
-    public part_t startAtt(int shipper, int consigner, int mat, string user)
+    public part_t startAtt(string user)
     {
       #if SILVERLIGHT
-      var asyncResult = Begin_startAtt(null, null, shipper, consigner, mat, user);
+      var asyncResult = Begin_startAtt(null, null, user);
       return End_startAtt(asyncResult);
 
       #else
-      send_startAtt(shipper, consigner, mat, user);
+      send_startAtt(user);
       return recv_startAtt();
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_startAtt(AsyncCallback callback, object state, int shipper, int consigner, int mat, string user)
+    public IAsyncResult send_startAtt(AsyncCallback callback, object state, string user)
     {
       oprot_.WriteMessageBegin(new TMessage("startAtt", TMessageType.Call, seqid_));
       startAtt_args args = new startAtt_args();
-      args.Shipper = shipper;
-      args.Consigner = consigner;
-      args.Mat = mat;
       args.User = user;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
@@ -1237,13 +1558,10 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_startAtt(int shipper, int consigner, int mat, string user)
+    public void send_startAtt(string user)
     {
       oprot_.WriteMessageBegin(new TMessage("startAtt", TMessageType.Call, seqid_));
       startAtt_args args = new startAtt_args();
-      args.Shipper = shipper;
-      args.Consigner = consigner;
-      args.Mat = mat;
       args.User = user;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
@@ -1440,6 +1758,10 @@ public partial class DataProviderService {
       processMap_["setTara"] = setTara_Process;
       processMap_["setZone"] = setZone_Process;
       processMap_["setCarry"] = setCarry_Process;
+      processMap_["setShipper"] = setShipper_Process;
+      processMap_["setConsigner"] = setConsigner_Process;
+      processMap_["setMat"] = setMat_Process;
+      processMap_["setCar"] = setCar_Process;
       processMap_["startAtt"] = startAtt_Process;
       processMap_["endAtt"] = endAtt_Process;
       processMap_["changePass"] = changePass_Process;
@@ -1965,6 +2287,146 @@ public partial class DataProviderService {
       oprot.Transport.Flush();
     }
 
+    public void setShipper_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      setShipper_args args = new setShipper_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      setShipper_result result = new setShipper_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.setShipper(args.Part_id, args.Car_id, args.Shipper);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("setShipper", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("setShipper", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void setConsigner_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      setConsigner_args args = new setConsigner_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      setConsigner_result result = new setConsigner_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.setConsigner(args.Part_id, args.Car_id, args.Consigner);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("setConsigner", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("setConsigner", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void setMat_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      setMat_args args = new setMat_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      setMat_result result = new setMat_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.setMat(args.Part_id, args.Car_id, args.Mat);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("setMat", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("setMat", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void setCar_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      setCar_args args = new setCar_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      setCar_result result = new setCar_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.setCar(args.Part_id, args.Car_id, args.Car);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("setCar", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("setCar", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
     public void startAtt_Process(int seqid, TProtocol iprot, TProtocol oprot)
     {
       startAtt_args args = new startAtt_args();
@@ -1975,7 +2437,7 @@ public partial class DataProviderService {
       {
         try
         {
-          result.Success = iface_.startAtt(args.Shipper, args.Consigner, args.Mat, args.User);
+          result.Success = iface_.startAtt(args.User);
         }
         catch (DataProviderException ex)
         {
@@ -6074,12 +6536,37 @@ public partial class DataProviderService {
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class startAtt_args : TBase
+  public partial class setShipper_args : TBase
   {
+    private string _part_id;
+    private int _car_id;
     private int _shipper;
-    private int _consigner;
-    private int _mat;
-    private string _user;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+    public int Car_id
+    {
+      get
+      {
+        return _car_id;
+      }
+      set
+      {
+        __isset.car_id = true;
+        this._car_id = value;
+      }
+    }
 
     public int Shipper
     {
@@ -6091,6 +6578,320 @@ public partial class DataProviderService {
       {
         __isset.shipper = true;
         this._shipper = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+      public bool car_id;
+      public bool shipper;
+    }
+
+    public setShipper_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Car_id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32) {
+                Shipper = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setShipper_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.car_id) {
+          field.Name = "car_id";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Car_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.shipper) {
+          field.Name = "shipper";
+          field.Type = TType.I32;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Shipper);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setShipper_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      if (__isset.car_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car_id: ");
+        __sb.Append(Car_id);
+      }
+      if (__isset.shipper) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Shipper: ");
+        __sb.Append(Shipper);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setShipper_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public setShipper_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setShipper_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setShipper_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setConsigner_args : TBase
+  {
+    private string _part_id;
+    private int _car_id;
+    private int _consigner;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+    public int Car_id
+    {
+      get
+      {
+        return _car_id;
+      }
+      set
+      {
+        __isset.car_id = true;
+        this._car_id = value;
       }
     }
 
@@ -6107,6 +6908,320 @@ public partial class DataProviderService {
       }
     }
 
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+      public bool car_id;
+      public bool consigner;
+    }
+
+    public setConsigner_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Car_id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32) {
+                Consigner = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setConsigner_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.car_id) {
+          field.Name = "car_id";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Car_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.consigner) {
+          field.Name = "consigner";
+          field.Type = TType.I32;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Consigner);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setConsigner_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      if (__isset.car_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car_id: ");
+        __sb.Append(Car_id);
+      }
+      if (__isset.consigner) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Consigner: ");
+        __sb.Append(Consigner);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setConsigner_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public setConsigner_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setConsigner_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setConsigner_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setMat_args : TBase
+  {
+    private string _part_id;
+    private int _car_id;
+    private int _mat;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+    public int Car_id
+    {
+      get
+      {
+        return _car_id;
+      }
+      set
+      {
+        __isset.car_id = true;
+        this._car_id = value;
+      }
+    }
+
     public int Mat
     {
       get
@@ -6119,6 +7234,620 @@ public partial class DataProviderService {
         this._mat = value;
       }
     }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+      public bool car_id;
+      public bool mat;
+    }
+
+    public setMat_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Car_id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32) {
+                Mat = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setMat_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.car_id) {
+          field.Name = "car_id";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Car_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.mat) {
+          field.Name = "mat";
+          field.Type = TType.I32;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Mat);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setMat_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      if (__isset.car_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car_id: ");
+        __sb.Append(Car_id);
+      }
+      if (__isset.mat) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Mat: ");
+        __sb.Append(Mat);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setMat_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public setMat_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setMat_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setMat_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setCar_args : TBase
+  {
+    private string _part_id;
+    private int _car_id;
+    private car_t _car;
+
+    public string Part_id
+    {
+      get
+      {
+        return _part_id;
+      }
+      set
+      {
+        __isset.part_id = true;
+        this._part_id = value;
+      }
+    }
+
+    public int Car_id
+    {
+      get
+      {
+        return _car_id;
+      }
+      set
+      {
+        __isset.car_id = true;
+        this._car_id = value;
+      }
+    }
+
+    public car_t Car
+    {
+      get
+      {
+        return _car;
+      }
+      set
+      {
+        __isset.car = true;
+        this._car = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool part_id;
+      public bool car_id;
+      public bool car;
+    }
+
+    public setCar_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Part_id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Car_id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Struct) {
+                Car = new car_t();
+                Car.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setCar_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Part_id != null && __isset.part_id) {
+          field.Name = "part_id";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Part_id);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.car_id) {
+          field.Name = "car_id";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Car_id);
+          oprot.WriteFieldEnd();
+        }
+        if (Car != null && __isset.car) {
+          field.Name = "car";
+          field.Type = TType.Struct;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          Car.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setCar_args(");
+      bool __first = true;
+      if (Part_id != null && __isset.part_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Part_id: ");
+        __sb.Append(Part_id);
+      }
+      if (__isset.car_id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car_id: ");
+        __sb.Append(Car_id);
+      }
+      if (Car != null && __isset.car) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Car: ");
+        __sb.Append(Car== null ? "<null>" : Car.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class setCar_result : TBase
+  {
+    private bool _success;
+    private DataProviderException _ex;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public setCar_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("setCar_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("setCar_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class startAtt_args : TBase
+  {
+    private string _user;
 
     public string User
     {
@@ -6139,9 +7868,6 @@ public partial class DataProviderService {
     [Serializable]
     #endif
     public struct Isset {
-      public bool shipper;
-      public bool consigner;
-      public bool mat;
       public bool user;
     }
 
@@ -6164,27 +7890,6 @@ public partial class DataProviderService {
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Shipper = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.I32) {
-                Consigner = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.I32) {
-                Mat = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 4:
               if (field.Type == TType.String) {
                 User = iprot.ReadString();
               } else { 
@@ -6212,34 +7917,10 @@ public partial class DataProviderService {
         TStruct struc = new TStruct("startAtt_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.shipper) {
-          field.Name = "shipper";
-          field.Type = TType.I32;
-          field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Shipper);
-          oprot.WriteFieldEnd();
-        }
-        if (__isset.consigner) {
-          field.Name = "consigner";
-          field.Type = TType.I32;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Consigner);
-          oprot.WriteFieldEnd();
-        }
-        if (__isset.mat) {
-          field.Name = "mat";
-          field.Type = TType.I32;
-          field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Mat);
-          oprot.WriteFieldEnd();
-        }
         if (User != null && __isset.user) {
           field.Name = "user";
           field.Type = TType.String;
-          field.ID = 4;
+          field.ID = 1;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(User);
           oprot.WriteFieldEnd();
@@ -6256,24 +7937,6 @@ public partial class DataProviderService {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("startAtt_args(");
       bool __first = true;
-      if (__isset.shipper) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Shipper: ");
-        __sb.Append(Shipper);
-      }
-      if (__isset.consigner) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Consigner: ");
-        __sb.Append(Consigner);
-      }
-      if (__isset.mat) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Mat: ");
-        __sb.Append(Mat);
-      }
       if (User != null && __isset.user) {
         if(!__first) { __sb.Append(", "); }
         __first = false;

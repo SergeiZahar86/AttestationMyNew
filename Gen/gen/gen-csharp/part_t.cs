@@ -23,9 +23,6 @@ public partial class part_t : TBase
 {
   private string _part_id;
   private string _oper;
-  private int _shipper;
-  private int _consigner;
-  private int _mat;
   private List<car_t> _cars;
   private string _start_time;
   private string _end_time;
@@ -53,45 +50,6 @@ public partial class part_t : TBase
     {
       __isset.oper = true;
       this._oper = value;
-    }
-  }
-
-  public int Shipper
-  {
-    get
-    {
-      return _shipper;
-    }
-    set
-    {
-      __isset.shipper = true;
-      this._shipper = value;
-    }
-  }
-
-  public int Consigner
-  {
-    get
-    {
-      return _consigner;
-    }
-    set
-    {
-      __isset.consigner = true;
-      this._consigner = value;
-    }
-  }
-
-  public int Mat
-  {
-    get
-    {
-      return _mat;
-    }
-    set
-    {
-      __isset.mat = true;
-      this._mat = value;
     }
   }
 
@@ -142,9 +100,6 @@ public partial class part_t : TBase
   public struct Isset {
     public bool part_id;
     public bool oper;
-    public bool shipper;
-    public bool consigner;
-    public bool mat;
     public bool cars;
     public bool start_time;
     public bool end_time;
@@ -178,27 +133,6 @@ public partial class part_t : TBase
           case 2:
             if (field.Type == TType.String) {
               Oper = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 3:
-            if (field.Type == TType.I32) {
-              Shipper = iprot.ReadI32();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 4:
-            if (field.Type == TType.I32) {
-              Consigner = iprot.ReadI32();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 5:
-            if (field.Type == TType.I32) {
-              Mat = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -272,30 +206,6 @@ public partial class part_t : TBase
         oprot.WriteString(Oper);
         oprot.WriteFieldEnd();
       }
-      if (__isset.shipper) {
-        field.Name = "shipper";
-        field.Type = TType.I32;
-        field.ID = 3;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Shipper);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.consigner) {
-        field.Name = "consigner";
-        field.Type = TType.I32;
-        field.ID = 4;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Consigner);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.mat) {
-        field.Name = "mat";
-        field.Type = TType.I32;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Mat);
-        oprot.WriteFieldEnd();
-      }
       if (Cars != null && __isset.cars) {
         field.Name = "cars";
         field.Type = TType.List;
@@ -350,24 +260,6 @@ public partial class part_t : TBase
       __first = false;
       __sb.Append("Oper: ");
       __sb.Append(Oper);
-    }
-    if (__isset.shipper) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Shipper: ");
-      __sb.Append(Shipper);
-    }
-    if (__isset.consigner) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Consigner: ");
-      __sb.Append(Consigner);
-    }
-    if (__isset.mat) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Mat: ");
-      __sb.Append(Mat);
     }
     if (Cars != null && __isset.cars) {
       if(!__first) { __sb.Append(", "); }

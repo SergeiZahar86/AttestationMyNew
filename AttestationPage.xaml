@@ -120,6 +120,7 @@
             <Style.Setters>
                 <Setter Property="Button.FontFamily" Value="Verdana" />
                 <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -157,7 +158,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid >
+    <Grid x:Name="gridMain" >
         <!--  Разметка грида  -->
         <Grid.RowDefinitions>
             <RowDefinition Height="0.10*"/>
@@ -205,11 +206,13 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
             <TextBlock Text="Номер партии:" Grid.Row="0" FontSize="16" 
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            <!--
             <TextBlock Text="Вид материала:" Grid.Row="1" FontSize="16"
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
-            
+            -->
         </Grid>
         <Grid x:Name="grid_5" Grid.Row="0" Grid.Column="5" Background="#EEEEEE">
             <Grid.RowDefinitions>
@@ -218,7 +221,9 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="part_idTextBlock" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <!--
             <TextBlock x:Name="matTextBlock" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            -->
         </Grid>
 
         <Grid x:Name="grid_6" Grid.Row="0" Grid.Column="7" Background="#EEEEEE">
@@ -227,10 +232,12 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <!--
             <TextBlock Text="Грузоотправитель:" Grid.Row="0" FontSize="16" 
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
             <TextBlock Text="Грузополучатель:" Grid.Row="1" FontSize="16"
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            -->
 
         </Grid>
         <Grid x:Name="grid_7" Grid.Row="0" Grid.Column="8" Background="#EEEEEE">
@@ -239,8 +246,10 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <!--
             <TextBlock x:Name="shippersTextBlock" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
             <TextBlock x:Name="consigneesTextBlock" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            -->
         </Grid>
 
 
@@ -262,7 +271,7 @@
         <!-- ========================== DataGrid ======================= -->
         <DataGrid x:Name="DataGridMain" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Padding="2" ColumnWidth="*" 
                   AutoGenerateColumns="False" ItemsSource="{Binding}"
-                  VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="14" 
+                  VerticalAlignment="Top" HorizontalAlignment="Stretch" FontSize="16" 
                   FontFamily="Calibri" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                   Width="1870"  Loaded="DataGridMain_Loaded" BorderThickness="0"
                   SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="#FFD0DEE4"
@@ -308,8 +317,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn x:Name="VagNum" Header="Номер вагона"  
+
+                <DataGridTemplateColumn x:Name="VagNum" Header="Номер вагона" Width="100" 
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
@@ -331,7 +340,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn x:Name="Tara" Header="Тара, т" 
+                <DataGridTemplateColumn x:Name="Tara" Header="Тара, т" Width="60"
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -348,8 +357,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn x:Name="TaraNSI" Header="Тара НСИ,т" 
+
+                <DataGridTemplateColumn x:Name="TaraNSI" Header="Тара НСИ,т"  Width="90"
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -358,7 +367,7 @@
                                     BorderThickness="0" Background="Transparent"
                                     Style="{StaticResource SomeButton}">
                                 <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="30000"  >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Tara_e}" FontSize="22" Foreground="Black" 
@@ -370,9 +379,32 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т (Тара - ТараНСИ)" 
-                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+
+                <DataGridTemplateColumn x:Name="TaraDelta" Header="▲ Тара,т" Width="70" >
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="#FF37474F"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontFamily" Value="Calibri"/>
+                            <Setter Property="Height" Value="40"/>
+                            <Setter Property="Padding" Value="1"/>
+                            <Setter Property="Margin" Value="1"/>
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <ContentControl Content="{Binding}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="▲ Тара,т (Тара - ТараНСИ)" ToolTipService.ShowDuration="30000"
+                                                         FontSize="22" Foreground="Black" Background="White"/>
+                                            </ToolTipService.ToolTip>
+                                        </ContentControl>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
                     <DataGridTemplateColumn.CellTemplate  >
                         <DataTemplate>
                             <TextBlock Text="{Binding Tara_delta}"  HorizontalAlignment="Center"
@@ -389,8 +421,31 @@
                     </DataGridTemplateColumn.CellTemplate> 
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn x:Name="Capacity" Header="Грузоподъемность"
-                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                <DataGridTemplateColumn x:Name="Capacity" Header="Грузо-сть" Width="80">
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="#FF37474F"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontFamily" Value="Calibri"/>
+                            <Setter Property="Height" Value="40"/>
+                            <Setter Property="Padding" Value="1"/>
+                            <Setter Property="Margin" Value="1"/>
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <ContentControl Content="{Binding}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="Грузоподъемность" ToolTipService.ShowDuration="30000"
+                                                         FontSize="22" Foreground="Black" Background="White"/>
+                                            </ToolTipService.ToolTip>
+                                        </ContentControl>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
                     <DataGridTemplateColumn.CellTemplate  >
 
                         <DataTemplate>
@@ -413,7 +468,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn x:Name="Zona" Header="Зона"
+                <DataGridTemplateColumn x:Name="Zona" Header="Зона" Width="50"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate  >
                         <DataTemplate>
@@ -421,7 +476,8 @@
                                     HorizontalContentAlignment="Stretch"
                                     BorderThickness="0" Background="Transparent"
                                     Style="{StaticResource SomeButton}">
-                                <TextBlock Text="{Binding Zone_eString}"  HorizontalAlignment="Center"
+                                <TextBlock Text="{Binding Zone_eString}"
+                                           HorizontalAlignment="Center"
                                            VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
@@ -432,11 +488,84 @@
                                 </TextBlock>
                             </Button>
                         </DataTemplate>
-
+                    </DataGridTemplateColumn.CellTemplate>
+                    
+                </DataGridTemplateColumn>
+                
+                
+                
+                
+                
+                <DataGridTemplateColumn x:Name="shipper" Header="Грузоотправитель" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
+                            <Button x:Name="shipperButton" Height="30" BorderThickness="0"
+                                    Style="{StaticResource SomeButton}"
+                                    Background="Transparent" Click="shipperButton_Click"
+                                    BorderBrush="White"  >
+                                <TextBlock Text="{Binding Shipper}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Shipper}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
+                        </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn x:Name="consigner" Header="Грузополучатель" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
+                            <Button x:Name="consignerButton" Height="30" BorderThickness="0"
+                                    Style="{StaticResource SomeButton}"
+                                    Background="Transparent" Click="consignerButton_Click"
+                                    BorderBrush="White"  >
+                                <TextBlock Text="{Binding Consigner}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Consigner}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn x:Name="mat" Header="Вид материалов" 
+                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
+                            <Button x:Name="matButton" Height="30" BorderThickness="0"
+                                    Style="{StaticResource SomeButton}"
+                                    Background="Transparent" Click="matButton_Click"
+                                    BorderBrush="White"  >
+                                <TextBlock Text="{Binding Mat}"  HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                    <TextBlock.ToolTip >
+                                        <ToolTip>
+                                            <TextBlock Text="{Binding Mat}" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                
+                
                 <!-- FotoButton -->
-                <DataGridTemplateColumn x:Name="FotoButton" Header="Фото" 
+                <DataGridTemplateColumn x:Name="FotoButton" Header="Фото" Width="50"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
@@ -449,8 +578,31 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <!-- isOK -->
-                <DataGridTemplateColumn x:Name="isOk" Header="Итог аттестации" 
-                                        HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
+                <DataGridTemplateColumn x:Name="isOk" Header="Итог атт." Width="70">
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="#FF37474F"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontFamily" Value="Calibri"/>
+                            <Setter Property="Height" Value="40"/>
+                            <Setter Property="Padding" Value="1"/>
+                            <Setter Property="Margin" Value="1"/>
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <ContentControl Content="{Binding}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="Итог аттестации" ToolTipService.ShowDuration="30000"
+                                                         FontSize="22" Foreground="Black" Background="White"/>
+                                            </ToolTipService.ToolTip>
+                                        </ContentControl>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
                             <Button x:Name="Change_isOk" Height="30" BorderThickness="0"

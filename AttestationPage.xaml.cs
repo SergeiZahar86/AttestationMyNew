@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace Attestation
@@ -29,9 +30,9 @@ namespace Attestation
             timeDelta.Text = global.deltaTimeStr;                         // Время затраченное на аттестации (продолжительность)
 
             part_idTextBlock.Text = global.PartId;                        // Номер партии
-            matTextBlock.Text = global.MatName;                           // Название материала
-            shippersTextBlock.Text = global.Shipper;                      // Грузоотправитель
-            consigneesTextBlock.Text = global.Consignee;                  // Грузополучатель
+            //matTextBlock.Text = global.MatName;                           // Название материала
+            //shippersTextBlock.Text = global.Shipper;                      // Грузоотправитель
+            //consigneesTextBlock.Text = global.Consignee;                  // Грузополучатель
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e) // загрузка данных в DataGrid
         {
@@ -40,12 +41,16 @@ namespace Attestation
         }
         private void StartAttestation_Click(object sender, RoutedEventArgs e) // Кнопка начала аттестации
         {
+            
             if(global.isColor) // проверяем флаг
             {
+                /*
                 input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
                 inputOf.ShowDialog();
+            
                 if (global.IdConsigner != null && global.IdShipper != null && global.IdMat != null)
                 {
+                */
                     //////////// Установка времени ///////////////////////////////////////////////////////
                     global.startTime = DateTime.Now;                       // Запись текущего времени
                     global.startTimeStr = null;                            // Начало аттестации партии вагонов для страницы Аттестации
@@ -62,16 +67,16 @@ namespace Attestation
                     DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
 
                     /* Запрос партии вагонов */
-                    global.GetGlobalPart((int)global.IdShipper, (int)global.IdConsigner, (int)global.IdMat, global.user); /* Начало аттестации
+                    global.GetGlobalPart(global.user); /* Начало аттестации
                                                                                                              *   и получение партии вагонов */
 
                     global.PartId = global.part.Part_id.ToString();              // Номер партии
                     part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
-                    shippersTextBlock.Text = global.Shipper;                     // Грузоотправитель
-                    consigneesTextBlock.Text = global.Consignee;                 // Грузополучатель
+                    //shippersTextBlock.Text = global.Shipper;                     // Грузоотправитель
+                    //consigneesTextBlock.Text = global.Consignee;                 // Грузополучатель
 
 
-                    matTextBlock.Text = global.MatName;                          // Название материала
+                    //matTextBlock.Text = global.MatName;                          // Название материала
 
                     StartAttestation.Background = global.RedColorEnd;            // красный
 
@@ -86,13 +91,13 @@ namespace Attestation
                     global.IdMat = null;                        // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
 
                     global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
-                }
+                //}
             }
             else
             {
                 VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
                 ver.ShowDialog();
-                if (global.exitAtt(global.part.Part_id) && isVerification && global.client.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
+                if (global.exitAtt(global.part.Part_id) && isVerification && global.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
                 {
 
                     global.endTime = DateTime.Now;                                    // Окончание аттестации 
@@ -187,6 +192,19 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
+        private void shipperButton_Click(object sender, RoutedEventArgs e) // изменение Грузоотправителя
+        {
+
+        }
+        private void consignerButton_Click(object sender, RoutedEventArgs e) // изменение Грузоотправителя
+        {
+
+        }
+        private void matButton_Click(object sender, RoutedEventArgs e) // изменение Грузоотправителя
+        {
+
+        }
+
 
     }
 }

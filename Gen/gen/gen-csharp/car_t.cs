@@ -24,6 +24,9 @@ public partial class car_t : TBase
   private string _part_id;
   private int _car_id;
   private string _num;
+  private int _shipper;
+  private int _consigner;
+  private int _mat;
   private int _att_code;
   private double _tara;
   private double _tara_e;
@@ -68,6 +71,45 @@ public partial class car_t : TBase
     {
       __isset.num = true;
       this._num = value;
+    }
+  }
+
+  public int Shipper
+  {
+    get
+    {
+      return _shipper;
+    }
+    set
+    {
+      __isset.shipper = true;
+      this._shipper = value;
+    }
+  }
+
+  public int Consigner
+  {
+    get
+    {
+      return _consigner;
+    }
+    set
+    {
+      __isset.consigner = true;
+      this._consigner = value;
+    }
+  }
+
+  public int Mat
+  {
+    get
+    {
+      return _mat;
+    }
+    set
+    {
+      __isset.mat = true;
+      this._mat = value;
     }
   }
 
@@ -171,6 +213,9 @@ public partial class car_t : TBase
     public bool part_id;
     public bool car_id;
     public bool num;
+    public bool shipper;
+    public bool consigner;
+    public bool mat;
     public bool att_code;
     public bool tara;
     public bool tara_e;
@@ -221,47 +266,68 @@ public partial class car_t : TBase
             break;
           case 4:
             if (field.Type == TType.I32) {
-              Att_code = iprot.ReadI32();
+              Shipper = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 5:
-            if (field.Type == TType.Double) {
-              Tara = iprot.ReadDouble();
+            if (field.Type == TType.I32) {
+              Consigner = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 6:
-            if (field.Type == TType.Double) {
-              Tara_e = iprot.ReadDouble();
+            if (field.Type == TType.I32) {
+              Mat = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 7:
             if (field.Type == TType.I32) {
-              Zone_e = iprot.ReadI32();
+              Att_code = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 8:
-            if (field.Type == TType.I32) {
-              Cause_id = iprot.ReadI32();
+            if (field.Type == TType.Double) {
+              Tara = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 9:
             if (field.Type == TType.Double) {
-              Carrying_e = iprot.ReadDouble();
+              Tara_e = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 10:
+            if (field.Type == TType.I32) {
+              Zone_e = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 11:
+            if (field.Type == TType.I32) {
+              Cause_id = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 12:
+            if (field.Type == TType.Double) {
+              Carrying_e = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 13:
             if (field.Type == TType.String) {
               Att_time = iprot.ReadString();
             } else { 
@@ -313,10 +379,34 @@ public partial class car_t : TBase
         oprot.WriteString(Num);
         oprot.WriteFieldEnd();
       }
+      if (__isset.shipper) {
+        field.Name = "shipper";
+        field.Type = TType.I32;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(Shipper);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.consigner) {
+        field.Name = "consigner";
+        field.Type = TType.I32;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(Consigner);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.mat) {
+        field.Name = "mat";
+        field.Type = TType.I32;
+        field.ID = 6;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(Mat);
+        oprot.WriteFieldEnd();
+      }
       if (__isset.att_code) {
         field.Name = "att_code";
         field.Type = TType.I32;
-        field.ID = 4;
+        field.ID = 7;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Att_code);
         oprot.WriteFieldEnd();
@@ -324,7 +414,7 @@ public partial class car_t : TBase
       if (__isset.tara) {
         field.Name = "tara";
         field.Type = TType.Double;
-        field.ID = 5;
+        field.ID = 8;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Tara);
         oprot.WriteFieldEnd();
@@ -332,7 +422,7 @@ public partial class car_t : TBase
       if (__isset.tara_e) {
         field.Name = "tara_e";
         field.Type = TType.Double;
-        field.ID = 6;
+        field.ID = 9;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Tara_e);
         oprot.WriteFieldEnd();
@@ -340,7 +430,7 @@ public partial class car_t : TBase
       if (__isset.zone_e) {
         field.Name = "zone_e";
         field.Type = TType.I32;
-        field.ID = 7;
+        field.ID = 10;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Zone_e);
         oprot.WriteFieldEnd();
@@ -348,7 +438,7 @@ public partial class car_t : TBase
       if (__isset.cause_id) {
         field.Name = "cause_id";
         field.Type = TType.I32;
-        field.ID = 8;
+        field.ID = 11;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Cause_id);
         oprot.WriteFieldEnd();
@@ -356,7 +446,7 @@ public partial class car_t : TBase
       if (__isset.carrying_e) {
         field.Name = "carrying_e";
         field.Type = TType.Double;
-        field.ID = 9;
+        field.ID = 12;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Carrying_e);
         oprot.WriteFieldEnd();
@@ -364,7 +454,7 @@ public partial class car_t : TBase
       if (Att_time != null && __isset.att_time) {
         field.Name = "att_time";
         field.Type = TType.String;
-        field.ID = 10;
+        field.ID = 13;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Att_time);
         oprot.WriteFieldEnd();
@@ -398,6 +488,24 @@ public partial class car_t : TBase
       __first = false;
       __sb.Append("Num: ");
       __sb.Append(Num);
+    }
+    if (__isset.shipper) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Shipper: ");
+      __sb.Append(Shipper);
+    }
+    if (__isset.consigner) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Consigner: ");
+      __sb.Append(Consigner);
+    }
+    if (__isset.mat) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Mat: ");
+      __sb.Append(Mat);
     }
     if (__isset.att_code) {
       if(!__first) { __sb.Append(", "); }

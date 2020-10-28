@@ -88,12 +88,9 @@ namespace Attestation
                                                                                                      * начала и завершения аттестации*/
             ///////////////////////////////////////////////////////////////////////////////////////////////
         }
-        public void GetGlobalPart(int shipper, int consignee, int mat, string user) /* Получение партии
-                                                                                     * вагонов перед Началом аттестации */
-            {
-            part = beginAtt(shipper, consignee, mat, user);
-
-
+        public void GetGlobalPart(string user) // Получение партии вагонов перед Началом аттестации 
+        {
+            part = beginAtt(user);
             if (part.Cars != null) DATA = part.Cars;
             else DATA = new List<car_t>();
             ROWS = GetRows();
@@ -113,7 +110,7 @@ namespace Attestation
                 double Tar = 33.3;
                 double Tar_e = 43.3;
                 double Tar_delta = Math.Round((Tar - Tar_e), 3, MidpointRounding.AwayFromZero);
-                rows.Add(new RowTab("hello", 1, "345", 1, "", Tar, Tar_e, Tar_delta, 1, "", 1, "", 55, ""));
+                rows.Add(new RowTab("hello", i+1, "345", 1, "", Tar, Tar_e, Tar_delta, 1, "", 1, "", 55, ""));
             }
             /*
             foreach (car_t cars in DATA)
@@ -195,18 +192,18 @@ namespace Attestation
         {
             return this.client.setAtt(part_id, car_id, att_code);
         }
-        public bool setUser(string user) // запись имени оператора
+        public bool setUser(string part_id, string user) // запись имени оператора
         {
-            return this.setUser(user); 
+            return this.client.setUser(part_id, user); 
         }
         //////////////////////////////////////////////////// Функции  //////////////////////////////////////////////////////////////////////////
         public bool exitAtt(string part_id) // Завершение аттестации
         {
             return this.client.endAtt(part_id);
         }
-        public part_t beginAtt(int shipper, int consignee, int mat, string user) // Начало аттестации и получение партии вагонов
+        public part_t beginAtt( string user) // Начало аттестации и получение партии вагонов
         {
-            return this.client.startAtt(shipper, consignee, mat, user);
+            return this.client.startAtt(user);
         }
         public bool changePass(string login, string oldPass, string newPass, string newEmpl_id) // Смена данных учетной записи 
         {
