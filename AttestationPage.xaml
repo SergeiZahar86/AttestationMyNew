@@ -10,6 +10,10 @@
       Title="AttestationPage">
 
     <Page.Resources>
+
+
+
+
         <!-- .......................... Стили......................................................-->
         <!-- ......................Стиль кнопка начала аттестации ...................................-->
         <Style x:Key="startAttestation" TargetType="Button">
@@ -421,7 +425,7 @@
                     </DataGridTemplateColumn.CellTemplate> 
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn x:Name="Capacity" Header="Грузо-сть" Width="80">
+                <DataGridTemplateColumn x:Name="Capacity" Header="Грузо-сть" Width="70">
                     <DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -468,7 +472,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn x:Name="Zona" Header="Зона" Width="50"
+                <DataGridTemplateColumn x:Name="Zona" Header="Зона" Width="40"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     
                     <DataGridTemplateColumn.CellTemplate  >
@@ -479,7 +483,25 @@
                                     Style="{StaticResource SomeButton}">
                                 <TextBlock Text="{Binding Zone_eString}"
                                            HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000" Height="30" >
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <Trigger Property="Text" Value="Зелёная">
+                                                    <Setter Property="Background" Value="LightGreen"/>
+                                                    <Setter Property="Foreground" Value="Transparent"/>
+                                                </Trigger>
+                                                <Trigger Property="Text" Value="Жёлтая">
+                                                    <Setter Property="Background" Value="Yellow"/>
+                                                    <Setter Property="Foreground" Value="Transparent"/>
+                                                </Trigger>
+                                                <Trigger Property="Text" Value="Красная">
+                                                    <Setter Property="Background" Value="#FFEE7171"/>
+                                                    <Setter Property="Foreground" Value="Transparent"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Zone_eString}" FontSize="22" Foreground="Black" 
@@ -487,6 +509,7 @@
                                         </ToolTip>
                                     </TextBlock.ToolTip>
                                 </TextBlock>
+                                
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
