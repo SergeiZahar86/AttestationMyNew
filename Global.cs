@@ -56,7 +56,7 @@ namespace Attestation
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
-        public DataProviderService.Client client;
+        public DataProviderService.Client client; // DataProviderService - Название заглушки
         /// /////////////////////////////////////////////////////
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
 
