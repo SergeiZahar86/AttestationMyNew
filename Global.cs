@@ -52,7 +52,8 @@ namespace Attestation
         public List<string> Att_codeFonts;              // справочник элементов шрифта для итогов аттестации
         public List<Zona> zonas;                        // справочник Зоны вагонов
 
-        public List<RowTab> ROWS;                       // внутренний список вагонов 
+        //public List<RowTab> ROWS;                       // внутренний список вагонов 
+        public List<RowTab> ROWS;
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;

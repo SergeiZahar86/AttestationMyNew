@@ -516,10 +516,6 @@
                     
                 </DataGridTemplateColumn>
                 
-                
-                
-                
-                
                 <DataGridTemplateColumn x:Name="shipper" Header="Грузоотправитель" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate >
@@ -585,8 +581,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                
                 
                 <!-- FotoButton -->
                 <DataGridTemplateColumn x:Name="FotoButton" Header="Фото" Width="50"
