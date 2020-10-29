@@ -62,7 +62,8 @@ namespace Attestation
 
         private Global()
         {
-            this.transport = new TSocket("10.90.90.5", 9090);
+            ///////////////////////////////////////////////////////////////////////////
+            this.transport = new TSocket("10.90.90.5", 9090); // 10.90.90.5  - IP адрес сервера
             TProtocol proto = new TBinaryProtocol(transport);
             transport.Open();
             this.client = new DataProviderService.Client(proto);
