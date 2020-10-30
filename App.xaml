@@ -5,7 +5,10 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/" 
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <fa:CssClassNameConverter Mode="FromIconToString" x:Key="FromIconClassNameConverter" />
-        <fa:CssClassNameConverter Mode="FromStringToIcon" x:Key="FromStringClassNameConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
    </Application.Resources>
 </Application>
