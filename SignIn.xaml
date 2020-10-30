@@ -40,8 +40,8 @@
                        TextAlignment="Center" Foreground="#B22222" />
 
                     <WrapPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
-                            <Button  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 
-                                    Click="ok_Click" IsDefault="True" >Применить</Button>
+                <Button  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 
+                                    Click="ok_Click" IsDefault="True" >Войти</Button>
 
                             <Button x:Name="ok" Click="close_Click" Style="{StaticResource RedButton_SignIn}"
                                     Width="95" ToolTip="Выход">

@@ -13,7 +13,7 @@
 
     <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
         <Grid>
-            <TextBlock  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Text="Вы вышли из учётной записи." 
+            <TextBlock  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Text="Нажав &quot;Применить&quot; вы завершите процесс." 
                           TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
             <TextBlock  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Text="Вы действительно хотите закрыть программу?" 
                           TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
