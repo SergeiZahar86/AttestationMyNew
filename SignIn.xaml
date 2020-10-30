@@ -12,122 +12,50 @@
         ResizeMode="CanResizeWithGrip" AllowsTransparency="true"  >
 
 
-    <Window.Resources>
-        <!-- .......................... Стили......................................................-->
-        <Style  x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="20,0,20,0"/>
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="Foreground" Value="#555555"/>
-        </Style>
-        <Style  x:Key="TextBoxStyle" TargetType="TextBox">
-            <Setter Property="Margin" Value="20,0,20,0"/>
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="Background" Value="White" />
-        </Style>
-        <Style  x:Key="PasswordBoxStyle" TargetType="PasswordBox">
-            <Setter Property="Margin" Value="20,0,20,0"/>
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="PasswordChar" Value="*" />
-        </Style>
-        <!-- ......................Красная кнопка ...................................-->
-        <Style  x:Key="RedButton" TargetType="Button">
-            <Setter Property="Background" Value="#AAB22222" />
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="Height" Value="40" />
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Margin" Value="15,0,15,0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}"  BorderThickness="0" CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#CB0000"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <!-- ......................Зеленая кнопка ...................................-->
-
-        <Style  x:Key="GreenButton" TargetType="Button">
-            <Setter Property="Background" Value="#AA009933" />
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="Height" Value="40" />
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Margin" Value="15,0,15,0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}"  BorderThickness="0" CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#22B222"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-    <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
-            <Grid  >
-                <Grid.RowDefinitions>
-                    <RowDefinition  />
-                    <RowDefinition  />
-                    <RowDefinition  />
-                    <RowDefinition  />
-                    <RowDefinition  />
-                    <RowDefinition Height="3*" />
-                </Grid.RowDefinitions>
-                <DockPanel x:Name="TitleBar" Grid.Row="0" VerticalAlignment="Top" Background="#B22222" Height="30" Width="343">
-                <TextBlock HorizontalAlignment="Left" Text="Авторизация" Foreground="White" FontFamily="Calibry" FontSize="16" 
+      <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
+            <Grid>
+                  <Grid.RowDefinitions>
+                      <RowDefinition  />
+                      <RowDefinition  />
+                      <RowDefinition  />
+                      <RowDefinition  />
+                      <RowDefinition  />
+                      <RowDefinition Height="3*" />
+                  </Grid.RowDefinitions>
+                    <DockPanel x:Name="TitleBar" Grid.Row="0" VerticalAlignment="Top" Background="#B22222" Height="30" Width="343">
+                    <TextBlock HorizontalAlignment="Left" Text="Авторизация" Foreground="White" FontFamily="Calibry" FontSize="16" 
                            Margin="8,6,15,4"/>
-                    <!--
-                <Button x:Name="CloseButton" Click="close_Click" HorizontalAlignment="right" fa:Awesome.Content="Times"
-                            FontSize="20" DockPanel.Dock="Right"  Style="{StaticResource RedButton}" Width="28"
-                            RenderTransformOrigin="0.51,0.5" Margin="4,1,4,2.714" Height="Auto"/>
-                    -->
-                </DockPanel>
+                    </DockPanel>
 
-                <TextBlock Grid.Row="1" Text="Укажите логин:" Height="20" VerticalAlignment="Bottom"
-                       Style="{StaticResource TextBlockStyle}"/>
-                <TextBox  x:Name="tbLogin" Grid.Row="2" Height="30" VerticalContentAlignment="Center" MaxLines="1"
-                          Style="{StaticResource TextBoxStyle}" MinWidth="250"
+                    <TextBlock Grid.Row="1" Text="Укажите логин:" Height="20" VerticalAlignment="Bottom"
+                       Style="{StaticResource TextBlockStyle}" Margin="20,0,20,0"/>
+                    <TextBox  x:Name="tbLogin" Grid.Row="2" Height="30" VerticalContentAlignment="Center" MaxLines="1"
+                          Style="{StaticResource TextBoxStyle}" MinWidth="250" Margin="20,0,20,0"
                           TextAlignment="Left" MaxLength="70" />
-                <TextBlock Grid.Row="3" Text="Укажите пароль:" Height="20" VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}"/>
-            <PasswordBox  x:Name="passwordBox" Grid.Row="4" Style="{StaticResource PasswordBoxStyle}" Height="30" MaxLength="70"
-                           VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-            <TextBlock x:Name="mistake" Grid.Row="5" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top"
+                    <TextBlock Grid.Row="3" Text="Укажите пароль:" Height="20" Margin="20,0,20,0"
+                       VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}"/>
+                    <PasswordBox  x:Name="passwordBox" Grid.Row="4" Style="{StaticResource PasswordBoxStyle}" Height="30" MaxLength="70"
+                           VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Margin="20,0,20,0"/>
+                    <TextBlock x:Name="mistake" Grid.Row="5" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top"
                        TextAlignment="Center" Foreground="#B22222" />
 
-            <WrapPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
-                    <Button  Style="{StaticResource GreenButton}"  Width="95" ToolTip="Выход" 
-                             Click="ok_Click" IsDefault="True" >Применить</Button>
+                    <WrapPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
+                            <Button  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 
+                                    Click="ok_Click" IsDefault="True" >Применить</Button>
 
-                <Button x:Name="ok" Click="close_Click" Style="{StaticResource RedButton}"
-                            Width="95" ToolTip="Выход">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Закрыть" Grid.Row="0" HorizontalAlignment="Center" Padding="0,2,0,0"/>
-                        <TextBlock Text="программу" Grid.Row="1" HorizontalAlignment="Center" />
-                    </Grid>
-                </Button>
+                            <Button x:Name="ok" Click="close_Click" Style="{StaticResource RedButton_SignIn}"
+                                    Width="95" ToolTip="Выход">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Закрыть" Grid.Row="0" HorizontalAlignment="Center" Padding="0,2,0,0"/>
+                                    <TextBlock Text="программу" Grid.Row="1" HorizontalAlignment="Center" />
+                                </Grid>
+                            </Button>
                 
-                </WrapPanel>
+                    </WrapPanel>
             </Grid>
-    </Border>
+      </Border>
 </Window>

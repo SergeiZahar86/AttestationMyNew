@@ -13,7 +13,7 @@
 
     <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
         <Grid>
-            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Content="Выбор значения:" 
+            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="18" Content="Выбрать из списка:" 
                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <ComboBox x:Name="shipper_Value" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="20,0"
                           Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Left" Padding="5"
@@ -44,7 +44,7 @@
             <DockPanel x:Name="TitleBar" Grid.Row="0" Grid.ColumnSpan="6" DockPanel.Dock="Top" Background="#B22222"
                                Height="30" Width="343" VerticalAlignment="Top">
                 <TextBlock HorizontalAlignment="Left" Foreground="White" FontFamily="Calibry" FontSize="16" 
-                                Margin="8,6,15,4">Выбор итогов аттестации</TextBlock>
+                                Margin="8,6,15,4">Выбор грузоотправителя</TextBlock>
                 <Button x:Name="CloseButton" HorizontalAlignment="right" fa5:Awesome.Content="Solid_Times" FontSize="20"
                                 DockPanel.Dock="Right"  Style="{StaticResource RedButton}"  
                                 Width="28" RenderTransformOrigin="0.51,0.5" Margin="4,1,4,2.714" Height="Auto" Click="Close_Click"/>

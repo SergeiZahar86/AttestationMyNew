@@ -84,7 +84,7 @@ namespace Attestation
             /////////////////////////////////////////////////////////////////////////////////////////////
             isColor = true;                      // для кнопки начала и завершения аттестации
             mainButtonAttestation = "Начать";    // для кнопки начала и завершения аттестации
-            GreenColorStart = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 173, 1));  /*зеленый, для кнопки
+            GreenColorStart = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 158, 129));  /*зеленый, для кнопки
                                                                                                  * начала и завершения аттестации */
             RedColorEnd = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); /* красный, для кнопки
                                                                                                      * начала и завершения аттестации*/

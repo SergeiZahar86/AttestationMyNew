@@ -217,31 +217,5 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-
-
-        public class MultiConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                string input = value as string;
-                switch (input)
-                {
-                    case "Зелёная":
-                        return Brushes.LightGreen;
-                    case "Жёлтая":
-                        return Brushes.Yellow;
-                    case "Красная":
-                        return Brushes.Red;
-                    default:
-                        return DependencyProperty.UnsetValue;
-                }
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                throw new NotSupportedException();
-            }
-        }
-
     }
 }
