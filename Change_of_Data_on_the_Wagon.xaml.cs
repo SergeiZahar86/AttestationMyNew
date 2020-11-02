@@ -23,5 +23,13 @@ namespace Attestation
         {
             InitializeComponent();
         }
+        private void ok_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
