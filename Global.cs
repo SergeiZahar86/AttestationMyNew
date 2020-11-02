@@ -112,7 +112,7 @@ namespace Attestation
                 double Tar = 33.3;
                 double Tar_e = 43.3;
                 double Tar_delta = Math.Round((Tar - Tar_e), 3, MidpointRounding.AwayFromZero);
-                rows.Add(new RowTab("hello", i+1, "34556644",1, "",1, "",1, "", 1, "", Tar, Tar_e, Tar_delta, 1, "", 1, "", 55, ""));
+                rows.Add(new RowTab("hello", i+1, (34556644 +i*8).ToString(),1, "",1, "",1, "", 1, "", Tar+i*7, Tar_e + i * 7, Tar_delta, 1, "", 1, "", 55, ""));
             }
             
 

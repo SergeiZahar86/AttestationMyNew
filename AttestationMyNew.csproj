@@ -195,6 +195,9 @@
     </Compile>
     <Compile Include="car_t.cs" />
     <Compile Include="cause_t.cs" />
+    <Compile Include="Change_of_Data_on_the_Wagon.xaml.cs">
+      <DependentUpon>Change_of_Data_on_the_Wagon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Consigners.cs" />
     <Compile Include="ContinuationOfAttestation.xaml.cs">
       <DependentUpon>ContinuationOfAttestation.xaml</DependentUpon>
@@ -267,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AttestationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Change_of_Data_on_the_Wagon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -217,5 +217,23 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
+
+       
+
+       
+        private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
+            //global.Idx = DataGridMain.SelectedIndex;
+            //global.Idx = DataGridMain.CurrentRow.Index;
+
+            RowTab rowTab = DataGridMain.SelectedItem as RowTab;
+
+
+            //showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
+            showChange_VagNum.ShowDialog();
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
+        }
     }
 }
