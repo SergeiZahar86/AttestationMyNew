@@ -10,6 +10,13 @@ namespace Attestation
     {
         private Global global;
         private List<Zona> zona_Val;
+        private List<Shippers> shippersVal;
+        private List<Consigners> consignersVal;
+        private List<mat_t> matsVal;
+        private List<String> isOk_Val;
+
+
+
         public Change_of_Data_on_the_Wagon()
         {
             global = Global.getInstance();
@@ -17,6 +24,18 @@ namespace Attestation
 
             zona_Val = global.zonas;
             zona_Value.ItemsSource = zona_Val;
+
+            shippersVal = global.shippers;
+            shipper_Value.ItemsSource = shippersVal;
+
+            consignersVal = global.consigners;
+            consigner_Value.ItemsSource = consignersVal;
+
+            matsVal = global.mats;
+            mat_Value.ItemsSource = matsVal;
+
+            isOk_Val = global.IsOk_Val;
+            isOk_Value.ItemsSource = isOk_Val;
         }
 
         private void Vag_PreviewTextInput(object sender, TextCompositionEventArgs e) // Валидация ввода, можно только цифры
@@ -56,7 +75,29 @@ namespace Attestation
             global.ROWS[global.Idx].Zone_eString = global.zonas[zona_Value.SelectedIndex].Name;
 
         }
+        private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор Грузоотправитель из справочника
+        {
+            global.ROWS[global.Idx].Shipper = global.shippers[shipper_Value.SelectedIndex].Id - 1;
+            global.ROWS[global.Idx].Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
 
+        }
+        private void consigner_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор Грузополучателя из справочника
+        {
+            global.ROWS[global.Idx].Consigner = global.consigners[consigner_Value.SelectedIndex].Id - 1;
+            global.ROWS[global.Idx].Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
+
+        }
+        private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор вида материала из справочника
+        {
+            global.ROWS[global.Idx].Mat = global.mats[mat_Value.SelectedIndex].Id - 1;
+            global.ROWS[global.Idx].Mat_String = global.mats[mat_Value.SelectedIndex].Name;
+
+        }
+        private void isOk_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор итогов аттестации
+        {
+            global.ROWS[global.Idx].Att_code = isOk_Value.SelectedIndex;
+            global.ROWS[global.Idx].Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
+        }
 
 
 
@@ -107,6 +148,26 @@ namespace Attestation
                 this.Close();
             }
             /////////////////////////////////////////////
+            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+            {
+                this.Close();
+            }
+            /////////////////////////////////////////////////
+            if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+            {
+                this.Close();
+            }
+            /////////////////////////////////////////////////////////
+            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+            {
+                this.Close();
+            }
+            ///////////////////////////////////////////////
+            if (global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Att_code))
+            {
+                this.Close();
+            }
+            ///////////////////////////////////////////////////////
             
         }
         private void close_Click(object sender, RoutedEventArgs e)

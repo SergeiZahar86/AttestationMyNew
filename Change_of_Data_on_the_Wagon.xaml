@@ -8,13 +8,13 @@
         mc:Ignorable="d"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        Title="Change_of_Data_on_the_Wagon" Height="550" Width="900" WindowStyle="None"
+        Title="Change_of_Data_on_the_Wagon" Height="550" Width="1000" WindowStyle="None"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" AllowsTransparency="true">
     <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="0.8*" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -90,6 +90,11 @@
             <Label x:Name="oldTara_delta" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource LabelChangeData}"/>
             <Label x:Name="oldCarrying" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4"  Style="{StaticResource LabelChangeData}"/>
             <Label x:Name="old_zona" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
+            <Label x:Name="old_shipper" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
+            <Label x:Name="old_consigner" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
+            <Label x:Name="old_mat" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
+            <Label x:Name="old_isOk" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
+            
 
 
 
@@ -106,10 +111,25 @@
                       SelectionChanged="zona_Value_SelectionChanged"
                       ItemsSource="{Binding Path=zona_Val}" DisplayMemberPath="Name" SelectedValuePath="Name"
                       SelectedValue="{Binding Path=Zona}" Style="{StaticResource comboBoxChangeData}"/>
+            <ComboBox x:Name="shipper_Value" Grid.Row="8" Grid.Column="6" Grid.ColumnSpan="6"
+                      SelectionChanged="shipper_Value_SelectionChanged"
+                      ItemsSource="{Binding Path=zona_Val}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                      SelectedValue="{Binding Path=Zona}" Style="{StaticResource comboBoxChangeData}"/>
+            <ComboBox x:Name="consigner_Value" Grid.Row="9" Grid.Column="6" Grid.ColumnSpan="6" 
+                      SelectionChanged="consigner_Value_SelectionChanged"
+                      ItemsSource="{Binding Path=zona_Val}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                      SelectedValue="{Binding Path=Zona}" Style="{StaticResource comboBoxChangeData}"/>
+            <ComboBox x:Name="mat_Value" Grid.Row="10" Grid.Column="6" Grid.ColumnSpan="6" 
+                      SelectionChanged="mat_Value_SelectionChanged"
+                      ItemsSource="{Binding Path=zona_Val}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                      SelectedValue="{Binding Path=Zona}" Style="{StaticResource comboBoxChangeData}"/>
+            <ComboBox x:Name="isOk_Value" Grid.Row="11" Grid.Column="6" Grid.ColumnSpan="6" 
+                      SelectionChanged="isOk_Value_SelectionChanged"
+                      ItemsSource="{Binding IsOk_Val}" Style="{StaticResource comboBoxChangeData}"/>
 
 
 
-            <TextBlock x:Name="TextInput" Grid.Column="0" Grid.ColumnSpan="9" Grid.Row="11" HorizontalAlignment="Stretch"
+            <TextBlock x:Name="TextInput" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="13" HorizontalAlignment="Stretch"
                        FontSize="14" FontFamily="Calibry" Foreground ="#B22222" VerticalAlignment="Top" Height="20"/>
             <WrapPanel Grid.Row="14" Grid.Column="3" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  >
                 <Button Content="Принять" Style="{StaticResource GreenButton}"  Width="95" ToolTip="Выход"
