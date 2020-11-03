@@ -7,6 +7,7 @@ namespace Attestation
     public partial class ShowChange_Tara_e : Window
     {
         private Global global;
+
         public ShowChange_Tara_e()
         {
             InitializeComponent();

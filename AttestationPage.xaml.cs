@@ -34,12 +34,12 @@ namespace Attestation
             //shippersTextBlock.Text = global.Shipper;                      // Грузоотправитель
             //consigneesTextBlock.Text = global.Consignee;                  // Грузополучатель
         }
-        private void DataGridMain_Loaded(object sender, RoutedEventArgs e) // загрузка данных в DataGrid
+        private void DataGridMain_Loaded(object sender, RoutedEventArgs e)      // загрузка данных в DataGrid
         {
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void StartAttestation_Click(object sender, RoutedEventArgs e) // Кнопка начала аттестации
+        private void StartAttestation_Click(object sender, RoutedEventArgs e)   // Кнопка начала аттестации
         {
             
             if(global.isColor) // проверяем флаг
@@ -122,7 +122,7 @@ namespace Attestation
                 }
             }
         }
-        private void Foto_Click(object sender, RoutedEventArgs e) // выводит окно с фотографиями вагонов
+        private void Foto_Click(object sender, RoutedEventArgs e)               // выводит окно с фотографиями вагонов
         {
             /*
             global.Idx = DataGridMain.SelectedIndex;
@@ -141,7 +141,7 @@ namespace Attestation
             }
             */
         }
-        private void Change_VagNum(object sender, RoutedEventArgs e) // Изменение номера вагона
+        private void Change_VagNum(object sender, RoutedEventArgs e)            // Изменение номера вагона
         {
             ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
             global.Idx = DataGridMain.SelectedIndex;
@@ -150,7 +150,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void Change_isOk(object sender, RoutedEventArgs e) // Изменение итогов аттестации
+        private void Change_isOk(object sender, RoutedEventArgs e)              // Изменение итогов аттестации
         {
             ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
             global.Idx = DataGridMain.SelectedIndex;
@@ -158,7 +158,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void CauseButton_Click (object sender, RoutedEventArgs e) // Установить причину неаттестации
+        private void CauseButton_Click (object sender, RoutedEventArgs e)       // Установить причину неаттестации
         {
             ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
             global.Idx = DataGridMain.SelectedIndex;
@@ -166,7 +166,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void Change_Tara_e(object sender, RoutedEventArgs e) // изменение Тара НСИ
+        private void Change_Tara_e(object sender, RoutedEventArgs e)            // изменение Тара НСИ
         {
             ShowChange_Tara_e showChange_Tara_e = new ShowChange_Tara_e();
             global.Idx = DataGridMain.SelectedIndex;
@@ -175,7 +175,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void Change_Carrying(object sender, RoutedEventArgs e) // изменение Грузоподъемность
+        private void Change_Carrying(object sender, RoutedEventArgs e)          // изменение Грузоподъемность
         {
             ShowChange_Carrying showChange_Carrying = new ShowChange_Carrying();
             global.Idx = DataGridMain.SelectedIndex;
@@ -184,7 +184,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void Change_Zone_eString(object sender, RoutedEventArgs e) // изменение Зоны вагонов
+        private void Change_Zone_eString(object sender, RoutedEventArgs e)      // изменение Зоны вагонов
         {
             ShowChange_Zone_eString showChange_Zone_eString = new ShowChange_Zone_eString();
             global.Idx = DataGridMain.SelectedIndex;
@@ -192,7 +192,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void shipperButton_Click(object sender, RoutedEventArgs e) // изменение Грузоотправителя
+        private void shipperButton_Click(object sender, RoutedEventArgs e)      // изменение Грузоотправителя
         {
             ShowChange_Shipper_String Change_Shipper_String = new ShowChange_Shipper_String();
             global.Idx = DataGridMain.SelectedIndex;
@@ -201,7 +201,7 @@ namespace Attestation
             DataGridMain.ItemsSource = global.ROWS;
 
         }
-        private void consignerButton_Click(object sender, RoutedEventArgs e) // изменение Грузополучателя
+        private void consignerButton_Click(object sender, RoutedEventArgs e)    // изменение Грузополучателя
         {
             ShowChange_Consigner_String Change_Consigner_String = new ShowChange_Consigner_String();
             global.Idx = DataGridMain.SelectedIndex;
@@ -209,7 +209,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        private void matButton_Click(object sender, RoutedEventArgs e) // изменение материала 
+        private void matButton_Click(object sender, RoutedEventArgs e)          // изменение материала 
         {
             ShowChange_Mat_String Change_Mat_String = new ShowChange_Mat_String();
             global.Idx = DataGridMain.SelectedIndex;
@@ -221,17 +221,20 @@ namespace Attestation
        
 
        
-        private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) // изменение значений строки
         {
-            ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
-            //global.Idx = DataGridMain.SelectedIndex;
-            //global.Idx = DataGridMain.CurrentRow.Index;
+            Change_of_Data_on_the_Wagon change_Of_Data = new Change_of_Data_on_the_Wagon();
+            global.Idx = DataGridMain.SelectedIndex;
 
-            RowTab rowTab = DataGridMain.SelectedItem as RowTab;
+            change_Of_Data.Number.Text = global.ROWS[global.Idx].Car_id.ToString();         // порядковый номер вагона в шапке окна
+            change_Of_Data.oldVagNum.Content = global.ROWS[global.Idx].Num;                 // старый номер вагона
+            change_Of_Data.oldTara.Content = global.ROWS[global.Idx].Tara;                  // вес тары
+            change_Of_Data.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;              // прежний вес тары НСИ
+            change_Of_Data.oldTara_delta.Content = global.ROWS[global.Idx].Tara_delta;      // дельта тары
+            change_Of_Data.oldCarrying.Content = global.ROWS[global.Idx].Carrying;          // прежняя грузоподъемность
+            change_Of_Data.old_zona.Content = global.ROWS[global.Idx].Zone_eString;         // прежнее значение "зона"
 
-
-            //showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
-            showChange_VagNum.ShowDialog();
+            change_Of_Data.ShowDialog();
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
