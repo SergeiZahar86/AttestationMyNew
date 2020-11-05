@@ -94,7 +94,7 @@
             <Label x:Name="old_consigner" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
             <Label x:Name="old_mat" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
             <Label x:Name="old_isOk" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
-            
+            <Label x:Name="old_cause" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource LabelChangeData}"/>
 
 
 
@@ -126,6 +126,10 @@
             <ComboBox x:Name="isOk_Value" Grid.Row="11" Grid.Column="6" Grid.ColumnSpan="6" 
                       SelectionChanged="isOk_Value_SelectionChanged"
                       ItemsSource="{Binding IsOk_Val}" Style="{StaticResource comboBoxChangeData}"/>
+            <ComboBox x:Name="cause_Value" Grid.Row="12" Grid.Column="6" Grid.ColumnSpan="6"
+                      SelectionChanged="cause_Value_SelectionChanged"
+                      ItemsSource="{Binding Path=Cause}" DisplayMemberPath="Name" SelectedValuePath="Name"
+                      SelectedValue="{Binding Path=cause_t}" Style="{StaticResource comboBoxChangeData}"/>
 
 
 

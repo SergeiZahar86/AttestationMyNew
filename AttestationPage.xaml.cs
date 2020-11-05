@@ -245,7 +245,7 @@ namespace Attestation
                 case "Asterisk": 
                     change_Of_Data.old_isOk.Content = "Условно аттестован"; break;
             }
-
+            change_Of_Data.old_cause.Content = global.ROWS[global.Idx].Cause_idString;         // прежнее значение причины неаттестации
 
             change_Of_Data.ShowDialog();
             DataGridMain.ItemsSource = null;

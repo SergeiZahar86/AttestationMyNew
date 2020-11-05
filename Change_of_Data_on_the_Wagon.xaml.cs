@@ -8,13 +8,26 @@ namespace Attestation
 {
     public partial class Change_of_Data_on_the_Wagon : Window
     {
-        private Global global;
+        private Global global;            
         private List<Zona> zona_Val;
         private List<Shippers> shippersVal;
         private List<Consigners> consignersVal;
         private List<mat_t> matsVal;
         private List<String> isOk_Val;
+        private List<cause_t> Cause;
 
+        private int zone;
+        private string zoneStr;
+        private int shipper;
+        private string shipperStr;
+        private int consigner;
+        private string consignerStr;
+        private int mat;
+        private string matStr;
+        private int att;
+        private string attStr;
+        private int cause;
+        private string causeStr;
 
 
         public Change_of_Data_on_the_Wagon()
@@ -36,6 +49,9 @@ namespace Attestation
 
             isOk_Val = global.IsOk_Val;
             isOk_Value.ItemsSource = isOk_Val;
+
+            Cause = global.cause;
+            cause_Value.ItemsSource = Cause;
         }
 
         private void Vag_PreviewTextInput(object sender, TextCompositionEventArgs e) // Валидация ввода, можно только цифры
@@ -71,104 +87,94 @@ namespace Attestation
         }
         private void zona_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор зоны из справочника
         {
-            global.ROWS[global.Idx].Zone_e = global.zonas[zona_Value.SelectedIndex].Id;
-            global.ROWS[global.Idx].Zone_eString = global.zonas[zona_Value.SelectedIndex].Name;
+            zone = global.zonas[zona_Value.SelectedIndex].Id;
+            zoneStr = global.zonas[zona_Value.SelectedIndex].Name;
 
         }
         private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор Грузоотправитель из справочника
         {
-            global.ROWS[global.Idx].Shipper = global.shippers[shipper_Value.SelectedIndex].Id - 1;
-            global.ROWS[global.Idx].Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
+            shipper = global.shippers[shipper_Value.SelectedIndex].Id - 1;
+            shipperStr = global.shippers[shipper_Value.SelectedIndex].Name;
 
         }
         private void consigner_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор Грузополучателя из справочника
         {
-            global.ROWS[global.Idx].Consigner = global.consigners[consigner_Value.SelectedIndex].Id - 1;
-            global.ROWS[global.Idx].Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
+            consigner = global.consigners[consigner_Value.SelectedIndex].Id - 1;
+            consignerStr = global.consigners[consigner_Value.SelectedIndex].Name;
 
         }
         private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор вида материала из справочника
         {
-            global.ROWS[global.Idx].Mat = global.mats[mat_Value.SelectedIndex].Id - 1;
-            global.ROWS[global.Idx].Mat_String = global.mats[mat_Value.SelectedIndex].Name;
+            mat = global.mats[mat_Value.SelectedIndex].Id - 1;
+            matStr = global.mats[mat_Value.SelectedIndex].Name;
 
         }
         private void isOk_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор итогов аттестации
         {
-            global.ROWS[global.Idx].Att_code = isOk_Value.SelectedIndex;
-            global.ROWS[global.Idx].Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
+            att = isOk_Value.SelectedIndex;
+            attStr = global.Att_codeFonts[isOk_Value.SelectedIndex];
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор причины неаттестации
+        {
+            cause = Cause[cause_Value.SelectedIndex].Id;
+            causeStr = Cause[cause_Value.SelectedIndex].Name;
+        }
 
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-
             String vag = textboxVag.Text;
             global.ROWS[global.Idx].Num = vag;
 
-            if (global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, vag)) // Корректировка номера вагона на сервере	
-            {
-                this.Close();
-            }
             //////////////////////////////
             String tar = textboxTara.Text;
             string tarRepl = tar.Replace(".", ",");
-            global.ROWS[global.Idx].Tara_e = Convert.ToDouble(tarRepl);
+            if (tarRepl.Length > 0)
+            {
+                global.ROWS[global.Idx].Tara_e = Convert.ToDouble(tarRepl);
+            }
             global.ROWS[global.Idx].Tara_delta = Math.Round((global.ROWS[global.Idx].Tara - global.ROWS[global.Idx].Tara_e),
                 3, MidpointRounding.AwayFromZero);
-            if (global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Tara_e))
-            {
-                this.Close();
-            }
+
             /////////////////////////////////////////
             String car = textboxCarrying.Text;
             string carRepl = car.Replace(".", ",");
-            global.ROWS[global.Idx].Carrying = Convert.ToDouble(carRepl);
-            if (global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Carrying))
+            if (carRepl.Length > 0)
             {
-                this.Close();
+                global.ROWS[global.Idx].Carrying = Convert.ToDouble(carRepl);
             }
+
             /////////////////////////////////////////
-            if (global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Zone_e))
+            global.ROWS[global.Idx].Zone_e = zone;
+            global.ROWS[global.Idx].Zone_eString = zoneStr;
+
+            global.ROWS[global.Idx].Shipper = shipper - 1;
+            global.ROWS[global.Idx].Shipper_String = shipperStr;
+
+            global.ROWS[global.Idx].Consigner = consigner - 1;
+            global.ROWS[global.Idx].Consigner_String = consignerStr;
+
+            global.ROWS[global.Idx].Mat = mat - 1;
+            global.ROWS[global.Idx].Mat_String = matStr;
+
+            global.ROWS[global.Idx].Att_code = att;
+            global.ROWS[global.Idx].Att_codeString = attStr;
+
+            global.ROWS[global.Idx].Cause_id = cause;
+            global.ROWS[global.Idx].Cause_idString = causeStr;
+
+            bool a1 = global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, vag);
+            bool a2 = global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Tara_e);
+            bool a3 = global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Carrying);
+            bool a4 = global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Zone_e);
+            bool a5 = global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper);
+            bool a6 = global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper);
+            bool a7 = global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Mat);
+            bool a8 = global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Att_code);
+
+            if(a1 && a2 && a3 && a4 && a5 && a6 && a7 && a8)
             {
                 this.Close();
             }
-            /////////////////////////////////////////////
-            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
-            {
-                this.Close();
-            }
-            /////////////////////////////////////////////////
-            if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
-            {
-                this.Close();
-            }
-            /////////////////////////////////////////////////////////
-            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
-            {
-                this.Close();
-            }
-            ///////////////////////////////////////////////
-            if (global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Att_code))
-            {
-                this.Close();
-            }
-            ///////////////////////////////////////////////////////
-            
         }
         private void close_Click(object sender, RoutedEventArgs e)
         {

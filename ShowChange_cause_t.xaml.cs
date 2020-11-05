@@ -23,7 +23,7 @@ namespace Attestation
         {
             this.Close();
         }
-        private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор причины неаттестации
         {
             global.ROWS[global.Idx].Cause_idString = Cause[cause_Value.SelectedIndex].Name;
             global.ROWS[global.Idx].Cause_id = Cause[cause_Value.SelectedIndex].Id;

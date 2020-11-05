@@ -18,7 +18,7 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+            if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Mat))
             {
                 this.Close();
             }
