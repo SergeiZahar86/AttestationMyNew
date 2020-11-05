@@ -60,8 +60,10 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Номер партии:" Grid.Row="0" FontSize="16" 
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            <!--
             <TextBlock Text="Вид материала:" Grid.Row="1" FontSize="16"
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            -->
 
         </Grid>
         <Grid x:Name="grid_5" Grid.Row="0" Grid.Column="5" Background="#EEEEEE">
@@ -80,10 +82,12 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <!--
             <TextBlock Text="Грузоотправитель:" Grid.Row="0" FontSize="16" 
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
             <TextBlock Text="Грузополучатель:" Grid.Row="1" FontSize="16"
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            -->
 
         </Grid>
         <Grid x:Name="grid_7" Grid.Row="0" Grid.Column="8" Background="#EEEEEE">
