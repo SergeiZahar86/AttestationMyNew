@@ -17,9 +17,9 @@ namespace Attestation
         private Global global;
 
         private static string numberCard;
-        private  System.Timers.Timer aTimer;
+        //ivate  System.Timers.Timer aTimer;
 
-        private void OnTimedEvent(Object source, EventArgs e)
+        private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
             numberCard = global.getNumberCard();
             NewEmplId.Text = numberCard;
@@ -30,11 +30,12 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
 
-
+            // Таймер для работы считывателя///
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
+            ///////////////////////////////////
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {

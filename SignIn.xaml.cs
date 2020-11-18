@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Attestation
 {
@@ -6,11 +7,25 @@ namespace Attestation
     {
         private Global global;
         public static bool isCloseProgram;
+        private static string numberCard;
+
+        private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
+        {
+            numberCard = global.getNumberCard();
+            NewEmplId.Text = numberCard;
+        }
         public SignIn()
         {
             InitializeComponent();
             global = Global.getInstance();
             isCloseProgram = false;
+
+            // Таймер для работы считывателя///
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+            ///////////////////////////////////
         }
         private void ok_Click(object sender, RoutedEventArgs e) // кнопка Применить
         { 
@@ -18,7 +33,7 @@ namespace Attestation
             {
                 global.Login = tbLogin.Text;
                 string password = passwordBox.Password;
-                global.user = global.getUser(global.Login, password, ""); // Global.getUser (261)
+                global.user = global.getUser(global.Login, password, NewEmplId.Text); // Global.getUser (261)
                 if (global.user.Length > 0)
                 {
                     this.Close();

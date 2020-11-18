@@ -247,7 +247,7 @@ namespace Attestation
             return this.client.changePass(login, oldPass, newPass, newEmpl_id);
         }
 
-        public string getNumberCard()
+        public string getNumberCard() // Работы считывателя карты, возвращает номер карты
         {
             int retval;                                             //Return Value
 
