@@ -43,12 +43,12 @@ namespace Attestation
             newPassword = NewPassword.Password;
             newPasswordRepead = NewPasswordRepead.Password;
             if(oldPassword.Length > 0 && newPassword.Length > 0 &&
-                newPasswordRepead.Length > 0 && newPassword == newPasswordRepead)
+                newPasswordRepead.Length > 0 && newPassword != newPasswordRepead)
             {
                 bool ret=false;
                 try
                 {
-                    ret = global.changePass(global.Login, oldPassword, newPassword, null); // changePass() - Смена данных учетной записи 
+                    ret = global.changePass(global.Login, oldPassword, newPassword, NewEmplId.Text); // changePass() - Смена данных учетной записи 
                 } catch(DataProviderException ex)
                 {
                     string t=ex.Message;
