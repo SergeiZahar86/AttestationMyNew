@@ -1,22 +1,44 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Timers;
 
 namespace Attestation
 {
     public partial class changePassword : Window
-    {
-        public string Login;
-        private Global global;
 
+    { 
         private string oldPassword;
         private string newPassword;
         private string newPasswordRepead;
+        public string Login;
+        private Global global;
+
+        private static string numberCard;
+        private  System.Timers.Timer aTimer;
+
+        private void OnTimedEvent(Object source, EventArgs e)
+        {
+            numberCard = global.getNumberCard();
+            NewEmplId.Text = numberCard;
+        }
+        
         public changePassword()
         {
             InitializeComponent();
             global = Global.getInstance();
+
+
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {
+           
             oldPassword = OldPassword.Password;
             newPassword = NewPassword.Password;
             newPasswordRepead = NewPasswordRepead.Password;

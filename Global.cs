@@ -5,11 +5,37 @@ using Thrift.Transport;
 using Thrift.Protocol;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Runtime.InteropServices;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Controls;
 
 namespace Attestation
 {
     class Global
     {
+        [DllImport("WinScard.dll")]
+        public static extern int SCardEstablishContext(uint dwScope, IntPtr notUsed1, IntPtr notUsed2, out IntPtr phContext);
+
+        [DllImport("WinScard.dll")]
+        public static extern int SCardConnect(IntPtr hContext, string cReaderName,
+            uint dwShareMode, uint dwPrefProtocol, ref IntPtr hCard, ref IntPtr ActiveProtocol);
+
+        [DllImport("WinScard.dll")]
+        public static extern int SCardDisconnect(IntPtr hCard, int Disposition);
+
+        [DllImport("WinScard.dll")]
+        public static extern int SCardTransmit(IntPtr hCard, ref HiDWinscard.SCARD_IO_REQUEST pioSendRequest,
+            Byte[] SendBuff, int SendBuffLen, ref HiDWinscard.SCARD_IO_REQUEST pioRecvRequest, Byte[] RecvBuff, ref int RecvBuffLen);
+
+        [DllImport("WinScard.dll")]
+        public static extern int SCardReleaseContext(IntPtr phContext);
+
+
+
+
+
+
+
         //public bool isLoadAttestation; // флаг для загрузки страницы аттестации
 
         public bool isColor;                                                 // флаг для кнопки начала и завершения аттестации
@@ -52,6 +78,7 @@ namespace Attestation
         public List<string> Att_codeFonts;              // справочник элементов шрифта для итогов аттестации
         public List<Zona> zonas;                        // справочник Зоны вагонов
 
+        public TextBox pubTextBox;
         //public List<RowTab> ROWS;                       // внутренний список вагонов 
         public List<RowTab> ROWS;
 
@@ -218,6 +245,83 @@ namespace Attestation
         public bool changePass(string login, string oldPass, string newPass, string newEmpl_id) // Смена данных учетной записи 
         {
             return this.client.changePass(login, oldPass, newPass, newEmpl_id);
+        }
+
+        public string getNumberCard()
+        {
+            int retval;                                             //Return Value
+
+            IntPtr hContext;                                        //Context Handle value
+            IntPtr hCard = IntPtr.Zero;                                           //Card handle
+            IntPtr protocol = IntPtr.Zero;                                        //Protocol used currently
+            Byte[] sendBuffer = new Byte[255];                        //Send Buffer in SCardTransmit
+            Byte[] receiveBuffer = new Byte[255];                   //Receive Buffer in SCardTransmit
+            int sendbufferlen, receivebufferlen;                    //Send and Receive Buffer length in SCardTransmit
+            Byte bcla;                                             //Class Byte
+            Byte bins;                                             //Instruction Byte
+            Byte bp1;                                              //Parameter Byte P1
+            Byte bp2;                                              //Parameter Byte P2
+            Byte len;                                              //Lc/Le Byte
+            Byte[] data = new Byte[255];                            //Data Bytes
+            HiDWinscard.SCARD_READERSTATE ReaderState;              //Object of SCARD_READERSTATE
+            uint dwscope;                                           //Scope of the resource manager context
+            string code = null;
+
+            dwscope = 2;
+
+            retval = SCardEstablishContext(dwscope, IntPtr.Zero, IntPtr.Zero, out hContext);
+
+            retval = SCardConnect(hContext, "HID OMNIKEY 5427 CK CL 0", HiDWinscard.SCARD_SHARE_SHARED, HiDWinscard.SCARD_PROTOCOL_T1,
+                                 ref hCard, ref protocol);       //Command to connect the card ,protocol T=1
+            if (retval == 0)
+            {
+                bcla = 0xFF;
+                bins = 0xCA;
+                bp1 = 0x00;
+                bp2 = 0x00;
+                len = 0x00;
+                sendBuffer[0] = bcla;
+                sendBuffer[1] = bins;
+                sendBuffer[2] = bp1;
+                sendBuffer[3] = bp2;
+                sendBuffer[4] = len;
+
+                HiDWinscard.SCARD_IO_REQUEST sioreq;
+                sioreq.dwProtocol = 0x2;
+                sioreq.cbPciLength = 8;
+
+                HiDWinscard.SCARD_IO_REQUEST rioreq;
+                rioreq.cbPciLength = 8;
+                rioreq.dwProtocol = 0x2;
+
+                sendbufferlen = 0x5;
+                receivebufferlen = 8;
+
+
+                retval = SCardTransmit(hCard, ref sioreq, sendBuffer, sendbufferlen, ref rioreq, receiveBuffer, ref receivebufferlen);
+                if (retval == 0)
+                {
+                    if ((receiveBuffer[receivebufferlen - 2] == 0x90) && (receiveBuffer[receivebufferlen - 1] == 0))
+                    {
+                        //Console.WriteLine(BitConverter.ToString(receiveBuffer, (receivebufferlen - 2), 1) + " " + BitConverter.ToString(receiveBuffer, (receivebufferlen - 1), 1));
+
+                        code = BitConverter.ToString(receiveBuffer).Replace("-", string.Empty).Substring(0, (receivebufferlen - 2) * 2);
+                        Console.WriteLine(code);
+                        Console.ReadLine();
+                    }
+
+                }
+                retval = SCardDisconnect(hCard, HiDWinscard.SCARD_UNPOWER_CARD); //Command to disconnect the card
+            }
+            else
+            {
+
+            }
+
+
+            retval = SCardReleaseContext(hContext);
+
+            return code;
         }
 
     }

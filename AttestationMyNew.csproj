@@ -209,6 +209,7 @@
       <DependentUpon>DatePickerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="HiDWinscard.cs" />
     <Compile Include="input_Of_Initial_Data.xaml.cs">
       <DependentUpon>input_Of_Initial_Data.xaml</DependentUpon>
     </Compile>
