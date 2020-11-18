@@ -65,21 +65,25 @@
                            FontSize="16" Margin="15,10,15,4">Отчеты</TextBlock>
             </Border>
             -->
+            <!--
             <Border BorderThickness="0 0 0 6" BorderBrush="#37474F" x:Name="BorderArchive" Cursor="Hand">
                 <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Archive_Click"
                            FontFamily="Calibry"
                            FontSize="16" Margin="15,10,15,4">Архив</TextBlock>
             </Border>
+            -->
             <Label x:Name="label_fio" Content="{Binding SomeValueString}"  Height="30" Width="400"
                    VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center"
                    VerticalContentAlignment="Center" 
                    FontFamily="Calibry" Foreground="Black" Background="#FFD0DEE4" Margin="50,0,0,0"/>
+            <!--
             <DockPanel HorizontalAlignment="right" Margin="0,0,20,0">
                 <TextBlock HorizontalAlignment="Right" Margin="4,10,15,4" Cursor="Hand"
                            Style="{StaticResource TextblockHead}">Аттестация вагонов</TextBlock>
                 <TextBlock  x:Name="user" HorizontalAlignment="Right" Margin="4,10,15,4"
                             Cursor="Hand" Style="{StaticResource TextblockHead}">admin</TextBlock>
             </DockPanel>
+            --> 
         </DockPanel>
         <Border Background="#EEEEEE">
             <Frame x:Name="MainFrame"  Height="1020" Margin="0,10,0,0" VerticalAlignment="Top" Width="1920" NavigationUIVisibility="Hidden"/>

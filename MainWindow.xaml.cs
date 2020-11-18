@@ -124,7 +124,7 @@ namespace Attestation
             var converter = new System.Windows.Media.BrushConverter();
             //BorderReport.BorderBrush= (Brush)converter.ConvertFromString("#37474F");
             BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
-            BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
+            //BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
             //BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#00CC00");
             AttestationPage p = new AttestationPage();
             MainFrame.Navigate(p);
@@ -133,21 +133,23 @@ namespace Attestation
         }
         private void Report_Click(object sender, MouseButtonEventArgs e) // страница отчетов
         {
+            /*
             var converter = new System.Windows.Media.BrushConverter();
             //BorderReport.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
             BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
-            BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
+            //BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
 
             ReportPage p = new ReportPage();
             MainFrame.Navigate(p);
             user.Text = "Ok";
+            */
         }
         private void Archive_Click(object sender, MouseButtonEventArgs e) // страница архивов
         {
             var converter = new System.Windows.Media.BrushConverter();
             //BorderReport.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
             BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#37474F");
-            BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
+            //BorderArchive.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
 
             Archive p = new Archive();
             MainFrame.Navigate(p);

@@ -128,7 +128,8 @@
                   Width="1870"  Loaded="DataGridMain_Loaded" BorderThickness="0"
                   SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="#FFD0DEE4"
                    BorderBrush="White" Background="White" 
-                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,10,0"  MouseDoubleClick="DataGridMain_MouseDoubleClick"   >
+                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,10,0"
+                  MouseDoubleClick="DataGridMain_MouseDoubleClick"   >
            
 
             <DataGrid.Resources>
