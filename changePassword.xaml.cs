@@ -17,12 +17,14 @@ namespace Attestation
         private Global global;
 
         private static string numberCard;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
         //ivate  System.Timers.Timer aTimer;
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
             numberCard = global.getNumberCard();
             NewEmplId.Text = numberCard;
+
         }
         
         public changePassword()
@@ -31,7 +33,7 @@ namespace Attestation
             global = Global.getInstance();
 
             // Таймер для работы считывателя///
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
@@ -53,8 +55,12 @@ namespace Attestation
                 {
                     string t=ex.Message;
                 }
-                  if(ret) this.Close();
-                     else result.Text = "Старый пароль введен неверно";
+                if (ret) 
+                {
+                    dispatcherTimer.Stop(); // остановить таймер
+                    this.Close();
+                }
+                else { result.Text = "Старый пароль введен неверно"; }
             }
             else
             {
@@ -63,6 +69,7 @@ namespace Attestation
         }
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
+            dispatcherTimer.Stop(); // остановить таймер
             this.Close();
         }
     }

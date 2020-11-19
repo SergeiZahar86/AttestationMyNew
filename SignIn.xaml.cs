@@ -9,12 +9,13 @@ namespace Attestation
         public static bool isCloseProgram;
         private static string numberCard;
         string password;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
             numberCard = global.getNumberCard();
             NewEmplId.Text = numberCard;
-            if (NewEmplId.Text.Length > 0)
+            if (NewEmplId.Text.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
             {
                 global.user = global.getUser("", "", NewEmplId.Text); // Global.getUser (261)
                 if (global.user.Length > 0)
@@ -32,7 +33,7 @@ namespace Attestation
             isCloseProgram = false;
 
             // Таймер для работы считывателя///
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
@@ -47,6 +48,7 @@ namespace Attestation
                 global.user = global.getUser(global.Login, password, NewEmplId.Text); // Global.getUser (261)
                 if (global.user.Length > 0)
                 {
+                    dispatcherTimer.Stop(); // остановить таймер
                     this.Close();
                 }
                 else
@@ -66,6 +68,7 @@ namespace Attestation
             closeProgram.ShowDialog();
             if (isCloseProgram)
             {
+                dispatcherTimer.Stop(); // остановить таймер
                 Application.Current.Shutdown();
             }
 

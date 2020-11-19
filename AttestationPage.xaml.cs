@@ -8,9 +8,23 @@ namespace Attestation
 {
     public partial class AttestationPage : Page
     {
-        public int idx; // индекс строки
+        public int idx;                                             // индекс строки
         private Global global;
-        public static bool isVerification;             // флаг для подтверждения окончания аттестации
+        public static bool isVerification;                          // флаг для подтверждения окончания аттестации
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
+
+
+        private void OnTimedEvent(Object source, EventArgs e) // Получение вагонов с сервера по таймеру
+        {
+            global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
+            global.DATA = global.part.Cars;                        // серверный список вагонов
+            global.ROWS = global.GetRows();                        // внутренний список вагонов
+
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
+            //numberCard = global.getNumberCard();
+            //NewEmplId.Text = numberCard;
+        }
 
         public AttestationPage() // конструктор
         {
@@ -33,6 +47,13 @@ namespace Attestation
             //matTextBlock.Text = global.MatName;                           // Название материала
             //shippersTextBlock.Text = global.Shipper;                      // Грузоотправитель
             //consigneesTextBlock.Text = global.Consignee;                  // Грузополучатель
+
+            // Таймер ///////////////////////////////////////
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            
+            /////////////////////////////////////////////////
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e)      // загрузка данных в DataGrid
         {
@@ -91,6 +112,8 @@ namespace Attestation
                     global.IdMat = null;                        // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
 
                     global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
+
+                    dispatcherTimer.Start();                    // Стартуем таймер
                 //}
             }
             else
@@ -119,6 +142,8 @@ namespace Attestation
                     DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
 
                     global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
+
+                    dispatcherTimer.Stop();                                           // Останавливает таймер
                 }
             }
         }

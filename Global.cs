@@ -6,10 +6,10 @@ using Thrift.Protocol;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
-using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
 using System.Configuration;
 using System.Windows;
+using System.Threading;
 
 namespace Attestation
 {
@@ -31,12 +31,6 @@ namespace Attestation
 
         [DllImport("WinScard.dll")]
         public static extern int SCardReleaseContext(IntPtr phContext);
-
-
-
-
-
-
 
         //public bool isLoadAttestation; // флаг для загрузки страницы аттестации
 
@@ -83,6 +77,7 @@ namespace Attestation
         public TextBox pubTextBox;
         //public List<RowTab> ROWS;                       // внутренний список вагонов 
         public List<RowTab> ROWS;
+        
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
@@ -96,24 +91,22 @@ namespace Attestation
 
         private Global()
         {
-            //try
-            //{
-                var appSettings = ConfigurationManager.AppSettings;
-                Port = int.Parse(appSettings["port"] ?? "9090");
-                Host = appSettings["host"] ?? "localhost";
-                //string t = appSettings["port"] ;
-                //Host = appSettings["host"] ;
-            /*}  catch (ConfigurationErrorsException ex) 
-            
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }*/
-
-///////////////////////////////////////////////////////////////////////////
-this.transport = new TSocket(Host, Port); // 10.90.90.5  - IP адрес сервера
+            var appSettings = ConfigurationManager.AppSettings;
+            Port = int.Parse(appSettings["port"] ?? "9090");
+            Host = appSettings["host"] ?? "localhost";
+            ///////////////////////////////////////////////////////////////////////////
+            this.transport = new TSocket(Host, Port); // 10.90.90.5  - IP адрес сервера
             TProtocol proto = new TBinaryProtocol(transport);
-            transport.Open();
+            try
+            {
+                transport.Open();
+            }
+            catch(Exception sa)
+            {
+                MessageBox.Show(sa.Message);
+                Thread.Sleep(5000);
+                Application.Current.Shutdown(); ;
+            }
             this.client = new DataProviderService.Client(proto);
             ///////////////////////////////////////////////////////////////////////////////
 
@@ -140,9 +133,12 @@ this.transport = new TSocket(Host, Port); // 10.90.90.5  - IP адрес сер�
         public void GetGlobalPart(string user) // Получение партии вагонов перед Началом аттестации 
         {
             part = beginAtt(user);
+            DATA = part.Cars;        // серверный список вагонов
+            ROWS = GetRows();        // внутренний список вагонов
+            /*part = beginAtt(user);
             if (part.Cars != null) DATA = part.Cars;
             else DATA = new List<car_t>();
-            ROWS = GetRows();
+            ROWS = GetRows();*/
         }
         public static Global getInstance() // возвращает singleton объекта Global
         {
@@ -154,16 +150,14 @@ this.transport = new TSocket(Host, Port); // 10.90.90.5  - IP адрес сер�
         {
             List<RowTab> rows = new List<RowTab>();
             
-            for(int i = 0; i<25; i++)
+            /*for(int i = 0; i<25; i++)
             {
                 double Tar = 33.3;
                 double Tar_e = 43.3;
                 double Tar_delta = Math.Round((Tar - Tar_e), 3, MidpointRounding.AwayFromZero);
                 rows.Add(new RowTab("hello", i+1, (34556644 +i*8).ToString(),1, "",1, "",1, "", 1, "", Tar+i*7, Tar_e + i * 7, Tar_delta, 1, "", 1, "", 55, ""));
-            }
+            }*/
             
-
-            /*
             foreach (car_t cars in DATA)
             {
                 string Part_id__ = cars.Part_id;                        
@@ -193,11 +187,11 @@ this.transport = new TSocket(Host, Port); // 10.90.90.5  - IP адрес сер�
                 double Carrying__ = cars.Carrying_e;
                 string Att_time__ = cars.Att_time;
                 
-                    rows.Add(new RowTab(Part_id__, Car_id__, Num__, shipper__, shipperString__, consigner__,
+                rows.Add(new RowTab(Part_id__, Car_id__, Num__, shipper__, shipperString__, consigner__,
                         consignerString__, mat__, matString__, Att_code__, Att_codeString__, Tara__, Tara_e__,
                         Tara_delta__, Zone_e__, Zone_eString__, Cause_id__, Cause_idString__, Carrying__, Att_time__));
             }
-            */
+            
             return rows;
         }
         public byte[] ImageToByteArray(System.Drawing.Image imageIn) // преобразует картинку в массив байтов
