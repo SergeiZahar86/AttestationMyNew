@@ -10,10 +10,10 @@ namespace Attestation
     public partial class changePassword : Window
 
     { 
+        private string login;
         private string oldPassword;
         private string newPassword;
-        private string newPasswordRepead;
-        public string Login;
+        public string LoginBool;
         private Global global;
 
         private static string numberCard;
@@ -33,23 +33,22 @@ namespace Attestation
             // Таймер для работы считывателя///
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 100);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
             ///////////////////////////////////
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {
            
+            login = Login.Password;
             oldPassword = OldPassword.Password;
             newPassword = NewPassword.Password;
-            newPasswordRepead = NewPasswordRepead.Password;
-            if(oldPassword.Length > 0 && newPassword.Length > 0 &&
-                newPasswordRepead.Length > 0 && newPassword != newPasswordRepead)
+            if(login.Length > 0 && oldPassword.Length > 0)
             {
                 bool ret=false;
                 try
                 {
-                    ret = global.changePass(global.Login, oldPassword, newPassword, NewEmplId.Text); // changePass() - Смена данных учетной записи 
+                    ret = global.changePass(global.Login, login, oldPassword, NewEmplId.Text); // changePass() - Смена данных учетной записи 
                 } catch(DataProviderException ex)
                 {
                     string t=ex.Message;

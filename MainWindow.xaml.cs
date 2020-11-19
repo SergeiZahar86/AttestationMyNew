@@ -111,7 +111,7 @@ namespace Attestation
             bool? ret = dialog.DialogResult;
             if (ret == true)
             {
-                string login = dialog.Login;
+                string login = dialog.LoginBool;
 
             }
         }

@@ -8,6 +8,8 @@ using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
+using System.Configuration;
+using System.Windows;
 
 namespace Attestation
 {
@@ -85,13 +87,31 @@ namespace Attestation
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
         public DataProviderService.Client client; // DataProviderService - Название заглушки
+
+        int Port;
+        string Host;
+
         /// /////////////////////////////////////////////////////
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
 
         private Global()
         {
-            ///////////////////////////////////////////////////////////////////////////
-            this.transport = new TSocket("10.90.90.5", 9090); // 10.90.90.5  - IP адрес сервера
+            //try
+            //{
+                var appSettings = ConfigurationManager.AppSettings;
+                Port = int.Parse(appSettings["port"] ?? "9090");
+                Host = appSettings["host"] ?? "localhost";
+                //string t = appSettings["port"] ;
+                //Host = appSettings["host"] ;
+            /*}  catch (ConfigurationErrorsException ex) 
+            
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }*/
+
+///////////////////////////////////////////////////////////////////////////
+this.transport = new TSocket(Host, Port); // 10.90.90.5  - IP адрес сервера
             TProtocol proto = new TBinaryProtocol(transport);
             transport.Open();
             this.client = new DataProviderService.Client(proto);
