@@ -33,7 +33,7 @@ namespace Attestation
             // Таймер для работы считывателя///
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 100);
             dispatcherTimer.Start();
             ///////////////////////////////////
         }
