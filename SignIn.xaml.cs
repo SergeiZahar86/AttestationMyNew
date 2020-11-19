@@ -8,14 +8,25 @@ namespace Attestation
         private Global global;
         public static bool isCloseProgram;
         private static string numberCard;
+        string password;
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
             numberCard = global.getNumberCard();
             NewEmplId.Text = numberCard;
+            if (NewEmplId.Text.Length > 0)
+            {
+                global.user = global.getUser("", "", NewEmplId.Text); // Global.getUser (261)
+                if (global.user.Length > 0)
+                {
+                    this.Close();
+                }
+            }
         }
         public SignIn()
         {
+            //numberCard = "";
+
             InitializeComponent();
             global = Global.getInstance();
             isCloseProgram = false;
@@ -32,7 +43,7 @@ namespace Attestation
             try
             {
                 global.Login = tbLogin.Text;
-                string password = passwordBox.Password;
+                password = passwordBox.Password;
                 global.user = global.getUser(global.Login, password, NewEmplId.Text); // Global.getUser (261)
                 if (global.user.Length > 0)
                 {

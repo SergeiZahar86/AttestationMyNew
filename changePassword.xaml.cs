@@ -48,7 +48,7 @@ namespace Attestation
                 bool ret=false;
                 try
                 {
-                    ret = global.changePass(global.Login, login, oldPassword, NewEmplId.Text); // changePass() - Смена данных учетной записи 
+                    ret = global.changePass(global.Login, oldPassword, newPassword, NewEmplId.Text); // changePass() - Смена данных учетной записи 
                 } catch(DataProviderException ex)
                 {
                     string t=ex.Message;
