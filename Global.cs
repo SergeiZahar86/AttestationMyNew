@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Configuration;
 using System.Windows;
 using System.Threading;
+using System.Text;
 
 namespace Attestation
 {
@@ -339,6 +340,31 @@ namespace Attestation
 
             return code;
         }
+        public bool checkSum(string number)
+        {
+            byte[] buf = Encoding.ASCII.GetBytes(number);
 
+            for (int i = 0; i<number.Length; i++)
+            {
+                buf[i] = (byte)(buf[i] - 48);
+            }
+            byte[] K = { 2, 1, 2, 1, 2, 1, 2 };
+            int sum = 0;
+            for(int i = 0; i < 7; i++)
+            {
+                int p = buf[i] * K[i];
+                p = p > 9 ? p = p % 10 + p / 10 : p;
+                sum += p;
+            }
+            int c = sum % 10 == 0 ? 0 : 10 - sum%10;
+            if(c == buf[7])
+                return true;
+            else
+                return false;
+            
+
+
+
+        }
     }
 }

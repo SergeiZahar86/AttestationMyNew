@@ -12,6 +12,7 @@ namespace Attestation
         private Global global;
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
         System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
+        private bool realNumber;                                    // флаг проверки подлинности номера вагона
 
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение вагонов с сервера по таймеру
@@ -28,6 +29,7 @@ namespace Attestation
 
         public AttestationPage() // конструктор
         {
+            realNumber = false;                                                  // флаг проверки подлинности номера вагона
             // Таймер ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
@@ -272,5 +274,14 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-    }
+
+/*        private void test_Click(object sender, RoutedEventArgs e)
+        {
+            
+            bool ret = global.checkSum("53538960");
+            if (ret)
+                MessageBox.Show("ok");
+            else MessageBox.Show("no");
+        }
+*/    }
 }

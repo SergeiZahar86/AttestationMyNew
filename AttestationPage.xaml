@@ -104,8 +104,9 @@
             -->
         </Grid>
 
-
-
+        <!--
+        <Button x:Name="test" Grid.Column="0" Grid.Row="0" Height="50" Width="50" Click="test_Click"/>
+        -->
         <Button x:Name="StartAttestation" Click="StartAttestation_Click"  Grid.Column="0" Grid.Row="0" Height="44" Width="90" 
                  Style="{StaticResource startAttestation}" HorizontalAlignment="Left" Margin="25,0,0,0">
             <Grid>

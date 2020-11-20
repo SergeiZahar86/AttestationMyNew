@@ -29,8 +29,8 @@ namespace Attestation
         }
         private void zona_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.ROWS[global.Idx].Zone_e = global.zonas[zona_Value.SelectedIndex].Id;
-            global.ROWS[global.Idx].Zone_eString = global.zonas[zona_Value.SelectedIndex].Name;
+            global.ROWS[global.Idx].Zone_e = global.zonas[zona_Value.SelectedIndex ].Id;
+            global.ROWS[global.Idx].Zone_eString = global.zonas[zona_Value.SelectedIndex ].Name;
             
         }
     }
