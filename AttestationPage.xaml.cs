@@ -17,8 +17,8 @@ namespace Attestation
         private void OnTimedEvent(Object source, EventArgs e) // Получение вагонов с сервера по таймеру
         {
             global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
-            global.DATA = global.part.Cars;                        // серверный список вагонов
-            global.ROWS = global.GetRows();                        // внутренний список вагонов
+            global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+            global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
 
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
@@ -28,6 +28,12 @@ namespace Attestation
 
         public AttestationPage() // конструктор
         {
+            // Таймер ///////////////////////////////////////
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            
+            /////////////////////////////////////////////////
             InitializeComponent();
             global = Global.getInstance();
             isVerification = false;                                       // флаг для подтверждения окончания аттестации
@@ -36,24 +42,19 @@ namespace Attestation
             if (!global.isColor)
             {
                 global.mainButtonAttestation = "Закончить";
-                startRow_1.Text = global.mainButtonAttestation;               // текст в кнопке аттестации
-                StartAttestation.Background = global.RedColorEnd;             // красный
+                startRow_1.Text = global.mainButtonAttestation;           // текст в кнопке аттестации
+                StartAttestation.Background = global.RedColorEnd;         // красный
+                dispatcherTimer.Start();                                  // Стартуем таймер
             }
             timeStart.Text = global.startTimeStr;                         // время начала
             timeEnd.Text = global.endTimeStr;                             // Время окончания
             timeDelta.Text = global.deltaTimeStr;                         // Время затраченное на аттестации (продолжительность)
 
             part_idTextBlock.Text = global.PartId;                        // Номер партии
-            //matTextBlock.Text = global.MatName;                           // Название материала
-            //shippersTextBlock.Text = global.Shipper;                      // Грузоотправитель
-            //consigneesTextBlock.Text = global.Consignee;                  // Грузополучатель
+            //matTextBlock.Text = global.MatName;                         // Название материала
+            //shippersTextBlock.Text = global.Shipper;                    // Грузоотправитель
+            //consigneesTextBlock.Text = global.Consignee;                // Грузополучатель
 
-            // Таймер ///////////////////////////////////////
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
-            
-            /////////////////////////////////////////////////
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e)      // загрузка данных в DataGrid
         {
@@ -88,16 +89,15 @@ namespace Attestation
                     DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
 
                     /* Запрос партии вагонов */
-                    global.GetGlobalPart(global.user); /* Начало аттестации
-                                                                                                             *   и получение партии вагонов */
+                    global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
 
                     global.PartId = global.part.Part_id.ToString();              // Номер партии
                     part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
-                    //shippersTextBlock.Text = global.Shipper;                     // Грузоотправитель
-                    //consigneesTextBlock.Text = global.Consignee;                 // Грузополучатель
+                    //shippersTextBlock.Text = global.Shipper;                   // Грузоотправитель
+                    //consigneesTextBlock.Text = global.Consignee;               // Грузополучатель
 
 
-                    //matTextBlock.Text = global.MatName;                          // Название материала
+                    //matTextBlock.Text = global.MatName;                        // Название материала
 
                     StartAttestation.Background = global.RedColorEnd;            // красный
 
@@ -242,11 +242,7 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-
-       
-
-       
-        private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) // изменение значений строки
+        private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) // изменение значений строки по двойному клику
         {
             Change_of_Data_on_the_Wagon change_Of_Data = new Change_of_Data_on_the_Wagon();
             global.Idx = DataGridMain.SelectedIndex;

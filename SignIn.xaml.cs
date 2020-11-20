@@ -20,6 +20,7 @@ namespace Attestation
                 global.user = global.getUser("", "", NewEmplId.Text); // Global.getUser (261)
                 if (global.user.Length > 0)
                 {
+                    dispatcherTimer.Stop(); // остановить таймер
                     this.Close();
                 }
             }
@@ -56,9 +57,10 @@ namespace Attestation
                     mistake.Text = "Логин или пароль введён неверно";
                 }
             }
-            catch
+            catch(Exception aa)
             {
-                mistake.Text = "Логин или пароль введён неверно";
+               
+                mistake.Text = (aa.Message);
             }
         }
         private void close_Click(object sender, RoutedEventArgs e) // закрыть программу
