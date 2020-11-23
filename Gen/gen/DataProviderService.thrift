@@ -86,6 +86,7 @@ service DataProviderService
 	  bool setConsigner(1:string part_id,2:int car_id,3:int consigner) throws (1:DataProviderException ex),      # корректировка грузополучателя
 	  bool setMat(1:string part_id,2:int car_id,3:int mat) throws (1:DataProviderException ex),                  # корректировка материала
 	  bool setCar(1:string part_id,2:int car_id, 3:car_t car) throws (1:DataProviderException ex),               # корректировка данных по вагону
+	  bool setCause(1:string part_id,2:int car_id, 3:int cause_id) throws (1:DataProviderException ex),          # корректировка причины неаттестации
 	  
 	  # Сервисные функции 
 	  part_t startAtt(1:string user) throws (1:DataProviderException ex),                                        # Начало аттестации 

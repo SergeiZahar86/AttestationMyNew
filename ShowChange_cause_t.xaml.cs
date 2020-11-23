@@ -17,7 +17,11 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id))
+            {
+                global.ROWS[global.Idx].Cause_idString = global.rowTab.Cause_idString;
+                this.Close();
+            }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
@@ -25,8 +29,8 @@ namespace Attestation
         }
         private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор причины неаттестации
         {
-            global.rowTab.Cause_idString = Cause[cause_Value.SelectedIndex].Name;
             global.rowTab.Cause_id = Cause[cause_Value.SelectedIndex].Id;
+            global.rowTab.Cause_idString = Cause[cause_Value.SelectedIndex].Name;
         }
     }
 }
