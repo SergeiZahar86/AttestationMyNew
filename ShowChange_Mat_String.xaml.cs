@@ -18,8 +18,9 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Mat))
+            if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat))
             {
+                global.ROWS[global.Idx].Mat_String = global.rowTab.Mat_String;
                 this.Close();
             }
         }
@@ -29,8 +30,8 @@ namespace Attestation
         }
         private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.ROWS[global.Idx].Mat = global.mats[mat_Value.SelectedIndex].Id - 1;
-            global.ROWS[global.Idx].Mat_String = global.mats[mat_Value.SelectedIndex].Name;
+            global.rowTab.Mat = global.mats[mat_Value.SelectedIndex].Id;
+            global.rowTab.Mat_String = global.mats[mat_Value.SelectedIndex].Name;
 
         }
     }

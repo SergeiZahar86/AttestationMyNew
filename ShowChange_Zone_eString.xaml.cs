@@ -18,8 +18,9 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Zone_e))
+            if (global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e))
             {
+                global.ROWS[global.Idx].Zone_eString = global.rowTab.Zone_eString;
                 this.Close();
             }
         }
@@ -29,8 +30,8 @@ namespace Attestation
         }
         private void zona_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.ROWS[global.Idx].Zone_e = global.zonas[zona_Value.SelectedIndex ].Id;
-            global.ROWS[global.Idx].Zone_eString = global.zonas[zona_Value.SelectedIndex ].Name;
+            global.rowTab.Zone_e = global.zonas[zona_Value.SelectedIndex ].Id-1;
+            global.rowTab.Zone_eString = global.zonas[zona_Value.SelectedIndex ].Name;
             
         }
     }

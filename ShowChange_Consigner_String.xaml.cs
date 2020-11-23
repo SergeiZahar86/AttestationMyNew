@@ -18,8 +18,9 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+            if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Consigner))
             {
+                global.ROWS[global.Idx].Consigner_String = global.rowTab.Consigner_String;
                 this.Close();
             }
         }
@@ -29,8 +30,8 @@ namespace Attestation
         }
         private void consigner_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.ROWS[global.Idx].Consigner = global.consigners[consigner_Value.SelectedIndex].Id - 1;
-            global.ROWS[global.Idx].Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
+            global.rowTab.Consigner = global.consigners[consigner_Value.SelectedIndex].Id;
+            global.rowTab.Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
 
         }
     }

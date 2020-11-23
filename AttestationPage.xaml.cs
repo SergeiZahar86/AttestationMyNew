@@ -181,17 +181,27 @@ namespace Attestation
         {
             ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
             global.Idx = DataGridMain.SelectedIndex;
-            showChange_IsOk.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                showChange_IsOk.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void CauseButton_Click (object sender, RoutedEventArgs e)       // Установить причину неаттестации
         {
             ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
             global.Idx = DataGridMain.SelectedIndex;
-            showChange_Cause_T.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                showChange_Cause_T.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void Change_Tara_e(object sender, RoutedEventArgs e)            // изменение Тара НСИ
         {
@@ -206,18 +216,28 @@ namespace Attestation
         {
             ShowChange_Carrying showChange_Carrying = new ShowChange_Carrying();
             global.Idx = DataGridMain.SelectedIndex;
-            showChange_Carrying.oldCarrying.Content = global.ROWS[global.Idx].Carrying;
-            showChange_Carrying.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                showChange_Carrying.oldCarrying.Content = global.ROWS[global.Idx].Carrying;
+                showChange_Carrying.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void Change_Zone_eString(object sender, RoutedEventArgs e)      // изменение Зоны вагонов
         {
             ShowChange_Zone_eString showChange_Zone_eString = new ShowChange_Zone_eString();
             global.Idx = DataGridMain.SelectedIndex;
-            showChange_Zone_eString.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                showChange_Zone_eString.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void shipperButton_Click(object sender, RoutedEventArgs e)      // изменение Грузоотправителя
         {
@@ -230,27 +250,34 @@ namespace Attestation
                 DataGridMain.ItemsSource = null;
                 DataGridMain.ItemsSource = global.ROWS;
             }
-            catch
-            {
-
-            }
+            catch { }
 
         }
         private void consignerButton_Click(object sender, RoutedEventArgs e)    // изменение Грузополучателя
         {
             ShowChange_Consigner_String Change_Consigner_String = new ShowChange_Consigner_String();
             global.Idx = DataGridMain.SelectedIndex;
-            Change_Consigner_String.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                Change_Consigner_String.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void matButton_Click(object sender, RoutedEventArgs e)          // изменение материала 
         {
             ShowChange_Mat_String Change_Mat_String = new ShowChange_Mat_String();
             global.Idx = DataGridMain.SelectedIndex;
-            Change_Mat_String.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                Change_Mat_String.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) // изменение значений строки по двойному клику
         {

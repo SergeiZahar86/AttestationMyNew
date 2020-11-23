@@ -169,33 +169,77 @@ namespace Attestation
                 string shipperString__ = "";
                 if (shipper__ != 0)
                 {
-                    foreach (Shippers shippers in shippers)
+                    foreach (Shippers shipp in shippers)
                     {
-                        if (shippers.Id == shipper__)
+                        if (shipp.Id == shipper__)
                         {
-                            shipperString__ = shippers.Name;
+                            shipperString__ = shipp.Name;
                         }
                     }
                 }
                 int consigner__ = cars.Consigner;
                 string consignerString__ = "";
+                if (consigner__ != 0)
+                {
+                    foreach (Consigners cons in consigners)
+                    {
+                        if (cons.Id == consigner__)
+                        {
+                            consignerString__ = cons.Name;
+                        }
+                    }
+                }
                 int mat__ = cars.Mat;
                 string matString__ = "";
+                if (mat__ != 0)
+                {
+                    foreach (mat_t mat in mats)
+                    {
+                        if (mat.Id == mat__)
+                        {
+                            matString__ = mat.Name;
+                        }
+                    }
+                }
                 int Att_code__ = cars.Att_code;
                 string Att_codeString__ = "";
+                
+                    switch (Att_code__)
+                        {
+                        case 0:
+                            Att_codeString__ = Att_codeFonts[0];
+                            break;
+                        case 1:
+                            Att_codeString__ = Att_codeFonts[1];
+                            break;
+                        case 2:
+                            Att_codeString__ = Att_codeFonts[2];
+                            break;
+                    }
+                
                 double Tara__ = cars.Tara;
                 double Tara_e__ = cars.Tara_e;
                 double Tara_delta__ = Math.Round((Tara__ - Tara_e__),3, MidpointRounding.AwayFromZero);
                 int Zone_e__ = cars.Zone_e;
                 string Zone_eString__ = "";
-                switch (cars.Zone_e)
+                switch (Zone_e__)
                 {
-                    case 0: Zone_eString__ = "Зелёная"; break;
-                    case 1: Zone_eString__ = "Жёлтая"; break;
-                    default: Zone_eString__ = "Красная"; break;
+                    case 0: Zone_eString__ = zonas[0].Name; break;
+                    case 1: Zone_eString__ = zonas[1].Name; break;
+                    case 2: Zone_eString__ = zonas[2].Name; break;
                 }
                 int Cause_id__ = cars.Cause_id;
                 string Cause_idString__ = "";
+                if (Cause_id__ != 0)
+                {
+                    foreach (cause_t cc in cause)
+                    {
+                        if (cc.Id == Cause_id__)
+                        {
+                            Cause_idString__ = cc.Name;
+                        }
+                    }
+                }
                 double Carrying__ = cars.Carrying_e;
                 string Att_time__ = cars.Att_time;
                 

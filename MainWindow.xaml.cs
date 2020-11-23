@@ -59,8 +59,8 @@ namespace Attestation
                 if (contractor_.Shipper)
                 {
                     global.shippers.Add(new Shippers(i, contractor_.Name));
-                i++;
                 }
+                i++;
             }
         }
         private void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
@@ -72,8 +72,8 @@ namespace Attestation
                 if (contractor_.Consigner)
                 {
                     global.consigners.Add(new Consigners(i, contractor_.Name));
-                i++;
                 }
+                i++;
             }
         }
         private void GetZonas() // получение справочника Зоны вагонов

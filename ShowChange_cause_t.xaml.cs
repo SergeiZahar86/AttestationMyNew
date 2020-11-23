@@ -25,8 +25,8 @@ namespace Attestation
         }
         private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор причины неаттестации
         {
-            global.ROWS[global.Idx].Cause_idString = Cause[cause_Value.SelectedIndex].Name;
-            global.ROWS[global.Idx].Cause_id = Cause[cause_Value.SelectedIndex].Id;
+            global.rowTab.Cause_idString = Cause[cause_Value.SelectedIndex].Name;
+            global.rowTab.Cause_id = Cause[cause_Value.SelectedIndex].Id;
         }
     }
 }
