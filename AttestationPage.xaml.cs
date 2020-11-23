@@ -151,7 +151,7 @@ namespace Attestation
         }
         private void Foto_Click(object sender, RoutedEventArgs e)               // выводит окно с фотографиями вагонов
         {
-            /*
+            
             global.Idx = DataGridMain.SelectedIndex;
             global.photo = global.getPhoto(global.part.Part_id, global.ROWS[global.Idx].Car_id);
             if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
@@ -166,7 +166,7 @@ namespace Attestation
             {
                 System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
             }
-            */
+            
         }
         private void Change_VagNum(object sender, RoutedEventArgs e)            // Изменение номера вагона
         {
@@ -283,31 +283,45 @@ namespace Attestation
         {
             Change_of_Data_on_the_Wagon change_Of_Data = new Change_of_Data_on_the_Wagon();
             global.Idx = DataGridMain.SelectedIndex;
-
-            change_Of_Data.Number.Text = global.ROWS[global.Idx].Car_id.ToString();            // порядковый номер вагона в шапке окна
-            change_Of_Data.oldVagNum.Content = global.ROWS[global.Idx].Num;                    // старый номер вагона
-            change_Of_Data.oldTara.Content = global.ROWS[global.Idx].Tara;                     // вес тары
-            change_Of_Data.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;                 // прежний вес тары НСИ
-            change_Of_Data.oldTara_delta.Content = global.ROWS[global.Idx].Tara_delta;         // дельта тары
-            change_Of_Data.oldCarrying.Content = global.ROWS[global.Idx].Carrying;             // прежняя грузоподъемность
-            change_Of_Data.old_zona.Content = global.ROWS[global.Idx].Zone_eString;            // прежнее значение "зона"
-            change_Of_Data.old_shipper.Content = global.ROWS[global.Idx].Shipper_String;       // прежнее значение Грузоотправитель
-            change_Of_Data.old_consigner.Content = global.ROWS[global.Idx].Consigner_String;   // прежнее значение Грузополучателя
-            change_Of_Data.old_mat.Content = global.ROWS[global.Idx].Mat_String;               // прежнее значение материала
-            switch (global.ROWS[global.Idx].Att_codeString /* прежнее значение итогов аттестации */)                                    
+            try
             {
-                case "CheckCircle":
-                    change_Of_Data.old_isOk.Content = "Аттестован"; break;
-                case "WindowClose":
-                    change_Of_Data.old_isOk.Content = "Не аттестован"; break;
-                case "Asterisk": 
-                    change_Of_Data.old_isOk.Content = "Условно аттестован"; break;
-            }
-            change_Of_Data.old_cause.Content = global.ROWS[global.Idx].Cause_idString;         // прежнее значение причины неаттестации
+                ///////  получение объекта RowTab по двойному клику  ////////////////////////////////////
+                if (sender != null)
+                {
+                    DataGrid grid = sender as DataGrid;
+                    if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
+                    {
+                        DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
+                        global.rowTab = (RowTab)dgr.DataContext;
+                    }
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////
+                change_Of_Data.Number.Text = global.ROWS[global.Idx].Car_id.ToString();            // порядковый номер вагона в шапке окна
+                change_Of_Data.oldVagNum.Content = global.ROWS[global.Idx].Num;                    // старый номер вагона
+                change_Of_Data.oldTara.Content = global.ROWS[global.Idx].Tara;                     // вес тары
+                change_Of_Data.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;                 // прежний вес тары НСИ
+                change_Of_Data.oldTara_delta.Content = global.ROWS[global.Idx].Tara_delta;         // дельта тары
+                change_Of_Data.oldCarrying.Content = global.ROWS[global.Idx].Carrying;             // прежняя грузоподъемность
+                change_Of_Data.old_zona.Content = global.ROWS[global.Idx].Zone_eString;            // прежнее значение "зона"
+                change_Of_Data.old_shipper.Content = global.ROWS[global.Idx].Shipper_String;       // прежнее значение Грузоотправитель
+                change_Of_Data.old_consigner.Content = global.ROWS[global.Idx].Consigner_String;   // прежнее значение Грузополучателя
+                change_Of_Data.old_mat.Content = global.ROWS[global.Idx].Mat_String;               // прежнее значение материала
+                switch (global.ROWS[global.Idx].Att_codeString /* прежнее значение итогов аттестации */)
+                {
+                    case "CheckCircle":
+                        change_Of_Data.old_isOk.Content = "Аттестован"; break;
+                    case "WindowClose":
+                        change_Of_Data.old_isOk.Content = "Не аттестован"; break;
+                    case "Asterisk":
+                        change_Of_Data.old_isOk.Content = "Условно аттестован"; break;
+                }
+                change_Of_Data.old_cause.Content = global.ROWS[global.Idx].Cause_idString;         // прежнее значение причины неаттестации
 
-            change_Of_Data.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+                change_Of_Data.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
 
 /*        private void test_Click(object sender, RoutedEventArgs e)

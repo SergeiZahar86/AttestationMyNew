@@ -280,12 +280,10 @@ namespace Attestation
         {
             return this.client.getPart(part_id);
         }
-        /*
         public photo_t getPhoto(string part_id, int car_id) // Получение фотографий вагона
         {
             return this.client.getPhoto(part_id, car_id);
         }
-        */
         public String getUser(String Login, String Password, String Emple_id) // Получение имени пользователя
         {
             return this.client.getUser(Login, Password, Emple_id);
