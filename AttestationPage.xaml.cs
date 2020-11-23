@@ -33,7 +33,7 @@ namespace Attestation
             // Таймер ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             
             /////////////////////////////////////////////////
             InitializeComponent();
@@ -223,9 +223,17 @@ namespace Attestation
         {
             ShowChange_Shipper_String Change_Shipper_String = new ShowChange_Shipper_String();
             global.Idx = DataGridMain.SelectedIndex;
-            Change_Shipper_String.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                Change_Shipper_String.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch
+            {
+
+            }
 
         }
         private void consignerButton_Click(object sender, RoutedEventArgs e)    // изменение Грузополучателя

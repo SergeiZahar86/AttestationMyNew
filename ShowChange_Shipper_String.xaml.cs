@@ -8,6 +8,8 @@ namespace Attestation
     {
         private Global global;
         private List<Shippers> shippersVal;
+        int a;
+        string s;
 
         public ShowChange_Shipper_String()
         {
@@ -18,8 +20,10 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+            if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper))
+            //if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
             {
+                global.ROWS[global.Idx].Shipper_String = global.rowTab.Shipper_String;
                 this.Close();
             }
         }
@@ -29,8 +33,13 @@ namespace Attestation
         }
         private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.ROWS[global.Idx].Shipper = global.shippers[shipper_Value.SelectedIndex].Id - 1;
+            global.rowTab.Shipper = global.shippers[shipper_Value.SelectedIndex].Id;
+            global.rowTab.Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
             global.ROWS[global.Idx].Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
+
+
+            //global.ROWS[global.Idx].Shipper = global.shippers[shipper_Value.SelectedIndex].Id - 1;
+            //global.ROWS[global.Idx].Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
 
         }
     }

@@ -76,9 +76,8 @@ namespace Attestation
         public List<Zona> zonas;                        // справочник Зоны вагонов
 
         public TextBox pubTextBox;
-        //public List<RowTab> ROWS;                       // внутренний список вагонов 
-        public List<RowTab> ROWS;
-        
+        public List<RowTab> ROWS;                       // внутренний список вагонов 
+        public RowTab rowTab;                           // сохранение объекта вагона для изменения значения по клику по таблице
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
@@ -168,6 +167,16 @@ namespace Attestation
                 string Num__ = cars.Num;
                 int shipper__ = cars.Shipper;
                 string shipperString__ = "";
+                if (shipper__ != 0)
+                {
+                    foreach (Shippers shippers in shippers)
+                    {
+                        if (shippers.Id == shipper__)
+                        {
+                            shipperString__ = shippers.Name;
+                        }
+                    }
+                }
                 int consigner__ = cars.Consigner;
                 string consignerString__ = "";
                 int mat__ = cars.Mat;
