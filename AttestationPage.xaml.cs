@@ -143,7 +143,7 @@ namespace Attestation
                     global.isEnabled = false;                                         // флаг кликабельности datagrid
                     DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
 
-                    global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
+                    //global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
 
                     dispatcherTimer.Stop();                                           // Останавливает таймер
                 }
