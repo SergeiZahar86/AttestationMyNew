@@ -412,10 +412,6 @@ namespace Attestation
                 return true;
             else
                 return false;
-            
-
-
-
         }
     }
 }
