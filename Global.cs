@@ -95,12 +95,15 @@ namespace Attestation
             var appSettings = ConfigurationManager.AppSettings;
             Port = int.Parse(appSettings["port"] ?? "9090");
             Host = appSettings["host"] ?? "localhost";
-            this.transport = new TSocket(Host, Port); //  IP адрес сервера
-            TProtocol proto = new TBinaryProtocol(transport);
-            //TMultiplexedProtocol multiplexed = new TMultiplexedProtocol(proto, "DataProviderService");
+            TFramedTransport transportf = new TFramedTransport(new TSocket(Host, Port));
+            transportf.Open();
+            //this.transport = new TSocket(Host, Port); //  IP адрес сервера
+            //TProtocol proto = new TBinaryProtocol(transport);
+            TProtocol proto = new TBinaryProtocol(transportf);
+            TMultiplexedProtocol multiplexed = new TMultiplexedProtocol(proto, "DataProviderService");
             try
             {
-                transport.Open();
+                //transport.Open();
             }
             catch(Exception sa)
             {
@@ -108,8 +111,8 @@ namespace Attestation
                 Thread.Sleep(5000);
                 Application.Current.Shutdown(); ;
             }
-            //this.client = new DataProviderService.Client(multiplexed);
-            this.client = new DataProviderService.Client(proto);
+            this.client = new DataProviderService.Client(multiplexed);
+            //this.client = new DataProviderService.Client(proto);
             ///////////////////////////////////////////////////////////////////////////////
 
             IdShipper = null;     // Инициализация для проверки на  Null
