@@ -30,8 +30,8 @@ namespace Attestation
             global.DATA = global.part.Cars;                        // получаем серверный список вагонов
             global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
             //observable = global.ROWS;
-            //DataGridMain.ItemsSource = null;
-            //DataGridMain.ItemsSource = global.ROWS;
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
             //numberCard = global.getNumberCard();
             //NewEmplId.Text = numberCard;
         }
