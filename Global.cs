@@ -11,10 +11,16 @@ using System.Configuration;
 using System.Windows;
 using System.Threading;
 using System.Text;
+using uPLibrary.Networking.M2Mqtt;
+using System.Windows.Threading;
+using uPLibrary.Networking.M2Mqtt.Messages;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace Attestation
 {
-    class Global
+    class Global : INotifyPropertyChanged
     {
         [DllImport("WinScard.dll")]
         public static extern int SCardEstablishContext(uint dwScope, IntPtr notUsed1, IntPtr notUsed2, out IntPtr phContext);
@@ -76,8 +82,19 @@ namespace Attestation
         public List<Zona> zonas;                        // справочник Зоны вагонов
 
         public TextBox pubTextBox;
-        public List<RowTab> ROWS;                       // внутренний список вагонов 
-        public RowTab rowTab;                           // сохранение объекта вагона для изменения значения по клику по таблице
+        private ObservableCollection<RowTab> rOWS;                       // внутренний список вагонов 
+        public ObservableCollection<RowTab> ROWS
+        {
+            get { return rOWS; }
+            set
+            {
+                rOWS = value;
+                OnPropertyChanged("ROWS");
+            }
+        }
+        // сохранение объекта вагона для изменения значения по клику по таблице
+        public RowTab rowTab;
+                                
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         TTransport transport;
@@ -85,6 +102,7 @@ namespace Attestation
 
         int Port;
         string Host;
+
 
         /// /////////////////////////////////////////////////////
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
@@ -134,7 +152,10 @@ namespace Attestation
             RedColorEnd = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); /* красный, для кнопки
                                                                                                      * начала и завершения аттестации*/
             ///////////////////////////////////////////////////////////////////////////////////////////////
+            ///
         }
+
+
         public void GetGlobalPart(string user) // Получение партии вагонов перед Началом аттестации 
         {
             part = beginAtt(user);
@@ -151,9 +172,9 @@ namespace Attestation
                 instance = new Global();
             return instance;
         }
-        public List<RowTab> GetRows() // внутренний список вагонов 
+        public ObservableCollection<RowTab> GetRows() // внутренний список вагонов 
         {
-            List<RowTab> rows = new List<RowTab>();
+            ObservableCollection<RowTab> rows = new ObservableCollection<RowTab>();
             
             /*for(int i = 0; i<25; i++)
             {
@@ -415,6 +436,14 @@ namespace Attestation
                 return true;
             else
                 return false;
+        }
+
+        // для интерфейса INotifyPropertyChanged /////////////////////
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace Attestation
 {
@@ -13,16 +17,21 @@ namespace Attestation
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
         System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
         private bool realNumber;                                    // флаг проверки подлинности номера вагона
+        MqttClient client;
+        RowTab row;
 
+
+        //ObservableCollection<RowTab> observable;
+        
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение вагонов с сервера по таймеру
         {
             global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
             global.DATA = global.part.Cars;                        // получаем серверный список вагонов
             global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            //observable = global.ROWS;
+            //DataGridMain.ItemsSource = null;
+            //DataGridMain.ItemsSource = global.ROWS;
             //numberCard = global.getNumberCard();
             //NewEmplId.Text = numberCard;
         }
@@ -34,12 +43,25 @@ namespace Attestation
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
-            
+
             /////////////////////////////////////////////////
             InitializeComponent();
             global = Global.getInstance();
             isVerification = false;                                       // флаг для подтверждения окончания аттестации
+            //DataGridMain.ItemsSource = observable;
+            //DataGridMain.SelectedItem = RowTab;
             DataGridMain.IsEnabled = global.isEnabled;                    // флаг кликабельности datagrid
+            //////// MQTT ///////////////////////////
+            ///
+            try
+            {
+                client = new MqttClient("10.90.101.1", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
+                client.MqttMsgPublishReceived += client_MqttMsgPublishReceived; // этот код запускается при получении сообщения
+                client.Connect("sergei", "admin", "admin"); // подключение к серверу ИндасХолдинг у Коли
+                string Topic = "/write/tls/#";
+                client.Subscribe(new string[] { Topic }, new byte[] { 0 });
+            }
+            catch { }
 
             if (!global.isColor)
             {
@@ -58,23 +80,54 @@ namespace Attestation
             //consigneesTextBlock.Text = global.Consignee;                // Грузополучатель
 
         }
+        void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e) // этот код запускается при получении сообщения от mqtt
+        {
+            try
+            {
+                string ReceivedMessage = Encoding.UTF8.GetString(e.Message);
+                byte b1 = e.Message[0];
+                byte b2 = e.Message[1];
+                switch (b1)
+                {
+                    case 0b01010000:
+                        Dispatcher.Invoke(delegate { shippersTextBlock.Text = "Начало погрузки"; });
+                        break;
+                    case 0b01100000:
+                        Dispatcher.Invoke(delegate { shippersTextBlock.Text = "Окончание погрузки"; });
+                        break;
+                    case 0b10010000:
+                        Dispatcher.Invoke(delegate { shippersTextBlock.Text = "Начало взвешивания"; });
+                        break;
+                    case 0b10100000:
+                        Dispatcher.Invoke(delegate { shippersTextBlock.Text = "Окончание взвешивания"; });
+                        break;
+                }
+            }
+            catch(Exception ass)
+            {
+                MessageBox.Show(ass.Message);
+            }
+        }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e)      // загрузка данных в DataGrid
         {
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
+        
         private void StartAttestation_Click(object sender, RoutedEventArgs e)   // Кнопка начала аттестации
         {
-            
-            if(global.isColor) // проверяем флаг
+            try
             {
-                /*
-                input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
-                inputOf.ShowDialog();
-            
-                if (global.IdConsigner != null && global.IdShipper != null && global.IdMat != null)
+
+                if (global.isColor) // проверяем флаг
                 {
-                */
+                    /*
+                    input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
+                    inputOf.ShowDialog();
+
+                    if (global.IdConsigner != null && global.IdShipper != null && global.IdMat != null)
+                    {
+                    */
                     //////////// Установка времени ///////////////////////////////////////////////////////
                     global.startTime = DateTime.Now;                       // Запись текущего времени
                     global.startTimeStr = null;                            // Начало аттестации партии вагонов для страницы Аттестации
@@ -84,8 +137,8 @@ namespace Attestation
                     timeEnd.Text = global.endTimeStr;                      // Время окончания аттестации (вверху страницы)
                     global.startTimeStr = global.startTime.ToString();     // Время начала аттестации (глобал)
                     timeStart.Text = global.startTimeStr;                  // Время начала аттестации (вверху страницы)
-                    ///////////////////////////////////////////////////////////////////////
-                    
+                                                                           ///////////////////////////////////////////////////////////////////////
+
                     //isVerification = false;                              // флаг для подтверждения окончания аттестации
                     global.isEnabled = true;                               // флаг кликабельности datagrid
                     DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
@@ -95,8 +148,8 @@ namespace Attestation
 
                     global.PartId = global.part.Part_id.ToString();              // Номер партии
                     part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
-                    //shippersTextBlock.Text = global.Shipper;                   // Грузоотправитель
-                    //consigneesTextBlock.Text = global.Consignee;               // Грузополучатель
+                                                                                 //shippersTextBlock.Text = global.Shipper;                   // Грузоотправитель
+                                                                                 //consigneesTextBlock.Text = global.Consignee;               // Грузополучатель
 
 
                     //matTextBlock.Text = global.MatName;                        // Название материала
@@ -116,66 +169,79 @@ namespace Attestation
                     global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
 
                     dispatcherTimer.Start();                    // Стартуем таймер
-                //}
-            }
-            else
-            {
-                VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
-                ver.ShowDialog();
-                if (global.exitAtt(global.part.Part_id) && isVerification && global.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
+                                                                //}
+                }
+                else
                 {
+                    VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
+                    ver.ShowDialog();
+                    if (global.exitAtt(global.part.Part_id) && isVerification && global.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
+                    {
 
-                    global.endTime = DateTime.Now;                                    // Окончание аттестации 
-                    global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
-                    global.endTimeStr = global.endTime.ToString();                    /* Перезапись времени окончания в Глобал в виде строки 
+                        global.endTime = DateTime.Now;                                    // Окончание аттестации 
+                        global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
+                        global.endTimeStr = global.endTime.ToString();                    /* Перезапись времени окончания в Глобал в виде строки 
                                                                                        для дальнейшей записи в объект car_t и передачи на сервер*/
-                    timeEnd.Text = global.endTimeStr;
-                    global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
-                    global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
-                    timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
+                        timeEnd.Text = global.endTimeStr;
+                        global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
+                        global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
+                        timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
 
-                    StartAttestation.Background = global.GreenColorStart;             // зеленый
+                        StartAttestation.Background = global.GreenColorStart;             // зеленый
 
-                    global.mainButtonAttestation = "Начать";
-                    startRow_1.Text = global.mainButtonAttestation;
+                        global.mainButtonAttestation = "Начать";
+                        startRow_1.Text = global.mainButtonAttestation;
 
-                    global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
-                    global.isEnabled = false;                                         // флаг кликабельности datagrid
-                    DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
+                        global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
+                        global.isEnabled = false;                                         // флаг кликабельности datagrid
+                        DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
 
-                    //global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
+                        //global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
 
-                    dispatcherTimer.Stop();                                           // Останавливает таймер
+                        dispatcherTimer.Stop();                                           // Останавливает таймер
+                        
+                    }
                 }
             }
+            catch(Exception aqq) 
+            {
+                MessageBox.Show(aqq.Message);
+            }
         }
+        
         private void Foto_Click(object sender, RoutedEventArgs e)               // выводит окно с фотографиями вагонов
         {
-            
-            global.Idx = DataGridMain.SelectedIndex;
-            global.photo = global.getPhoto(global.part.Part_id, global.ROWS[global.Idx].Car_id);
-            if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
+            try
             {
-                ShowPhotos showPhotos = new ShowPhotos();
-                showPhotos.image1.Source = Global.ByteArraytoBitmap(global.photo.Left);
-                showPhotos.image2.Source = Global.ByteArraytoBitmap(global.photo.Right);
-                showPhotos.image3.Source = Global.ByteArraytoBitmap(global.photo.Top);
-                showPhotos.ShowDialog();
+                global.Idx = DataGridMain.SelectedIndex;
+                global.photo = global.getPhoto(global.part.Part_id, global.ROWS[global.Idx].Car_id);
+                if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
+                {
+                    ShowPhotos showPhotos = new ShowPhotos();
+                    showPhotos.image1.Source = Global.ByteArraytoBitmap(global.photo.Left);
+                    showPhotos.image2.Source = Global.ByteArraytoBitmap(global.photo.Right);
+                    showPhotos.image3.Source = Global.ByteArraytoBitmap(global.photo.Top);
+                    showPhotos.ShowDialog();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
+                }
             }
-            else
-            {
-                System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
-            }
-            
+            catch { }
         }
         private void Change_VagNum(object sender, RoutedEventArgs e)            // Изменение номера вагона
         {
-            ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
-            global.Idx = DataGridMain.SelectedIndex;
-            showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
-            showChange_VagNum.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
+                global.Idx = DataGridMain.SelectedIndex;
+                showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
+                showChange_VagNum.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void Change_isOk(object sender, RoutedEventArgs e)              // Изменение итогов аттестации
         {
@@ -205,12 +271,16 @@ namespace Attestation
         }
         private void Change_Tara_e(object sender, RoutedEventArgs e)            // изменение Тара НСИ
         {
-            ShowChange_Tara_e showChange_Tara_e = new ShowChange_Tara_e();
-            global.Idx = DataGridMain.SelectedIndex;
-            showChange_Tara_e.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
-            showChange_Tara_e.ShowDialog();
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
+            try
+            {
+                ShowChange_Tara_e showChange_Tara_e = new ShowChange_Tara_e();
+                global.Idx = DataGridMain.SelectedIndex;
+                showChange_Tara_e.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
+                showChange_Tara_e.ShowDialog();
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+            }
+            catch { }
         }
         private void Change_Carrying(object sender, RoutedEventArgs e)          // изменение Грузоподъемность
         {

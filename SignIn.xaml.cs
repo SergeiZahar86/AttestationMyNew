@@ -72,6 +72,7 @@ namespace Attestation
             {
                 dispatcherTimer.Stop(); // остановить таймер
                 Application.Current.Shutdown();
+                Environment.Exit(0);
             }
 
         }
