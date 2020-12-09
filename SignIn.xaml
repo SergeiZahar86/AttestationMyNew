@@ -22,7 +22,7 @@
                         <RowDefinition  />
                         <RowDefinition  />
                         <RowDefinition  />
-                        <RowDefinition Height="0.2*" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="2*"/>
                   </Grid.RowDefinitions>
                     <DockPanel x:Name="TitleBar" Grid.Row="0" VerticalAlignment="Top" Background="#B22222" Height="30" Width="343">
@@ -43,8 +43,9 @@
                        TextAlignment="Center" Foreground="#B22222" />
                     <TextBlock Grid.Row="5" Text="Код пропуска:" Height="20" Margin="20,0,20,0"
                        VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBox x:Name="NewEmplId"  Grid.Row="6" HorizontalContentAlignment="Center" Style="{StaticResource TextBoxStyle_Password}"
-                           IsEnabled="False"  MinWidth="250" />
+            <PasswordBox x:Name="NewEmplId"  Grid.Row="6" HorizontalContentAlignment="Center" Style="{StaticResource PasswordBoxStyle}"
+                           IsEnabled="False"  MinWidth="250" Margin="20,0,20,0"/>
+            <TextBlock x:Name="error" Grid.Row="7" Margin="20,0" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             <WrapPanel Grid.Row="8" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
                 <Button  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 

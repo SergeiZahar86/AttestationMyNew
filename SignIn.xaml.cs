@@ -7,21 +7,27 @@ namespace Attestation
     {
         private Global global;
         public static bool isCloseProgram;
-        private static string numberCard;
         string password;
         System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
-            numberCard = global.getNumberCard();
-            NewEmplId.Text = numberCard;
-            if (NewEmplId.Text.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
+            global.numberCard = global.getNumberCard();  // получение номера карты
+            NewEmplId.Password = global.numberCard;
+            if (NewEmplId.Password.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
             {
-                global.user = global.getUser("", "", NewEmplId.Text); // Global.getUser (261)
-                if (global.user.Length > 0)
+                try
                 {
-                    dispatcherTimer.Stop(); // остановить таймер
-                    this.Close();
+                    //throw new Exception();
+                    global.user = global.getUser("", "", NewEmplId.Password); // Global.getUser (261)
+                    if (global.user.Length > 0)
+                    {
+                        dispatcherTimer.Stop(); // остановить таймер
+                        this.Close();
+                    }
+                }catch(Exception ass)
+                {
+                    error.Text = "Недействительная карта";
                 }
             }
         }
@@ -46,7 +52,7 @@ namespace Attestation
             {
                 global.Login = tbLogin.Text;
                 password = passwordBox.Password;
-                global.user = global.getUser(global.Login, password, NewEmplId.Text); // Global.getUser (261)
+                global.user = global.getUser(global.Login, password, NewEmplId.Password); // Global.getUser (261)
                 if (global.user.Length > 0)
                 {
                     dispatcherTimer.Stop(); // остановить таймер

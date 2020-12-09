@@ -24,7 +24,7 @@ namespace Attestation
         //ObservableCollection<RowTab> observable;
         
 
-        private void OnTimedEvent(Object source, EventArgs e) // Получение вагонов с сервера по таймеру
+        private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
         {
             global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
             global.DATA = global.part.Cars;                        // получаем серверный список вагонов
@@ -35,14 +35,13 @@ namespace Attestation
             //numberCard = global.getNumberCard();
             //NewEmplId.Text = numberCard;
         }
-
         public AttestationPage() // конструктор
         {
             realNumber = false;                                                  // флаг проверки подлинности номера вагона
             // Таймер ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
 
             /////////////////////////////////////////////////
             InitializeComponent();
@@ -80,7 +79,7 @@ namespace Attestation
             //consigneesTextBlock.Text = global.Consignee;                // Грузополучатель
 
         }
-        void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e) // этот код запускается при получении сообщения от mqtt
+        void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)  // этот код запускается при получении сообщения от mqtt
         {
             try
             {
@@ -108,7 +107,7 @@ namespace Attestation
                 MessageBox.Show(ass.Message);
             }
         }
-        private void DataGridMain_Loaded(object sender, RoutedEventArgs e)      // загрузка данных в DataGrid
+        private void DataGridMain_Loaded(object sender, RoutedEventArgs e)            // загрузка данных в DataGrid
         {
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;

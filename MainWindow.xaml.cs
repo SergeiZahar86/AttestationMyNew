@@ -10,14 +10,31 @@ namespace Attestation
     public partial class MainWindow : Window
     {
         private Global global;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
+
+        private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
+        {
+            if(global.getNumberCard() != global.numberCard)
+            {
+                GetSignIn();
+            }
+            
+        }
         public MainWindow()
         {
             InitializeComponent();
             global = Global.getInstance();
+
+            // Таймер ///////////////////////////////////////
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            /////////////////////////////////////////////////
         }
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
-            GetSignIn();
+            GetSignIn();                                                    // авторизация
+            dispatcherTimer.Start();                                        // запуск таймара
             if (global.user.Length > 0)
             {
                 

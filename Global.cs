@@ -62,7 +62,8 @@ namespace Attestation
         public photo_t photo;                           // класс содержащий поля фотографий вагонов
         public part_t part;                             // партии вагонов
         public string user;                             // имя пользователя (ФИО)
-        public string Login; 
+        public string Login;
+        public string numberCard;            // Номер карты пользователя
         public int? IdShipper;               // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
         public int? IdConsigner;             // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
         public int? IdMat;                   // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
@@ -109,7 +110,7 @@ namespace Attestation
 
         private Global()
         {
-            ///////////////////////////////////////////////////////////////////////////
+            /////////// подключение к серверу ///////////////////////////////////////////////////////////////
             var appSettings = ConfigurationManager.AppSettings;
             Port = int.Parse(appSettings["port"] ?? "9090");
             Host = appSettings["host"] ?? "localhost";
@@ -338,31 +339,26 @@ namespace Attestation
         {
             return this.client.changePass(login, oldPass, newPass, newEmpl_id);
         }
-
         public string getNumberCard() // Работы считывателя карты, возвращает номер карты
         {
-            int retval;                                             //Return Value
-
-            IntPtr hContext;                                        //Context Handle value
-            IntPtr hCard = IntPtr.Zero;                                           //Card handle
-            IntPtr protocol = IntPtr.Zero;                                        //Protocol used currently
-            Byte[] sendBuffer = new Byte[255];                        //Send Buffer in SCardTransmit
-            Byte[] receiveBuffer = new Byte[255];                   //Receive Buffer in SCardTransmit
-            int sendbufferlen, receivebufferlen;                    //Send and Receive Buffer length in SCardTransmit
+            int retval;                                            //Return Value
+            IntPtr hContext;                                       //Context Handle value
+            IntPtr hCard = IntPtr.Zero;                            //Card handle
+            IntPtr protocol = IntPtr.Zero;                         //Protocol used currently
+            Byte[] sendBuffer = new Byte[255];                     //Send Buffer in SCardTransmit
+            Byte[] receiveBuffer = new Byte[255];                  //Receive Buffer in SCardTransmit
+            int sendbufferlen, receivebufferlen;                   //Send and Receive Buffer length in SCardTransmit
             Byte bcla;                                             //Class Byte
             Byte bins;                                             //Instruction Byte
             Byte bp1;                                              //Parameter Byte P1
             Byte bp2;                                              //Parameter Byte P2
             Byte len;                                              //Lc/Le Byte
-            Byte[] data = new Byte[255];                            //Data Bytes
-            HiDWinscard.SCARD_READERSTATE ReaderState;              //Object of SCARD_READERSTATE
-            uint dwscope;                                           //Scope of the resource manager context
+            Byte[] data = new Byte[255];                           //Data Bytes
+            HiDWinscard.SCARD_READERSTATE ReaderState;             //Object of SCARD_READERSTATE
+            uint dwscope;                                          //Scope of the resource manager context
             string code = null;
-
             dwscope = 2;
-
             retval = SCardEstablishContext(dwscope, IntPtr.Zero, IntPtr.Zero, out hContext);
-
             retval = SCardConnect(hContext, "HID OMNIKEY 5427 CK CL 0", HiDWinscard.SCARD_SHARE_SHARED, HiDWinscard.SCARD_PROTOCOL_T1,
                                  ref hCard, ref protocol);       //Command to connect the card ,protocol T=1
             if (retval == 0)
@@ -377,45 +373,34 @@ namespace Attestation
                 sendBuffer[2] = bp1;
                 sendBuffer[3] = bp2;
                 sendBuffer[4] = len;
-
                 HiDWinscard.SCARD_IO_REQUEST sioreq;
                 sioreq.dwProtocol = 0x2;
                 sioreq.cbPciLength = 8;
-
                 HiDWinscard.SCARD_IO_REQUEST rioreq;
                 rioreq.cbPciLength = 8;
                 rioreq.dwProtocol = 0x2;
-
                 sendbufferlen = 0x5;
                 receivebufferlen = 8;
-
-
                 retval = SCardTransmit(hCard, ref sioreq, sendBuffer, sendbufferlen, ref rioreq, receiveBuffer, ref receivebufferlen);
                 if (retval == 0)
                 {
                     if ((receiveBuffer[receivebufferlen - 2] == 0x90) && (receiveBuffer[receivebufferlen - 1] == 0))
                     {
                         //Console.WriteLine(BitConverter.ToString(receiveBuffer, (receivebufferlen - 2), 1) + " " + BitConverter.ToString(receiveBuffer, (receivebufferlen - 1), 1));
-
                         code = BitConverter.ToString(receiveBuffer).Replace("-", string.Empty).Substring(0, (receivebufferlen - 2) * 2);
                         Console.WriteLine(code);
                         Console.ReadLine();
                     }
-
                 }
                 retval = SCardDisconnect(hCard, HiDWinscard.SCARD_UNPOWER_CARD); //Command to disconnect the card
             }
             else
             {
-
             }
-
-
             retval = SCardReleaseContext(hContext);
-
             return code;
         }
-        public bool checkSum(string number)
+        public bool checkSum(string number) // проверка номера вагона на правдивость
         {
             byte[] buf = Encoding.ASCII.GetBytes(number);
 
