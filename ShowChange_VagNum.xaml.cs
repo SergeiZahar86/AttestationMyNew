@@ -29,12 +29,25 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e) // Корректировка номера вагона
         {
-            String vag = textboxVag.Text;
-            global.ROWS[global.Idx].Num = vag;
-
-            if (global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, vag)) // Корректировка номера вагона на сервере	
-            {   
-                this.Close();
+            try
+            {
+                String vag = textboxVag.Text;
+                global.ROWS[global.Idx].Num = vag;
+                if (textboxVag.Text.Length == 8)
+                {
+                    if (global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, vag)) // Корректировка номера вагона на сервере	
+                    {
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    error.Text = "Должно быть 8 цифр";
+                }
+            }
+            catch 
+            {
+                error.Text = "Ошибка отправки на сервер";
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)

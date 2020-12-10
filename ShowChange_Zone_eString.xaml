@@ -26,6 +26,9 @@
                     <ComboBoxItem Name="nothing" Content="Неизвестно"/>
                     -->
             </ComboBox>
+            <TextBlock x:Name="TextInput" Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="3"
+                       FontSize="14" FontFamily="Calibry" Foreground ="#B22222" 
+                       TextAlignment="Center"/>
 
             <!--
                 <Label x:Name="oldVagNum" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" FontSize="30"

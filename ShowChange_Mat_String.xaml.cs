@@ -18,10 +18,17 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat))
+            try
             {
-                global.ROWS[global.Idx].Mat_String = global.rowTab.Mat_String;
-                this.Close();
+                if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat))
+                {
+                    global.ROWS[global.Idx].Mat_String = global.rowTab.Mat_String;
+                    this.Close();
+                }
+            }
+            catch
+            {
+                TextInput.Text = "Ошибка отправки на сервер";
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)

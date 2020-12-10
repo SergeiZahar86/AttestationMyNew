@@ -112,7 +112,6 @@ namespace Attestation
             DataGridMain.ItemsSource = null;
             DataGridMain.ItemsSource = global.ROWS;
         }
-        
         private void StartAttestation_Click(object sender, RoutedEventArgs e)   // Кнопка начала аттестации
         {
             try
@@ -207,7 +206,6 @@ namespace Attestation
                 MessageBox.Show(aqq.Message);
             }
         }
-        
         private void Foto_Click(object sender, RoutedEventArgs e)               // выводит окно с фотографиями вагонов
         {
             try

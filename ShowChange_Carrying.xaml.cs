@@ -30,12 +30,18 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            String car = textboxCarrying.Text;
-            string carRepl = car.Replace(".", ",");
-            global.ROWS[global.Idx].Carrying = Convert.ToDouble(carRepl);
-            if (global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Carrying))
+            try
             {
-                this.Close();
+                String car = textboxCarrying.Text;
+                string carRepl = car.Replace(".", ",");
+                global.ROWS[global.Idx].Carrying = Convert.ToDouble(carRepl);
+                if (global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Carrying))
+                {
+                    this.Close();
+                }
+            }catch
+            {
+                result.Text = "Ошибка отправки на сервер";
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)

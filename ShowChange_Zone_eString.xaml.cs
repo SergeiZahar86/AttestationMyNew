@@ -18,10 +18,17 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e))
+            try
             {
-                global.ROWS[global.Idx].Zone_eString = global.rowTab.Zone_eString;
-                this.Close();
+                if (global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e))
+                {
+                    global.ROWS[global.Idx].Zone_eString = global.rowTab.Zone_eString;
+                    this.Close();
+                }
+            }
+            catch
+            {
+                TextInput.Text = "Ошибка отправки на сервер";
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)

@@ -122,62 +122,76 @@ namespace Attestation
 
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-            if (textboxVag.Text.Length > 0)
+            try
             {
-                global.rowTab.Num = textboxVag.Text;  // меняем номер вагона
+                if (textboxVag.Text.Length > 0 && textboxVag.Text.Length == 8)
+                {
+                    global.rowTab.Num = textboxVag.Text;  // меняем номер вагона
+                }
+
+                //////////////////////////////
+                String tar = textboxTara.Text;
+                string tarRepl = tar.Replace(".", ",");
+                if (tarRepl.Length > 0)
+                {
+                    global.rowTab.Tara_e = Convert.ToDouble(tarRepl);
+                }
+                global.rowTab.Tara_delta = Math.Round((global.rowTab.Tara - global.rowTab.Tara_e),
+                    3, MidpointRounding.AwayFromZero);
+
+                /////////////////////////////////////////
+                String car = textboxCarrying.Text;
+                string carRepl = car.Replace(".", ",");
+                if (carRepl.Length > 0)
+                {
+                    global.rowTab.Carrying = Convert.ToDouble(carRepl);
+                }
+
+                /////////////////////////////////////////
+                //global.rowTab.Zone_e = zone;
+                //global.rowTab.Zone_eString = zoneStr;
+
+                //global.rowTab.Shipper = shipper - 1;
+                //global.rowTab.Shipper_String = shipperStr;
+
+                //global.rowTab.Consigner = consigner - 1;
+                //global.rowTab.Consigner_String = consignerStr;
+
+                //global.rowTab.Mat = mat - 1;
+                //global.rowTab.Mat_String = matStr;
+
+                //global.rowTab.Att_code = att;
+                //global.rowTab.Att_codeString = attStr;
+
+                //global.rowTab.Cause_id = cause;
+                //global.rowTab.Cause_idString = causeStr;
+
+                bool a1 = global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Num);
+                bool a2 = global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Tara_e);
+                bool a3 = global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Carrying);
+                bool a4 = global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e);
+                bool a5 = global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper);
+                bool a6 = global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper);
+                bool a7 = global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat);
+                bool a8 = global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Att_code);
+                bool a9 = global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id);
+
+                if (a1 && a2 && a3 && a4 && a5 && a6 && a7 && a8 && a9)
+                {
+                    if ((textboxVag.Text.Length > 0 && textboxVag.Text.Length == 8) || textboxVag.Text.Length == 0)
+                    {
+                        global.ROWS[global.Idx] = global.rowTab;
+                        this.Close();
+                    }
+                    else
+                    {
+                        TextInput.Text = "Номер вагона должен состоять из 8 цифр";
+                    }
+                }
             }
-
-            //////////////////////////////
-            String tar = textboxTara.Text;
-            string tarRepl = tar.Replace(".", ",");
-            if (tarRepl.Length > 0)
+            catch
             {
-                global.rowTab.Tara_e = Convert.ToDouble(tarRepl);
-            }
-            global.rowTab.Tara_delta = Math.Round((global.rowTab.Tara - global.rowTab.Tara_e),
-                3, MidpointRounding.AwayFromZero);
-
-            /////////////////////////////////////////
-            String car = textboxCarrying.Text;
-            string carRepl = car.Replace(".", ",");
-            if (carRepl.Length > 0)
-            {
-                global.rowTab.Carrying = Convert.ToDouble(carRepl);
-            }
-
-            /////////////////////////////////////////
-            //global.rowTab.Zone_e = zone;
-            //global.rowTab.Zone_eString = zoneStr;
-
-            //global.rowTab.Shipper = shipper - 1;
-            //global.rowTab.Shipper_String = shipperStr;
-
-            //global.rowTab.Consigner = consigner - 1;
-            //global.rowTab.Consigner_String = consignerStr;
-
-            //global.rowTab.Mat = mat - 1;
-            //global.rowTab.Mat_String = matStr;
-
-            //global.rowTab.Att_code = att;
-            //global.rowTab.Att_codeString = attStr;
-
-            //global.rowTab.Cause_id = cause;
-            //global.rowTab.Cause_idString = causeStr;
-
-            bool a1 = global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Num);
-            bool a2 = global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Tara_e);
-            bool a3 = global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Carrying);
-            bool a4 = global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e);
-            bool a5 = global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper);
-            bool a6 = global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper);
-            bool a7 = global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat);
-            bool a8 = global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Att_code);
-            bool a9 = global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id);
-
-            if(a1 && a2 && a3 && a4 && a5 && a6 && a7 && a8 && a9)
-            {
-                global.ROWS[global.Idx] = global.rowTab;
-                this.Close();
+                TextInput.Text = "Ошибка отправки на сервер";
             }
         }
         private void close_Click(object sender, RoutedEventArgs e)

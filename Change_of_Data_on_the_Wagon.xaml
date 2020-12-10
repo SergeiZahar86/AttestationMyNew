@@ -133,8 +133,9 @@
 
 
 
-            <TextBlock x:Name="TextInput" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="13" HorizontalAlignment="Stretch"
-                       FontSize="14" FontFamily="Calibry" Foreground ="#B22222" VerticalAlignment="Top" Height="20"/>
+            <TextBlock x:Name="TextInput" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="13" 
+                       FontSize="14" FontFamily="Calibry" Foreground ="#B22222"  Height="20"
+                       TextAlignment="Center"/>
             <WrapPanel Grid.Row="14" Grid.Column="3" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  >
                 <Button Content="Принять" Style="{StaticResource GreenButton}"  Width="95" ToolTip="Выход"
                              Click="ok_Click"/>
