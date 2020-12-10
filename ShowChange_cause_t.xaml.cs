@@ -17,12 +17,18 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            if (global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id))
-            {
-                global.ROWS[global.Idx].Cause_idString = global.rowTab.Cause_idString;
-                this.Close();
+            try {
+                if (global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id))
+                {
+                    global.ROWS[global.Idx].Cause_idString = global.rowTab.Cause_idString;
+                    this.Close();
+                }
             }
-        }
+            catch
+            {
+                TextInput.Text = "Ошибка отправки на сервер";
+            }
+}
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

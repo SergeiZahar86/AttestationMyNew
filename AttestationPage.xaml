@@ -8,7 +8,9 @@
       xmlns:fa5="http://schemas.fontawesome.com/icons/"
       mc:Ignorable="d" d:DesignHeight="1200" d:DesignWidth="1980"
       Title="AttestationPage">
-
+    <Page.Resources>
+        <local:NameToBrushConverter x:Key="NameToBrushConverter"/>
+    </Page.Resources>
 
     <Grid x:Name="gridMain" >
         <!--  Разметка грида  -->
@@ -151,6 +153,9 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
+
+            
+
             <!--  ============================ Описание полей ===================================-->
             <DataGrid.Columns>
                 
@@ -198,8 +203,8 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Tara}"  HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
+                            <TextBlock Text="{Binding Tara}"  HorizontalAlignment="Left"
+                                       VerticalAlignment="Center" ToolTipService.ShowDuration="15000" TextAlignment="Left" 
                                        >
                                 <TextBlock.ToolTip >
                                     <ToolTip>
@@ -261,7 +266,7 @@
                     </DataGridTemplateColumn.HeaderStyle>
                     <DataGridTemplateColumn.CellTemplate  >
                         <DataTemplate>
-                            <TextBlock Text="{Binding Tara_delta}"  HorizontalAlignment="Center"
+                            <TextBlock Text="{Binding Tara_delta}"  HorizontalAlignment="Left"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
                                        >
                                 <TextBlock.ToolTip >

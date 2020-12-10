@@ -31,7 +31,9 @@
                 <ComboBoxItem Name="nothing" Content="Неизвестно"/>
                 -->
             </ComboBox>
-
+            <TextBlock x:Name="TextInput" Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="3" 
+                       FontSize="14" FontFamily="Calibry" Foreground ="#B22222" 
+                       TextAlignment="Center"/>
 
             <Button x:Name="Ok" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Style="{StaticResource GreenButton}"
                     Width="95" ToolTip="Выход" Click="Ok_Click" IsDefault="True">Применить</Button>
