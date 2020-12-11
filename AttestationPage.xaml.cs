@@ -41,7 +41,7 @@ namespace Attestation
             // Таймер ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
 
             /////////////////////////////////////////////////
             InitializeComponent();

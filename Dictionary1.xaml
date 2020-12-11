@@ -182,13 +182,14 @@
             <Setter Property="Button.FontFamily" Value="Calibri" />
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="6,0,0,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border Name="border" BorderThickness="0" BorderBrush="Black"
                                     Background="{TemplateBinding Background}" CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Stretch" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">

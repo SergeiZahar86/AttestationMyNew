@@ -186,12 +186,10 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            <Button x:Name="button_Change_VagNum" Click="Change_VagNum" VerticalContentAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
-                                    BorderThickness="0" Background="Transparent"
+                            <Button x:Name="button_Change_VagNum" Click="Change_VagNum"
+                                    BorderThickness="0" Background="Transparent" 
                                     Style="{StaticResource SomeButton}">
-                                <TextBlock Text="{Binding Num}"  HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                                <TextBlock Text="{Binding Num}" ToolTipService.ShowDuration="15000" Padding="0,6,0,0"  >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Num}" FontSize="22" Foreground="Black" 
@@ -200,11 +198,11 @@
                                     </TextBlock.ToolTip>
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Background" Value="{Binding Num, Converter={StaticResource NameToBrushConverter}}"/>
+                                            <Setter Property="Background"
+                                                    Value="{Binding Num, Converter={StaticResource NameToBrushConverter}}"/>
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
