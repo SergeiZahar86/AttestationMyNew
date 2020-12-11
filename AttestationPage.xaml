@@ -153,7 +153,12 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
-
+            
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Background" Value="{Binding BackgroundColor, Converter={StaticResource NameToBrushConverter}}"/>
+                </Style>
+            </DataGrid.CellStyle>
             
 
             <!--  ============================ Описание полей ===================================-->
@@ -193,7 +198,13 @@
                                                         Background="White" />
                                         </ToolTip>
                                     </TextBlock.ToolTip>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding Num, Converter={StaticResource NameToBrushConverter}}"/>
+                                        </Style>
+                                    </TextBlock.Style>
                                 </TextBlock>
+                                
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
