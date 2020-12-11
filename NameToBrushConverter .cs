@@ -7,10 +7,12 @@ namespace Attestation
 {
     public class NameToBrushConverter : IValueConverter
     {
+        private Global global;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            global = Global.getInstance();
             string input = value as string;
-            if(input == "00000000")
+            if (global.checkSum(input))
             {
                 return Brushes.LightGreen;
             }
@@ -18,14 +20,7 @@ namespace Attestation
             {
                 return Brushes.LightPink;
             }
-
-            /*if (value == null) return Colors.White.ToString();
-
-            if (value.ToString().ToUpper().Contains("CMS")) return "LIME";
-
-            return "ORANGE";*/
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

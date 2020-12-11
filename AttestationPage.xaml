@@ -130,7 +130,7 @@
                   FontFamily="Calibri" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                   Width="1870"  Loaded="DataGridMain_Loaded" BorderThickness="0"
                   SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="#FFD0DEE4"
-                   BorderBrush="White" Background="White" 
+                  BorderBrush="White" Background="White" 
                   GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,10,0"
                   MouseDoubleClick="DataGridMain_MouseDoubleClick"   >
            
@@ -153,13 +153,13 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
-            
+            <!--
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Background" Value="{Binding BackgroundColor, Converter={StaticResource NameToBrushConverter}}"/>
                 </Style>
             </DataGrid.CellStyle>
-            
+            -->
 
             <!--  ============================ Описание полей ===================================-->
             <DataGrid.Columns>
@@ -186,10 +186,13 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
+                            
                             <Button x:Name="button_Change_VagNum" Click="Change_VagNum"
                                     BorderThickness="0" Background="Transparent" 
                                     Style="{StaticResource SomeButton}">
-                                <TextBlock Text="{Binding Num}" ToolTipService.ShowDuration="15000" Padding="0,6,0,0"  >
+                                
+                                <TextBlock Text="{Binding Num}" ToolTipService.ShowDuration="15000" Padding="2,6,0,0"
+                                           MouseLeftButtonDown="Change_VagNum" Cursor="Hand" HorizontalAlignment="Stretch">
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Num}" FontSize="22" Foreground="Black" 
@@ -203,7 +206,9 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                            
                             </Button>
+                        
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -230,12 +235,14 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
+                            
                             <Button x:Name="button_Change_Tara_e" Click="Change_Tara_e" VerticalContentAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
                                     BorderThickness="0" Background="Transparent"
                                     Style="{StaticResource SomeButton}">
-                                <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="30000"  >
+                                
+                            <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Left" PreviewMouseLeftButtonDown="Change_Tara_e"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="30000" Cursor="Hand" >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Tara_e}" FontSize="22" Foreground="Black" 
@@ -243,7 +250,9 @@
                                         </ToolTip>
                                     </TextBlock.ToolTip>
                                 </TextBlock>
+                            
                             </Button>
+                            
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -314,15 +323,17 @@
                             </Setter>
                         </Style>
                     </DataGridTemplateColumn.HeaderStyle>
-                    <DataGridTemplateColumn.CellTemplate  >
+                    <DataGridTemplateColumn.CellTemplate>
 
                         <DataTemplate>
+                            
                             <Button x:Name="button_Change_Carrying" Click="Change_Carrying" VerticalContentAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
                                     BorderThickness="0" Background="Transparent"
                                     Style="{StaticResource SomeButton}">
-                                <TextBlock Text="{Binding Carrying}"  HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000"  >
+                             
+                            <TextBlock Text="{Binding Carrying}"  HorizontalAlignment="Left" MouseLeftButtonDown="Change_Carrying"
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000" Cursor="Hand" >
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Carrying}" FontSize="22" Foreground="Black" 
@@ -330,7 +341,9 @@
                                         </ToolTip>
                                     </TextBlock.ToolTip>
                                 </TextBlock>
+                            
                             </Button>
+                            
                         </DataTemplate>
 
                     </DataGridTemplateColumn.CellTemplate>
@@ -341,13 +354,15 @@
                     
                     <DataGridTemplateColumn.CellTemplate  >
                         <DataTemplate>
+                            
                             <Button x:Name="button_Change_Zone_eString" Click="Change_Zone_eString" VerticalContentAlignment="Stretch"
                                     HorizontalContentAlignment="Stretch"
                                     BorderThickness="0" Background="Transparent"
                                     Style="{StaticResource SomeButton}">
+                               
                                 <TextBlock Text="{Binding Zone_eString}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000" Height="30" >
+                                           HorizontalAlignment="Stretch" Cursor="Hand"
+                                           VerticalAlignment="Stretch" ToolTipService.ShowDuration="15000" Height="30" >
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Style.Triggers>
@@ -360,7 +375,7 @@
                                                     <Setter Property="Foreground" Value="Transparent"/>
                                                 </Trigger>
                                                 <Trigger Property="Text" Value="Красная">
-                                                    <Setter Property="Background" Value="#FFEE7171"/>
+                                                <Setter Property="Background" Value="LightPink"/>
                                                     <Setter Property="Foreground" Value="Transparent"/>
                                                 </Trigger>
                                             </Style.Triggers>
@@ -375,6 +390,7 @@
                                 </TextBlock>
                                 
                             </Button>
+                            
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     

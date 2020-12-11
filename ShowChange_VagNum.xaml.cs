@@ -45,9 +45,9 @@ namespace Attestation
                     error.Text = "Должно быть 8 цифр";
                 }
             }
-            catch 
+            catch (Exception aa)
             {
-                error.Text = "Ошибка отправки на сервер";
+                error.Text = $"Ошибка отправки на сервер {aa}";
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
