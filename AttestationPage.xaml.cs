@@ -54,7 +54,8 @@ namespace Attestation
             ///
             try
             {
-                client = new MqttClient("10.90.101.200", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
+                client = new MqttClient("10.90.101.1", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
+                //client = new MqttClient("10.90.101.200", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
                 client.MqttMsgPublishReceived += client_MqttMsgPublishReceived; // этот код запускается при получении сообщения
                 client.Connect("sergei", "root", "root"); // подключение к серверу ИндасХолдинг у Коли
                 string Topic = "/write/tls/#";
@@ -119,6 +120,18 @@ namespace Attestation
 
                 if (global.isColor) // проверяем флаг
                 {
+                    if (!global.transport.IsOpen) // проверяем соединение
+                    {
+                        try
+                        {
+                            global.transport.Open();
+                            MessageBox.Show("Ошибка подключения");
+                        }
+                        catch(Exception ass)
+                        {
+                            MessageBox.Show(ass.Message);
+                        }
+                    }
                     /*
                     input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
                     inputOf.ShowDialog();

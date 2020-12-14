@@ -98,7 +98,7 @@ namespace Attestation
                                 
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
-        TTransport transport;
+        public TTransport transport;
         public DataProviderService.Client client; // DataProviderService - Название заглушки
 
         int Port;
