@@ -186,12 +186,11 @@
                                     HeaderStyle="{StaticResource CenterGridHeaderStyle}" >
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            
                             <Button x:Name="button_Change_VagNum" Click="Change_VagNum"
-                                    BorderThickness="0" Background="Transparent" 
-                                    Style="{StaticResource SomeButton}">
+                                    BorderThickness="0" Background="{Binding ElementName=textNum,Path=Background}" 
+                                    Style="{StaticResource SomeButton}"  HorizontalAlignment="Stretch">
                                 
-                                <TextBlock Text="{Binding Num}" ToolTipService.ShowDuration="15000" Padding="2,6,0,0"
+                                <TextBlock x:Name="textNum" Text="{Binding Num}" ToolTipService.ShowDuration="15000" Padding="7,6,0,0"
                                            MouseLeftButtonDown="Change_VagNum" Cursor="Hand" HorizontalAlignment="Stretch">
                                     <TextBlock.ToolTip >
                                         <ToolTip>
@@ -219,7 +218,7 @@
                         <DataTemplate>
                             <TextBlock Text="{Binding Tara}"  HorizontalAlignment="Left"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" TextAlignment="Left" 
-                                       >
+                                       Padding="7,0,0,0">
                                 <TextBlock.ToolTip >
                                     <ToolTip>
                                         <TextBlock Text="{Binding Tara}" FontSize="22" Foreground="Black" 
@@ -242,7 +241,7 @@
                                     Style="{StaticResource SomeButton}">
                                 
                             <TextBlock Text="{Binding Tara_e}"  HorizontalAlignment="Left" PreviewMouseLeftButtonDown="Change_Tara_e"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="30000" Cursor="Hand" >
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="30000" Cursor="Hand" Padding="7,0,0,0">
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Tara_e}" FontSize="22" Foreground="Black" 
@@ -286,7 +285,7 @@
                         <DataTemplate>
                             <TextBlock Text="{Binding Tara_delta}"  HorizontalAlignment="Left"
                                        VerticalAlignment="Center" ToolTipService.ShowDuration="15000" 
-                                       >
+                                       Padding="7,0,0,0">
                                 <TextBlock.ToolTip >
                                     <ToolTip>
                                         <TextBlock Text="{Binding Tara_delta}" FontSize="22" Foreground="Black" 
@@ -333,7 +332,7 @@
                                     Style="{StaticResource SomeButton}">
                              
                             <TextBlock Text="{Binding Carrying}"  HorizontalAlignment="Left" MouseLeftButtonDown="Change_Carrying"
-                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000" Cursor="Hand" >
+                                           VerticalAlignment="Center" ToolTipService.ShowDuration="15000" Cursor="Hand" Padding="7,0,0,0">
                                     <TextBlock.ToolTip >
                                         <ToolTip>
                                             <TextBlock Text="{Binding Carrying}" FontSize="22" Foreground="Black" 
@@ -504,11 +503,12 @@
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
                             <Button x:Name="Change_isOk" Height="30" BorderThickness="0"
-                                    Style="{StaticResource SomeButton}"
+                                    Style="{StaticResource SomeButton}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
                                     FontSize="12" Background="Transparent" Click="Change_isOk"
                                     BorderBrush="White" >
                                 <Button.Content>
-                                    <fa:ImageAwesome x:Name="Icon" Foreground="#FF37474F"  Icon="{Binding Att_codeString}"   Margin="5"/>
+                                    <fa:ImageAwesome x:Name="Icon" Foreground="#FF37474F"  Icon="{Binding Att_codeString}" 
+                                                     Margin="5" HorizontalAlignment="Center"/>
                                 </Button.Content>
                             </Button>
                         </DataTemplate>
