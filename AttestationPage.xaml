@@ -30,6 +30,9 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <!--
+        <Button x:Name="ss" Grid.Row="1"  Click="ggggg" Background="Red"/>
+        -->
         <Grid x:Name="grid_2" Grid.Row="0" Grid.Column="1" Background="#EEEEEE">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -121,20 +124,19 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Button>
-        
 
         <!-- ========================== DataGrid ======================= -->
         <DataGrid x:Name="DataGridMain" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Padding="2" ColumnWidth="*" 
-                  AutoGenerateColumns="False" ItemsSource="{Binding global.ROWS}"
+                  AutoGenerateColumns="False" ItemsSource="{Binding}" 
                   VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16" 
                   FontFamily="Calibri" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  Width="1870"  Loaded="DataGridMain_Loaded" BorderThickness="0"
+                  Width="1870"   BorderThickness="0" Loaded="DataGridMain_Loaded"
                   SelectionMode="Single" CanUserAddRows="False" AlternatingRowBackground="#FFD0DEE4"
                   BorderBrush="White" Background="White" 
                   GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB0B0B0" Margin="0,0,10,0"
                   MouseDoubleClick="DataGridMain_MouseDoubleClick"   >
-           
 
+            
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
                    Color="#AAFF0000"/>

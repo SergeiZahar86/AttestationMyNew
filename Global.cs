@@ -83,16 +83,7 @@ namespace Attestation
         public List<Zona> zonas;                        // справочник Зоны вагонов
 
         public TextBox pubTextBox;
-        private ObservableCollection<RowTab> rOWS;                       // внутренний список вагонов 
-        public ObservableCollection<RowTab> ROWS
-        {
-            get { return rOWS; }
-            set
-            {
-                rOWS = value;
-                OnPropertyChanged("ROWS");
-            }
-        }
+        public ObservableCollection<RowTab> ROWS;                       // внутренний список вагонов 
         // сохранение объекта вагона для изменения значения по клику по таблице
         public RowTab rowTab;
                                 
@@ -267,7 +258,7 @@ namespace Attestation
                 }
                 double Carrying__ = cars.Carrying_e;
                 string Att_time__ = cars.Att_time;
-                
+
                 rows.Add(new RowTab(Part_id__, Car_id__, Num__, shipper__, shipperString__, consigner__,
                         consignerString__, mat__, matString__, Att_code__, Att_codeString__, Tara__, Tara_e__,
                         Tara_delta__, Zone_e__, Zone_eString__, Cause_id__, Cause_idString__, Carrying__, Att_time__));
