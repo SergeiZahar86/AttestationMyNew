@@ -8,7 +8,7 @@ namespace Attestation
     {
         private Global global;
         private List<Zona> zona_Val;
-
+        string color;
         public ShowChange_Zone_eString()
         {
             InitializeComponent();
@@ -22,7 +22,8 @@ namespace Attestation
             {
                 if (global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e))
                 {
-                    global.ROWS[global.Idx].Zone_eString = global.rowTab.Zone_eString;
+                    //global.ROWS[global.Idx].Zone_eString = global.rowTab.Zone_eString;
+                    global.ROWS[global.Idx].Zone_eString = color;
                     this.Close();
                 }
             }
@@ -38,8 +39,8 @@ namespace Attestation
         private void zona_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             global.rowTab.Zone_e = global.zonas[zona_Value.SelectedIndex ].Id-1;
-            global.rowTab.Zone_eString = global.zonas[zona_Value.SelectedIndex ].Name;
-            
+            //global.rowTab.Zone_eString = global.zonas[zona_Value.SelectedIndex ].Name;
+            color = global.zonas[zona_Value.SelectedIndex].Name;
         }
     }
 }

@@ -233,9 +233,9 @@ namespace Attestation
                             break;
                     }
                 
-                double Tara__ = cars.Tara;
+                double Tara__ = Math.Round( cars.Tara, 3);
                 double Tara_e__ = cars.Tara_e;
-                double Tara_delta__ = Math.Round((Tara__ - Tara_e__),3, MidpointRounding.AwayFromZero);
+                double Tara_delta__ = Math.Round(Tara__ - Tara_e__,3);
                 int Zone_e__ = cars.Zone_e;
                 string Zone_eString__ = "";
                 switch (Zone_e__)
