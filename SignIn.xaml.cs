@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSAccessAgentAPI;
+using System;
 using System.Windows;
 
 namespace Attestation
@@ -9,9 +10,24 @@ namespace Attestation
         public static bool isCloseProgram;
         string password;
         System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
+        DSAccessAgent agent = DSAccessAgent.getInstance(); /// <summary>
+        /// ///////////////////////////////////////////////////////////////////////////
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
+            LoginData data = agent.login("www", "www", 5000);
+            string a = data.description;
+            string[] rol = data.roles; // ArmRole
+            foreach(string s in rol)
+            {
+                if(s == "ArmRole")
+                {
+
+                }
+            }
             global.numberCard = global.getNumberCard();  // получение номера карты
             NewEmplId.Password = global.numberCard;
             if (NewEmplId.Password.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
