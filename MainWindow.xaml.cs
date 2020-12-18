@@ -28,7 +28,7 @@ namespace Attestation
             // Таймер ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             /////////////////////////////////////////////////
         }
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка

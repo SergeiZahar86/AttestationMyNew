@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Timers;
+using DSAccessAgentAPI;
 
 namespace Attestation
 {
@@ -15,6 +16,8 @@ namespace Attestation
         private string newPassword;
         public string LoginBool;
         private Global global;
+        DSAccessAgent agent;                                      // из библиотеки для авторизации DSAccess
+
 
         private static string numberCard;
         System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
@@ -41,11 +44,42 @@ namespace Attestation
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-           
-            login = Login.Password;
+
+
+
+
+            login = Login.Text;
             oldPassword = OldPassword.Password;
             newPassword = NewPassword.Password;
-            if(login.Length > 0 && oldPassword.Length > 0)
+            global.numberCard = global.getNumberCard();  // получение номера карты
+
+            if (login.Length > 0 && oldPassword.Length > 0 && (global.numberCard.Length > 0 || newPassword.Length >0))
+            {
+                try
+                {
+                    ChangeData data = agent.change(login, oldPassword, newPassword, 1000);
+                    if (data.code != 0)
+                    {
+                        result.Text = $"{data.code.ToString()} {data.message}";
+                    }
+                    else
+                    {
+                        result.Text = $"{data.message}";
+                        dispatcherTimer.Stop(); // остановить таймер
+                        this.Close();
+                    }
+                }catch(Exception ass)
+                {
+                    MessageBox.Show(ass.Message);
+                }
+            }
+            else
+            {
+                result.Text = "Введите логин,старый пароль и новое значение пароля или карты, или все вместе";
+            }
+
+
+            /*if (login.Length > 0 && oldPassword.Length > 0)
             {
                 bool ret=false;
                 try
@@ -65,7 +99,7 @@ namespace Attestation
             else
             {
                 result.Text = "Новый или старый пароль введен некорректно";
-            }
+            }*/
         }
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
