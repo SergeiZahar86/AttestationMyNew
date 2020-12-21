@@ -63,6 +63,10 @@ namespace Attestation
             oldPassword = OldPassword.Password;
             newPassword = NewPassword.Password;
             global.numberCard = global.getNumberCard();  // получение номера карты
+            if(global.numberCard == null)
+            {
+                global.numberCard = "";
+            }
 
             if (login.Length > 0 && oldPassword.Length > 0 && (global.numberCard.Length > 0 || newPassword.Length >0))
             {
