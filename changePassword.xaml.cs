@@ -25,8 +25,18 @@ namespace Attestation
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
+
+            // Подключение к очереди
+            while (agent.Init() == false)
+            {
+                Console.WriteLine("[Init] " + agent.getLastError());
+                Thread.Sleep(200);
+            }
+
+
+
             numberCard = global.getNumberCard();
-            NewEmplId.Text = numberCard;
+            NewEmplId.Password = numberCard;
 
         }
         
@@ -41,6 +51,7 @@ namespace Attestation
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
             ///////////////////////////////////
+            agent = DSAccessAgent.getInstance();
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {
@@ -57,7 +68,7 @@ namespace Attestation
             {
                 try
                 {
-                    ChangeData data = agent.change(login, oldPassword, newPassword, 1000);
+                    ChangeResult data = agent.change(login, oldPassword, newPassword, 1000);
                     if (data.code != 0)
                     {
                         result.Text = $"{data.code.ToString()} {data.message}";

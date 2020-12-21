@@ -36,7 +36,7 @@ namespace Attestation
             {
                 try
                 {
-                    LoginData data = agent.login(null, null, 500);
+                    LoginResult data = agent.login("", "", 500);
 
                     if (data.code != 0)
                     {
@@ -83,7 +83,7 @@ namespace Attestation
             {
                 global.Login = tbLogin.Text;
                 password = passwordBox.Password;
-                LoginData data = agent.login(global.Login, password, 1000);
+                LoginResult data = agent.login(global.Login, password, 1000);
                 //global.user = global.getUser(global.Login, password, NewEmplId.Password); // Global.getUser (261)
                 if(data.code != 0)
                 {
