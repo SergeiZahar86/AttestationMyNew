@@ -45,11 +45,7 @@
             </Button>
 
             <!-- .................................    Логотип ............................ -->
-            <Image Width="30" Margin="8,4,0,4">
-                <Image.Source>
-                    <BitmapImage   UriSource="/Resources/logo.png"/>
-                </Image.Source>
-            </Image>
+            <Image Width="30" Margin="8,4,0,4" Source="/Resources/logo.png"/>
             <TextBlock HorizontalAlignment="Right" Foreground="#DC0000" FontFamily="Impact"
                        FontSize="24" Margin="4,4,15,4" Text="Indas Cube"/>
 
@@ -83,7 +79,7 @@
                 <TextBlock  x:Name="user" HorizontalAlignment="Right" Margin="4,10,15,4"
                             Cursor="Hand" Style="{StaticResource TextblockHead}">admin</TextBlock>
             </DockPanel>
-            --> 
+            -->
         </DockPanel>
         <Border Background="#EEEEEE">
             <Frame x:Name="MainFrame"  Height="1020" Margin="0,10,0,0" VerticalAlignment="Top" Width="1920" NavigationUIVisibility="Hidden"/>

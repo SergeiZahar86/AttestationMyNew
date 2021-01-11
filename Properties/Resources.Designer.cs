@@ -63,9 +63,9 @@ namespace Attestation.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo {
+        internal static System.Drawing.Bitmap logo_img2 {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                object obj = ResourceManager.GetObject("logo_img2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
