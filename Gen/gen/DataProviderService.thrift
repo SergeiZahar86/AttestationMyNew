@@ -64,20 +64,20 @@ struct photo_t {           # Массив фотографий
 service DataProviderService
 {
       # Справочники
-      list<cause_t> getCauses() throws (1:DataProviderException ex),                                          # Запрос справочника причин неаттестации
-      list<contractor_t> getContractors() throws (1:DataProviderException ex),                                # Запрос справочника контрагентов
-      list<mat_t> getMat() throws (1:DataProviderException ex),                                               # Запрос справочника материалов
+    list<cause_t> getCauses() throws (1:DataProviderException ex),                                          # Запрос справочника причин неаттестации
+    list<contractor_t> getContractors() throws (1:DataProviderException ex),                                # Запрос справочника контрагентов
+    list<mat_t> getMat() throws (1:DataProviderException ex),                                               # Запрос справочника материалов
       
       # Запрос данных	  
-      photo_t getPhoto(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                   # Получение фотографий вагона
-      part_t getPart(1:string part_id) throws (1:DataProviderException ex),                                   # Запрос партии вагонов   
-      string getUser(1:string login, 2:string password, 3:string empl_id) throws (1:DataProviderException ex),# Получение имени пользователя
+    photo_t getPhoto(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                   # Получение фотографий вагона
+    part_t getPart(1:string part_id) throws (1:DataProviderException ex),                                   # Запрос партии вагонов   
+    string getUser(1:string login, 2:string password, 3:string empl_id) throws (1:DataProviderException ex),# Получение имени пользователя
 	  string getNum(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                      # Получение номера вагона
 	  string getOldPart() throws (1:DataProviderException ex),                                                # Получение номера последней незакрытой партии
     
 	  # запись значенией
-  	  bool setNum(1:string part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	
-      bool setAtt(1:string part_id, 2:int car_id, 3:int att_code) throws (1:DataProviderException ex),           # Корректировка признака аттестации
+  	bool setNum(1:string part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	
+    bool setAtt(1:string part_id, 2:int car_id, 3:int att_code) throws (1:DataProviderException ex),           # Корректировка признака аттестации
 	  bool setUser(1:string part_id,2:string user) throws (1:DataProviderException ex),                          # запись имени оператора
 	  bool setTara(1:string part_id,2:int car_id,3:double tara) throws (1:DataProviderException ex),             # корректировка тары по Этран
 	  bool setZone(1:string part_id,2:int car_id,3:int zone) throws (1:DataProviderException ex),                # корректировка зоны по Этран
