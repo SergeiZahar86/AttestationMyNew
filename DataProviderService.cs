@@ -39,6 +39,7 @@ public partial class DataProviderService {
     part_t startAtt(string user);
     bool endAtt(string part_id);
     bool changePass(string login, string oldPass, string newPass, string newEmpl_id);
+    Status_Att getStatusAtt();
   }
 
   public interface Iface : ISync {
@@ -129,6 +130,10 @@ public partial class DataProviderService {
     #if SILVERLIGHT
     IAsyncResult Begin_changePass(AsyncCallback callback, object state, string login, string oldPass, string newPass, string newEmpl_id);
     bool End_changePass(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_getStatusAtt(AsyncCallback callback, object state);
+    Status_Att End_getStatusAtt(IAsyncResult asyncResult);
     #endif
   }
 
@@ -1820,6 +1825,73 @@ public partial class DataProviderService {
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "changePass failed: unknown result");
     }
 
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_getStatusAtt(AsyncCallback callback, object state)
+    {
+      return send_getStatusAtt(callback, state);
+    }
+
+    public Status_Att End_getStatusAtt(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_getStatusAtt();
+    }
+
+    #endif
+
+    public Status_Att getStatusAtt()
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_getStatusAtt(null, null);
+      return End_getStatusAtt(asyncResult);
+
+      #else
+      send_getStatusAtt();
+      return recv_getStatusAtt();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_getStatusAtt(AsyncCallback callback, object state)
+    {
+      oprot_.WriteMessageBegin(new TMessage("getStatusAtt", TMessageType.Call, seqid_));
+      getStatusAtt_args args = new getStatusAtt_args();
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_getStatusAtt()
+    {
+      oprot_.WriteMessageBegin(new TMessage("getStatusAtt", TMessageType.Call, seqid_));
+      getStatusAtt_args args = new getStatusAtt_args();
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public Status_Att recv_getStatusAtt()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      getStatusAtt_result result = new getStatusAtt_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "getStatusAtt failed: unknown result");
+    }
+
   }
   public class Processor : TProcessor {
     public Processor(ISync iface)
@@ -1847,6 +1919,7 @@ public partial class DataProviderService {
       processMap_["startAtt"] = startAtt_Process;
       processMap_["endAtt"] = endAtt_Process;
       processMap_["changePass"] = changePass_Process;
+      processMap_["getStatusAtt"] = getStatusAtt_Process;
     }
 
     protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -2643,6 +2716,34 @@ public partial class DataProviderService {
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
         oprot.WriteMessageBegin(new TMessage("changePass", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void getStatusAtt_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      getStatusAtt_args args = new getStatusAtt_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      getStatusAtt_result result = new getStatusAtt_result();
+      try
+      {
+        result.Success = iface_.getStatusAtt();
+        oprot.WriteMessageBegin(new TMessage("getStatusAtt", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("getStatusAtt", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -9154,6 +9255,180 @@ public partial class DataProviderService {
         __first = false;
         __sb.Append("Ex: ");
         __sb.Append(Ex== null ? "<null>" : Ex.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class getStatusAtt_args : TBase
+  {
+
+    public getStatusAtt_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("getStatusAtt_args");
+        oprot.WriteStructBegin(struc);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("getStatusAtt_args(");
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class getStatusAtt_result : TBase
+  {
+    private Status_Att _success;
+
+    public Status_Att Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+    }
+
+    public getStatusAtt_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Struct) {
+                Success = new Status_Att();
+                Success.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("getStatusAtt_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.Struct;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            Success.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("getStatusAtt_result(");
+      bool __first = true;
+      if (Success != null && __isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success== null ? "<null>" : Success.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

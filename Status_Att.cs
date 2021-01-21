@@ -19,10 +19,10 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class cause_t : TBase
+public partial class Status_Att : TBase
 {
   private int _id;
-  private string _name;
+  private string _massage;
 
   public int Id
   {
@@ -37,16 +37,16 @@ public partial class cause_t : TBase
     }
   }
 
-  public string Name
+  public string Massage
   {
     get
     {
-      return _name;
+      return _massage;
     }
     set
     {
-      __isset.name = true;
-      this._name = value;
+      __isset.massage = true;
+      this._massage = value;
     }
   }
 
@@ -57,10 +57,10 @@ public partial class cause_t : TBase
   #endif
   public struct Isset {
     public bool id;
-    public bool name;
+    public bool massage;
   }
 
-  public cause_t() {
+  public Status_Att() {
   }
 
   public void Read (TProtocol iprot)
@@ -87,7 +87,7 @@ public partial class cause_t : TBase
             break;
           case 2:
             if (field.Type == TType.String) {
-              Name = iprot.ReadString();
+              Massage = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -110,7 +110,7 @@ public partial class cause_t : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("cause_t");
+      TStruct struc = new TStruct("Status_Att");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (__isset.id) {
@@ -121,12 +121,12 @@ public partial class cause_t : TBase
         oprot.WriteI32(Id);
         oprot.WriteFieldEnd();
       }
-      if (Name != null && __isset.name) {
-        field.Name = "name";
+      if (Massage != null && __isset.massage) {
+        field.Name = "massage";
         field.Type = TType.String;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Name);
+        oprot.WriteString(Massage);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -139,7 +139,7 @@ public partial class cause_t : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("cause_t(");
+    StringBuilder __sb = new StringBuilder("Status_Att(");
     bool __first = true;
     if (__isset.id) {
       if(!__first) { __sb.Append(", "); }
@@ -147,11 +147,11 @@ public partial class cause_t : TBase
       __sb.Append("Id: ");
       __sb.Append(Id);
     }
-    if (Name != null && __isset.name) {
+    if (Massage != null && __isset.massage) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Name: ");
-      __sb.Append(Name);
+      __sb.Append("Massage: ");
+      __sb.Append(Massage);
     }
     __sb.Append(")");
     return __sb.ToString();

@@ -61,6 +61,11 @@ struct photo_t {           # Массив фотографий
   3:binary top             # Фотография сверху
 }
 
+struct Status_Att{         # Статус аттестации
+  1:int id,                # Номер сообщения
+  2:string massage         # Сообщение
+}
+
 service DataProviderService
 {
       # Справочники
@@ -89,9 +94,10 @@ service DataProviderService
 	  bool setCause(1:string part_id,2:int car_id, 3:int cause_id) throws (1:DataProviderException ex),          # корректировка причины неаттестации
 	  
 	  # Сервисные функции 
-	  part_t startAtt(1:string user) throws (1:DataProviderException ex),                                        # Начало аттестации 
-	  bool endAtt(1:string part_id) throws (1:DataProviderException ex),                                         # Завершение аттестации
-	  bool changePass(1:string login, 2:string oldPass, 3:string newPass, 4:string newEmpl_id) throws (1:DataProviderException ex) # Смена данных учетной записи 
+	  part_t startAtt(1:string user) throws (1:DataProviderException ex),                                                              # Начало аттестации 
+	  bool endAtt(1:string part_id) throws (1:DataProviderException ex),                                                               # Завершение аттестации
+	  bool changePass(1:string login, 2:string oldPass, 3:string newPass, 4:string newEmpl_id) throws (1:DataProviderException ex),    # Смена данных учетной записи 
+    Status_Att getStatusAtt()                                                                                                        # Запрос статуса начала или завершения аттестации
 }
 
 
