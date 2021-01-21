@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using DSAccess;
+using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Timers;
-using DSAccessAgentAPI;
+using Newtonsoft.Json.Linq;
+
 
 namespace Attestation
 {
@@ -16,7 +15,8 @@ namespace Attestation
         private string newPassword;
         public string LoginBool;
         private Global global;
-        DSAccessAgent agent;                                      // из библиотеки для авторизации DSAccess
+        DSAccessLib agent;                                      // из библиотеки для авторизации DSAccess
+        string session;
 
 
         private static string numberCard;
@@ -29,7 +29,7 @@ namespace Attestation
             // Подключение к очереди
             while (agent.Init() == false)
             {
-                Console.WriteLine("[Init] " + agent.getLastError());
+                //Console.WriteLine("[Init] " + agent.getLastError());
                 Thread.Sleep(200);
             }
 
@@ -51,7 +51,7 @@ namespace Attestation
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
             ///////////////////////////////////
-            agent = DSAccessAgent.getInstance();
+            agent = DSAccessLib.getInstance();
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {
@@ -72,7 +72,16 @@ namespace Attestation
             {
                 try
                 {
-                    ChangeResult data = agent.change(login, oldPassword, newPassword, 1000);
+                    session = agent.change(login, oldPassword, newPassword, 4000);
+                    Thread.Sleep(100);
+                    JObject data = agent.getResult(session, 200);
+                    result.Text = $"{data["data"]}";
+                    dispatcherTimer.Stop(); // остановить таймер
+                    this.Close();
+
+
+
+                    /*ChangeResult data = agent.change(login, oldPassword, newPassword, 1000);
                     if (data.code != 0)
                     {
                         result.Text = $"{data.code.ToString()} {data.message}";
@@ -82,8 +91,9 @@ namespace Attestation
                         result.Text = $"{data.message}";
                         dispatcherTimer.Stop(); // остановить таймер
                         this.Close();
-                    }
-                }catch(Exception ass)
+                    }*/
+                }
+                catch(Exception ass)
                 {
                     MessageBox.Show(ass.Message);
                 }

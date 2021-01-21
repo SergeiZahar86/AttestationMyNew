@@ -1,4 +1,5 @@
-﻿using DSAccessAgentAPI;
+﻿using DSAccess;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Threading;
 using System.Windows;
@@ -11,24 +12,14 @@ namespace Attestation
         public static bool isCloseProgram;
         string password;
         System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
-        DSAccessAgent agent;                                      // из библиотеки для авторизации DSAccess
+        DSAccessLib agent;
+        string session;
+        // из библиотеки для авторизации DSAccess
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
-            /* LoginData data = agent.login("www", "www", 5000);
-             string a = data.description;
-             string[] rol = data.roles; // ArmRole
-             foreach(string s in rol)
-             {
-                 if(s == "ArmRole")
-                 {
-
-                 }
-             }*/
-            // Подключение к очереди
             while (agent.Init() == false)
             {
-                Console.WriteLine("[Init] " + agent.getLastError());
-                Thread.Sleep(300);
+                Thread.Sleep(100);
             }
             global.numberCard = global.getNumberCard();  // получение номера карты
             NewEmplId.Password = global.numberCard;
@@ -36,24 +27,21 @@ namespace Attestation
             {
                 try
                 {
-                    LoginResult data = agent.login("", "", 500);
+                    session = agent.login(tbLogin.Text, passwordBox.Password);
+                    JObject data = agent.getResult(session, 3000);
+                    int code = int.Parse(data["code"].ToString());
 
-                    if (data.code != 0)
+                    if (code != 0)
                     {
-                        error.Text = $"{data.code.ToString()} {data.message}";
+                        error.Text = ("[Ошибка] " + data["data"]);
                     }
                     else
                     {
-                        global.user = data.description;
+                        global.user = (string)data["data"]["description"];
+                        error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
                         dispatcherTimer.Stop(); // остановить таймер
                         this.Close();
                     }
-                    /*global.user = global.getUser("", "", NewEmplId.Password); // Global.getUser (261)
-                    if (global.user.Length > 0)
-                    {
-                        dispatcherTimer.Stop(); // остановить таймер
-                        this.Close();
-                    }*/
                 }
                 catch(Exception ass)
                 {
@@ -63,9 +51,8 @@ namespace Attestation
         }
         public SignIn()
         {
-            //numberCard = "";
-
-            agent = DSAccessAgent.getInstance();   // из библиотеки для авторизации DSAccess
+            session = null;
+            agent = DSAccessLib.getInstance(); // из библиотеки для авторизации DSAccess
             InitializeComponent();
             global = Global.getInstance();
             isCloseProgram = false;
@@ -83,16 +70,19 @@ namespace Attestation
             {
                 global.Login = tbLogin.Text;
                 password = passwordBox.Password;
-                LoginResult data = agent.login(global.Login, password, 1000);
+                session = agent.login(global.Login, password);
                 //global.user = global.getUser(global.Login, password, NewEmplId.Password); // Global.getUser (261)
-                if(data.code != 0)
+                Thread.Sleep(1000);
+                JObject data = agent.getResult(session, 3000);
+                int code = int.Parse(data["code"].ToString());
+                if (code != 0)
                 {
-
-                    error.Text = $"{data.code.ToString()} {data.message}";
+                    error.Text = ("[Ошибка] " + data["data"]);
                 }
-                else if (data.user.Length > 0)
+                else if(((string)data["data"]["description"]).Length > 0)
                 {
-                    global.user = data.user;
+                    global.user = (string)data["data"]["description"];
+                    error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
                     dispatcherTimer.Stop(); // остановить таймер
                     this.Close();
                 }
@@ -101,7 +91,7 @@ namespace Attestation
                     error.Text = "Логин или пароль введён неверно";
                 }
             }
-            catch(Exception aa)
+            catch (Exception aa)
             {
 
                 error.Text = (aa.Message);

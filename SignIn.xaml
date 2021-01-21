@@ -45,7 +45,7 @@
                        VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}"/>
             <PasswordBox x:Name="NewEmplId"  Grid.Row="6" HorizontalContentAlignment="Center" Style="{StaticResource PasswordBoxStyle}"
                            IsEnabled="False"  MinWidth="250" Margin="20,0,20,0"/>
-            <TextBlock x:Name="error" Grid.Row="7" Margin="20,0" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="error" Grid.Row="7" Margin="20,0" Foreground="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
             <WrapPanel Grid.Row="8" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
                 <Button  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 
