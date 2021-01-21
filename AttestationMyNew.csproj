@@ -233,6 +233,9 @@
       <DependentUpon>ContinuationOfAttestation.xaml</DependentUpon>
     </Compile>
     <Compile Include="contractor_t.cs" />
+    <Compile Include="ExClose.xaml.cs">
+      <DependentUpon>ExClose.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NameToBrushConverter .cs" />
     <Compile Include="DataProviderException.cs" />
     <Compile Include="DataProviderService.cs" />
@@ -319,6 +322,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionary1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExClose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

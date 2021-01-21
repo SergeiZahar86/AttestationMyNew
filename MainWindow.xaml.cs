@@ -37,7 +37,8 @@ namespace Attestation
             //dispatcherTimer.Start();                                        // запуск таймара
             if (global.user.Length > 0)
             {
-                
+                try
+                {
                     global.cause = global.client.getCauses();               // Запрос справочника причин неаттестации
                     global.contractors = global.client.getContractors();    // Запрос справочника контрагентов
                     global.mats = global.client.getMat();                   // Запрос справочника материалов
@@ -62,11 +63,16 @@ namespace Attestation
                         ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
                         ofAttestation.ShowDialog();
                     }
-                
+                    AttestationPage p = new AttestationPage();
+                    MainFrame.Navigate(p);
+                }
+                catch
+                {
+                    ExClose exClose = new ExClose();
+                    exClose.ShowDialog();
+                }
                 
 
-                AttestationPage p = new AttestationPage();
-                MainFrame.Navigate(p);
             }
             
         }

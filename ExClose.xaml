@@ -1,0 +1,50 @@
+﻿<Window x:Class="Attestation.ExClose"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Attestation"
+        mc:Ignorable="d"
+        Title="ExClose" Height="290" Width="344.031" WindowStyle="None"
+        WindowStartupLocation="CenterScreen" Top="-200"
+        MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
+        ResizeMode="CanResizeWithGrip" AllowsTransparency="true"  >
+    <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <DockPanel x:Name="TitleBar" Grid.Row="0" VerticalAlignment="Top" Background="#B22222" Height="30" Width="343">
+                <TextBlock HorizontalAlignment="Left" Text="Авторизация" Foreground="White" FontFamily="Calibry" FontSize="16" 
+                           Margin="8,6,15,4"/>
+            </DockPanel>
+
+            <WrapPanel Grid.Row="8" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
+                <Button  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 
+                                    Click="ok_Click" IsDefault="True" >Войти</Button>
+
+                <Button x:Name="ok" Click="close_Click" Style="{StaticResource RedButton_SignIn}"
+                                    Width="95" ToolTip="Выход">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Закрыть" Grid.Row="0" HorizontalAlignment="Center" Padding="0,2,0,0"/>
+                        <TextBlock Text="программу" Grid.Row="1" HorizontalAlignment="Center" />
+                    </Grid>
+                </Button>
+
+            </WrapPanel>
+        </Grid>
+    </Border>
+</Window>
