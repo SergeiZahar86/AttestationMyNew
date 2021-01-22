@@ -16,21 +16,24 @@ namespace Attestation
 {
     public partial class ExClose : Window
     {
-        public ExClose()
+        string exeption;
+        public ExClose(string exeption)
         {
+            this.exeption = exeption;
             InitializeComponent();
+            exep.Text = exeption;
         }
         private void ok_Click(object sender, RoutedEventArgs e) // кнопка Применить
         {
             this.Close();
-            Application.Current.Shutdown(); // выход из программы
-            Environment.Exit(0);
+            /*Application.Current.Shutdown(); // выход из программы
+            Environment.Exit(0);*/
         }
         private void close_Click(object sender, RoutedEventArgs e) // закрыть программу
         {
             this.Close();
-            Application.Current.Shutdown(); // выход из программы
-            Environment.Exit(0);
+            /*Application.Current.Shutdown(); // выход из программы
+            Environment.Exit(0);*/
         }
     }
 }

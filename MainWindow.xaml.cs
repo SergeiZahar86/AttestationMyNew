@@ -66,10 +66,11 @@ namespace Attestation
                     AttestationPage p = new AttestationPage();
                     MainFrame.Navigate(p);
                 }
-                catch
+                catch (Exception ss)
                 {
-                    ExClose exClose = new ExClose();
+                    ExClose exClose = new ExClose(ss.ToString());
                     exClose.ShowDialog();
+                    Application.Current.Shutdown();
                 }
                 
 

@@ -228,6 +228,9 @@
     <Compile Include="Change_of_Data_on_the_Wagon.xaml.cs">
       <DependentUpon>Change_of_Data_on_the_Wagon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Close_Att.xaml.cs">
+      <DependentUpon>Close_Att.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Consigners.cs" />
     <Compile Include="ContinuationOfAttestation.xaml.cs">
       <DependentUpon>ContinuationOfAttestation.xaml</DependentUpon>
@@ -292,6 +295,9 @@
     <Compile Include="SignIn.xaml.cs">
       <DependentUpon>SignIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Start_Att.xaml.cs">
+      <DependentUpon>Start_Att.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Status_Att.cs" />
     <Compile Include="VerificationCloseProgram .xaml.cs">
       <DependentUpon>VerificationCloseProgram .xaml</DependentUpon>
@@ -310,6 +316,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Change_of_Data_on_the_Wagon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Close_Att.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -394,6 +404,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SignIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Start_Att.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

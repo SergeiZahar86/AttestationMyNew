@@ -16,9 +16,10 @@ namespace Attestation
         private Global global;
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
         System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
-        private bool realNumber;                                    // флаг проверки подлинности номера вагона
+        //private bool realNumber;                                    // флаг проверки подлинности номера вагона
         MqttClient client;
         RowTab row;
+        private bool is_Num_close_att;                              // флаг количества цифр в номерах вагонов
 
 
         //ObservableCollection<RowTab> observable;
@@ -37,7 +38,8 @@ namespace Attestation
         }
         public AttestationPage() // конструктор
         {
-            realNumber = false;                                                  // флаг проверки подлинности номера вагона
+            is_Num_close_att = true;                                            
+            //realNumber = false;                                                  // флаг проверки подлинности номера вагона
             // Таймер ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
@@ -155,8 +157,13 @@ namespace Attestation
                     DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
 
                     /* Запрос партии вагонов */
-                    global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
-
+                    Start_Att start = new Start_Att();
+                    start.ShowDialog();
+                    //start.Focus();
+                    
+                    //global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
+                    
+                    //start.Close();
                     global.PartId = global.part.Part_id.ToString();              // Номер партии
                     part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
                                                                                  //shippersTextBlock.Text = global.Shipper;                   // Грузоотправитель
@@ -186,8 +193,18 @@ namespace Attestation
                 {
                     VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
                     ver.ShowDialog();
-                    if (global.exitAtt(global.part.Part_id) && isVerification && global.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
+                    Close_Att close = new Close_Att();
+                    close.ShowDialog();
+                    foreach(RowTab ff in global.ROWS)
                     {
+                        if(ff.Num.Length != 8)
+                        {
+                            is_Num_close_att = false;
+                        }
+                    }
+                    if (global.is_ok_close_att && is_Num_close_att)            // метод bool exitAtt() подтверждение окончания аттестации
+                    {
+                        //start.Close();
 
                         global.endTime = DateTime.Now;                                    // Окончание аттестации 
                         global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
@@ -211,6 +228,10 @@ namespace Attestation
 
                         dispatcherTimer.Stop();                                           // Останавливает таймер
                         
+                    }
+                    else
+                    {
+                        MessageBox.Show("Номера вагонов должны состоять из восьми цифр");
                     }
                 }
             }

@@ -47,6 +47,7 @@ namespace Attestation
         public System.Windows.Media.SolidColorBrush GreenColorStart;         // цвет для кнопки начала и завершения аттестации
         public System.Windows.Media.SolidColorBrush RedColorEnd;             // цвет для кнопки начала и завершения аттестации
         public bool isEnabled;                                               // флаг кликабельности datagrid
+        public bool is_ok_close_att;                                             // проверка при закрытии аттестации
 
 
         private static Global instance;
@@ -118,9 +119,11 @@ namespace Attestation
             }
             catch(Exception sa)
             {
-                MessageBox.Show(sa.Message);
-                Thread.Sleep(5000);
-                Application.Current.Shutdown(); ;
+                //MessageBox.Show(sa.Message);
+                //Thread.Sleep(50000);
+                ExClose exClose = new ExClose(sa.ToString());
+                exClose.ShowDialog();
+                Application.Current.Shutdown();
             }
             //this.client = new DataProviderService.Client(multiplexed);
             ///////////////////////////////////////////////////////////////////////////////
