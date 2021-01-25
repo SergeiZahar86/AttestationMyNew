@@ -289,10 +289,17 @@ namespace Attestation
         }
         public static string ShortName(string fio) // из полного "Фамилии Имени, Отчества" получить "Фамилию, инициалы"
         {
+            try
+            {
                 string[] str = new string[3];
                 str = fio.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 //if (str.Length != 3)  throw new ArgumentException("ФИО задано в неверно формате");
                 return string.Format("{0} {1}. {2}.", str[0], str[1][0], str[2][0]);
+            }
+            catch
+            {
+                return null;
+            }
         }
         /// ////////////////////////////////////////// Запрос данных ///////////////////////////////////////////////////////////////////////////////
         public part_t getPart(string part_id) // Запрос партии вагонов

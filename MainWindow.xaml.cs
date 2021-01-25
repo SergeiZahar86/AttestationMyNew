@@ -49,6 +49,10 @@ namespace Attestation
                     //MessageBox.Show(ass.Message);
                 }
             }
+            else
+            {
+                global.GetSignIn();
+            }
             //dispatcherTimer.Start();                                        // запуск таймара
             if (global.user.Length > 0)
             {
