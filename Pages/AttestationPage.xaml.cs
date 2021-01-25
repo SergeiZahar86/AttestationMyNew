@@ -126,8 +126,9 @@ namespace Attestation
                     {
                         try
                         {
+                            global.transport.Close();
                             global.transport.Open();
-                            MessageBox.Show("Ошибка подключения");
+                            MessageBox.Show("Соединение с сервером восстановлено");
                         }
                         catch(Exception ass)
                         {
@@ -160,44 +161,57 @@ namespace Attestation
                     Start_Att start = new Start_Att();
                     start.ShowDialog();
                     //start.Focus();
-                    
+
                     //global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
-                    
+
                     //start.Close();
-                    global.PartId = global.part.Part_id.ToString();              // Номер партии
-                    part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
-                                                                                 //shippersTextBlock.Text = global.Shipper;                   // Грузоотправитель
-                                                                                 //consigneesTextBlock.Text = global.Consignee;               // Грузополучатель
+                    if (global.part == null)
+                    {
+                        return;
+                    }
+                    try
+                    {
+                        global.PartId = global.part.Part_id.ToString();              // Номер партии
+                        part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
+                                                                                     //shippersTextBlock.Text = global.Shipper;                   // Грузоотправитель
+                                                                                     //consigneesTextBlock.Text = global.Consignee;               // Грузополучатель
 
 
-                    //matTextBlock.Text = global.MatName;                        // Название материала
+                        //matTextBlock.Text = global.MatName;                        // Название материала
 
-                    StartAttestation.Background = global.RedColorEnd;            // красный
+                        StartAttestation.Background = global.RedColorEnd;            // красный
 
-                    global.mainButtonAttestation = "Закончить";
-                    startRow_1.Text = global.mainButtonAttestation;
+                        global.mainButtonAttestation = "Закончить";
+                        startRow_1.Text = global.mainButtonAttestation;
 
-                    DataGridMain.ItemsSource = null;
-                    DataGridMain.ItemsSource = global.ROWS;     // Привязка вагонов к datagrid
+                        DataGridMain.ItemsSource = null;
+                        DataGridMain.ItemsSource = global.ROWS;     // Привязка вагонов к datagrid
 
-                    global.IdConsigner = null;                  // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
-                    global.IdShipper = null;                    // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
-                    global.IdMat = null;                        // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
+                        global.IdConsigner = null;                  // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
+                        global.IdShipper = null;                    // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
+                        global.IdMat = null;                        // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
 
-                    global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
+                        global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
 
-                    dispatcherTimer.Start();                    // Стартуем таймер
-                                                                //}
+                        dispatcherTimer.Start();                    // Стартуем таймер
+                                                                    //}
+                    }
+                    catch (Exception sss)
+                    {
+                        MessageBox.Show(sss.Message);
+                    }
                 }
+                
                 else
                 {
+                    is_Num_close_att = true;
                     VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
                     ver.ShowDialog();
                     Close_Att close = new Close_Att();
                     close.ShowDialog();
                     foreach(RowTab ff in global.ROWS)
                     {
-                        if(ff.Num.Length != 8)
+                        if(ff.Num.Length != 8) // делаем проверку длины номера вагона
                         {
                             is_Num_close_att = false;
                         }
@@ -231,7 +245,7 @@ namespace Attestation
                     }
                     else
                     {
-                        MessageBox.Show("Номера вагонов должны состоять из восьми цифр");
+                        MessageBox.Show("Номера вагонов должны состоять из восьми цифр (АРМ)");
                     }
                 }
             }

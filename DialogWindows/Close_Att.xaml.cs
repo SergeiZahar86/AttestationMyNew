@@ -14,22 +14,21 @@ using System.Windows.Shapes;
 
 namespace Attestation
 {
-    public partial class Start_Att : Window
+    public partial class Close_Att : Window
     {
         private Global global;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
-        //bool is_ok;
 
-        public Start_Att()
+        public Close_Att()
         {
-            //is_ok = false;
             InitializeComponent();
             global = Global.getInstance();
             //this.Close();
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            ok.IsEnabled = false;
+            //ok.IsEnabled = false;
+            global.is_ok_close_att = false;             // флаг для закрытия аттестации
             dispatcherTimer.Start();                    // Стартуем таймер
 
         }
@@ -38,14 +37,19 @@ namespace Attestation
         {
             try
             {
-                global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
-                //is_ok = true;
-                ok.IsEnabled = true;
-                dispatcherTimer.Stop();
+                if (global.exitAtt(global.part.Part_id) && global.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
+                {
+                    //ok.IsEnabled = true;
+                    dispatcherTimer.Stop();
+                    global.is_ok_close_att = true;
+                    this.Close();
+                }
             }
             catch
             {
-
+                dispatcherTimer.Stop();
+                MessageBox.Show("Ошибка при закрытии аттестации");
+                this.Close();
             }
         }
 

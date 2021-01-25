@@ -217,129 +217,128 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Archive.xaml.cs">
+    <Compile Include="Pages\Archive.xaml.cs">
       <DependentUpon>Archive.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AttestationPage.xaml.cs">
+    <Compile Include="Pages\AttestationPage.xaml.cs">
       <DependentUpon>AttestationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="car_t.cs" />
-    <Compile Include="cause_t.cs" />
-    <Compile Include="Change_of_Data_on_the_Wagon.xaml.cs">
+    <Compile Include="Thrift\car_t.cs" />
+    <Compile Include="Thrift\cause_t.cs" />
+    <Compile Include="DialogWindows\Change_of_Data_on_the_Wagon.xaml.cs">
       <DependentUpon>Change_of_Data_on_the_Wagon.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Close_Att.xaml.cs">
+    <Compile Include="DialogWindows\Close_Att.xaml.cs">
       <DependentUpon>Close_Att.xaml</DependentUpon>
     </Compile>
     <Compile Include="Consigners.cs" />
-    <Compile Include="ContinuationOfAttestation.xaml.cs">
+    <Compile Include="DialogWindows\ContinuationOfAttestation.xaml.cs">
       <DependentUpon>ContinuationOfAttestation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="contractor_t.cs" />
-    <Compile Include="ExClose.xaml.cs">
+    <Compile Include="Thrift\contractor_t.cs" />
+    <Compile Include="DialogWindows\Start_Att.xaml.cs">
+      <DependentUpon>Start_Att.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogWindows\ExClose.xaml.cs">
       <DependentUpon>ExClose.xaml</DependentUpon>
     </Compile>
     <Compile Include="NameToBrushConverter .cs" />
-    <Compile Include="DataProviderException.cs" />
-    <Compile Include="DataProviderService.cs" />
-    <Compile Include="DatePickerWindow.xaml.cs">
+    <Compile Include="Thrift\DataProviderException.cs" />
+    <Compile Include="Thrift\DataProviderService.cs" />
+    <Compile Include="DialogWindows\DatePickerWindow.xaml.cs">
       <DependentUpon>DatePickerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="HiDWinscard.cs" />
-    <Compile Include="input_Of_Initial_Data.xaml.cs">
+    <Compile Include="DialogWindows\input_Of_Initial_Data.xaml.cs">
       <DependentUpon>input_Of_Initial_Data.xaml</DependentUpon>
     </Compile>
-    <Compile Include="mat_t.cs" />
-    <Compile Include="part_t.cs" />
-    <Compile Include="photo_t.cs" />
-    <Compile Include="ReportPage.xaml.cs">
-      <DependentUpon>ReportPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="changePassword.xaml.cs">
+    <Compile Include="Thrift\mat_t.cs" />
+    <Compile Include="Thrift\part_t.cs" />
+    <Compile Include="Thrift\photo_t.cs" />
+    <Compile Include="DialogWindows\changePassword.xaml.cs">
       <DependentUpon>changePassword.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RowCar.cs" />
     <Compile Include="RowTab.cs" />
     <Compile Include="Shippers.cs" />
-    <Compile Include="ShowChange_Carrying.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_Carrying.xaml.cs">
       <DependentUpon>ShowChange_Carrying.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_cause_t.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_cause_t.xaml.cs">
       <DependentUpon>ShowChange_cause_t.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_Consigner_String.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_Consigner_String.xaml.cs">
       <DependentUpon>ShowChange_Consigner_String.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_isOk.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_isOk.xaml.cs">
       <DependentUpon>ShowChange_isOk.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_Mat_String.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_Mat_String.xaml.cs">
       <DependentUpon>ShowChange_Mat_String.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_Shipper_String.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_Shipper_String.xaml.cs">
       <DependentUpon>ShowChange_Shipper_String.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_Tara_e.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_Tara_e.xaml.cs">
       <DependentUpon>ShowChange_Tara_e.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_VagNum.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_VagNum.xaml.cs">
       <DependentUpon>ShowChange_VagNum.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowChange_Zone_eString.xaml.cs">
+    <Compile Include="DialogWindows\ShowChange_Zone_eString.xaml.cs">
       <DependentUpon>ShowChange_Zone_eString.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ShowPhotos.xaml.cs">
+    <Compile Include="DialogWindows\ShowPhotos.xaml.cs">
       <DependentUpon>ShowPhotos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SignIn.xaml.cs">
+    <Compile Include="DialogWindows\SignIn.xaml.cs">
       <DependentUpon>SignIn.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Start_Att.xaml.cs">
-      <DependentUpon>Start_Att.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Status_Att.cs" />
-    <Compile Include="VerificationCloseProgram .xaml.cs">
+    <Compile Include="Thrift\Status_Att.cs" />
+    <Compile Include="DialogWindows\VerificationCloseProgram .xaml.cs">
       <DependentUpon>VerificationCloseProgram .xaml</DependentUpon>
     </Compile>
-    <Compile Include="VerificationEndAttestation.xaml.cs">
+    <Compile Include="DialogWindows\VerificationEndAttestation.xaml.cs">
       <DependentUpon>VerificationEndAttestation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VideoData.cs" />
     <Compile Include="Zona.cs" />
-    <Page Include="Archive.xaml">
+    <Page Include="Pages\Archive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AttestationPage.xaml">
+    <Page Include="Pages\AttestationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Change_of_Data_on_the_Wagon.xaml">
+    <Page Include="DialogWindows\Change_of_Data_on_the_Wagon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Close_Att.xaml">
+    <Page Include="DialogWindows\Close_Att.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ContinuationOfAttestation.xaml">
+    <Page Include="DialogWindows\ContinuationOfAttestation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DatePickerWindow.xaml">
+    <Page Include="DialogWindows\DatePickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogWindows\Start_Att.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dictionary1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ExClose.xaml">
+    <Page Include="DialogWindows\ExClose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="input_Of_Initial_Data.xaml">
+    <Page Include="DialogWindows\input_Of_Initial_Data.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -355,67 +354,59 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ReportPage.xaml">
+    <Page Include="DialogWindows\changePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="changePassword.xaml">
+    <Page Include="DialogWindows\ShowChange_Carrying.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_Carrying.xaml">
+    <Page Include="DialogWindows\ShowChange_cause_t.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_cause_t.xaml">
+    <Page Include="DialogWindows\ShowChange_Consigner_String.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_Consigner_String.xaml">
+    <Page Include="DialogWindows\ShowChange_isOk.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_isOk.xaml">
+    <Page Include="DialogWindows\ShowChange_Mat_String.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_Mat_String.xaml">
+    <Page Include="DialogWindows\ShowChange_Shipper_String.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_Shipper_String.xaml">
+    <Page Include="DialogWindows\ShowChange_Tara_e.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_Tara_e.xaml">
+    <Page Include="DialogWindows\ShowChange_VagNum.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_VagNum.xaml">
+    <Page Include="DialogWindows\ShowChange_Zone_eString.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowChange_Zone_eString.xaml">
+    <Page Include="DialogWindows\ShowPhotos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ShowPhotos.xaml">
+    <Page Include="DialogWindows\SignIn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignIn.xaml">
+    <Page Include="DialogWindows\VerificationCloseProgram .xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Start_Att.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VerificationCloseProgram .xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VerificationEndAttestation.xaml">
+    <Page Include="DialogWindows\VerificationEndAttestation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -466,15 +457,6 @@
     <Resource Include="ImageFromRowTab\Bitmap3.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageNull\Bitmap11.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ImageNull\Bitmap22.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ImageNull\Bitmap33.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Key.png" />
   </ItemGroup>
   <ItemGroup>
@@ -501,5 +483,6 @@
   <ItemGroup>
     <SplashScreen Include="Resources\logo-img2.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

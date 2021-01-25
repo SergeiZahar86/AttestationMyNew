@@ -14,13 +14,15 @@ using System.Windows.Shapes;
 
 namespace Attestation
 {
-    public partial class Close_Att : Window
+    public partial class Start_Att : Window
     {
         private Global global;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
+        //bool is_ok;
 
-        public Close_Att()
+        public Start_Att()
         {
+            //is_ok = false;
             InitializeComponent();
             global = Global.getInstance();
             //this.Close();
@@ -28,7 +30,6 @@ namespace Attestation
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             //ok.IsEnabled = false;
-            global.is_ok_close_att = false;             // флаг для закрытия аттестации
             dispatcherTimer.Start();                    // Стартуем таймер
 
         }
@@ -37,19 +38,16 @@ namespace Attestation
         {
             try
             {
-                if (global.exitAtt(global.part.Part_id) && global.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
-                {
-                    //ok.IsEnabled = true;
-                    dispatcherTimer.Stop();
-                    global.is_ok_close_att = true;
-                    dispatcherTimer.Stop();
-                    this.Close();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Ошибка при закрытии аттестации");
+                global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
+                //is_ok = true;
+               //ok.IsEnabled = true;
                 dispatcherTimer.Stop();
+                this.Close();
+            }
+            catch (Exception sss)
+            {
+                dispatcherTimer.Stop();
+                MessageBox.Show("Ошибка при открытии аттестации");
                 this.Close();
             }
         }
