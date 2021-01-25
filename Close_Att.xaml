@@ -31,10 +31,10 @@
             <TextBlock Grid.Row="3" Grid.RowSpan="3" Text="Ожидаем ответа от сервера" Margin="20, 0"
                            FontSize="20" TextWrapping="Wrap" TextAlignment="Center"/>
             <WrapPanel Grid.Row="8" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center">
-
+                <!--
                 <Button x:Name="ok"  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 
                                     Click="ok_Click" IsDefault="True" >Войти</Button>
-
+                -->
                 <Button x:Name="close" Click="close_Click" Style="{StaticResource RedButton_SignIn}"
                                     Width="95" ToolTip="Выход">
                     <Grid>

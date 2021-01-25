@@ -27,7 +27,7 @@ namespace Attestation
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            ok.IsEnabled = false;
+            //ok.IsEnabled = false;
             global.is_ok_close_att = false;             // флаг для закрытия аттестации
             dispatcherTimer.Start();                    // Стартуем таймер
 
@@ -39,7 +39,7 @@ namespace Attestation
             {
                 if (global.exitAtt(global.part.Part_id) && global.setUser(global.part.Part_id, global.user))            // метод bool exitAtt() подтверждение окончания аттестации
                 {
-                    ok.IsEnabled = true;
+                    //ok.IsEnabled = true;
                     dispatcherTimer.Stop();
                     global.is_ok_close_att = true;
                     dispatcherTimer.Stop();
