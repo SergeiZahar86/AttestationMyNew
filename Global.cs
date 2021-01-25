@@ -123,7 +123,7 @@ namespace Attestation
                 //Thread.Sleep(50000);
                 ExClose exClose = new ExClose(sa.ToString());
                 exClose.ShowDialog();
-                Application.Current.Shutdown();
+                //Application.Current.Shutdown();
             }
             //this.client = new DataProviderService.Client(multiplexed);
             ///////////////////////////////////////////////////////////////////////////////
@@ -429,6 +429,100 @@ namespace Attestation
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+        public void workAfterShutdown()
+        {
+            try
+            {
+                cause = client.getCauses();               // Запрос справочника причин неаттестации
+                contractors = client.getContractors();    // Запрос справочника контрагентов
+                mats = client.getMat();                   // Запрос справочника материалов
+                GetConsignees(contractors);                      // получение справочника Грузополучателя
+                GetShippers(contractors);                        // получение справочника Грузоотправителей
+                GetZonas();                                             // получение справочника Зоны вагонов
+                IsOk_Val = GetIsOk_Val();                        // справочник итогов аттестации
+                Att_codeFonts = GetAtt_codeFonts();              // справочник элементов шрифта для итогов аттестации
+
+                OldPart = client.getOldPart();                   // проверяем наличие незавершенных аттестаций(метод с сервера)
+                if (OldPart.Length > 0)
+                {
+                    part = client.getPart(OldPart);                 // получаем незавершенную партию
+                    startTimeStr = part.Start_time;                        // получение времени начала аттестации
+                    PartId = part.Part_id;                                 // получение номера партии
+                    isColor = false;                                              // для кнопки начала и завершения аттестации 
+                    ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
+                    ofAttestation.ShowDialog();
+                }
+            }
+            catch (Exception ss)
+            {
+                ExClose exClose = new ExClose(ss.ToString());
+                exClose.ShowDialog();
+            }
+        }
+
+        public void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
+        {
+            shippers = new List<Shippers>();
+            int i = 1;
+            foreach (contractor_t contractor_ in contr)
+            {
+                if (contractor_.Shipper)
+                {
+                    shippers.Add(new Shippers(i, contractor_.Name));
+                }
+                i++;
+            }
+        }
+        public void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
+        {
+            consigners = new List<Consigners>();
+            int i = 1;
+            foreach (contractor_t contractor_ in contr)
+            {
+                if (contractor_.Consigner)
+                {
+                    consigners.Add(new Consigners(i, contractor_.Name));
+                }
+                i++;
+            }
+        }
+        public void GetZonas() // получение справочника Зоны вагонов
+        {
+            zonas = new List<Zona>();
+            zonas.Add(new Zona(1, "Зелёная"));
+            zonas.Add(new Zona(2, "Жёлтая"));
+            zonas.Add(new Zona(3, "Красная"));
+        }
+        public List<string> GetIsOk_Val() // справочник итогов аттестации
+        {
+            List<string> str = new List<string>
+            {
+                "Аттестован",
+                "Не аттестован",
+                "Условно аттестован"
+            };
+            return str;
+        }
+        public List<string> GetAtt_codeFonts() // справочник элементов шрифта для итогов аттестации
+        {
+            List<string> fonts = new List<string>();
+            fonts.Add("CheckCircle");
+            fonts.Add("WindowClose");
+            fonts.Add("Asterisk");
+            return fonts;
+        }
+        public void GetSignIn() // Авторизация
+        {
+            SignIn signIn = new SignIn();
+            signIn.ShowDialog();
+            try
+            {
+                //label_fio.Content = Global.ShortName(global.user);
+            }
+            catch
+            {
+            }
         }
     }
 }

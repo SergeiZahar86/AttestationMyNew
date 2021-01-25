@@ -125,6 +125,11 @@
             </Grid>
         </Button>
 
+        <Button x:Name="connect" Grid.Column="8" Grid.Row="1" Margin="0,5,30,5" Style="{StaticResource ButtonConnect}" Click="connect_Click"/>
+
+        <Label x:Name="name" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center" FontSize="20" FontFamily="Calibri"/>
+
         <!-- ========================== DataGrid ======================= -->
         <DataGrid x:Name="DataGridMain" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Padding="2" ColumnWidth="*" 
                   AutoGenerateColumns="False" ItemsSource="{Binding}" 

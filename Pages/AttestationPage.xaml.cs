@@ -15,7 +15,8 @@ namespace Attestation
         public int idx;                                             // индекс строки
         private Global global;
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
-        System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер аттестации
+        System.Windows.Threading.DispatcherTimer timerConnect;
         //private bool realNumber;                                    // флаг проверки подлинности номера вагона
         MqttClient client;
         RowTab row;
@@ -36,18 +37,43 @@ namespace Attestation
             //numberCard = global.getNumberCard();
             //NewEmplId.Text = numberCard;
         }
+        private void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
+        {
+            if (!global.transport.IsOpen) // проверяем соединение
+            {
+                    connect.Background = global.RedColorEnd;
+            }
+            else
+            {
+                connect.Background = global.GreenColorStart;
+            }
+        }
         public AttestationPage() // конструктор
         {
-            is_Num_close_att = true;                                            
-            //realNumber = false;                                                  // флаг проверки подлинности номера вагона
-            // Таймер ///////////////////////////////////////
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
-
-            /////////////////////////////////////////////////
             InitializeComponent();
             global = Global.getInstance();
+
+            is_Num_close_att = true;                                            
+            //realNumber = false;                                                  // флаг проверки подлинности номера вагона
+            // Таймеры ///////////////////////////////////////
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+
+            timerConnect = new System.Windows.Threading.DispatcherTimer();
+            timerConnect.Tick += new EventHandler(ConnectTimer);
+            timerConnect.Interval = new TimeSpan(0, 0, 2);
+            timerConnect.Start();
+            if (!global.transport.IsOpen) // проверяем соединение
+            {
+                connect.Background = global.RedColorEnd;
+            }
+            else
+            {
+                connect.Background = global.GreenColorStart;
+            }
+
+            /////////////////////////////////////////////////
             isVerification = false;                                       // флаг для подтверждения окончания аттестации
             //DataGridMain.ItemsSource = observable;
             //DataGridMain.SelectedItem = RowTab;
@@ -439,13 +465,39 @@ namespace Attestation
             catch { }
         }
 
-/*        private void test_Click(object sender, RoutedEventArgs e)
+        private void connect_Click(object sender, RoutedEventArgs e)  // кнопка соединения с сервером
         {
-            
-            bool ret = global.checkSum("53538960");
-            if (ret)
-                MessageBox.Show("ok");
-            else MessageBox.Show("no");
+            if (!global.transport.IsOpen) // проверяем соединение
+            {
+                try
+                {
+                    global.transport.Close();
+                    global.transport.Open();
+                    MessageBox.Show("Соединение с сервером восстановлено");
+                    global.GetSignIn();                                                    // авторизация
+                    name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
+                    if (global.user.Length > 0)
+                    {
+                        global.workAfterShutdown();                                        // восстановление после разрыва
+                    }
+                }
+                catch (Exception ass)
+                {
+                    //MessageBox.Show(ass.Message);
+                    ExClose exClose = new ExClose(ass.ToString());
+                    exClose.ShowDialog();
+                }
+            }
         }
-*/    }
+
+        /*        private void test_Click(object sender, RoutedEventArgs e)
+                {
+
+                    bool ret = global.checkSum("53538960");
+                    if (ret)
+                        MessageBox.Show("ok");
+                    else MessageBox.Show("no");
+                }
+        */
+    }
 }

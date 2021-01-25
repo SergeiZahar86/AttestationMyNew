@@ -16,7 +16,7 @@ namespace Attestation
         {
             if(global.getNumberCard() != global.numberCard)
             {
-                GetSignIn();
+                global.GetSignIn();
             }
             
         }
@@ -33,11 +33,27 @@ namespace Attestation
         }
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
-            GetSignIn();                                                    // авторизация
+            if (!global.transport.IsOpen) // проверяем соединение
+            {
+                try
+                {
+                    global.transport.Close();
+                    global.transport.Open();
+                    MessageBox.Show("Соединение с сервером восстановлено");
+                    global.GetSignIn();                                                    // авторизация
+                }
+                catch (Exception ass)
+                {
+                    ExClose exClose = new ExClose(ass.ToString());
+                    exClose.ShowDialog();
+                    //MessageBox.Show(ass.Message);
+                }
+            }
             //dispatcherTimer.Start();                                        // запуск таймара
             if (global.user.Length > 0)
             {
-                try
+                global.workAfterShutdown(); // восстановление после разрыва
+                /*try
                 {
                     global.cause = global.client.getCauses();               // Запрос справочника причин неаттестации
                     global.contractors = global.client.getContractors();    // Запрос справочника контрагентов
@@ -63,21 +79,20 @@ namespace Attestation
                         ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
                         ofAttestation.ShowDialog();
                     }
-                    AttestationPage p = new AttestationPage();
-                    MainFrame.Navigate(p);
                 }
                 catch (Exception ss)
                 {
                     ExClose exClose = new ExClose(ss.ToString());
                     exClose.ShowDialog();
-                    Application.Current.Shutdown();
-                }
-                
-
+                    //Application.Current.Shutdown();
+                }*/
             }
-            
+                    AttestationPage p = new AttestationPage();
+                    MainFrame.Navigate(p);
+                    p.name.Content = Global.ShortName(global.user);   // выводим имя пользователя
+
         }
-        private void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
+        /*private void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
         {
             global.shippers = new List<Shippers>();
             int i = 1;
@@ -127,7 +142,7 @@ namespace Attestation
             fonts.Add("WindowClose");
             fonts.Add("Asterisk");
             return fonts;
-        }
+        }*/
         // Обработка события кнопок
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         { 
@@ -186,9 +201,9 @@ namespace Attestation
         }
         private void signIn_Click(object sender, RoutedEventArgs e) // кнопка авторизации
         {
-            GetSignIn();
+            global.GetSignIn();
         }
-        private void GetSignIn() // Авторизация
+        /*private void GetSignIn() // Авторизация
         {
             SignIn signIn = new SignIn();
             signIn.ShowDialog();
@@ -199,7 +214,7 @@ namespace Attestation
             catch
             {
             }
-        }
+        }*/
 
     }
 }
