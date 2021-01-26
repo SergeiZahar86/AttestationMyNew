@@ -125,7 +125,19 @@
             </Grid>
         </Button>
 
-        <Button x:Name="connect" Grid.Column="8" Grid.Row="1" Margin="0,5,30,5" Style="{StaticResource ButtonConnect}" Click="connect_Click"/>
+        <Button x:Name="connect" Grid.Column="8" Grid.Row="1" Margin="30,5,30,5"  Click="connect_Click"
+                HorizontalAlignment="Center" Style="{StaticResource ButtonConnect}">
+            <TextBlock x:Name="textConnect" FontSize="18" Width="280" ToolTipService.ShowDuration="15000" VerticalAlignment="Center" 
+                        Cursor="Hand" HorizontalAlignment="Center" TextAlignment="Center">
+                <TextBlock.ToolTip >
+                    <ToolTip>
+                        <TextBlock x:Name="toolTipConnect" FontSize="22" Foreground="Black" 
+                                                        Background="White" />
+                    </ToolTip>
+                </TextBlock.ToolTip>
+            </TextBlock>
+        </Button>
+
 
         <Label x:Name="name" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center"
                HorizontalContentAlignment="Center" FontSize="20" FontFamily="Calibri"/>

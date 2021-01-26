@@ -4,6 +4,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -28,25 +30,44 @@ namespace Attestation
 
         private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
         {
-            global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
-            global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-            global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-            //observable = global.ROWS;
-            DataGridMain.ItemsSource = null;
-            DataGridMain.ItemsSource = global.ROWS;
-            //numberCard = global.getNumberCard();
-            //NewEmplId.Text = numberCard;
+            try
+            {
+                global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
+                global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                       //observable = global.ROWS;
+                DataGridMain.ItemsSource = null;
+                DataGridMain.ItemsSource = global.ROWS;
+                //numberCard = global.getNumberCard();
+                //NewEmplId.Text = numberCard;
+            }
+            catch (Exception ass)
+            {
+                ExClose exClose = new ExClose(ass.ToString());
+                exClose.ShowDialog();
+            }
         }
         private void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
         {
+            try
+            {
+                global.client.getStatusAtt();
+            }
+            catch { }
             if (!global.transport.IsOpen) // проверяем соединение
             {
-                    connect.Background = global.RedColorEnd;
+                connect.Background = global.RedColorEnd;
+                textConnect.Text = "Восстановить соединение";
+                toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
+
             }
-            else
+            /*else
             {
                 connect.Background = global.GreenColorStart;
-            }
+                textConnect.Text = "Соединение установленно";
+                toolTipConnect.Text = "Соединение с сервером установленно";
+
+            }*/
         }
         public AttestationPage() // конструктор
         {
@@ -67,10 +88,21 @@ namespace Attestation
             if (!global.transport.IsOpen) // проверяем соединение
             {
                 connect.Background = global.RedColorEnd;
+                textConnect.Text = "Восстановить соединение";
+                toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
             }
             else
             {
                 connect.Background = global.GreenColorStart;
+                textConnect.Text = "Соединение установленно";
+                toolTipConnect.Text = "Соединение с сервером установленно";
+                //connect.HorizontalContentAlignment = HorizontalAlignment.Center;
+                /*TextBlock textBlock = new TextBlock();
+                textBlock.Text = "Сервер доступен";
+                textBlock.TextAlignment = TextAlignment.Center;
+                textBlock.FontSize = 16;
+                connect.Content = textBlock;*/
+                //connect.Content = "Сервер доступен";
             }
 
             /////////////////////////////////////////////////
@@ -89,7 +121,11 @@ namespace Attestation
                 string Topic = "/write/tls/#";
                 client.Subscribe(new string[] { Topic }, new byte[] { 0 });
             }
-            catch { }
+            catch (Exception ass)
+            {
+                ExClose exClose = new ExClose(ass.ToString());
+                exClose.ShowDialog();
+            }
 
             if (!global.isColor)
             {
@@ -275,9 +311,10 @@ namespace Attestation
                     }
                 }
             }
-            catch(Exception aqq) 
+            catch (Exception ass)
             {
-                MessageBox.Show(aqq.Message);
+                ExClose exClose = new ExClose(ass.ToString());
+                exClose.ShowDialog();
             }
         }
         private void Foto_Click(object sender, RoutedEventArgs e)               // выводит окно с фотографиями вагонов
@@ -299,7 +336,11 @@ namespace Attestation
                     System.Windows.MessageBox.Show("У строки " + global.ROWS[global.Idx].Car_id.ToString() + " нет фотографий");
                 }
             }
-            catch { }
+            catch (Exception ass)
+            {
+                ExClose exClose = new ExClose(ass.ToString());
+                exClose.ShowDialog();
+            }
         }
         private void Change_VagNum(object sender, RoutedEventArgs e)            // Изменение номера вагона
         {
@@ -480,6 +521,9 @@ namespace Attestation
                     {
                         global.workAfterShutdown();                                        // восстановление после разрыва
                     }
+                    connect.Background = global.GreenColorStart;
+                    textConnect.Text = "Соединение установленно";
+                    toolTipConnect.Text = "Соединение с сервером установленно";
                 }
                 catch (Exception ass)
                 {
@@ -490,14 +534,6 @@ namespace Attestation
             }
         }
 
-        /*        private void test_Click(object sender, RoutedEventArgs e)
-                {
-
-                    bool ret = global.checkSum("53538960");
-                    if (ret)
-                        MessageBox.Show("ok");
-                    else MessageBox.Show("no");
-                }
-        */
+        
     }
 }
