@@ -41,7 +41,8 @@
                                     Click="ok_Click" IsDefault="True" >Войти</Button>
 -->
                 <Button x:Name="ok" Click="close_Click" Style="{StaticResource RedButton_SignIn}"
-                                    Width="95" ToolTip="Выход">
+                                    Width="95" ToolTip="Выход" Content="Закрыть" FontSize="18" FontFamily="Calibry" >
+                    <!--
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -50,6 +51,7 @@
                         <TextBlock Text="Закрыть" Grid.Row="0" HorizontalAlignment="Center" Padding="0,0,0,0"/>
                         <TextBlock Text="программу" Grid.Row="1" HorizontalAlignment="Center" />
                     </Grid>
+                    -->
                 </Button>
 
             </WrapPanel>

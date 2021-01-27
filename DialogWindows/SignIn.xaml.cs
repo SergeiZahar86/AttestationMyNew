@@ -72,8 +72,8 @@ namespace Attestation
                 password = passwordBox.Password;
                 session = agent.login(global.Login, password);
                 //global.user = global.getUser(global.Login, password, NewEmplId.Password); // Global.getUser (261)
-                Thread.Sleep(1000);
-                JObject data = agent.getResult(session, 3000);
+                Thread.Sleep(2000);
+                JObject data = agent.getResult(session, 4000);
                 int code = int.Parse(data["code"].ToString());
                 if (code != 0)
                 {

@@ -79,11 +79,11 @@ namespace Attestation
             // Таймеры ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
 
             timerConnect = new System.Windows.Threading.DispatcherTimer();
             timerConnect.Tick += new EventHandler(ConnectTimer);
-            timerConnect.Interval = new TimeSpan(0, 0, 2);
+            timerConnect.Interval = new TimeSpan(0, 0, 5);
             timerConnect.Start();
             if (!global.transport.IsOpen) // проверяем соединение
             {

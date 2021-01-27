@@ -73,8 +73,14 @@ namespace Attestation
                 try
                 {
                     session = agent.change(login, oldPassword, newPassword, 4000);
-                    Thread.Sleep(100);
-                    JObject data = agent.getResult(session, 200);
+                    Thread.Sleep(1000);
+                    JObject data = agent.getResult(session, 2000);
+                    int code = int.Parse(data["code"].ToString());
+                    if (code != 0)
+                    {
+                        ExClose exClose = new ExClose((data["data"]).ToString());
+                        exClose.ShowDialog();
+                    }
                     result.Text = $"{data["data"]}";
                     dispatcherTimer.Stop(); // остановить таймер
                     this.Close();
@@ -95,7 +101,9 @@ namespace Attestation
                 }
                 catch(Exception ass)
                 {
-                    MessageBox.Show(ass.Message);
+                    //MessageBox.Show(ass.Message);
+                    ExClose exClose = new ExClose(ass.ToString());
+                    exClose.ShowDialog();
                 }
             }
             else
