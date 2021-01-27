@@ -33,13 +33,16 @@ namespace Attestation
             try
             {
                 global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
-                global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                       //observable = global.ROWS;
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
-                //numberCard = global.getNumberCard();
-                //NewEmplId.Text = numberCard;
+                if (global.part != null)
+                {
+                    global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                    global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                           //observable = global.ROWS;
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                    //numberCard = global.getNumberCard();
+                    //NewEmplId.Text = numberCard;
+                }
             }
             catch (Exception ass)
             {
