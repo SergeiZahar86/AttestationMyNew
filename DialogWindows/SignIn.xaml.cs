@@ -1,19 +1,30 @@
 ﻿using DSAccess;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 
 namespace Attestation
 {
+
+    public class Roles // класс для парсинга json
+    {
+        public List<string> roles { get; set; }
+    }
+
+
     public partial class SignIn : Window
     {
+        string role;                                              // роль необходимая для входа
         private Global global;
         public static bool isCloseProgram;
         string password;
         System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
         DSAccessLib agent;
         string session;
+        List<string> roles; // список ролей
         // из библиотеки для авторизации DSAccess
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
@@ -51,6 +62,8 @@ namespace Attestation
         }
         public SignIn()
         {
+            role = "ArmOtk";
+            List<string> roles = new List<string>();
             session = null;
             agent = DSAccessLib.getInstance(); // из библиотеки для авторизации DSAccess
             InitializeComponent();
@@ -74,21 +87,34 @@ namespace Attestation
                 //global.user = global.getUser(global.Login, password, NewEmplId.Password); // Global.getUser (261)
                 Thread.Sleep(2000);
                 JObject data = agent.getResult(session, 4000);
-                int code = int.Parse(data["code"].ToString());
-                if (code != 0)
+                // проверяем роль
+                JToken list = data["data"]["roles"];
+                List<string> rls = list.ToObject<List<string>>();
+                foreach(string rl in rls)
                 {
-                    error.Text = ("[Ошибка] " + data["data"]);
-                }
-                else if(((string)data["data"]["description"]).Length > 0)
-                {
-                    global.user = (string)data["data"]["description"];
-                    error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
-                    dispatcherTimer.Stop(); // остановить таймер
-                    this.Close();
-                }
-                else
-                {
-                    error.Text = "Логин или пароль введён неверно";
+                    if(rl == role)
+                    {
+                        int code = int.Parse(data["code"].ToString());
+                        if (code != 0)
+                        {
+                            error.Text = ("[Ошибка] " + data["data"]);
+                        }
+                        else if(((string)data["data"]["description"]).Length > 0)
+                        {
+                            global.user = (string)data["data"]["description"];
+                            error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
+                            dispatcherTimer.Stop(); // остановить таймер
+                            this.Close();
+                        }
+                        else
+                        {
+                            error.Text = "Логин или пароль введён неверно";
+                        }
+                    }
+                    else
+                    {
+                        error.Text = ("У вас недостаточно прав");
+                    }
                 }
             }
             catch (Exception aa)
