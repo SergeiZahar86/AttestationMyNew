@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
@@ -23,10 +24,10 @@ namespace Attestation
         MqttClient client;
         RowTab row;
         private bool is_Num_close_att;                              // флаг количества цифр в номерах вагонов
-
-
+        private int CountRow;                                     // для сравнения списков с целью выявления изменений
+        private bool chenge;
         //ObservableCollection<RowTab> observable;
-        
+
 
         private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
         {
@@ -35,13 +36,25 @@ namespace Attestation
                 global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
                 if (global.part != null)
                 {
-                    global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                    global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                           //observable = global.ROWS;
-                    DataGridMain.ItemsSource = null;
-                    DataGridMain.ItemsSource = global.ROWS;
-                    //numberCard = global.getNumberCard();
-                    //NewEmplId.Text = numberCard;
+                    if (global.part.Cars.Count == 1 && CountRow != global.part.Cars.Count)
+                    {
+                        global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                        global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                               //observable = global.ROWS;
+                        DataGridMain.ItemsSource = null;
+                        DataGridMain.ItemsSource = global.ROWS;
+                        CountRow = 1;
+                    }
+                    else if (CountRow != global.part.Cars.Count)
+                    {
+                        global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                        global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                               //observable = global.ROWS;
+                        DataGridMain.ItemsSource = null;
+                        DataGridMain.ItemsSource = global.ROWS;
+
+                        CountRow = global.ROWS.Count;
+                    }
                 }
             }
             catch (Exception ass)
@@ -52,16 +65,39 @@ namespace Attestation
         }
         private void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
         {
-            try
-            {
-                global.client.getStatusAtt();
-            }
-            catch { }
+            /* try
+             {
+                 global.client.getStatusAtt(); // Запрос статуса начала или завершения аттестации
+             }
+             catch { }*/
             if (!global.transport.IsOpen) // проверяем соединение
             {
                 connect.Background = global.RedColorEnd;
                 textConnect.Text = "Восстановить соединение";
                 toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
+
+                try
+                {
+                    global.transport.Close();
+                    global.transport.Open();
+                    MessageBox.Show("Соединение с сервером восстановлено");
+                    /*global.GetSignIn();                                                    // авторизация
+                    name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
+                    if (global.user.Length > 0)
+                    {*/
+                        global.workAfterShutdown();                                        // восстановление после разрыва
+                    //}
+                    connect.Background = global.GreenColorStart;
+                    textConnect.Text = "Соединение установленно";
+                    toolTipConnect.Text = "Соединение с сервером установленно";
+                }
+                catch (Exception ass)
+                {
+                    //MessageBox.Show(ass.Message);
+                    ExClose exClose = new ExClose(ass.ToString());
+                    exClose.ShowDialog();
+                }
+
 
             }
             /*else
@@ -77,16 +113,17 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
 
+            CountRow = 100;                                                        // для сравнения списков с целью выявления изменений
             is_Num_close_att = true;                                            
             //realNumber = false;                                                  // флаг проверки подлинности номера вагона
             // Таймеры ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
 
             timerConnect = new System.Windows.Threading.DispatcherTimer();
             timerConnect.Tick += new EventHandler(ConnectTimer);
-            timerConnect.Interval = new TimeSpan(0, 0, 5);
+            timerConnect.Interval = new TimeSpan(0, 0, 16);
             timerConnect.Start();
             if (!global.transport.IsOpen) // проверяем соединение
             {
@@ -117,11 +154,11 @@ namespace Attestation
             ///
             try
             {
-                client = new MqttClient("10.90.101.1", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
+                client = new MqttClient(global.Mqtt_host, 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
                 //client = new MqttClient("10.90.101.200", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
                 client.MqttMsgPublishReceived += client_MqttMsgPublishReceived; // этот код запускается при получении сообщения
-                client.Connect("sergei", "root", "root"); // подключение к серверу ИндасХолдинг у Коли
-                string Topic = "/write/tls/#";
+                client.Connect("ArmOTK", global.Mqtt_user, global.Mqtt_password); // подключение к серверу ИндасХолдинг у Коли
+                string Topic = global.PLC_topic;
                 client.Subscribe(new string[] { Topic }, new byte[] { 0 });
             }
             catch (Exception ass)
@@ -518,12 +555,12 @@ namespace Attestation
                     global.transport.Close();
                     global.transport.Open();
                     MessageBox.Show("Соединение с сервером восстановлено");
-                    global.GetSignIn();                                                    // авторизация
-                    name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
-                    if (global.user.Length > 0)
-                    {
+                    //global.GetSignIn();                                                    // авторизация
+                    //name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
+                    /*if (global.user.Length > 0)
+                    {*/
                         global.workAfterShutdown();                                        // восстановление после разрыва
-                    }
+                    //}
                     connect.Background = global.GreenColorStart;
                     textConnect.Text = "Соединение установленно";
                     toolTipConnect.Text = "Соединение с сервером установленно";

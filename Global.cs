@@ -17,6 +17,7 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using Attestation.DialogWindows;
 
 namespace Attestation
 {
@@ -87,7 +88,11 @@ namespace Attestation
         public ObservableCollection<RowTab> ROWS;                       // внутренний список вагонов 
         // сохранение объекта вагона для изменения значения по клику по таблице
         public RowTab rowTab;
-                                
+        public string PLC_topic;
+        public string Mqtt_host;
+        public string Mqtt_user;
+        public string Mqtt_password;
+
 
         /// для соединения с сервером ///////////////////////////////////////////////////////
         public TTransport transport;
@@ -102,8 +107,14 @@ namespace Attestation
 
         private Global()
         {
-            /////////// подключение к серверу ///////////////////////////////////////////////////////////////
+
+            //////////////////////////////////////////////////////////////////////////
             var appSettings = ConfigurationManager.AppSettings;
+            PLC_topic = appSettings["PLC_topic"];
+            Mqtt_host = appSettings["Mqtt_host"];
+            Mqtt_user = appSettings["Mqtt_user"];
+            Mqtt_password = appSettings["Mqtt_password"];
+            /////////////// подключение к серверу ///////////////////////////////////////////////////////////////////////////////////
             Port = int.Parse(appSettings["port"] ?? "9090");
             Host = appSettings["host"] ?? "localhost";
             //TFramedTransport transportf = new TFramedTransport(new TSocket(Host, Port));
@@ -441,6 +452,8 @@ namespace Attestation
         {
             try
             {
+                Waiting_Download_data waiting_ = new Waiting_Download_data();
+                waiting_.Show();
                 cause = client.getCauses();               // Запрос справочника причин неаттестации
                 contractors = client.getContractors();    // Запрос справочника контрагентов
                 mats = client.getMat();                   // Запрос справочника материалов
@@ -460,6 +473,7 @@ namespace Attestation
                     ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
                     ofAttestation.ShowDialog();
                 }
+                waiting_.Close();
             }
             catch (Exception ss)
             {

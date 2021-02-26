@@ -1,4 +1,5 @@
-﻿using DSAccess;
+﻿using Attestation.DialogWindows;
+using DSAccess;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -25,13 +26,30 @@ namespace Attestation
         DSAccessLib agent;
         string session;
         List<string> roles; // список ролей
+        int DSAc; // счетчик ожидания подключения к DSAccessAgent
+        int code; // код ответа от DSAccessAgent
         // из библиотеки для авторизации DSAccess
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
+          
             while (agent.Init() == false)
             {
-                Thread.Sleep(100);
+                if (DSAc < 70)
+                {
+                    Thread.Sleep(100);
+                    DSAc++;
+                }
+                else
+                {
+                    dispatcherTimer.Stop();
+                    DSAccessAgentWindow DSA = new DSAccessAgentWindow();
+                    DSA.ShowDialog();
+                    this.Close();
+                    Application.Current.Shutdown();
+                    Environment.Exit(0);
+                }
             }
+            
             global.numberCard = global.getNumberCard();  // получение номера карты
             NewEmplId.Password = global.numberCard;
             if (NewEmplId.Password.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
@@ -40,9 +58,9 @@ namespace Attestation
                 {
                     session = agent.login(tbLogin.Text, passwordBox.Password);
                     JObject data = agent.getResult(session, 3000);
-                    int code = int.Parse(data["code"].ToString());
+                    int code1 = int.Parse(data["code"].ToString());
 
-                    if (code != 0)
+                    if (code1 != 0)
                     {
                         error.Text = ("[Ошибка] " + data["data"]);
                     }
@@ -62,6 +80,7 @@ namespace Attestation
         }
         public SignIn()
         {
+            DSAc = 0; // инициализация счетчика ожидания подключения к DSAccessAgent
             role = "ArmOtk";
             List<string> roles = new List<string>();
             session = null;
@@ -85,43 +104,51 @@ namespace Attestation
                 password = passwordBox.Password;
                 session = agent.login(global.Login, password);
                 //global.user = global.getUser(global.Login, password, NewEmplId.Password); // Global.getUser (261)
-                Thread.Sleep(2000);
+                Waiting_Sign_in waiting = new Waiting_Sign_in();
+                waiting.Show();
+                Thread.Sleep(3000);
                 JObject data = agent.getResult(session, 4000);
-                // проверяем роль
-                JToken list = data["data"]["roles"];
-                List<string> rls = list.ToObject<List<string>>();
-                foreach(string rl in rls)
+                code = int.Parse(data["code"].ToString());
+                if (code == 0)
                 {
-                    if(rl == role)
+                    // проверяем роль
+                    JToken list = data["data"]["roles"];
+                    List<string> rls = list.ToObject<List<string>>();
+                    foreach (string rl in rls)
                     {
-                        int code = int.Parse(data["code"].ToString());
-                        if (code != 0)
+                        if (rl == role)
                         {
-                            error.Text = ("[Ошибка] " + data["data"]);
-                        }
-                        else if(((string)data["data"]["description"]).Length > 0)
-                        {
-                            global.user = (string)data["data"]["description"];
-                            error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
-                            dispatcherTimer.Stop(); // остановить таймер
-                            this.Close();
+                            if (((string)data["data"]["description"]).Length > 0)
+                            {
+                                global.user = (string)data["data"]["description"];
+                                error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
+                                dispatcherTimer.Stop(); // остановить таймер
+                                this.Close();
+                                break;
+                            }
+                            else
+                            {
+                                error.Text = "Логин или пароль введён неверно";
+                            }
                         }
                         else
                         {
-                            error.Text = "Логин или пароль введён неверно";
+                            error.Text = ("У вас недостаточно прав");
                         }
                     }
-                    else
-                    {
-                        error.Text = ("У вас недостаточно прав");
-                    }
                 }
+                else
+                {
+                    error.Text = "Неверные данные"; // ("[Ошибка] " + data["data"]);
+                }
+                waiting.Close();
             }
             catch (Exception aa)
             {
 
                 error.Text = (aa.Message);
             }
+            
         }
         private void close_Click(object sender, RoutedEventArgs e) // закрыть программу
         {

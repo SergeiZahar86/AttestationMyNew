@@ -12,14 +12,14 @@ namespace Attestation
         private Global global;
         //System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
 
-        private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
+        /*private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
         {
             if(global.getNumberCard() != global.numberCard)
             {
                 global.GetSignIn();
             }
             
-        }
+        }*/
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +33,9 @@ namespace Attestation
         }
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
+            global.GetSignIn();
+            label_fio.Content = Global.ShortName(global.user);
+
             if (!global.transport.IsOpen) // проверяем соединение
             {
                 try
@@ -51,7 +54,8 @@ namespace Attestation
             }
             else
             {
-                global.GetSignIn();
+                /*global.GetSignIn();
+                label_fio.Content = Global.ShortName(global.user);*/
             }
             //dispatcherTimer.Start();                                        // запуск таймара
             if (global.user.Length > 0)
@@ -93,7 +97,7 @@ namespace Attestation
             }
                     AttestationPage p = new AttestationPage();
                     MainFrame.Navigate(p);
-                    p.name.Content = Global.ShortName(global.user);   // выводим имя пользователя
+                    //p.name.Content = Global.ShortName(global.user);   // выводим имя пользователя
 
         }
         /*private void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей

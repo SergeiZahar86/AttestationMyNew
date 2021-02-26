@@ -217,6 +217,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DialogWindows\DSAccessAgentWindow.xaml.cs">
+      <DependentUpon>DSAccessAgentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogWindows\Waiting_Download_data.xaml.cs">
+      <DependentUpon>Waiting_Download_data.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogWindows\Waiting_Sign_in.xaml.cs">
+      <DependentUpon>Waiting_Sign_in.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Archive.xaml.cs">
       <DependentUpon>Archive.xaml</DependentUpon>
     </Compile>
@@ -302,6 +311,18 @@
       <DependentUpon>VerificationEndAttestation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Zona.cs" />
+    <Page Include="DialogWindows\DSAccessAgentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogWindows\Waiting_Download_data.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogWindows\Waiting_Sign_in.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Archive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

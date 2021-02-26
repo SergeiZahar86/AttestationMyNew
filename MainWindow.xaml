@@ -70,8 +70,8 @@
             -->
             <Label x:Name="label_fio" Content="{Binding SomeValueString}"  Height="30" Width="400"
                    VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center"
-                   VerticalContentAlignment="Center" 
-                   FontFamily="Calibry" Foreground="Black" Background="#FFD0DEE4" Margin="50,0,0,0"/>
+                   VerticalContentAlignment="Center" HorizontalAlignment="Right"
+                   FontFamily="Calibry" Foreground="White" Background="#FF37474F" Margin="0"/>
             <!--
             <DockPanel HorizontalAlignment="right" Margin="0,0,20,0">
                 <TextBlock HorizontalAlignment="Right" Margin="4,10,15,4" Cursor="Hand"
