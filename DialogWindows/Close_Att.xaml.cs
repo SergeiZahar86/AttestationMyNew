@@ -42,14 +42,16 @@ namespace Attestation
                 {
                     //ok.IsEnabled = true;
                     dispatcherTimer.Stop();
-                    global.is_ok_close_att = true;
+                    global.is_ok_close_att = true; // разрешение закрыть аттестацию
                     this.Close();
                 }
             }
-            catch
+            catch (Exception dfd)
             {
+
                 dispatcherTimer.Stop();
                 MessageBox.Show("Ошибка при закрытии аттестации");
+                MessageBox.Show(dfd.ToString());
                 this.Close();
             }
         }

@@ -258,7 +258,7 @@ namespace Attestation
                     timeStart.Text = global.startTimeStr;                  // Время начала аттестации (вверху страницы)
                                                                            ///////////////////////////////////////////////////////////////////////
 
-                    //isVerification = false;                              // флаг для подтверждения окончания аттестации
+                    isVerification = false;                              // флаг для подтверждения окончания аттестации
                     global.isEnabled = true;                               // флаг кликабельности datagrid
                     DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
 
@@ -314,14 +314,24 @@ namespace Attestation
                     VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
                     ver.Owner = Window.GetWindow(this);
                     ver.ShowDialog();
-                    Close_Att close = new Close_Att();
-                    close.Owner = Window.GetWindow(this);
-                    close.ShowDialog();
-                    foreach(RowTab ff in global.ROWS)
+                    if (isVerification)
                     {
-                        if(ff.Num.Length != 8) // делаем проверку длины номера вагона
+                        bool ok = true;
+                        foreach (RowTab ff in global.ROWS)
                         {
-                            is_Num_close_att = false;
+                            if (ff.Num.Length != 8) // делаем проверку длины номера вагона
+                            {
+                                is_Num_close_att = false;
+                                MessageBox.Show("Номера вагонов должны состоять из восьми цифр (АРМ)");
+                                ok = false;
+                                break;
+                            }
+                        }
+                        if (ok)
+                        {
+                            Close_Att close = new Close_Att(); // внутри отправка данных на сервер
+                            close.Owner = Window.GetWindow(this);
+                            close.ShowDialog();
                         }
                     }
                     if (global.is_ok_close_att && is_Num_close_att)            // метод bool exitAtt() подтверждение окончания аттестации
@@ -353,7 +363,7 @@ namespace Attestation
                     }
                     else
                     {
-                        MessageBox.Show("Номера вагонов должны состоять из восьми цифр (АРМ)");
+                        MessageBox.Show("Ошибка при отправки данных на сервер");
                     }
                 }
             }
