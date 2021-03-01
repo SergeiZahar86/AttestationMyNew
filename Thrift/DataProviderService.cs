@@ -531,7 +531,7 @@ public partial class DataProviderService {
                 oprot_.Transport.Flush();
             }catch (Exception sss)
             {
-                MessageBox.Show(sss.ToString() + "Ошибка в Thrift (send_getPart). Разорвано соединение с сервером");
+                MessageBox.Show(" Ошибка в Thrift (send_getPart). Разорвано соединение с сервером     " + sss.ToString());
             }
     }
     #endif
@@ -562,7 +562,7 @@ public partial class DataProviderService {
             }
             catch (Exception sss)
             {
-                MessageBox.Show(sss.ToString() + "Ошибка в Thrift (recv_getPart). Разорвано соединение с сервером");
+                MessageBox.Show(" Ошибка в Thrift (recv_getPart). Разорвано соединение с сервером     " + sss.ToString());
                 return null;
             }
     }

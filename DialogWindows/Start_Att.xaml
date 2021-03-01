@@ -34,7 +34,7 @@
                 <!--
                 <Button x:Name="ok"  Style="{StaticResource GreenButton_SignIn}"  Width="95" ToolTip="Выход" 
                                     Click="ok_Click" IsDefault="True" >Войти</Button>
-                -->
+                
                 <Button x:Name="close" Click="close_Click" Style="{StaticResource RedButton_SignIn}"
                                     Width="95" ToolTip="Выход">
                     <Grid>
@@ -46,7 +46,7 @@
                         <TextBlock Text="программу" Grid.Row="1" HorizontalAlignment="Center" />
                     </Grid>
                 </Button>
-
+-->
             </WrapPanel>
         </Grid>
     </Border>

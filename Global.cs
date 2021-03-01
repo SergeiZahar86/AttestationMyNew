@@ -101,7 +101,7 @@ namespace Attestation
         int Port;
         string Host;
 
-
+        Waiting_Download_data waiting_;
         /// /////////////////////////////////////////////////////
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
 
@@ -159,6 +159,7 @@ namespace Attestation
                                                                                                      * начала и завершения аттестации*/
             ///////////////////////////////////////////////////////////////////////////////////////////////
             ///
+
         }
 
 
@@ -452,7 +453,7 @@ namespace Attestation
         {
             try
             {
-                Waiting_Download_data waiting_ = new Waiting_Download_data();
+                waiting_ = new Waiting_Download_data();
                 waiting_.Show();
                 cause = client.getCauses();               // Запрос справочника причин неаттестации
                 contractors = client.getContractors();    // Запрос справочника контрагентов
@@ -479,6 +480,7 @@ namespace Attestation
             {
                 ExClose exClose = new ExClose(ss.ToString());
                 exClose.ShowDialog();
+                waiting_.Close();
             }
         }
 

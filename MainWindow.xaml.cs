@@ -10,6 +10,7 @@ namespace Attestation
     public partial class MainWindow : Window
     {
         private Global global;
+        SignIn signIn;
         //System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер
 
         /*private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
@@ -33,7 +34,10 @@ namespace Attestation
         }
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
-            global.GetSignIn();
+            //global.GetSignIn();
+            signIn = new SignIn();
+            signIn.Owner = Window.GetWindow(this);
+            signIn.ShowDialog();
             label_fio.Content = Global.ShortName(global.user);
 
             if (!global.transport.IsOpen) // проверяем соединение
@@ -43,7 +47,10 @@ namespace Attestation
                     global.transport.Close();
                     global.transport.Open();
                     MessageBox.Show("Соединение с сервером восстановлено");
-                    global.GetSignIn();                                                    // авторизация
+                    //global.GetSignIn();                                                    // авторизация
+                    signIn = new SignIn();
+                    signIn.Owner = Window.GetWindow(this);
+                    signIn.ShowDialog();
                 }
                 catch (Exception ass)
                 {
@@ -209,7 +216,10 @@ namespace Attestation
         }
         private void signIn_Click(object sender, RoutedEventArgs e) // кнопка авторизации
         {
-            global.GetSignIn();
+            //global.GetSignIn();
+            signIn = new SignIn();
+            signIn.Owner = Window.GetWindow(this);
+            signIn.ShowDialog();
         }
         /*private void GetSignIn() // Авторизация
         {

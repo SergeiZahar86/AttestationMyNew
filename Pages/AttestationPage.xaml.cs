@@ -60,6 +60,7 @@ namespace Attestation
             catch (Exception ass)
             {
                 ExClose exClose = new ExClose(ass.ToString());
+                exClose.Owner = Window.GetWindow(this);
                 exClose.ShowDialog();
             }
         }
@@ -95,6 +96,7 @@ namespace Attestation
                 {
                     //MessageBox.Show(ass.Message);
                     ExClose exClose = new ExClose(ass.ToString());
+                    exClose.Owner = Window.GetWindow(this);
                     exClose.ShowDialog();
                 }
 
@@ -164,6 +166,7 @@ namespace Attestation
             catch (Exception ass)
             {
                 ExClose exClose = new ExClose(ass.ToString());
+                exClose.Owner = Window.GetWindow(this);
                 exClose.ShowDialog();
             }
 
@@ -261,6 +264,7 @@ namespace Attestation
 
                     /* Запрос партии вагонов */
                     Start_Att start = new Start_Att();
+                    start.Owner = Window.GetWindow(this);
                     start.ShowDialog();
                     //start.Focus();
 
@@ -308,8 +312,10 @@ namespace Attestation
                 {
                     is_Num_close_att = true;
                     VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
+                    ver.Owner = Window.GetWindow(this);
                     ver.ShowDialog();
                     Close_Att close = new Close_Att();
+                    close.Owner = Window.GetWindow(this);
                     close.ShowDialog();
                     foreach(RowTab ff in global.ROWS)
                     {
@@ -354,6 +360,7 @@ namespace Attestation
             catch (Exception ass)
             {
                 ExClose exClose = new ExClose(ass.ToString());
+                exClose.Owner = Window.GetWindow(this);
                 exClose.ShowDialog();
             }
         }
@@ -366,6 +373,7 @@ namespace Attestation
                 if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
                 {
                     ShowPhotos showPhotos = new ShowPhotos();
+                    showPhotos.Owner = Window.GetWindow(this);
                     showPhotos.image1.Source = Global.ByteArraytoBitmap(global.photo.Left);
                     showPhotos.image2.Source = Global.ByteArraytoBitmap(global.photo.Right);
                     showPhotos.image3.Source = Global.ByteArraytoBitmap(global.photo.Top);
@@ -379,6 +387,7 @@ namespace Attestation
             catch (Exception ass)
             {
                 ExClose exClose = new ExClose(ass.ToString());
+                exClose.Owner = Window.GetWindow(this);
                 exClose.ShowDialog();
             }
         }
@@ -387,6 +396,7 @@ namespace Attestation
             try
             {
                 ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
+                showChange_VagNum.Owner = Window.GetWindow(this);
                 global.Idx = DataGridMain.SelectedIndex;
                 showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
                 showChange_VagNum.ShowDialog();
@@ -398,6 +408,7 @@ namespace Attestation
         private void Change_isOk(object sender, RoutedEventArgs e)              // Изменение итогов аттестации
         {
             ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
+            showChange_IsOk.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -411,6 +422,7 @@ namespace Attestation
         private void CauseButton_Click (object sender, RoutedEventArgs e)       // Установить причину неаттестации
         {
             ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
+            showChange_Cause_T.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -426,6 +438,7 @@ namespace Attestation
             try
             {
                 ShowChange_Tara_e showChange_Tara_e = new ShowChange_Tara_e();
+                showChange_Tara_e.Owner = Window.GetWindow(this);
                 global.Idx = DataGridMain.SelectedIndex;
                 showChange_Tara_e.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
                 showChange_Tara_e.ShowDialog();
@@ -437,6 +450,7 @@ namespace Attestation
         private void Change_Carrying(object sender, RoutedEventArgs e)          // изменение Грузоподъемность
         {
             ShowChange_Carrying showChange_Carrying = new ShowChange_Carrying();
+            showChange_Carrying.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -451,6 +465,7 @@ namespace Attestation
         private void Change_Zone_eString(object sender, RoutedEventArgs e)      // изменение Зоны вагонов
         {
             ShowChange_Zone_eString showChange_Zone_eString = new ShowChange_Zone_eString();
+            showChange_Zone_eString.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -464,6 +479,7 @@ namespace Attestation
         private void shipperButton_Click(object sender, RoutedEventArgs e)      // изменение Грузоотправителя
         {
             ShowChange_Shipper_String Change_Shipper_String = new ShowChange_Shipper_String();
+            Change_Shipper_String.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -478,6 +494,7 @@ namespace Attestation
         private void consignerButton_Click(object sender, RoutedEventArgs e)    // изменение Грузополучателя
         {
             ShowChange_Consigner_String Change_Consigner_String = new ShowChange_Consigner_String();
+            Change_Consigner_String.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -491,6 +508,7 @@ namespace Attestation
         private void matButton_Click(object sender, RoutedEventArgs e)          // изменение материала 
         {
             ShowChange_Mat_String Change_Mat_String = new ShowChange_Mat_String();
+            Change_Mat_String.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -504,6 +522,7 @@ namespace Attestation
         private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) // изменение значений строки по двойному клику
         {
             Change_of_Data_on_the_Wagon change_Of_Data = new Change_of_Data_on_the_Wagon();
+            change_Of_Data.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
             try
             {
@@ -569,6 +588,7 @@ namespace Attestation
                 {
                     //MessageBox.Show(ass.Message);
                     ExClose exClose = new ExClose(ass.ToString());
+                    exClose.Owner = Window.GetWindow(this);
                     exClose.ShowDialog();
                 }
             }
