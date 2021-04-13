@@ -72,40 +72,47 @@ namespace Attestation
 
             if (login.Length > 0 && oldPassword.Length > 0 && (global.numberCard.Length > 0 || newPassword.Length >0))
             {
-                try
+                if (NewPassword.Password == NewPassword1.Password)
                 {
-                    session = agent.change(login, oldPassword, newPassword, 4000);
-                    Thread.Sleep(1000);
-                    JObject data = agent.getResult(session, 2000);
-                    int code = int.Parse(data["code"].ToString());
-                    if (code != 0)
+                    try
                     {
-                        ExClose exClose = new ExClose((data["data"]).ToString());
-                        exClose.ShowDialog();
-                    }
-                    result.Text = $"{data["data"]}";
-                    dispatcherTimer.Stop(); // остановить таймер
-                    this.Close();
-
-
-
-                    /*ChangeResult data = agent.change(login, oldPassword, newPassword, 1000);
-                    if (data.code != 0)
-                    {
-                        result.Text = $"{data.code.ToString()} {data.message}";
-                    }
-                    else
-                    {
-                        result.Text = $"{data.message}";
+                        session = agent.change(login, oldPassword, newPassword, 4000);
+                        Thread.Sleep(1000);
+                        JObject data = agent.getResult(session, 2000);
+                        int code = int.Parse(data["code"].ToString());
+                        if (code != 0)
+                        {
+                            ExClose exClose = new ExClose((data["data"]).ToString());
+                            exClose.ShowDialog();
+                        }
+                        result.Text = $"{data["data"]}";
                         dispatcherTimer.Stop(); // остановить таймер
                         this.Close();
-                    }*/
+
+
+
+                        /*ChangeResult data = agent.change(login, oldPassword, newPassword, 1000);
+                        if (data.code != 0)
+                        {
+                            result.Text = $"{data.code.ToString()} {data.message}";
+                        }
+                        else
+                        {
+                            result.Text = $"{data.message}";
+                            dispatcherTimer.Stop(); // остановить таймер
+                            this.Close();
+                        }*/
+                    }
+                    catch (Exception ass)
+                    {
+                        //MessageBox.Show(ass.Message);
+                        ExClose exClose = new ExClose(ass.ToString());
+                        exClose.ShowDialog();
+                    }
                 }
-                catch(Exception ass)
+                else
                 {
-                    //MessageBox.Show(ass.Message);
-                    ExClose exClose = new ExClose(ass.ToString());
-                    exClose.ShowDialog();
+                    result.Text = "Две строки нового пароля должны совпадать";
                 }
             }
             else
@@ -152,6 +159,7 @@ namespace Attestation
                 Login.IsEnabled = true;
                 OldPassword.IsEnabled = true;
                 NewPassword.IsEnabled = true;
+                NewPassword1.IsEnabled = true;
                 if (dispatcherTimer.IsEnabled == true)
                 {
                     dispatcherTimer.Stop();
@@ -161,7 +169,10 @@ namespace Attestation
             {
                 Login.IsEnabled = true;
                 OldPassword.IsEnabled = true;
+                NewPassword.Password = "";
+                NewPassword1.Password = "";
                 NewPassword.IsEnabled = false;
+                NewPassword1.IsEnabled = false;
                 if (dispatcherTimer.IsEnabled == false)
                 {
                     dispatcherTimer.Start();
