@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Windows;
 using Newtonsoft.Json.Linq;
-
+using System.Windows.Controls;
 
 namespace Attestation
 {
@@ -17,6 +17,8 @@ namespace Attestation
         private Global global;
         DSAccessLib agent;                                      // из библиотеки для авторизации DSAccess
         string session;
+        string nameComboItem;
+
 
 
         private static string numberCard;
@@ -36,7 +38,7 @@ namespace Attestation
 
 
             numberCard = global.getNumberCard();
-            NewEmplId.Password = numberCard;
+            //NewEmplId.Password = numberCard;
 
         }
         
@@ -49,7 +51,7 @@ namespace Attestation
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
+            //dispatcherTimer.Start();
             ///////////////////////////////////
             agent = DSAccessLib.getInstance();
         }
@@ -108,7 +110,7 @@ namespace Attestation
             }
             else
             {
-                result.Text = "Введите логин,старый пароль и новое значение пароля или карты, или все вместе";
+                result.Text = "Введите логин,старый пароль и новое значение пароля или карты";
             }
 
 
@@ -138,6 +140,33 @@ namespace Attestation
         {
             dispatcherTimer.Stop(); // остановить таймер
             this.Close();
+        }
+
+        private void choice_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            ComboBoxItem ComboItem = (ComboBoxItem)choice.SelectedItem;
+            nameComboItem = ComboItem.Name;
+            //string name1 = ComboItem.Content.ToString();
+            if(nameComboItem == "pass")
+            {
+                Login.IsEnabled = true;
+                OldPassword.IsEnabled = true;
+                NewPassword.IsEnabled = true;
+                if (dispatcherTimer.IsEnabled == true)
+                {
+                    dispatcherTimer.Stop();
+                }
+            }
+            else
+            {
+                Login.IsEnabled = true;
+                OldPassword.IsEnabled = true;
+                NewPassword.IsEnabled = false;
+                if (dispatcherTimer.IsEnabled == false)
+                {
+                    dispatcherTimer.Start();
+                }
+            }
         }
     }
 }

@@ -137,7 +137,7 @@
                        FontSize="14" FontFamily="Calibry" Foreground ="#B22222"  Height="20"
                        TextAlignment="Center"/>
             <WrapPanel Grid.Row="14" Grid.Column="3" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                <Button Content="Принять" Style="{StaticResource GreenButton}"  Width="95" ToolTip="Выход"
+                <Button Content="Применить" Style="{StaticResource GreenButton}"  Width="95" ToolTip="Выход"
                              Click="ok_Click"/>
                 <Button x:Name="ok" Content="Отменить" IsDefault="True" Style="{StaticResource RedButton}" 
                             Click="close_Click" Width="95" ToolTip="Выход"/>

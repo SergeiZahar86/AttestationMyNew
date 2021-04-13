@@ -51,8 +51,7 @@ namespace Attestation
             }
             
             global.numberCard = global.getNumberCard();  // получение номера карты
-            NewEmplId.Password = global.numberCard;
-            if (NewEmplId.Password.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
+            if (global.numberCard.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
             {
                 try
                 {
@@ -80,12 +79,15 @@ namespace Attestation
         }
         public SignIn()
         {
+            InitializeComponent();
+            tbLogin.Text = "admin";
+            passwordBox.Password = "111zzz***";
+
             DSAc = 0; // инициализация счетчика ожидания подключения к DSAccessAgent
             role = "ArmOtk";
             List<string> roles = new List<string>();
             session = null;
             agent = DSAccessLib.getInstance(); // из библиотеки для авторизации DSAccess
-            InitializeComponent();
             global = Global.getInstance();
             isCloseProgram = false;
 
@@ -111,6 +113,7 @@ namespace Attestation
                 code = int.Parse(data["code"].ToString());
                 if (code == 0)
                 {
+
                     // проверяем роль
                     JToken list = data["data"]["roles"];
                     List<string> rls = list.ToObject<List<string>>();
@@ -139,7 +142,7 @@ namespace Attestation
                 }
                 else
                 {
-                    error.Text = "Неверные данные"; // ("[Ошибка] " + data["data"]);
+                    error.Text = $"Ошибка - {data["data"]} "; // ("[Ошибка] " + data["data"]);
                 }
                 waiting.Close();
             }
