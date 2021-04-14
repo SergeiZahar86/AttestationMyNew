@@ -35,9 +35,9 @@ namespace Attestation
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
             //global.GetSignIn();
-            /*signIn = new SignIn();
+            signIn = new SignIn();
             signIn.Owner = Window.GetWindow(this);
-            signIn.ShowDialog();*/
+            signIn.ShowDialog();
             label_fio.Content = Global.ShortName(global.user);
 
             if (!global.transport.IsOpen) // проверяем соединение

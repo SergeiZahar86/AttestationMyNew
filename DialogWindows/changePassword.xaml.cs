@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using Newtonsoft.Json.Linq;
 using System.Windows.Controls;
+using Attestation.DialogWindows;
 
 namespace Attestation
 {
@@ -29,12 +30,12 @@ namespace Attestation
         {
 
             // Подключение к очереди
-            while (agent.Init() == false)
+          /*  while (agent.Init() == false)
             {
                 //Console.WriteLine("[Init] " + agent.getLastError());
                 Thread.Sleep(200);
             }
-
+            */
 
 
             numberCard = global.getNumberCard();
@@ -54,6 +55,19 @@ namespace Attestation
             //dispatcherTimer.Start();
             ///////////////////////////////////
             agent = DSAccessLib.getInstance();
+
+
+            if (agent.Init() == false)
+            {
+
+                DSAccessAgentWindow DSA = new DSAccessAgentWindow();
+                DSA.ShowDialog();
+                this.Close();
+                Application.Current.Shutdown();
+                Environment.Exit(0);
+            }
+
+
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {

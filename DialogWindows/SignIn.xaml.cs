@@ -29,10 +29,17 @@ namespace Attestation
         int DSAc; // счетчик ожидания подключения к DSAccessAgent
         int code; // код ответа от DSAccessAgent
         // из библиотеки для авторизации DSAccess
+        string user;
+        string pass;
+
+
+
+
+
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
           
-            while (agent.Init() == false)
+            /*while (agent.Init() == false)
             {
                 if (DSAc < 70)
                 {
@@ -48,15 +55,23 @@ namespace Attestation
                     Application.Current.Shutdown();
                     Environment.Exit(0);
                 }
-            }
+            }*/
             
-            global.numberCard = global.getNumberCard();  // получение номера карты
-            if (global.numberCard.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
-            {
+            //global.numberCard = global.getNumberCard();  // получение номера карты
+            //if (global.numberCard.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
+            //{
                 try
                 {
-                    session = agent.login(tbLogin.Text, passwordBox.Password);
-                    JObject data = agent.getResult(session, 3000);
+                    session = agent.login(user, pass);
+                JObject data=null;
+                try
+                {
+                     data = agent.getResult(session, 3000);
+                }catch(Exception ex)
+                {
+                    error.Text = "step1, "+ex.ToString();
+                    return;
+                }
                     int code1 = int.Parse(data["code"].ToString());
 
                     if (code1 != 0)
@@ -73,15 +88,15 @@ namespace Attestation
                 }
                 catch(Exception ass)
                 {
-                    error.Text = "Недействительная карта";
+                    error.Text = ass.ToString();
                 }
-            }
+            //}
         }
         public SignIn()
         {
             InitializeComponent();
-            tbLogin.Text = "admin";
-            passwordBox.Password = "111zzz***";
+            //tbLogin.Text = "admin";
+            //passwordBox.Password = "111zzz***";
 
             DSAc = 0; // инициализация счетчика ожидания подключения к DSAccessAgent
             role = "ArmOtk";
@@ -97,6 +112,21 @@ namespace Attestation
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
             ///////////////////////////////////
+            ///
+
+           
+            if (agent.Init() == false)
+            {
+
+                DSAccessAgentWindow DSA = new DSAccessAgentWindow();
+                DSA.ShowDialog();
+                this.Close();
+                Application.Current.Shutdown();
+                Environment.Exit(0);
+            }
+            //MessageBox.Show("DSAccessAgent не запущен. Программа будет закрыта");
+
+
         }
         private void ok_Click(object sender, RoutedEventArgs e) // кнопка Применить
         {
@@ -150,6 +180,10 @@ namespace Attestation
             {
 
                 error.Text = (aa.Message);
+            }
+            finally
+            {
+
             }
             
         }

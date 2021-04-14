@@ -28,22 +28,22 @@
               
               
             <DockPanel
-                  x:Name="TitleBar"
-                  Grid.Row="0"
-                  VerticalAlignment="Top"
-                  Background="#B22222"
-                  Height="30"
-                  Width="343"
-                  >
-                  <TextBlock
-                      HorizontalAlignment="Left"
-                      Text="Авторизация"
-                      Foreground="White"
-                      FontFamily="Calibry"
-                      FontSize="16" 
-                      Margin="20,6,15,4"
-                      />
-              </DockPanel>
+                x:Name="TitleBar"
+                Grid.Row="0"
+                VerticalAlignment="Top"
+                Background="#B22222"
+                Height="30"
+                Width="343"
+                >
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    Text="Авторизация"
+                    Foreground="White"
+                    FontFamily="Calibry"
+                    FontSize="16" 
+                    Margin="20,6,15,4"
+                    />
+            </DockPanel>
             <TextBlock 
                 Grid.Row="1"
                 TextWrapping="Wrap"
@@ -52,46 +52,46 @@
                 Text="Введите логин и пароль или поднесите пропуск к считывателю" Margin="20,8,20,0"
                 />
             <TextBlock
-                  Grid.Row="2"
-                  Text="Укажите логин:"
-                  Height="20"
-                  VerticalAlignment="Bottom"
-                  Style="{StaticResource TextBlockStyle}"
-                  Margin="20,0,20,0"/>
+                Grid.Row="2"
+                Text="Укажите логин:"
+                Height="20"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource TextBlockStyle}"
+                Margin="20,0,20,0"/>
             <TextBox
-                  x:Name="tbLogin"
-                  Grid.Row="3"
-                  Height="30"
-                  VerticalContentAlignment="Center"
-                  MaxLines="1"
-                  Style="{StaticResource TextBoxStyle}"
-                  MinWidth="250" Margin="20,0,20,0"
-                  TextAlignment="Left"
-                  MaxLength="70"/>
+                x:Name="tbLogin"
+                Grid.Row="3"
+                Height="30"
+                VerticalContentAlignment="Center"
+                MaxLines="1"
+                Style="{StaticResource TextBoxStyle}"
+                MinWidth="250" Margin="20,0,20,0"
+                TextAlignment="Left"
+                MaxLength="70"/>
             <TextBlock
-                  Grid.Row="4"
-                  Text="Укажите пароль:"
-                  Height="20"
-                  Margin="20,0,20,0"
-                  VerticalAlignment="Bottom"
-                  Style="{StaticResource TextBlockStyle}"/>
+                Grid.Row="4"
+                Text="Укажите пароль:"
+                Height="20"
+                Margin="20,0,20,0"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource TextBlockStyle}"/>
             <PasswordBox
-                  x:Name="passwordBox"
-                  Grid.Row="5"
-                  Style="{StaticResource PasswordBoxStyle}"
-                  Height="30"
-                  MaxLength="70"
-                  VerticalContentAlignment="Center"
-                  HorizontalContentAlignment="Left"
-                  Margin="20,0,20,0"/>
+                x:Name="passwordBox"
+                Grid.Row="5"
+                Style="{StaticResource PasswordBoxStyle}"
+                Height="30"
+                MaxLength="70"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Left"
+                Margin="20,0,20,0"/>
             <TextBlock
-                  x:Name="mistake"
-                  Grid.Row="6"
-                  Height="30"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Top"
-                 TextAlignment="Center"
-                  Foreground="#B22222" />
+                x:Name="mistake"
+                Grid.Row="6"
+                Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                TextAlignment="Center"
+                Foreground="#B22222"/>
             
             <!--
               <TextBlock Grid.Row="5" Text="Код пропуска:" Height="20" Margin="20,0,20,0"
@@ -99,52 +99,54 @@
               <PasswordBox x:Name="NewEmplId"  Grid.Row="6" HorizontalContentAlignment="Center" Style="{StaticResource PasswordBoxStyle}"
                              IsEnabled="False"  MinWidth="250" Margin="20,0,20,0"/>
               -->
-            
-            <TextBlock
-                  x:Name="error"
-                  Grid.Row="7"
-                  Margin="20,0"
-                  Foreground="Red"
-                  VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch"/>
-            
+            <ScrollViewer
+                Grid.Row="7"
+                VerticalScrollBarVisibility="Auto"
+                >
+                <TextBlock
+                    x:Name="error"
+                    Grid.Row="7"
+                    Margin="20,0"
+                    Foreground="Red"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"/>
+
+            </ScrollViewer>
             <WrapPanel 
-                  Grid.Row="8"
-                  HorizontalAlignment="Center"
-                  Margin="0,0,0,0"
-                  VerticalAlignment="Center">
-                  
-                  <Button  
-                      Style="{StaticResource GreenButton_SignIn}"
-                      Width="95" 
-                      Click="ok_Click"
-                      IsDefault="True"
-                      >
-                      Войти
-                  </Button>
-              
-                  <Button
-                      x:Name="ok"
-                      Click="close_Click"
-                      Style="{StaticResource RedButton_SignIn}"
-                      Width="95">
-                      <Grid>
-                          <Grid.RowDefinitions>
-                              <RowDefinition Height="0.8*"/>
-                              <RowDefinition/>
-                          </Grid.RowDefinitions>
-                          <TextBlock 
-                              Text="Закрыть"
-                              Grid.Row="0"
-                              HorizontalAlignment="Center"/>
-                          <TextBlock
-                              Text="программу"
-                              Grid.Row="1"
-                              HorizontalAlignment="Center"
-                              Padding="0,0,0,2"/>
-                      </Grid>
-                  </Button>
-              </WrapPanel>
-          </Grid>
-      </Border>
+                Grid.Row="8"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,0"
+                VerticalAlignment="Center">
+                <Button  
+                    Style="{StaticResource GreenButton_SignIn}"
+                    Width="95" 
+                    Click="ok_Click"
+                    IsDefault="True"
+                    >
+                    Войти
+                </Button>
+                <Button
+                    x:Name="ok"
+                    Click="close_Click"
+                    Style="{StaticResource RedButton_SignIn}"
+                    Width="95">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock 
+                            Text="Закрыть"
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"/>
+                        <TextBlock
+                            Text="программу"
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            Padding="0,0,0,2"/>
+                    </Grid>
+                </Button>
+            </WrapPanel>
+        </Grid>
+    </Border>
 </Window>
