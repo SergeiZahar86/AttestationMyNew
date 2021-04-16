@@ -38,7 +38,7 @@ namespace Attestation
             */
 
 
-            numberCard = global.getNumberCard();
+            //numberCard = global.getNumberCard();
             //NewEmplId.Password = numberCard;
 
         }
@@ -78,30 +78,34 @@ namespace Attestation
             login = Login.Text;
             oldPassword = OldPassword.Password;
             newPassword = NewPassword.Password;
-            global.numberCard = global.getNumberCard();  // получение номера карты
+            //global.numberCard = global.getNumberCard();  // получение номера карты
             if(global.numberCard == null)
             {
                 global.numberCard = "";
             }
 
-            if (login.Length > 0 && oldPassword.Length > 0 && (global.numberCard.Length > 0 || newPassword.Length >0))
+            //if (login.Length > 0 && oldPassword.Length > 0 &&  newPassword.Length >= 0))
             {
                 if (NewPassword.Password == NewPassword1.Password)
                 {
                     try
                     {
-                        session = agent.change(login, oldPassword, newPassword, 4000);
-                        Thread.Sleep(1000);
-                        JObject data = agent.getResult(session, 2000);
+                        //session = agent.change(login, oldPassword, newPassword, 4000);
+                        //Thread.Sleep(1000);
+                        JObject data = agent.change(login, oldPassword, newPassword,   15000);
                         int code = int.Parse(data["code"].ToString());
                         if (code != 0)
                         {
                             ExClose exClose = new ExClose((data["data"]).ToString());
                             exClose.ShowDialog();
                         }
-                        result.Text = $"{data["data"]}";
-                        dispatcherTimer.Stop(); // остановить таймер
-                        this.Close();
+                        else
+                        {
+                            result.Text = $"{data["data"]}";
+                            dispatcherTimer.Stop(); // остановить таймер
+                            this.Close();
+
+                        }
 
 
 
@@ -129,10 +133,10 @@ namespace Attestation
                     result.Text = "Две строки нового пароля должны совпадать";
                 }
             }
-            else
+           /* else
             {
                 result.Text = "Введите логин,старый пароль и новое значение пароля или карты";
-            }
+            }*/
 
 
             /*if (login.Length > 0 && oldPassword.Length > 0)

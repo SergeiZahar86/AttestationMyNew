@@ -38,7 +38,7 @@ namespace Attestation
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
-          
+
             /*while (agent.Init() == false)
             {
                 if (DSAc < 70)
@@ -56,40 +56,35 @@ namespace Attestation
                     Environment.Exit(0);
                 }
             }*/
-            
+
             //global.numberCard = global.getNumberCard();  // получение номера карты
             //if (global.numberCard.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
             //{
-                try
-                {
-                    session = agent.login(user, pass);
-                JObject data=null;
-                try
-                {
-                     data = agent.getResult(session, 3000);
-                }catch(Exception ex)
-                {
-                    error.Text = "step1, "+ex.ToString();
-                    return;
-                }
-                    int code1 = int.Parse(data["code"].ToString());
+            JObject data = null;
+            try
+            {
+                 data = agent.login("", "", 3000);
 
-                    if (code1 != 0)
-                    {
-                        error.Text = ("[Ошибка] " + data["data"]);
-                    }
-                    else
-                    {
-                        global.user = (string)data["data"]["description"];
-                        error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
-                        dispatcherTimer.Stop(); // остановить таймер
-                        this.Close();
-                    }
-                }
-                catch(Exception ass)
-                {
-                    error.Text = ass.ToString();
-                }
+            }
+            catch(Exception ex)
+            {
+                error.Text = "step1, "+ex.ToString();
+                return;
+            }
+            int code1 = int.Parse(data["code"].ToString());
+
+            if (code1 != 0)
+            {
+                error.Text = ("[Ошибка] " + data["data"]);
+            }
+            else
+            {
+                global.user = (string)data["data"]["description"];
+                error.Text = $"Срок действия пароля {data["data"]["expiration"]}";
+                dispatcherTimer.Stop(); // остановить таймер
+                this.Close();
+            }
+            
             //}
         }
         public SignIn()
@@ -130,16 +125,28 @@ namespace Attestation
         }
         private void ok_Click(object sender, RoutedEventArgs e) // кнопка Применить
         {
+
+            JObject data = null;
+            try
+            {
+                data = agent.login(tbLogin.Text, passwordBox.Password, 3000);
+
+            }
+            catch (Exception ex)
+            {
+                error.Text = "step1, " + ex.ToString();
+                return;
+            }
             try
             {
                 global.Login = tbLogin.Text;
                 password = passwordBox.Password;
-                session = agent.login(global.Login, password);
+                //session = agent.login(global.Login, password);
                 //global.user = global.getUser(global.Login, password, NewEmplId.Password); // Global.getUser (261)
                 Waiting_Sign_in waiting = new Waiting_Sign_in();
                 waiting.Show();
-                Thread.Sleep(3000);
-                JObject data = agent.getResult(session, 4000);
+                
+                //JObject data = agent.getResult(session, 4000);
                 code = int.Parse(data["code"].ToString());
                 if (code == 0)
                 {
