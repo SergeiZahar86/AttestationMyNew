@@ -26,7 +26,6 @@ namespace Attestation
         DSAccessLib agent;
         string session;
         List<string> roles; // список ролей
-        int DSAc; // счетчик ожидания подключения к DSAccessAgent
         int code; // код ответа от DSAccessAgent
         // из библиотеки для авторизации DSAccess
         string user;
@@ -39,27 +38,6 @@ namespace Attestation
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
 
-            /*while (agent.Init() == false)
-            {
-                if (DSAc < 70)
-                {
-                    Thread.Sleep(100);
-                    DSAc++;
-                }
-                else
-                {
-                    dispatcherTimer.Stop();
-                    DSAccessAgentWindow DSA = new DSAccessAgentWindow();
-                    DSA.ShowDialog();
-                    this.Close();
-                    Application.Current.Shutdown();
-                    Environment.Exit(0);
-                }
-            }*/
-
-            //global.numberCard = global.getNumberCard();  // получение номера карты
-            //if (global.numberCard.Length > 0) // проверяем карту и если совпадает закрываем окно и входим в систему
-            //{
             JObject data = null;
             try
             {
@@ -75,7 +53,7 @@ namespace Attestation
 
             if (code1 != 0)
             {
-                error.Text = ("[Ошибка] " + data["data"]);
+                error.Text = $"Ошибка: код {code1}, {data["data"]}";
             }
             else
             {
@@ -85,15 +63,10 @@ namespace Attestation
                 this.Close();
             }
             
-            //}
         }
         public SignIn()
         {
             InitializeComponent();
-            //tbLogin.Text = "admin";
-            //passwordBox.Password = "111zzz***";
-
-            DSAc = 0; // инициализация счетчика ожидания подключения к DSAccessAgent
             role = "ArmOtk";
             List<string> roles = new List<string>();
             session = null;

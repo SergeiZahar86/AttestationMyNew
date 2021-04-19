@@ -105,6 +105,7 @@
                 >
                 <TextBlock
                     x:Name="error"
+                    TextWrapping="Wrap"
                     Grid.Row="7"
                     Margin="20,0"
                     Foreground="Red"

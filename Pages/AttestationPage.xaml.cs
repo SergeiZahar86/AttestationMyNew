@@ -86,7 +86,8 @@ namespace Attestation
                     name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
                     if (global.user.Length > 0)
                     {*/
-                        global.workAfterShutdown();                                        // восстановление после разрыва
+                    name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
+                    global.workAfterShutdown();                                        // восстановление после разрыва
                     //}
                     connect.Background = global.GreenColorStart;
                     textConnect.Text = "Соединение установленно";
@@ -114,6 +115,7 @@ namespace Attestation
         {
             InitializeComponent();
             global = Global.getInstance();
+            name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
 
             CountRow = 100;                                                        // для сравнения списков с целью выявления изменений
             is_Num_close_att = true;                                            
