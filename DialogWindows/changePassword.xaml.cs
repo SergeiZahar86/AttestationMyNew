@@ -17,14 +17,8 @@ namespace Attestation
         public string LoginBool;
         private Global global;
         DSAccessLib agent;                                      // из библиотеки для авторизации DSAccess
-        string session;
         string nameComboItem;
-
-
-
-        private static string numberCard;
         System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
-        //ivate  System.Timers.Timer aTimer;
 
         private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
         {
@@ -109,17 +103,6 @@ namespace Attestation
 
 
 
-                        /*ChangeResult data = agent.change(login, oldPassword, newPassword, 1000);
-                        if (data.code != 0)
-                        {
-                            result.Text = $"{data.code.ToString()} {data.message}";
-                        }
-                        else
-                        {
-                            result.Text = $"{data.message}";
-                            dispatcherTimer.Stop(); // остановить таймер
-                            this.Close();
-                        }*/
                     }
                     catch (Exception ass)
                     {
@@ -133,33 +116,6 @@ namespace Attestation
                     result.Text = "Две строки нового пароля должны совпадать";
                 }
             }
-           /* else
-            {
-                result.Text = "Введите логин,старый пароль и новое значение пароля или карты";
-            }*/
-
-
-            /*if (login.Length > 0 && oldPassword.Length > 0)
-            {
-                bool ret=false;
-                try
-                {
-                    ret = global.changePass(global.Login, oldPassword, newPassword, NewEmplId.Text); // changePass() - Смена данных учетной записи 
-                } catch(DataProviderException ex)
-                {
-                    string t=ex.Message;
-                }
-                if (ret) 
-                {
-                    dispatcherTimer.Stop(); // остановить таймер
-                    this.Close();
-                }
-                else { result.Text = "Старый пароль введен неверно"; }
-            }
-            else
-            {
-                result.Text = "Новый или старый пароль введен некорректно";
-            }*/
         }
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {

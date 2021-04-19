@@ -45,7 +45,7 @@
             </Button>
 
             <!-- .................................    Логотип ............................ -->
-            <Image Width="30" Margin="8,4,0,4" Source="/Resources/logo.png"/>
+            <Image Width="30" Margin="8,4,0,4" Source="Resources/logo-img2-light.png"/>
             <TextBlock HorizontalAlignment="Right" Foreground="#DC0000" FontFamily="Impact"
                        FontSize="24" Margin="4,4,15,4" Text="Indas Cube"/>
 
