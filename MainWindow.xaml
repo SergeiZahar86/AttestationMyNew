@@ -68,10 +68,16 @@
                            FontSize="16" Margin="15,10,15,4">Архив</TextBlock>
             </Border>
             -->
-            <Label x:Name="label_fio" Content="{Binding SomeValueString}"  Height="30" Width="400"
-                   VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center"
+
+            <Label x:Name="label_login" Content="{Binding SomeValueString}"  Height="30" Width="400"
+                   VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Right"
                    VerticalContentAlignment="Center" HorizontalAlignment="Right"
-                   FontFamily="Calibry" Foreground="White" Background="#FF37474F" Margin="0"/>
+                   FontFamily="Calibry" Foreground="White" Background="#FF37474F" Margin="550,0,0,0" Padding="5,5,15,5"/>
+            
+            <Label x:Name="label_fio" Content="{Binding SomeValueString}"  Height="30" Width="400"
+                   VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Left"
+                   VerticalContentAlignment="Center" HorizontalAlignment="Right"
+                   FontFamily="Calibry" Foreground="White" Background="#FF37474F" Margin="0" Padding="30,5,5,5"/>
             <!--
             <DockPanel HorizontalAlignment="right" Margin="0,0,20,0">
                 <TextBlock HorizontalAlignment="Right" Margin="4,10,15,4" Cursor="Hand"

@@ -39,6 +39,7 @@ namespace Attestation
             signIn.Owner = Window.GetWindow(this);
             signIn.ShowDialog();
             label_fio.Content = Global.ShortName(global.user);
+            label_login.Content = global.Login;
 
             if (!global.transport.IsOpen) // проверяем соединение
             {

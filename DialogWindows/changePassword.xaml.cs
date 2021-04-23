@@ -20,37 +20,12 @@ namespace Attestation
         string nameComboItem;
         System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
 
-        private void OnTimedEvent(Object source, EventArgs e) // Получение номера карты
-        {
-
-            // Подключение к очереди
-          /*  while (agent.Init() == false)
-            {
-                //Console.WriteLine("[Init] " + agent.getLastError());
-                Thread.Sleep(200);
-            }
-            */
-
-
-            //numberCard = global.getNumberCard();
-            //NewEmplId.Password = numberCard;
-
-        }
         
         public changePassword()
         {
             InitializeComponent();
             global = Global.getInstance();
-
-            // Таймер для работы считывателя///
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            //dispatcherTimer.Start();
-            ///////////////////////////////////
             agent = DSAccessLib.getInstance();
-
-
             if (agent.Init() == false)
             {
 
@@ -60,43 +35,32 @@ namespace Attestation
                 Application.Current.Shutdown();
                 Environment.Exit(0);
             }
-
-
         }
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-
             login = Login.Text;
             oldPassword = OldPassword.Password;
             newPassword = NewPassword.Password;
-            //global.numberCard = global.getNumberCard();  // получение номера карты
             if(global.numberCard == null)
             {
                 global.numberCard = "";
             }
-
-            //if (login.Length > 0 && oldPassword.Length > 0 &&  newPassword.Length >= 0))
             {
                 if (NewPassword.Password == NewPassword1.Password)
                 {
                     try
                     {
-                        //session = agent.change(login, oldPassword, newPassword, 4000);
-                        //Thread.Sleep(1000);
                         JObject data = agent.change(login, oldPassword, newPassword,   15000);
                         int code = int.Parse(data["code"].ToString());
                         if (code != 0)
                         {
-                            ExClose exClose = new ExClose((data["data"]).ToString());
-                            exClose.ShowDialog();
+                            /* ExClose exClose = new ExClose((data["data"]).ToString());
+                             exClose.ShowDialog();*/
+                            
+                            result.Text = $"Ошибка обновления: код {code}, {data["data"]}";
                         }
                         else
                         {
-                            result.Text = $"{data["data"]}";
-                            dispatcherTimer.Stop(); // остановить таймер
                             this.Close();
 
                         }
@@ -107,8 +71,9 @@ namespace Attestation
                     catch (Exception ass)
                     {
                         //MessageBox.Show(ass.Message);
-                        ExClose exClose = new ExClose(ass.ToString());
-                        exClose.ShowDialog();
+                        /*ExClose exClose = new ExClose(ass.ToString());
+                        exClose.ShowDialog();*/
+                        result.Text = ass.ToString();
                     }
                 }
                 else
@@ -123,7 +88,7 @@ namespace Attestation
             this.Close();
         }
 
-        private void choice_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void choice_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) // выбор операции
         {
             ComboBoxItem ComboItem = (ComboBoxItem)choice.SelectedItem;
             nameComboItem = ComboItem.Name;
@@ -134,10 +99,7 @@ namespace Attestation
                 OldPassword.IsEnabled = true;
                 NewPassword.IsEnabled = true;
                 NewPassword1.IsEnabled = true;
-                if (dispatcherTimer.IsEnabled == true)
-                {
-                    dispatcherTimer.Stop();
-                }
+                
             }
             else
             {
@@ -147,10 +109,7 @@ namespace Attestation
                 NewPassword1.Password = "";
                 NewPassword.IsEnabled = false;
                 NewPassword1.IsEnabled = false;
-                if (dispatcherTimer.IsEnabled == false)
-                {
-                    dispatcherTimer.Start();
-                }
+                
             }
         }
     }

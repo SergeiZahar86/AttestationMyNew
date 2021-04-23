@@ -56,12 +56,15 @@ namespace Attestation
                         CountRow = global.ROWS.Count;
                     }
                 }
+                error.Text = "";
             }
             catch (Exception ass)
             {
-                ExClose exClose = new ExClose(ass.ToString());
+
+                /*ExClose exClose = new ExClose(ass.ToString());
                 exClose.Owner = Window.GetWindow(this);
-                exClose.ShowDialog();
+                exClose.ShowDialog();*/
+                error.Text = ass.ToString();
             }
         }
         private void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
@@ -81,6 +84,7 @@ namespace Attestation
                 {
                     global.transport.Close();
                     global.transport.Open();
+                    error.Text = "";
                     MessageBox.Show("Соединение с сервером восстановлено");
                     /*global.GetSignIn();                                                    // авторизация
                     name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
@@ -96,9 +100,10 @@ namespace Attestation
                 catch (Exception ass)
                 {
                     //MessageBox.Show(ass.Message);
-                    ExClose exClose = new ExClose(ass.ToString());
+                    /*ExClose exClose = new ExClose(ass.ToString());
                     exClose.Owner = Window.GetWindow(this);
-                    exClose.ShowDialog();
+                    exClose.ShowDialog();*/
+                    error.Text = ass.ToString();
                 }
 
 
@@ -599,9 +604,10 @@ namespace Attestation
                 catch (Exception ass)
                 {
                     //MessageBox.Show(ass.Message);
-                    ExClose exClose = new ExClose(ass.ToString());
-                    exClose.Owner = Window.GetWindow(this);
-                    exClose.ShowDialog();
+                    /* ExClose exClose = new ExClose(ass.ToString());
+                     exClose.Owner = Window.GetWindow(this);
+                     exClose.ShowDialog();*/
+                    error.Text = ass.ToString();
                 }
             }
         }

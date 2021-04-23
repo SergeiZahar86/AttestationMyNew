@@ -13,7 +13,7 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
             Cause = global.cause;
-            cause_Value.ItemsSource = Cause;
+             cause_Value.ItemsSource = Cause;
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {

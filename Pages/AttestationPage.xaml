@@ -71,16 +71,40 @@
                        TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
             -->
         </Grid>
-        <Grid x:Name="grid_5" Grid.Row="0" Grid.Column="5" Background="#EEEEEE">
+        <Grid 
+            x:Name="grid_5"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="5"
+            Background="#EEEEEE"
+            >
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="part_idTextBlock" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
-            <!--
-            <TextBlock x:Name="matTextBlock" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
-            -->
+            <TextBlock 
+                x:Name="part_idTextBlock"
+                Grid.Row="0"
+                FontSize="16"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                />
+            <ScrollViewer
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                VerticalScrollBarVisibility="Auto"
+                BorderThickness="0"
+                >
+                <TextBlock 
+                    x:Name="error"
+                    Style="{StaticResource TextBlockStyle_Password}" 
+                    TextWrapping="Wrap"
+                    FontSize="12"
+                    Foreground="Red"
+                    Padding="8"/>
+            </ScrollViewer>
         </Grid>
 
         <Grid x:Name="grid_6" Grid.Row="0" Grid.Column="7" Background="#EEEEEE">

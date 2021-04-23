@@ -538,8 +538,8 @@ public partial class DataProviderService {
 
     public part_t recv_getPart()
     {
-            try
-            {
+            /*try
+            {*/
                 TMessage msg = iprot_.ReadMessageBegin();
                 if (msg.Type == TMessageType.Exception)
                 {
@@ -559,12 +559,12 @@ public partial class DataProviderService {
                     throw result.Ex;
                 }
                 throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "getPart failed: unknown result");
-            }
+           /* }
             catch (Exception sss)
             {
                 MessageBox.Show(" Ошибка в Thrift (recv_getPart). Разорвано соединение с сервером     " + sss.ToString());
                 return null;
-            }
+            }*/
     }
 
     
