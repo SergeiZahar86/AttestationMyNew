@@ -18,7 +18,7 @@ namespace Attestation
         private Global global;
         DSAccessLib agent;                                      // из библиотеки для авторизации DSAccess
         string nameComboItem;
-        System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
+        //System.Windows.Threading.DispatcherTimer dispatcherTimer; // Таймер
 
         
         public changePassword()
@@ -84,7 +84,7 @@ namespace Attestation
         }
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            dispatcherTimer.Stop(); // остановить таймер
+            //dispatcherTimer.Stop(); // остановить таймер
             this.Close();
         }
 

@@ -23,6 +23,7 @@ namespace Attestation
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
         System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер аттестации
         System.Windows.Threading.DispatcherTimer timerConnect;
+        System.Windows.Threading.DispatcherTimer checkIsOpen;
         //private bool realNumber;                                    // флаг проверки подлинности номера вагона
         MqttClient client;
         RowTab row;
@@ -91,6 +92,33 @@ namespace Attestation
                 timer.Tag = null;
             }
         }
+
+        private async void check_is_open(Object source, EventArgs e)
+        {
+            DispatcherTimer timer = (DispatcherTimer)source;
+            if (null != timer.Tag)
+            {
+                return;
+            }
+            try
+            {
+                Task<List<mat_t>> t = Task<List<mat_t>>.Run(() => global.mats = global.client.getMat());
+                timer.Tag = t;
+                await t;
+                global.mats = t.Result;
+            }
+            catch (Exception ass)
+            {
+                return;
+            }
+            finally
+            {
+                timer.Tag = null;
+            }
+
+
+        }
+
         private async void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
         {
             /* try
@@ -171,6 +199,10 @@ namespace Attestation
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
 
+            checkIsOpen = new System.Windows.Threading.DispatcherTimer();
+            checkIsOpen.Tick += new EventHandler(check_is_open);
+            checkIsOpen.Interval = new TimeSpan(0, 0, 1);
+
             timerConnect = new System.Windows.Threading.DispatcherTimer();
             timerConnect.Tick += new EventHandler(ConnectTimer);
             timerConnect.Interval = new TimeSpan(0, 0, 2);
@@ -186,6 +218,7 @@ namespace Attestation
                 connect.Background = global.GreenColorStart;
                 textConnect.Text = "Соединение установленно";
                 toolTipConnect.Text = "Соединение с сервером установленно";
+                checkIsOpen.Start();
                 //connect.HorizontalContentAlignment = HorizontalAlignment.Center;
                 /*TextBlock textBlock = new TextBlock();
                 textBlock.Text = "Сервер доступен";
@@ -348,7 +381,9 @@ namespace Attestation
                         global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
 
                         dispatcherTimer.Start();                    // Стартуем таймер
-                                                                    //}
+                        checkIsOpen.Stop();
+
+
                     }
                     catch (Exception sss)
                     {
@@ -407,7 +442,9 @@ namespace Attestation
                         //global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
 
                         dispatcherTimer.Stop();                                           // Останавливает таймер
-                        
+                        checkIsOpen.Start();
+
+
                     }
                     else
                     {
