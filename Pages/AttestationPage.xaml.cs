@@ -117,7 +117,7 @@ namespace Attestation
                     await t;
                     //global.part = t.Result;
                     //global.transport.Open();
-                    MessageBox.Show("Соединение с сервером восстановлено");
+                    //MessageBox.Show("Соединение с сервером восстановлено");
                     /*global.GetSignIn();                                                    // авторизация
                     name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
                     if (global.user.Length > 0)
@@ -281,7 +281,7 @@ namespace Attestation
                         {
                             global.transport.Close();
                             global.transport.Open();
-                            MessageBox.Show("Соединение с сервером восстановлено");
+                            //MessageBox.Show("Соединение с сервером восстановлено");
                         }
                         catch(Exception ass)
                         {
@@ -631,7 +631,7 @@ namespace Attestation
                 {
                     global.transport.Close();
                     global.transport.Open();
-                    MessageBox.Show("Соединение с сервером восстановлено");
+                    //MessageBox.Show("Соединение с сервером восстановлено");
                     //global.GetSignIn();                                                    // авторизация
                     //name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
                     /*if (global.user.Length > 0)
