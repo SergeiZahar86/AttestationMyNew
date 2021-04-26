@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
@@ -29,34 +32,50 @@ namespace Attestation
         //ObservableCollection<RowTab> observable;
 
 
-        private void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
+        private async void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
         {
+            DispatcherTimer timer = (DispatcherTimer)source;
+            if (null != timer.Tag)
+            {
+                return;
+            }
+
             try
             {
-                global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
-                if (global.part != null)
+                if (global.transport.IsOpen) // проверяем соединение
                 {
-                    if (global.part.Cars.Count == 1 && CountRow != global.part.Cars.Count)
-                    {
-                        global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                        global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                               //observable = global.ROWS;
-                        DataGridMain.ItemsSource = null;
-                        DataGridMain.ItemsSource = global.ROWS;
-                        CountRow = 1;
-                    }
-                    else if (CountRow != global.part.Cars.Count)
-                    {
-                        global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                        global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                               //observable = global.ROWS;
-                        DataGridMain.ItemsSource = null;
-                        DataGridMain.ItemsSource = global.ROWS;
+                    Task<part_t> t = Task<JObject>.Run(() => global.client.getPart(global.PartId));
+                    timer.Tag = t;
+                    await t;
+                    global.part = t.Result;
 
-                        CountRow = global.ROWS.Count;
+
+
+                    //global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
+                    if (global.part != null)
+                    {
+                        if (global.part.Cars.Count == 1 && CountRow != global.part.Cars.Count)
+                        {
+                            global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                            global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                                   //observable = global.ROWS;
+                            DataGridMain.ItemsSource = null;
+                            DataGridMain.ItemsSource = global.ROWS;
+                            CountRow = 1;
+                        }
+                        else if (CountRow != global.part.Cars.Count)
+                        {
+                            global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                            global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                                   //observable = global.ROWS;
+                            DataGridMain.ItemsSource = null;
+                            DataGridMain.ItemsSource = global.ROWS;
+
+                            CountRow = global.ROWS.Count;
+                        }
                     }
+                    error.Text = "";
                 }
-                error.Text = "";
             }
             catch (Exception ass)
             {
@@ -65,15 +84,25 @@ namespace Attestation
                 exClose.Owner = Window.GetWindow(this);
                 exClose.ShowDialog();*/
                 error.Text = ass.ToString();
+                return;
+            }
+            finally
+            {
+                timer.Tag = null;
             }
         }
-        private void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
+        private async void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
         {
             /* try
              {
                  global.client.getStatusAtt(); // Запрос статуса начала или завершения аттестации
              }
              catch { }*/
+            DispatcherTimer timer = (DispatcherTimer)source;
+            if (null != timer.Tag)
+            {
+                return;
+            }
             if (!global.transport.IsOpen) // проверяем соединение
             {
                 connect.Background = global.RedColorEnd;
@@ -83,8 +112,11 @@ namespace Attestation
                 try
                 {
                     global.transport.Close();
-                    global.transport.Open();
-                    error.Text = "";
+                    Task<String> t = Task<String>.Run(() => { global.transport.Open(); return "OK"; });
+                    timer.Tag = t;
+                    await t;
+                    //global.part = t.Result;
+                    //global.transport.Open();
                     MessageBox.Show("Соединение с сервером восстановлено");
                     /*global.GetSignIn();                                                    // авторизация
                     name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
@@ -96,6 +128,7 @@ namespace Attestation
                     connect.Background = global.GreenColorStart;
                     textConnect.Text = "Соединение установленно";
                     toolTipConnect.Text = "Соединение с сервером установленно";
+                    error.Text = "";
                 }
                 catch (Exception ass)
                 {
@@ -104,9 +137,17 @@ namespace Attestation
                     exClose.Owner = Window.GetWindow(this);
                     exClose.ShowDialog();*/
                     error.Text = ass.ToString();
+                    return;
+                }
+                finally
+                {
+                    timer.Tag = null;
                 }
 
-
+            }
+            else
+            {
+                error.Text = "";
             }
             /*else
             {
@@ -128,11 +169,11 @@ namespace Attestation
             // Таймеры ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
 
             timerConnect = new System.Windows.Threading.DispatcherTimer();
             timerConnect.Tick += new EventHandler(ConnectTimer);
-            timerConnect.Interval = new TimeSpan(0, 0, 16);
+            timerConnect.Interval = new TimeSpan(0, 0, 2);
             timerConnect.Start();
             if (!global.transport.IsOpen) // проверяем соединение
             {

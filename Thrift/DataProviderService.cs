@@ -14,7 +14,6 @@ using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
-using System.Windows;
 
 public partial class DataProviderService {
   public interface ISync {
@@ -521,50 +520,33 @@ public partial class DataProviderService {
 
     public void send_getPart(string part_id)
     {
-            try // Это добавлено после генерации кода Thrift (try)
-            {
-                oprot_.WriteMessageBegin(new TMessage("getPart", TMessageType.Call, seqid_));
-                getPart_args args = new getPart_args();
-                args.Part_id = part_id;
-                args.Write(oprot_);
-                oprot_.WriteMessageEnd();
-                oprot_.Transport.Flush();
-            }catch (Exception sss)
-            {
-                MessageBox.Show(" Ошибка в Thrift (send_getPart). Разорвано соединение с сервером     " + sss.ToString());
-            }
+      oprot_.WriteMessageBegin(new TMessage("getPart", TMessageType.Call, seqid_));
+      getPart_args args = new getPart_args();
+      args.Part_id = part_id;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
     }
     #endif
 
     public part_t recv_getPart()
     {
-            /*try
-            {*/
-                TMessage msg = iprot_.ReadMessageBegin();
-                if (msg.Type == TMessageType.Exception)
-                {
-                    TApplicationException x = TApplicationException.Read(iprot_);
-                    iprot_.ReadMessageEnd();
-                    throw x;
-                }
-                getPart_result result = new getPart_result();
-                result.Read(iprot_);
-                iprot_.ReadMessageEnd();
-                if (result.__isset.success)
-                {
-                    return result.Success;
-                }
-                if (result.__isset.ex)
-                {
-                    throw result.Ex;
-                }
-                throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "getPart failed: unknown result");
-           /* }
-            catch (Exception sss)
-            {
-                MessageBox.Show(" Ошибка в Thrift (recv_getPart). Разорвано соединение с сервером     " + sss.ToString());
-                return null;
-            }*/
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      getPart_result result = new getPart_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "getPart failed: unknown result");
     }
 
     
