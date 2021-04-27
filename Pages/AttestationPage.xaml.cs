@@ -84,6 +84,8 @@ namespace Attestation
                 /*ExClose exClose = new ExClose(ass.ToString());
                 exClose.Owner = Window.GetWindow(this);
                 exClose.ShowDialog();*/
+                dispatcherTimer.Stop();
+                timerConnect.Start();
                 error.Text = ass.ToString();
                 return;
             }
@@ -109,6 +111,8 @@ namespace Attestation
             }
             catch (Exception ass)
             {
+                checkIsOpen.Stop();
+                timerConnect.Start();
                 return;
             }
             finally
@@ -157,6 +161,7 @@ namespace Attestation
                     textConnect.Text = "Соединение установленно";
                     toolTipConnect.Text = "Соединение с сервером установленно";
                     error.Text = "";
+                    timerConnect.Stop();
                 }
                 catch (Exception ass)
                 {
@@ -206,7 +211,6 @@ namespace Attestation
             timerConnect = new System.Windows.Threading.DispatcherTimer();
             timerConnect.Tick += new EventHandler(ConnectTimer);
             timerConnect.Interval = new TimeSpan(0, 0, 2);
-            timerConnect.Start();
             if (!global.transport.IsOpen) // проверяем соединение
             {
                 connect.Background = global.RedColorEnd;
@@ -218,7 +222,6 @@ namespace Attestation
                 connect.Background = global.GreenColorStart;
                 textConnect.Text = "Соединение установленно";
                 toolTipConnect.Text = "Соединение с сервером установленно";
-                checkIsOpen.Start();
                 //connect.HorizontalContentAlignment = HorizontalAlignment.Center;
                 /*TextBlock textBlock = new TextBlock();
                 textBlock.Text = "Сервер доступен";
@@ -257,6 +260,10 @@ namespace Attestation
                 startRow_1.Text = global.mainButtonAttestation;           // текст в кнопке аттестации
                 StartAttestation.Background = global.RedColorEnd;         // красный
                 dispatcherTimer.Start();                                  // Стартуем таймер
+            }
+            else
+            {
+                checkIsOpen.Start();
             }
             timeStart.Text = global.startTimeStr;                         // время начала
             timeEnd.Text = global.endTimeStr;                             // Время окончания
