@@ -33,28 +33,95 @@
         <!--
         <Button x:Name="ss" Grid.Row="1"  Click="ggggg" Background="Red"/>
         -->
-        <Grid x:Name="grid_2" Grid.Row="0" Grid.Column="1" Background="#EEEEEE">
+        <Grid
+            x:Name="grid_2"
+            Grid.Row="0"
+            Grid.Column="1"
+            Background="#EEEEEE"
+            >
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Время начала аттестации:" Grid.Row="0" FontSize="16" 
-                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
-            <TextBlock Text="Время окончания аттестации:" Grid.Row="1" FontSize="16"
-                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
-            <TextBlock Text="Продолжительность аттестации:" Grid.Row="2" FontSize="16"
-                       TextAlignment="Center" FontFamily="Calibry" Foreground="Black" HorizontalAlignment="Left"/>
+            <TextBlock
+                Text="Время начала аттестации:"
+                Grid.Row="0"
+                FontSize="16" 
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                />
+            <TextBlock
+                Text="Время с момента старта:"
+                Grid.Row="1"
+                FontSize="16" 
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                />
+            <TextBlock
+                Text="Время окончания аттестации:"
+                Grid.Row="2"
+                FontSize="16"
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                />
+            <TextBlock
+                Text="Продолжительность аттестации:"
+                Grid.Row="3"
+                FontSize="16"
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                />
         </Grid>
-        <Grid x:Name="grid_3" Grid.Row="0" Grid.Column="2" Background="#EEEEEE">
+        <Grid
+            x:Name="grid_3"
+            Grid.Row="0"
+            Grid.Column="2"
+            Background="#EEEEEE"
+            >
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="timeStart" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="timeEnd" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="timeDelta" Grid.Row="2" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock
+                x:Name="timeStart"
+                Grid.Row="0"
+                FontSize="16"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                />
+            <TextBlock
+                x:Name="timeSpend"
+                Grid.Row="1"
+                FontSize="16"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                />
+            <TextBlock
+                x:Name="timeEnd"
+                Grid.Row="2"
+                FontSize="16"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                />
+            <TextBlock
+                x:Name="timeDelta"
+                Grid.Row="3"
+                FontSize="16"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                />
         </Grid>
 
         <Grid x:Name="grid_4" Grid.Row="0" Grid.Column="4" Background="#EEEEEE">

@@ -40,6 +40,7 @@ public partial class DataProviderService {
     bool endAtt(string part_id);
     bool changePass(string login, string oldPass, string newPass, string newEmpl_id);
     Status_Att getStatusAtt();
+    part_t startAttEmergency(string user, int colWagons);
   }
 
   public interface Iface : ISync {
@@ -134,6 +135,10 @@ public partial class DataProviderService {
     #if SILVERLIGHT
     IAsyncResult Begin_getStatusAtt(AsyncCallback callback, object state);
     Status_Att End_getStatusAtt(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_startAttEmergency(AsyncCallback callback, object state, string user, int colWagons);
+    part_t End_startAttEmergency(IAsyncResult asyncResult);
     #endif
   }
 
@@ -1892,6 +1897,80 @@ public partial class DataProviderService {
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "getStatusAtt failed: unknown result");
     }
 
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_startAttEmergency(AsyncCallback callback, object state, string user, int colWagons)
+    {
+      return send_startAttEmergency(callback, state, user, colWagons);
+    }
+
+    public part_t End_startAttEmergency(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_startAttEmergency();
+    }
+
+    #endif
+
+    public part_t startAttEmergency(string user, int colWagons)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_startAttEmergency(null, null, user, colWagons);
+      return End_startAttEmergency(asyncResult);
+
+      #else
+      send_startAttEmergency(user, colWagons);
+      return recv_startAttEmergency();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_startAttEmergency(AsyncCallback callback, object state, string user, int colWagons)
+    {
+      oprot_.WriteMessageBegin(new TMessage("startAttEmergency", TMessageType.Call, seqid_));
+      startAttEmergency_args args = new startAttEmergency_args();
+      args.User = user;
+      args.ColWagons = colWagons;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_startAttEmergency(string user, int colWagons)
+    {
+      oprot_.WriteMessageBegin(new TMessage("startAttEmergency", TMessageType.Call, seqid_));
+      startAttEmergency_args args = new startAttEmergency_args();
+      args.User = user;
+      args.ColWagons = colWagons;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public part_t recv_startAttEmergency()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      startAttEmergency_result result = new startAttEmergency_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.ex) {
+        throw result.Ex;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "startAttEmergency failed: unknown result");
+    }
+
   }
   public class Processor : TProcessor {
     public Processor(ISync iface)
@@ -1920,6 +1999,7 @@ public partial class DataProviderService {
       processMap_["endAtt"] = endAtt_Process;
       processMap_["changePass"] = changePass_Process;
       processMap_["getStatusAtt"] = getStatusAtt_Process;
+      processMap_["startAttEmergency"] = startAttEmergency_Process;
     }
 
     protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -2744,6 +2824,41 @@ public partial class DataProviderService {
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
         oprot.WriteMessageBegin(new TMessage("getStatusAtt", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void startAttEmergency_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      startAttEmergency_args args = new startAttEmergency_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      startAttEmergency_result result = new startAttEmergency_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.startAttEmergency(args.User, args.ColWagons);
+        }
+        catch (DataProviderException ex)
+        {
+          result.Ex = ex;
+        }
+        oprot.WriteMessageBegin(new TMessage("startAttEmergency", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("startAttEmergency", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -9429,6 +9544,300 @@ public partial class DataProviderService {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success== null ? "<null>" : Success.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class startAttEmergency_args : TBase
+  {
+    private string _user;
+    private int _colWagons;
+
+    public string User
+    {
+      get
+      {
+        return _user;
+      }
+      set
+      {
+        __isset.user = true;
+        this._user = value;
+      }
+    }
+
+    public int ColWagons
+    {
+      get
+      {
+        return _colWagons;
+      }
+      set
+      {
+        __isset.colWagons = true;
+        this._colWagons = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool user;
+      public bool colWagons;
+    }
+
+    public startAttEmergency_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                User = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                ColWagons = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("startAttEmergency_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (User != null && __isset.user) {
+          field.Name = "user";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(User);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.colWagons) {
+          field.Name = "colWagons";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(ColWagons);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("startAttEmergency_args(");
+      bool __first = true;
+      if (User != null && __isset.user) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("User: ");
+        __sb.Append(User);
+      }
+      if (__isset.colWagons) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("ColWagons: ");
+        __sb.Append(ColWagons);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class startAttEmergency_result : TBase
+  {
+    private part_t _success;
+    private DataProviderException _ex;
+
+    public part_t Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public DataProviderException Ex
+    {
+      get
+      {
+        return _ex;
+      }
+      set
+      {
+        __isset.ex = true;
+        this._ex = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool ex;
+    }
+
+    public startAttEmergency_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Struct) {
+                Success = new part_t();
+                Success.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Ex = new DataProviderException();
+                Ex.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("startAttEmergency_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.Struct;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            Success.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.ex) {
+          if (Ex != null) {
+            field.Name = "Ex";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Ex.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("startAttEmergency_result(");
+      bool __first = true;
+      if (Success != null && __isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success== null ? "<null>" : Success.ToString());
+      }
+      if (Ex != null && __isset.ex) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ex: ");
+        __sb.Append(Ex== null ? "<null>" : Ex.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

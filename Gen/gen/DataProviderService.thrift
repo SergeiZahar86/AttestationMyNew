@@ -97,7 +97,8 @@ service DataProviderService
 	  part_t startAtt(1:string user) throws (1:DataProviderException ex),                                                              # Начало аттестации 
 	  bool endAtt(1:string part_id) throws (1:DataProviderException ex),                                                               # Завершение аттестации
 	  bool changePass(1:string login, 2:string oldPass, 3:string newPass, 4:string newEmpl_id) throws (1:DataProviderException ex),    # Смена данных учетной записи 
-    Status_Att getStatusAtt()                                                                                                        # Запрос статуса начала или завершения аттестации
+    Status_Att getStatusAtt(),                                                                                                        # Запрос статуса начала или завершения аттестации
+    part_t startAttEmergency(1:string user,2:int colWagons) throws (1:DataProviderException ex)                                             #СОЗДАНИЕ ПАРТИИ В АВАРИЙНОМ РЕЖИМЕ
 }
 
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,9 +44,20 @@ namespace Attestation
 
             try
             {
+                part_t get_part()
+                {
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                    {
+                        var fff = (DateTime.Now - global.startTime);
+                        timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
+                    });
+
+                    return global.client.getPart(global.PartId);
+                }
                 if (global.transport.IsOpen) // проверяем соединение
                 {
-                    Task<part_t> t = Task<JObject>.Run(() => global.client.getPart(global.PartId));
+                    // Task<part_t> t = Task<JObject>.Run(() => global.client.getPart(global.PartId));
+                    Task<part_t> t = Task<JObject>.Run(get_part);
                     timer.Tag = t;
                     await t;
                     global.part = t.Result;

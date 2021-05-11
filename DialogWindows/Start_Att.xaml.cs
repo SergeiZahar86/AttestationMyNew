@@ -39,8 +39,7 @@ namespace Attestation
             try
             {
                 global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
-                //is_ok = true;
-               //ok.IsEnabled = true;
+                //part_t part_ = global.client.startAttEmergency("ddd", 25);
                 dispatcherTimer.Stop();
                 this.Close();
             }
