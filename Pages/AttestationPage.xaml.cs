@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Attestation.DialogWindows;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -333,20 +334,12 @@ namespace Attestation
                         {
                             global.transport.Close();
                             global.transport.Open();
-                            //MessageBox.Show("Соединение с сервером восстановлено");
                         }
                         catch(Exception ass)
                         {
                             MessageBox.Show(ass.Message);
                         }
                     }
-                    /*
-                    input_Of_Initial_Data inputOf = new input_Of_Initial_Data();
-                    inputOf.ShowDialog();
-
-                    if (global.IdConsigner != null && global.IdShipper != null && global.IdMat != null)
-                    {
-                    */
                     //////////// Установка времени ///////////////////////////////////////////////////////
                     global.startTime = DateTime.Now;                       // Запись текущего времени
                     global.startTimeStr = null;                            // Начало аттестации партии вагонов для страницы Аттестации
@@ -362,15 +355,14 @@ namespace Attestation
                     global.isEnabled = true;                               // флаг кликабельности datagrid
                     DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
 
+                    Select_Start_Att select_Start = new Select_Start_Att();
+                    select_Start.Owner = Window.GetWindow(this);
+                    select_Start.ShowDialog();
+
                     /* Запрос партии вагонов */
                     Start_Att start = new Start_Att();
                     start.Owner = Window.GetWindow(this);
                     start.ShowDialog();
-                    //start.Focus();
-
-                    //global.GetGlobalPart(global.user);                     // Начало аттестации, вызов метода startAtt() и получение партии вагонов
-
-                    //start.Close();
                     if (global.part == null)
                     {
                         return;
@@ -379,11 +371,6 @@ namespace Attestation
                     {
                         global.PartId = global.part.Part_id.ToString();              // Номер партии
                         part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
-                                                                                     //shippersTextBlock.Text = global.Shipper;                   // Грузоотправитель
-                                                                                     //consigneesTextBlock.Text = global.Consignee;               // Грузополучатель
-
-
-                        //matTextBlock.Text = global.MatName;                        // Название материала
 
                         StartAttestation.Background = global.RedColorEnd;            // красный
 
@@ -438,7 +425,6 @@ namespace Attestation
                     }
                     if (global.is_ok_close_att && is_Num_close_att)            // метод bool exitAtt() подтверждение окончания аттестации
                     {
-                        //start.Close();
 
                         global.endTime = DateTime.Now;                                    // Окончание аттестации 
                         global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
@@ -458,7 +444,15 @@ namespace Attestation
                         global.isEnabled = false;                                         // флаг кликабельности datagrid
                         DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
 
-                        //global.client.setUser(global.part.Part_id, global.user);          // запись имени оператора в сервер в конце аттестации
+
+                        global.ROWS = null;
+                        DataGridMain.ItemsSource = null;
+                        DataGridMain.ItemsSource = global.ROWS;
+                        /*timeStart.Text = "";
+                        timeSpend.Text = "";
+                        timeEnd.Text = "";
+                        timeDelta.Text = "";
+                        part_idTextBlock.Text = "";*/
 
                         dispatcherTimer.Stop();                                           // Останавливает таймер
                         checkIsOpen.Start();

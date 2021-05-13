@@ -223,14 +223,14 @@
     <Compile Include="DialogWindows\DSAccessAgentWindow.xaml.cs">
       <DependentUpon>DSAccessAgentWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DialogWindows\Select_Start_Att.xaml.cs">
+      <DependentUpon>Select_Start_Att.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogWindows\Waiting_Download_data.xaml.cs">
       <DependentUpon>Waiting_Download_data.xaml</DependentUpon>
     </Compile>
     <Compile Include="DialogWindows\Waiting_Sign_in.xaml.cs">
       <DependentUpon>Waiting_Sign_in.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Archive.xaml.cs">
-      <DependentUpon>Archive.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AttestationPage.xaml.cs">
       <DependentUpon>AttestationPage.xaml</DependentUpon>
@@ -257,9 +257,6 @@
     <Compile Include="NameToBrushConverter .cs" />
     <Compile Include="Thrift\DataProviderException.cs" />
     <Compile Include="Thrift\DataProviderService.cs" />
-    <Compile Include="DialogWindows\DatePickerWindow.xaml.cs">
-      <DependentUpon>DatePickerWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="HiDWinscard.cs" />
     <Compile Include="DialogWindows\input_Of_Initial_Data.xaml.cs">
@@ -318,15 +315,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DialogWindows\Select_Start_Att.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DialogWindows\Waiting_Download_data.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DialogWindows\Waiting_Sign_in.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Archive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -343,10 +340,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DialogWindows\ContinuationOfAttestation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DialogWindows\DatePickerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

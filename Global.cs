@@ -48,7 +48,9 @@ namespace Attestation
         public System.Windows.Media.SolidColorBrush GreenColorStart;         // цвет для кнопки начала и завершения аттестации
         public System.Windows.Media.SolidColorBrush RedColorEnd;             // цвет для кнопки начала и завершения аттестации
         public bool isEnabled;                                               // флаг кликабельности datagrid
-        public bool is_ok_close_att;                                             // проверка при закрытии аттестации
+        public bool is_ok_close_att;                                         // проверка при закрытии аттестации
+        public bool normal_att;                                              // нормальный режим аттестации
+        public int how_many_wagons;                                          // количество вагонов при аварийном режиме аттестации
 
 
         private static Global instance;
@@ -159,7 +161,7 @@ namespace Attestation
                                                                                                      * начала и завершения аттестации*/
             ///////////////////////////////////////////////////////////////////////////////////////////////
             ///
-
+            normal_att = true;          // нормальный режим аттестации
         }
 
 
@@ -168,10 +170,6 @@ namespace Attestation
             part = beginAtt(user);
             DATA = part.Cars;        // серверный список вагонов
             ROWS = GetRows();        // внутренний список вагонов
-            /*part = beginAtt(user);
-            if (part.Cars != null) DATA = part.Cars;
-            else DATA = new List<car_t>();
-            ROWS = GetRows();*/
         }
         public static Global getInstance() // возвращает singleton объекта Global
         {
@@ -346,7 +344,10 @@ namespace Attestation
         }
         public part_t beginAtt( string user) // Начало аттестации и получение партии вагонов
         {
-            return this.client.startAtt(user);
+            if (normal_att)
+                return this.client.startAtt(user);
+            else
+                return this.client.startAttEmergency(user,how_many_wagons);
         }
         public bool changePass(string login, string oldPass, string newPass, string newEmpl_id) // Смена данных учетной записи 
         {
