@@ -40,6 +40,10 @@ namespace Attestation
             {
                 part_t get_part()
                 {
+                    var vvv = global.client.getStatusBits();
+                    var att = vvv.Att;
+                    var weight = vvv.Weight;
+                    var load = vvv.Load;
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
                         var fff = (DateTime.Now - global.startTime);
@@ -54,7 +58,8 @@ namespace Attestation
                     timer.Tag = t;
                     await t;
                     global.part = t.Result;
-
+                    global.startTimeStr = global.part.Start_time;
+                    timeStart.Text = global.startTimeStr;
 
 
                     if (global.part != null)
@@ -148,9 +153,9 @@ namespace Attestation
             }
             if (!global.transport.IsOpen) // проверяем соединение
             {
-                connect.Background = global.RedColorEnd;
-                textConnect.Text = "Восстановить соединение";
-                toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
+                //connect.Background = global.RedColorEnd;
+                //textConnect.Text = "Восстановить соединение";
+                //toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
 
                 try
                 {
@@ -159,9 +164,9 @@ namespace Attestation
                     timer.Tag = t;
                     await t;
                     global.workAfterShutdown();                                        // восстановление после разрыва
-                    connect.Background = global.GreenColorStart;
-                    textConnect.Text = "Соединение установленно";
-                    toolTipConnect.Text = "Соединение с сервером установленно";
+                    //connect.Background = global.GreenColorStart;
+                    //textConnect.Text = "Соединение установленно";
+                    //toolTipConnect.Text = "Соединение с сервером установленно";
                     error.Text = "";
                     timerConnect.Stop();
                     if(global.isColor)
@@ -204,15 +209,15 @@ namespace Attestation
             timerConnect.Interval = new TimeSpan(0, 0, 2);
             if (!global.transport.IsOpen) // проверяем соединение
             {
-                connect.Background = global.RedColorEnd;
-                textConnect.Text = "Восстановить соединение";
-                toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
+                //connect.Background = global.RedColorEnd;
+                //textConnect.Text = "Восстановить соединение";
+                //toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
             }
             else
             {
-                connect.Background = global.GreenColorStart;
-                textConnect.Text = "Соединение установленно";
-                toolTipConnect.Text = "Соединение с сервером установленно";
+                //connect.Background = global.GreenColorStart;
+                //textConnect.Text = "Соединение установленно";
+                //toolTipConnect.Text = "Соединение с сервером установленно";
                 
             }
 
@@ -308,8 +313,8 @@ namespace Attestation
                     global.startTimeStr = null;                            // Начало аттестации партии вагонов для страницы Аттестации
                     global.endTimeStr = null;                              // Окончание аттестации для страницы Аттестации
                     global.deltaTimeStr = null;                            // Продолжительность прохождения аттестации для страницы Аттестации 
-                    global.startTimeStr = global.startTime.ToString();     // Время начала аттестации (глобал)
-                    timeStart.Text = global.startTimeStr;                  // Время начала аттестации (вверху страницы)
+                    //global.startTimeStr = global.startTime.ToString();     // Время начала аттестации (глобал)
+                    //timeStart.Text = global.startTimeStr;                  // Время начала аттестации (вверху страницы)
                                                                            ///////////////////////////////////////////////////////////////////////
 
                     isVerification = false;                              // флаг для подтверждения окончания аттестации
@@ -632,7 +637,7 @@ namespace Attestation
             catch { }
         }
 
-        private void connect_Click(object sender, RoutedEventArgs e)  // кнопка соединения с сервером
+        /*private void connect_Click(object sender, RoutedEventArgs e)  // кнопка соединения с сервером
         {
             if (!global.transport.IsOpen) // проверяем соединение
             {
@@ -650,6 +655,6 @@ namespace Attestation
                     error.Text = ass.ToString();
                 }
             }
-        }
+        }*/
     }
 }

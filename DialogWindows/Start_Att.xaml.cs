@@ -29,7 +29,7 @@ namespace Attestation
             catch (Exception sss)
             {
                 dispatcherTimer.Stop();
-                MessageBox.Show("Ошибка при открытии аттестации");
+                MessageBox.Show($"Ошибка при открытии аттестации \n {sss}"); ;
                 this.Close();
             }
         }

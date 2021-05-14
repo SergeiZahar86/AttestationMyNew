@@ -14,6 +14,12 @@ struct cause_t {
   1:int id,      
   2:string name   
 }
+# состояние процессов позрузки, взвешивания и аттестации
+struct state_bits {
+  1:int att,      
+  2:int weight,
+  3:int load   
+}
 
 # Справочник контрагентов
 struct contractor_t {
@@ -79,6 +85,7 @@ service DataProviderService
     string getUser(1:string login, 2:string password, 3:string empl_id) throws (1:DataProviderException ex),# Получение имени пользователя
 	  string getNum(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                      # Получение номера вагона
 	  string getOldPart() throws (1:DataProviderException ex),                                                # Получение номера последней незакрытой партии
+    state_bits getStatusBits()  throws (1:DataProviderException ex),                                        # состояние процессов позрузки, взвешивания и аттестации                                               
     
 	  # запись значенией
   	bool setNum(1:string part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	

@@ -303,6 +303,7 @@
     <Compile Include="DialogWindows\SignIn.xaml.cs">
       <DependentUpon>SignIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Thrift\state_bits.cs" />
     <Compile Include="Thrift\Status_Att.cs" />
     <Compile Include="DialogWindows\VerificationCloseProgram .xaml.cs">
       <DependentUpon>VerificationCloseProgram .xaml</DependentUpon>

@@ -30,6 +30,84 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Canvas
+                Grid.Column="1"
+                >
+                <Border
+                    Width="20"
+                    Height="20"
+                    Canvas.Top="10"
+                    Canvas.Left="5"
+                    VerticalAlignment="Bottom"
+                    CornerRadius="10"
+                    Background="Gray"
+                    />
+            </Canvas>
+            <TextBlock
+                Grid.Column="2"
+                Text="аттестация"
+                Padding="5,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                
+                />
+            <Canvas
+                Grid.Column="3"
+                >
+                <Border
+                    Width="20"
+                    Height="20"
+                    Canvas.Top="10"
+                    Canvas.Left="5"
+                    VerticalAlignment="Bottom"
+                    CornerRadius="10"
+                    Background="Gray"
+                    />
+            </Canvas>
+            <TextBlock
+                Grid.Column="4"
+                Text="тара"
+                Padding="5,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                
+                />
+            <Canvas
+                Grid.Column="5"
+                >
+                <Border
+                    Width="20"
+                    Height="20"
+                    Canvas.Top="10"
+                    Canvas.Left="5"
+                    VerticalAlignment="Bottom"
+                    CornerRadius="10"
+                    Background="Gray"
+                    />
+            </Canvas>
+            <TextBlock
+                Grid.Column="6"
+                Text="погрузка"
+                Padding="5,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                
+                />
+        </Grid>
         <!--
         <Button x:Name="ss" Grid.Row="1"  Click="ggggg" Background="Red"/>
         -->
@@ -81,14 +159,14 @@
                 Grid.Row="0"
                 FontSize="16"
                 TextAlignment="Center"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Left" Margin="20,0,0,0"
                 />
             <TextBlock
                 x:Name="timeSpend"
                 Grid.Row="1"
                 FontSize="16"
                 TextAlignment="Center"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Left" Margin="20,0,0,0"
                 />
         </Grid>
 
@@ -208,7 +286,7 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Button>
-
+        <!--
         <Button
             x:Name="connect"
             Grid.Column="8"
@@ -240,7 +318,7 @@
                 </TextBlock.ToolTip>
             </TextBlock>
         </Button>
-
+        -->
 
         
 

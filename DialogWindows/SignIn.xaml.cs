@@ -20,7 +20,8 @@ namespace Attestation
 
     public partial class SignIn : Window
     {
-        string role;                                              // роль необходимая для входа
+        string role1;                                              // роль необходимая для входа
+        string role2;
         private Global global;
         public static bool isCloseProgram;
         string password;
@@ -86,7 +87,8 @@ namespace Attestation
         public SignIn()
         {
             InitializeComponent();
-            role = "ArmOtk";
+            role1 = "ArmOtk";
+            role2 = "Admin";
             List<string> roles = new List<string>();
             session = null;
             agent = DSAccessLib.getInstance(); // из библиотеки для авторизации DSAccess
@@ -183,7 +185,7 @@ namespace Attestation
                 List<string> rls = list.ToObject<List<string>>();
                 foreach (string rl in rls)
                 {
-                    if (rl == role)
+                    if (rl == role1 || rl == role2)
                     {
                         if (((string)data["data"]["description"]).Length > 0)
                         {
