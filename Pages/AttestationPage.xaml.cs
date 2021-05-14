@@ -2,16 +2,11 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Threading;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -26,13 +21,11 @@ namespace Attestation
         System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер аттестации
         System.Windows.Threading.DispatcherTimer timerConnect;
         System.Windows.Threading.DispatcherTimer checkIsOpen;
-        //private bool realNumber;                                    // флаг проверки подлинности номера вагона
         MqttClient client;
         RowTab row;
         private bool is_Num_close_att;                              // флаг количества цифр в номерах вагонов
         private int CountRow;                                     // для сравнения списков с целью выявления изменений
         private bool chenge;
-        //ObservableCollection<RowTab> observable;
 
 
         private async void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
@@ -57,7 +50,6 @@ namespace Attestation
                 }
                 if (global.transport.IsOpen) // проверяем соединение
                 {
-                    // Task<part_t> t = Task<JObject>.Run(() => global.client.getPart(global.PartId));
                     Task<part_t> t = Task<JObject>.Run(get_part);
                     timer.Tag = t;
                     await t;
@@ -65,7 +57,6 @@ namespace Attestation
 
 
 
-                    //global.part = global.client.getPart(global.PartId);    // получение партии вагонов с сервера
                     if (global.part != null)
                     {
                         if (global.part.Cars.Count == 1 && CountRow != global.part.Cars.Count)
@@ -90,17 +81,20 @@ namespace Attestation
                     }
                     error.Text = "";
                 }
+                else
+                {
+                    dispatcherTimer.Stop();
+                    timerConnect.Start();
+                    error.Text = $"Ошибка при обмене данными с DataProvider при получение вагонов с сервера";
+                }
             }
             catch (Exception ass)
             {
 
-                /*ExClose exClose = new ExClose(ass.ToString());
-                exClose.Owner = Window.GetWindow(this);
-                exClose.ShowDialog();*/
-                dispatcherTimer.Stop();
+                /*dispatcherTimer.Stop();
                 timerConnect.Start();
                 error.Text = ass.ToString();
-                return;
+                return;*/
             }
             finally
             {
@@ -117,16 +111,25 @@ namespace Attestation
             }
             try
             {
-                Task<List<mat_t>> t = Task<List<mat_t>>.Run(() => global.mats = global.client.getMat());
-                timer.Tag = t;
-                await t;
-                global.mats = t.Result;
+                if (global.transport.IsOpen == true)
+                {
+                    Task<List<mat_t>> t = Task<List<mat_t>>.Run(() => global.mats = global.client.getMat());
+                    timer.Tag = t;
+                    await t;
+                    global.mats = t.Result;
+                }
+                else
+                {
+                    checkIsOpen.Stop();
+                    timerConnect.Start();
+                }
             }
             catch (Exception ass)
             {
-                checkIsOpen.Stop();
+                /*checkIsOpen.Stop();
                 timerConnect.Start();
-                return;
+                return;*/
+                error.Text = $"Ошибка при обмене данными с DataProvider    {ass}";
             }
             finally
             {
@@ -138,11 +141,6 @@ namespace Attestation
 
         private async void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
         {
-            /* try
-             {
-                 global.client.getStatusAtt(); // Запрос статуса начала или завершения аттестации
-             }
-             catch { }*/
             DispatcherTimer timer = (DispatcherTimer)source;
             if (null != timer.Tag)
             {
@@ -160,28 +158,18 @@ namespace Attestation
                     Task<String> t = Task<String>.Run(() => { global.transport.Open(); return "OK"; });
                     timer.Tag = t;
                     await t;
-                    //global.part = t.Result;
-                    //global.transport.Open();
-                    //MessageBox.Show("Соединение с сервером восстановлено");
-                    /*global.GetSignIn();                                                    // авторизация
-                    name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
-                    if (global.user.Length > 0)
-                    {*/
-                    name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
                     global.workAfterShutdown();                                        // восстановление после разрыва
-                    //}
                     connect.Background = global.GreenColorStart;
                     textConnect.Text = "Соединение установленно";
                     toolTipConnect.Text = "Соединение с сервером установленно";
                     error.Text = "";
                     timerConnect.Stop();
+                    if(global.isColor)
+                        checkIsOpen.Start();
+                    else dispatcherTimer.Start();
                 }
                 catch (Exception ass)
                 {
-                    //MessageBox.Show(ass.Message);
-                    /*ExClose exClose = new ExClose(ass.ToString());
-                    exClose.Owner = Window.GetWindow(this);
-                    exClose.ShowDialog();*/
                     error.Text = ass.ToString();
                     return;
                 }
@@ -189,29 +177,19 @@ namespace Attestation
                 {
                     timer.Tag = null;
                 }
-
             }
             else
             {
                 error.Text = "";
             }
-            /*else
-            {
-                connect.Background = global.GreenColorStart;
-                textConnect.Text = "Соединение установленно";
-                toolTipConnect.Text = "Соединение с сервером установленно";
-
-            }*/
         }
         public AttestationPage() // конструктор
         {
             InitializeComponent();
             global = Global.getInstance();
-            //name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
 
             CountRow = 100;                                                        // для сравнения списков с целью выявления изменений
             is_Num_close_att = true;                                            
-            //realNumber = false;                                                  // флаг проверки подлинности номера вагона
             // Таймеры ///////////////////////////////////////
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
@@ -235,36 +213,27 @@ namespace Attestation
                 connect.Background = global.GreenColorStart;
                 textConnect.Text = "Соединение установленно";
                 toolTipConnect.Text = "Соединение с сервером установленно";
-                //connect.HorizontalContentAlignment = HorizontalAlignment.Center;
-                /*TextBlock textBlock = new TextBlock();
-                textBlock.Text = "Сервер доступен";
-                textBlock.TextAlignment = TextAlignment.Center;
-                textBlock.FontSize = 16;
-                connect.Content = textBlock;*/
-                //connect.Content = "Сервер доступен";
+                
             }
 
-            /////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             isVerification = false;                                       // флаг для подтверждения окончания аттестации
-            //DataGridMain.ItemsSource = observable;
-            //DataGridMain.SelectedItem = RowTab;
             DataGridMain.IsEnabled = global.isEnabled;                    // флаг кликабельности datagrid
             //////// MQTT ///////////////////////////
             ///
             try
             {
-                client = new MqttClient(global.Mqtt_host, 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
-                //client = new MqttClient("10.90.101.200", 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
+                /*client = new MqttClient(global.Mqtt_host, 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
                 client.MqttMsgPublishReceived += client_MqttMsgPublishReceived; // этот код запускается при получении сообщения
                 client.Connect("ArmOTK", global.Mqtt_user, global.Mqtt_password); // подключение к серверу ИндасХолдинг у Коли
                 string Topic = global.PLC_topic;
-                client.Subscribe(new string[] { Topic }, new byte[] { 0 });
+                client.Subscribe(new string[] { Topic }, new byte[] { 0 });*/
             }
             catch (Exception ass)
             {
-                ExClose exClose = new ExClose(ass.ToString());
+                /*ExClose exClose = new ExClose(ass.ToString());
                 exClose.Owner = Window.GetWindow(this);
-                exClose.ShowDialog();
+                exClose.ShowDialog();*/
             }
 
             if (!global.isColor)
@@ -272,20 +241,24 @@ namespace Attestation
                 global.mainButtonAttestation = "Закончить";
                 startRow_1.Text = global.mainButtonAttestation;           // текст в кнопке аттестации
                 StartAttestation.Background = global.RedColorEnd;         // красный
+                while (checkIsOpen.IsEnabled == true)
+                {
+                    checkIsOpen.Stop();
+                    Thread.Sleep(100);
+                }
                 dispatcherTimer.Start();                                  // Стартуем таймер
             }
             else
             {
+                while (dispatcherTimer.IsEnabled == true)
+                {
+                    dispatcherTimer.Stop();
+                    Thread.Sleep(100);
+                }
                 checkIsOpen.Start();
             }
             timeStart.Text = global.startTimeStr;                         // время начала
-            timeEnd.Text = global.endTimeStr;                             // Время окончания
-            timeDelta.Text = global.deltaTimeStr;                         // Время затраченное на аттестации (продолжительность)
-
             part_idTextBlock.Text = global.PartId;                        // Номер партии
-            //matTextBlock.Text = global.MatName;                         // Название материала
-            //shippersTextBlock.Text = global.Shipper;                    // Грузоотправитель
-            //consigneesTextBlock.Text = global.Consignee;                // Грузополучатель
 
         }
         void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)  // этот код запускается при получении сообщения от mqtt
@@ -328,25 +301,13 @@ namespace Attestation
 
                 if (global.isColor) // проверяем флаг
                 {
-                    if (!global.transport.IsOpen) // проверяем соединение
-                    {
-                        try
-                        {
-                            global.transport.Close();
-                            global.transport.Open();
-                        }
-                        catch(Exception ass)
-                        {
-                            MessageBox.Show(ass.Message);
-                        }
-                    }
+                    checkIsOpen.Stop();
+                   
                     //////////// Установка времени ///////////////////////////////////////////////////////
                     global.startTime = DateTime.Now;                       // Запись текущего времени
                     global.startTimeStr = null;                            // Начало аттестации партии вагонов для страницы Аттестации
                     global.endTimeStr = null;                              // Окончание аттестации для страницы Аттестации
                     global.deltaTimeStr = null;                            // Продолжительность прохождения аттестации для страницы Аттестации 
-                    timeDelta.Text = global.deltaTimeStr;                  // Время затраченное на аттестации (продолжительность) (вверху страницы)
-                    timeEnd.Text = global.endTimeStr;                      // Время окончания аттестации (вверху страницы)
                     global.startTimeStr = global.startTime.ToString();     // Время начала аттестации (глобал)
                     timeStart.Text = global.startTimeStr;                  // Время начала аттестации (вверху страницы)
                                                                            ///////////////////////////////////////////////////////////////////////
@@ -386,9 +347,11 @@ namespace Attestation
 
                         global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
 
+                        while (checkIsOpen.IsEnabled == true)
+                        {
+                            Thread.Sleep(100);
+                        }
                         dispatcherTimer.Start();                    // Стартуем таймер
-                        checkIsOpen.Stop();
-
 
                     }
                     catch (Exception sss)
@@ -418,6 +381,11 @@ namespace Attestation
                         }
                         if (ok)
                         {
+                            while (dispatcherTimer.IsEnabled == true)
+                            {
+                                dispatcherTimer.Stop();                                           // Останавливает таймер
+                                Thread.Sleep(100);
+                            }
                             Close_Att close = new Close_Att(); // внутри отправка данных на сервер
                             close.Owner = Window.GetWindow(this);
                             close.ShowDialog();
@@ -430,10 +398,8 @@ namespace Attestation
                         global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
                         global.endTimeStr = global.endTime.ToString();                    /* Перезапись времени окончания в Глобал в виде строки 
                                                                                        для дальнейшей записи в объект car_t и передачи на сервер*/
-                        timeEnd.Text = global.endTimeStr;
                         global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
                         global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
-                        timeDelta.Text = global.deltaTime.ToString(@"hh\:mm\:ss");        // Вывод затраченного времени вверху страницы
 
                         StartAttestation.Background = global.GreenColorStart;             // зеленый
 
@@ -443,33 +409,26 @@ namespace Attestation
                         global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
                         global.isEnabled = false;                                         // флаг кликабельности datagrid
                         DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
-
+                        timeSpend.Text = "";
+                        timeStart.Text = "";
+                        part_idTextBlock.Text = "";
 
                         global.ROWS = null;
                         DataGridMain.ItemsSource = null;
                         DataGridMain.ItemsSource = global.ROWS;
-                        /*timeStart.Text = "";
-                        timeSpend.Text = "";
-                        timeEnd.Text = "";
-                        timeDelta.Text = "";
-                        part_idTextBlock.Text = "";*/
 
-                        dispatcherTimer.Stop();                                           // Останавливает таймер
                         checkIsOpen.Start();
-
-
                     }
                     else
                     {
-                        MessageBox.Show("Ошибка при отправки данных на сервер");
+                        dispatcherTimer.Start(); // если не смогли закрыть аттестацию 
+                        MessageBox.Show("Ошибка при отправки данных в DataProvider");
                     }
                 }
             }
             catch (Exception ass)
             {
-                ExClose exClose = new ExClose(ass.ToString());
-                exClose.Owner = Window.GetWindow(this);
-                exClose.ShowDialog();
+                error.Text = $"Ошибка при обмене данными с DataProvider    {ass}";
             }
         }
         private void Foto_Click(object sender, RoutedEventArgs e)               // выводит окно с фотографиями вагонов
@@ -681,28 +640,16 @@ namespace Attestation
                 {
                     global.transport.Close();
                     global.transport.Open();
-                    //MessageBox.Show("Соединение с сервером восстановлено");
-                    //global.GetSignIn();                                                    // авторизация
-                    //name.Content = Global.ShortName(global.user);                          // выводим имя пользователя
-                    /*if (global.user.Length > 0)
-                    {*/
-                        global.workAfterShutdown();                                        // восстановление после разрыва
-                    //}
+                    global.workAfterShutdown();                                        // восстановление после разрыва
                     connect.Background = global.GreenColorStart;
                     textConnect.Text = "Соединение установленно";
                     toolTipConnect.Text = "Соединение с сервером установленно";
                 }
                 catch (Exception ass)
                 {
-                    //MessageBox.Show(ass.Message);
-                    /* ExClose exClose = new ExClose(ass.ToString());
-                     exClose.Owner = Window.GetWindow(this);
-                     exClose.ShowDialog();*/
                     error.Text = ass.ToString();
                 }
             }
         }
-
-        
     }
 }

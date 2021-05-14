@@ -8,12 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using System.Configuration;
-using System.Windows;
-using System.Threading;
 using System.Text;
-using uPLibrary.Networking.M2Mqtt;
-using System.Windows.Threading;
-using uPLibrary.Networking.M2Mqtt.Messages;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
@@ -119,12 +114,8 @@ namespace Attestation
             /////////////// подключение к серверу ///////////////////////////////////////////////////////////////////////////////////
             Port = int.Parse(appSettings["port"] ?? "9090");
             Host = appSettings["host"] ?? "localhost";
-            //TFramedTransport transportf = new TFramedTransport(new TSocket(Host, Port));
-            //transportf.Open();
             this.transport = new TSocket(Host, Port); //  IP адрес сервера
             TProtocol proto = new TBinaryProtocol(transport);
-            /*TProtocol proto = new TBinaryProtocol(transportf);
-            TMultiplexedProtocol multiplexed = new TMultiplexedProtocol(proto, "DataProviderService");*/
             this.client = new DataProviderService.Client(proto);
             try
             {
@@ -132,13 +123,9 @@ namespace Attestation
             }
             catch(Exception sa)
             {
-                //MessageBox.Show(sa.Message);
-                //Thread.Sleep(50000);
                 ExClose exClose = new ExClose(sa.ToString());
                 exClose.ShowDialog();
-                //Application.Current.Shutdown();
             }
-            //this.client = new DataProviderService.Client(multiplexed);
             ///////////////////////////////////////////////////////////////////////////////
 
             IdShipper = null;     // Инициализация для проверки на  Null
@@ -479,9 +466,10 @@ namespace Attestation
             }
             catch (Exception ss)
             {
-                ExClose exClose = new ExClose(ss.ToString());
-                exClose.ShowDialog();
                 waiting_.Close();
+                /*ExClose exClose = new ExClose(ss.ToString());
+                exClose.ShowDialog();
+                waiting_.Close();*/
             }
         }
 

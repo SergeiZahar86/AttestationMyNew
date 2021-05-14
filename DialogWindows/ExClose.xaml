@@ -28,7 +28,7 @@
                            Margin="8,6,15,4"/>
             </DockPanel>
             <TextBlock Grid.Row="3" Grid.RowSpan="2" Margin="20, 0" FontSize="20" FontFamily="Calibry" 
-                       Text="Ошибка получения данных с сервера" TextWrapping="Wrap" HorizontalAlignment="Center"
+                       Text="Ошибка получения данных с DataProvider" TextWrapping="Wrap" HorizontalAlignment="Center"
                        TextAlignment="Center"/>
             <ScrollViewer Grid.Row="5" Grid.RowSpan="3" Margin="20, 0">
                 <TextBlock x:Name="exep" TextWrapping="Wrap" HorizontalAlignment="Center"
