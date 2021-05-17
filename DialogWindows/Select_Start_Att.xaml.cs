@@ -15,6 +15,7 @@ namespace Attestation.DialogWindows
         {
             label_textboxCarrying.IsEnabled = false;
             textboxCarrying.IsEnabled = false;
+            textboxCarrying.Text = "";
         }
 
         private void check_att_Unchecked(object sender, RoutedEventArgs e)
@@ -39,6 +40,7 @@ namespace Attestation.DialogWindows
                     {
                         global.how_many_wagons = int.Parse(textboxCarrying.Text);
                         global.normal_att = false;
+                        global.getStartAtt = true;
                         Close();
                     }
                     else
@@ -56,7 +58,31 @@ namespace Attestation.DialogWindows
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            global.getStartAtt = false;
             Close();
+        }
+
+        private void textboxCarrying_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e) // валидация ввода
+        {
+            int key = (int)e.Key;
+            if (textboxCarrying.Text.Length == 0)
+            {
+                e.Handled = !(key >= 34 && key <= 36 || key == 2 );
+            }
+            else if ( textboxCarrying.Text == "0" || textboxCarrying.Text == "1")
+            {
+                e.Handled = !(key >= 34 && key <= 43 || key == 2 || key == 23 || key == 25);
+            }
+            //else if (textboxCarrying.Text.Length >= 1 && textboxCarrying.Text.Length < 2 )
+            else if (textboxCarrying.Text == "2")
+            {
+                e.Handled = !(key >= 34 && key <= 39|| key == 2 || key == 23 || key == 25);
+            }
+
+            else
+            {
+                e.Handled = !( key == 2 || key == 23 || key == 25);
+            }
         }
     }
 }

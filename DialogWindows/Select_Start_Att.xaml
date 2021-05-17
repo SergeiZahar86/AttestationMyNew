@@ -34,14 +34,14 @@
             <TextBox 
                 x:Name="textboxCarrying"
                 Grid.Row="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
-                FontSize="20"  
+                Grid.Column="2"
+                Grid.ColumnSpan="2"
+                FontSize="24"  
                 HorizontalContentAlignment="Left"
                 VerticalContentAlignment="Center"
                 Padding="0"
-                Margin="0,5"
-                IsEnabled="False"
+                Margin="30,5"
+                IsEnabled="False" PreviewKeyDown="textboxCarrying_PreviewKeyDown"
                 />
             <CheckBox
                 x:Name="check_att"

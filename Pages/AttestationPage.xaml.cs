@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -15,6 +16,29 @@ namespace Attestation
 {
     public partial class AttestationPage : Page
     {
+        // зеленый для элипсов
+        byte r_GreenE = 36;
+        byte g_GreenE = 201;
+        byte b_GreenE = 133;
+
+        // желтый
+        byte r_Yellow = 255;
+        byte g_Yellow = 241;
+        byte b_Yellow = 118;
+
+
+        // серый
+        byte r_Grey = 160;
+        byte g_Grey = 178;
+        byte b_Grey = 187;
+
+        // красный
+        byte r_Red = 244;
+        byte g_Red = 110;
+        byte b_Red = 104;
+
+
+        state_bits state;                                           // состояние аттестации, передача цветов для индикаторов
         public int idx;                                             // индекс строки
         private Global global;
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
@@ -28,6 +52,65 @@ namespace Attestation
         private bool chenge;
 
 
+
+        private void SetRedStatusAtt() // установка красного цвета для трёх индикаторов статуса аттестации
+        {
+            att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+            tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+            load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+        }
+
+        private void GetCollorStatusAtt(state_bits state) // установка цветов трёх индикаторов статуса аттестации
+        {
+            int att = state.Att;
+            int tara = state.Weight;
+            int load = state.Load;
+            switch (att)
+            {
+                case 0:
+                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
+                    break;
+                case 1:
+                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
+                    break;
+                case 2:
+                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
+                    break;
+                case 3:
+                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+                    break;
+            }
+            switch (tara)
+            {
+                case 0:
+                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
+                    break;
+                case 1:
+                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
+                    break;
+                case 2:
+                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
+                    break;
+                case 3:
+                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+                    break;
+            }
+            switch (load)
+            {
+                case 0:
+                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
+                    break;
+                case 1:
+                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
+                    break;
+                case 2:
+                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
+                    break;
+                case 3:
+                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+                    break;
+            }
+        }
         private async void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
         {
             DispatcherTimer timer = (DispatcherTimer)source;
@@ -40,12 +123,10 @@ namespace Attestation
             {
                 part_t get_part()
                 {
-                    var vvv = global.client.getStatusBits();
-                    var att = vvv.Att;
-                    var weight = vvv.Weight;
-                    var load = vvv.Load;
+                    state = global.client.getStatusBits();
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
+                        GetCollorStatusAtt(state); // установка цветов трёх индикаторов статуса аттестации
                         var fff = (DateTime.Now - global.startTime);
                         timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
                     });
@@ -91,15 +172,12 @@ namespace Attestation
                     dispatcherTimer.Stop();
                     timerConnect.Start();
                     error.Text = $"Ошибка при обмене данными с DataProvider при получение вагонов с сервера";
+                    SetRedStatusAtt();
                 }
             }
             catch (Exception ass)
             {
-
-                /*dispatcherTimer.Stop();
-                timerConnect.Start();
-                error.Text = ass.ToString();
-                return;*/
+                SetRedStatusAtt();
             }
             finally
             {
@@ -107,8 +185,18 @@ namespace Attestation
             }
         }
 
-        private async void check_is_open(Object source, EventArgs e)
+        private async void check_is_open(Object source, EventArgs e) // метод таймера при закрытой аттестации
         {
+            state_bits GetState_bits()
+            {
+                state = global.client.getStatusBits();
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    GetCollorStatusAtt(state); // установка цветов трёх индикаторов статуса аттестации
+                });
+                return state;
+
+            }
             DispatcherTimer timer = (DispatcherTimer)source;
             if (null != timer.Tag)
             {
@@ -118,30 +206,30 @@ namespace Attestation
             {
                 if (global.transport.IsOpen == true)
                 {
-                    Task<List<mat_t>> t = Task<List<mat_t>>.Run(() => global.mats = global.client.getMat());
+                    //Task<List<mat_t>> t = Task<List<mat_t>>.Run(() => global.mats = global.client.getMat());
+                    Task<state_bits> t = Task<state_bits>.Run(GetState_bits);
                     timer.Tag = t;
                     await t;
-                    global.mats = t.Result;
+                    //global.mats = t.Result;
+                    state = t.Result;
                 }
                 else
                 {
+                    error.Text = "Нет связи с DataProvider \n";
+                    SetRedStatusAtt();
                     checkIsOpen.Stop();
                     timerConnect.Start();
                 }
             }
             catch (Exception ass)
             {
-                /*checkIsOpen.Stop();
-                timerConnect.Start();
-                return;*/
                 error.Text = $"Ошибка при обмене данными с DataProvider    {ass}";
+                SetRedStatusAtt();
             }
             finally
             {
                 timer.Tag = null;
             }
-
-
         }
 
         private async void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
@@ -153,10 +241,6 @@ namespace Attestation
             }
             if (!global.transport.IsOpen) // проверяем соединение
             {
-                //connect.Background = global.RedColorEnd;
-                //textConnect.Text = "Восстановить соединение";
-                //toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
-
                 try
                 {
                     global.transport.Close();
@@ -164,9 +248,6 @@ namespace Attestation
                     timer.Tag = t;
                     await t;
                     global.workAfterShutdown();                                        // восстановление после разрыва
-                    //connect.Background = global.GreenColorStart;
-                    //textConnect.Text = "Соединение установленно";
-                    //toolTipConnect.Text = "Соединение с сервером установленно";
                     error.Text = "";
                     timerConnect.Stop();
                     if(global.isColor)
@@ -175,6 +256,7 @@ namespace Attestation
                 }
                 catch (Exception ass)
                 {
+                    SetRedStatusAtt();
                     error.Text = ass.ToString();
                     return;
                 }
@@ -306,6 +388,13 @@ namespace Attestation
 
                 if (global.isColor) // проверяем флаг
                 {
+                    Select_Start_Att select_Start = new Select_Start_Att();
+                    select_Start.Owner = Window.GetWindow(this);
+                    select_Start.ShowDialog();
+                    if (!global.getStartAtt)
+                    {
+                        return;
+                    }
                     checkIsOpen.Stop();
                    
                     //////////// Установка времени ///////////////////////////////////////////////////////
@@ -321,9 +410,6 @@ namespace Attestation
                     global.isEnabled = true;                               // флаг кликабельности datagrid
                     DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
 
-                    Select_Start_Att select_Start = new Select_Start_Att();
-                    select_Start.Owner = Window.GetWindow(this);
-                    select_Start.ShowDialog();
 
                     /* Запрос партии вагонов */
                     Start_Att start = new Start_Att();

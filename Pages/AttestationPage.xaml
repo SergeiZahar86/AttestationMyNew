@@ -48,6 +48,7 @@
                 Grid.Column="1"
                 >
                 <Border
+                    x:Name="att_canvas"
                     Width="20"
                     Height="20"
                     Canvas.Top="10"
@@ -55,6 +56,8 @@
                     VerticalAlignment="Bottom"
                     CornerRadius="10"
                     Background="Gray"
+                    BorderThickness="2"
+                    BorderBrush="DarkSlateGray"
                     />
             </Canvas>
             <TextBlock
@@ -69,6 +72,7 @@
                 Grid.Column="3"
                 >
                 <Border
+                    x:Name="tara_canvas"
                     Width="20"
                     Height="20"
                     Canvas.Top="10"
@@ -76,6 +80,8 @@
                     VerticalAlignment="Bottom"
                     CornerRadius="10"
                     Background="Gray"
+                    BorderThickness="2"
+                    BorderBrush="DarkSlateGray"
                     />
             </Canvas>
             <TextBlock
@@ -90,6 +96,7 @@
                 Grid.Column="5"
                 >
                 <Border
+                    x:Name="load_canvas"
                     Width="20"
                     Height="20"
                     Canvas.Top="10"
@@ -97,6 +104,8 @@
                     VerticalAlignment="Bottom"
                     CornerRadius="10"
                     Background="Gray"
+                    BorderThickness="2"
+                    BorderBrush="DarkSlateGray"
                     />
             </Canvas>
             <TextBlock

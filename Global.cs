@@ -37,6 +37,7 @@ namespace Attestation
 
         //public bool isLoadAttestation; // флаг для загрузки страницы аттестации
 
+        public bool getStartAtt;                                             // можно ли начинать аттестацию
         public bool isColor;                                                 // флаг для кнопки начала и завершения аттестации
         public string OldPart;                                               // результат вызова метода getOldPart()
         public string mainButtonAttestation;                                 // для кнопки начала и завершения аттестации
