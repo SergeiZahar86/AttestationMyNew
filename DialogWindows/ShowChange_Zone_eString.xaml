@@ -48,6 +48,16 @@
                                Height="30" Width="343" VerticalAlignment="Top">
                 <TextBlock HorizontalAlignment="Left" Foreground="White" FontFamily="Calibry" FontSize="16" 
                                 Margin="8,6,15,4">Выбор итогов аттестации</TextBlock>
+                <TextBlock
+                    x:Name="Number"
+                    HorizontalAlignment="Left"
+                    Foreground="White"
+                    FontFamily="Calibry"
+                    FontSize="16"
+                    TextAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="5,0,0,0"
+                    />
                 <Button x:Name="CloseButton" HorizontalAlignment="right" fa5:Awesome.Content="Solid_Times" FontSize="20"
                                 DockPanel.Dock="Right"  Style="{StaticResource RedButton}"  
                                 Width="28" RenderTransformOrigin="0.51,0.5" Margin="4,1,4,2.714" Height="Auto" Click="Close_Click"/>

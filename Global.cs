@@ -229,9 +229,9 @@ namespace Attestation
                         case 1:
                             Att_codeString__ = Att_codeFonts[1];
                             break;
-                        case 2:
+                        /*case 2:
                             Att_codeString__ = Att_codeFonts[2];
-                            break;
+                            break;*/
                     }
                 
                 double Tara__ = Math.Round( cars.Tara, 3);
@@ -405,15 +405,15 @@ namespace Attestation
         public bool checkSum(string number) // проверка номера вагона на правдивость
         {
             byte[] buf = Encoding.ASCII.GetBytes(number);
-            if (buf.Length == 8)
+            if (buf.Length == 8 && number != "00000000")
             {
                 for (int i = 0; i < number.Length; i++)
                 {
                     buf[i] = (byte)(buf[i] - 48);
                 }
-                byte[] K = { 2, 1, 2, 1, 2, 1, 2, 1 };
+                byte[] K = { 2, 1, 2, 1, 2, 1, 2 };
                 int sum = 0;
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     int p = buf[i] * K[i];
                     p = p > 9 ? p = p % 10 + p / 10 : p;
@@ -460,8 +460,8 @@ namespace Attestation
                     startTimeStr = part.Start_time;                        // получение времени начала аттестации
                     PartId = part.Part_id;                                 // получение номера партии
                     isColor = false;                                              // для кнопки начала и завершения аттестации 
-                    ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
-                    ofAttestation.ShowDialog();
+                    //ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
+                    //ofAttestation.ShowDialog();
                 }
                 waiting_.Close();
             }
@@ -511,18 +511,18 @@ namespace Attestation
         {
             List<string> str = new List<string>
             {
-                "Аттестован",
                 "Не аттестован",
-                "Условно аттестован"
+                "Аттестован",
+                //"Условно аттестован"
             };
             return str;
         }
         public List<string> GetAtt_codeFonts() // справочник элементов шрифта для итогов аттестации
         {
             List<string> fonts = new List<string>();
-            fonts.Add("CheckCircle");
             fonts.Add("WindowClose");
-            fonts.Add("Asterisk");
+            fonts.Add("CheckCircle");
+            //fonts.Add("Asterisk");
             return fonts;
         }
         public void GetSignIn() // Авторизация

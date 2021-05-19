@@ -65,20 +65,10 @@ namespace Attestation.DialogWindows
         private void textboxCarrying_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e) // валидация ввода
         {
             int key = (int)e.Key;
-            if (textboxCarrying.Text.Length == 0)
-            {
-                e.Handled = !(key >= 34 && key <= 36 || key == 2 );
-            }
-            else if ( textboxCarrying.Text == "0" || textboxCarrying.Text == "1")
+            if (textboxCarrying.Text.Length >= 0 && textboxCarrying.Text.Length < 2)
             {
                 e.Handled = !(key >= 34 && key <= 43 || key == 2 || key == 23 || key == 25);
             }
-            //else if (textboxCarrying.Text.Length >= 1 && textboxCarrying.Text.Length < 2 )
-            else if (textboxCarrying.Text == "2")
-            {
-                e.Handled = !(key >= 34 && key <= 39|| key == 2 || key == 23 || key == 25);
-            }
-
             else
             {
                 e.Handled = !( key == 2 || key == 23 || key == 25);

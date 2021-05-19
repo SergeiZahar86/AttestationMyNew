@@ -220,8 +220,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DialogWindows\DataIsNotEntered.xaml.cs">
+      <DependentUpon>DataIsNotEntered.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogWindows\DSAccessAgentWindow.xaml.cs">
       <DependentUpon>DSAccessAgentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DialogWindows\MultipleDataEntry.xaml.cs">
+      <DependentUpon>MultipleDataEntry.xaml</DependentUpon>
     </Compile>
     <Compile Include="DialogWindows\Select_Start_Att.xaml.cs">
       <DependentUpon>Select_Start_Att.xaml</DependentUpon>
@@ -312,7 +318,15 @@
       <DependentUpon>VerificationEndAttestation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Zona.cs" />
+    <Page Include="DialogWindows\DataIsNotEntered.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DialogWindows\DSAccessAgentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogWindows\MultipleDataEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

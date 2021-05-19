@@ -16,18 +16,6 @@ namespace Attestation
         private List<String> isOk_Val;
         private List<cause_t> Cause;
 
-        private int zone;
-        private string zoneStr;
-        private int shipper;
-        private string shipperStr;
-        private int consigner;
-        private string consignerStr;
-        private int mat;
-        private string matStr;
-        private int att;
-        private string attStr;
-        private int cause;
-        private string causeStr;
 
 
         public Change_of_Data_on_the_Wagon()
@@ -147,31 +135,13 @@ namespace Attestation
                     global.rowTab.Carrying = Convert.ToDouble(carRepl);
                 }
 
-                /////////////////////////////////////////
-                //global.rowTab.Zone_e = zone;
-                //global.rowTab.Zone_eString = zoneStr;
-
-                //global.rowTab.Shipper = shipper - 1;
-                //global.rowTab.Shipper_String = shipperStr;
-
-                //global.rowTab.Consigner = consigner - 1;
-                //global.rowTab.Consigner_String = consignerStr;
-
-                //global.rowTab.Mat = mat - 1;
-                //global.rowTab.Mat_String = matStr;
-
-                //global.rowTab.Att_code = att;
-                //global.rowTab.Att_codeString = attStr;
-
-                //global.rowTab.Cause_id = cause;
-                //global.rowTab.Cause_idString = causeStr;
 
                 bool a1 = global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Num);
                 bool a2 = global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Tara_e);
                 bool a3 = global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Carrying);
                 bool a4 = global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e);
                 bool a5 = global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper);
-                bool a6 = global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper);
+                bool a6 = global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Consigner);
                 bool a7 = global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat);
                 bool a8 = global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Att_code);
                 bool a9 = global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id);

@@ -1,12 +1,16 @@
 ﻿using Attestation.DialogWindows;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 using uPLibrary.Networking.M2Mqtt;
@@ -16,6 +20,7 @@ namespace Attestation
 {
     public partial class AttestationPage : Page
     {
+        bool allDataEntered;                    // все необходимые данные введены
         // зеленый для элипсов
         byte r_GreenE = 36;
         byte g_GreenE = 201;
@@ -164,6 +169,44 @@ namespace Attestation
 
                             CountRow = global.ROWS.Count;
                         }
+                        else
+                        {
+                            for (int i = 0; i < global.part.Cars.Count; i++)
+                            {
+                                if (global.DATA != null)
+                                {
+                                    for (int p = 0; p < global.DATA.Count; p++)
+                                    {
+                                        if (i == p)
+                                        {
+                                            var c1 = Math.Round(global.part.Cars[i].Tara, 3).ToString();
+                                            var c2 = Math.Round(global.DATA[p].Tara, 3).ToString();
+
+
+                                            if (c1 != c2 || global.part.Cars[i].Zone_e.ToString() != global.DATA[p].Zone_e.ToString()
+                                                || global.part.Cars[i].Tara_e.ToString() != global.DATA[p].Tara_e.ToString())
+                                            {
+                                                global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                                                global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                                                       //observable = global.ROWS;
+                                                DataGridMain.ItemsSource = null;
+                                                DataGridMain.ItemsSource = global.ROWS;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+                                    global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+                                                                                           //observable = global.ROWS;
+                                    DataGridMain.ItemsSource = null;
+                                    DataGridMain.ItemsSource = global.ROWS;
+                                    CountRow = global.ROWS.Count;
+                                }
+                            }
+                        }
                     }
                     error.Text = "";
                 }
@@ -275,6 +318,7 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
 
+            allDataEntered = true;
             CountRow = 100;                                                        // для сравнения списков с целью выявления изменений
             is_Num_close_att = true;                                            
             // Таймеры ///////////////////////////////////////
@@ -345,12 +389,12 @@ namespace Attestation
                 checkIsOpen.Start();
             }
             timeStart.Text = global.startTimeStr;                         // время начала
-            part_idTextBlock.Text = global.PartId;                        // Номер партии
+            //part_idTextBlock.Text = global.PartId;                        // Номер партии
 
         }
         void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)  // этот код запускается при получении сообщения от mqtt
         {
-            try
+            /*try
             {
                 string ReceivedMessage = Encoding.UTF8.GetString(e.Message);
                 byte b1 = e.Message[0];
@@ -374,7 +418,7 @@ namespace Attestation
             catch(Exception ass)
             {
                 MessageBox.Show(ass.Message);
-            }
+            }*/
         }
         private void DataGridMain_Loaded(object sender, RoutedEventArgs e)            // загрузка данных в DataGrid
         {
@@ -383,6 +427,7 @@ namespace Attestation
         }
         private void StartAttestation_Click(object sender, RoutedEventArgs e)   // Кнопка начала аттестации
         {
+            allDataEntered = true;
             try
             {
 
@@ -422,7 +467,7 @@ namespace Attestation
                     try
                     {
                         global.PartId = global.part.Part_id.ToString();              // Номер партии
-                        part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
+                        //part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
 
                         StartAttestation.Background = global.RedColorEnd;            // красный
 
@@ -453,67 +498,71 @@ namespace Attestation
                 
                 else
                 {
-                    is_Num_close_att = true;
-                    VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
-                    ver.Owner = Window.GetWindow(this);
-                    ver.ShowDialog();
-                    if (isVerification)
+                    verification(global.ROWS);
+                    if (allDataEntered)
                     {
-                        bool ok = true;
-                        foreach (RowTab ff in global.ROWS)
+                        is_Num_close_att = true;
+                        VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
+                        ver.Owner = Window.GetWindow(this);
+                        ver.ShowDialog();
+                        if (isVerification)
                         {
-                            if (ff.Num.Length != 8) // делаем проверку длины номера вагона
+                            bool ok = true;
+                            foreach (RowTab ff in global.ROWS)
                             {
-                                is_Num_close_att = false;
-                                MessageBox.Show("Номера вагонов должны состоять из восьми цифр (АРМ)");
-                                ok = false;
-                                break;
+                                if (ff.Num.Length != 8) // делаем проверку длины номера вагона
+                                {
+                                    is_Num_close_att = false;
+                                    MessageBox.Show("Номера вагонов должны состоять из восьми цифр (АРМ)");
+                                    ok = false;
+                                    break;
+                                }
+                            }
+                            if (ok)
+                            {
+                                while (dispatcherTimer.IsEnabled == true)
+                                {
+                                    dispatcherTimer.Stop();                                           // Останавливает таймер
+                                    Thread.Sleep(100);
+                                }
+                                Close_Att close = new Close_Att(); // внутри отправка данных на сервер
+                                close.Owner = Window.GetWindow(this);
+                                close.ShowDialog();
                             }
                         }
-                        if (ok)
+                        if (global.is_ok_close_att && is_Num_close_att)            // метод bool exitAtt() подтверждение окончания аттестации
                         {
-                            while (dispatcherTimer.IsEnabled == true)
-                            {
-                                dispatcherTimer.Stop();                                           // Останавливает таймер
-                                Thread.Sleep(100);
-                            }
-                            Close_Att close = new Close_Att(); // внутри отправка данных на сервер
-                            close.Owner = Window.GetWindow(this);
-                            close.ShowDialog();
-                        }
-                    }
-                    if (global.is_ok_close_att && is_Num_close_att)            // метод bool exitAtt() подтверждение окончания аттестации
-                    {
 
-                        global.endTime = DateTime.Now;                                    // Окончание аттестации 
-                        global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
-                        global.endTimeStr = global.endTime.ToString();                    /* Перезапись времени окончания в Глобал в виде строки 
+                            global.endTime = DateTime.Now;                                    // Окончание аттестации 
+                            global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
+                            global.endTimeStr = global.endTime.ToString();                    /* Перезапись времени окончания в Глобал в виде строки 
                                                                                        для дальнейшей записи в объект car_t и передачи на сервер*/
-                        global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
-                        global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
+                            global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
+                            global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
 
-                        StartAttestation.Background = global.GreenColorStart;             // зеленый
+                            StartAttestation.Background = global.GreenColorStart;             // зеленый
 
-                        global.mainButtonAttestation = "Начать";
-                        startRow_1.Text = global.mainButtonAttestation;
+                            global.mainButtonAttestation = "Начать";
+                            startRow_1.Text = global.mainButtonAttestation;
 
-                        global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
-                        global.isEnabled = false;                                         // флаг кликабельности datagrid
-                        DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
-                        timeSpend.Text = "";
-                        timeStart.Text = "";
-                        part_idTextBlock.Text = "";
+                            global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
+                            global.isEnabled = false;                                         // флаг кликабельности datagrid
+                            DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
+                            timeSpend.Text = "";
+                            timeStart.Text = "";
+                            //part_idTextBlock.Text = "";
 
-                        global.ROWS = null;
-                        DataGridMain.ItemsSource = null;
-                        DataGridMain.ItemsSource = global.ROWS;
+                            global.ROWS = null;
+                            DataGridMain.ItemsSource = null;
+                            DataGridMain.ItemsSource = global.ROWS;
 
-                        checkIsOpen.Start();
-                    }
-                    else
-                    {
-                        dispatcherTimer.Start(); // если не смогли закрыть аттестацию 
-                        MessageBox.Show("Ошибка при отправки данных в DataProvider");
+                            checkIsOpen.Start();
+                        }
+                        else
+                        {
+                            dispatcherTimer.Start(); // если не смогли закрыть аттестацию 
+                            MessageBox.Show("Ошибка при отправки данных в DataProvider");
+                        }
                     }
                 }
             }
@@ -557,6 +606,7 @@ namespace Attestation
                 showChange_VagNum.Owner = Window.GetWindow(this);
                 global.Idx = DataGridMain.SelectedIndex;
                 showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
+                showChange_VagNum.Number.Text =$"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
                 showChange_VagNum.ShowDialog();
                 DataGridMain.ItemsSource = null;
                 DataGridMain.ItemsSource = global.ROWS;
@@ -568,6 +618,7 @@ namespace Attestation
             ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
             showChange_IsOk.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
+            showChange_IsOk.Number.Text = $"вагон №  {global.ROWS[global.Idx].Car_id.ToString()}";
             try
             {
                 global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
@@ -582,6 +633,7 @@ namespace Attestation
             ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
             showChange_Cause_T.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
+            showChange_Cause_T.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
             try
             {
                 global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
@@ -599,6 +651,7 @@ namespace Attestation
                 showChange_Tara_e.Owner = Window.GetWindow(this);
                 global.Idx = DataGridMain.SelectedIndex;
                 showChange_Tara_e.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
+                showChange_Tara_e.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
                 showChange_Tara_e.ShowDialog();
                 DataGridMain.ItemsSource = null;
                 DataGridMain.ItemsSource = global.ROWS;
@@ -613,6 +666,7 @@ namespace Attestation
             try
             {
                 global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                showChange_Carrying.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";            // порядковый номер вагона в шапке окна
                 showChange_Carrying.oldCarrying.Content = global.ROWS[global.Idx].Carrying;
                 showChange_Carrying.ShowDialog();
                 DataGridMain.ItemsSource = null;
@@ -625,6 +679,7 @@ namespace Attestation
             ShowChange_Zone_eString showChange_Zone_eString = new ShowChange_Zone_eString();
             showChange_Zone_eString.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
+            showChange_Zone_eString.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
             try
             {
                 global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
@@ -639,6 +694,7 @@ namespace Attestation
             ShowChange_Shipper_String Change_Shipper_String = new ShowChange_Shipper_String();
             Change_Shipper_String.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
+            Change_Shipper_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
             try
             {
                 global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
@@ -654,6 +710,7 @@ namespace Attestation
             ShowChange_Consigner_String Change_Consigner_String = new ShowChange_Consigner_String();
             Change_Consigner_String.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
+            Change_Consigner_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
             try
             {
                 global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
@@ -668,6 +725,7 @@ namespace Attestation
             ShowChange_Mat_String Change_Mat_String = new ShowChange_Mat_String();
             Change_Mat_String.Owner = Window.GetWindow(this);
             global.Idx = DataGridMain.SelectedIndex;
+            Change_Mat_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
             try
             {
                 global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
@@ -723,24 +781,50 @@ namespace Attestation
             catch { }
         }
 
-        /*private void connect_Click(object sender, RoutedEventArgs e)  // кнопка соединения с сервером
+        private void DataGridMain_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (!global.transport.IsOpen) // проверяем соединение
+            List<int> num = new List<int>();
+            List<string> numStr = new List<string>();
+            IList rows = DataGridMain.SelectedItems;
+            ObservableCollection<RowTab> rowsNum = new ObservableCollection<RowTab>();
+            foreach (RowTab row in rows)
             {
-                try
+                rowsNum.Add(row);
+                num.Add(row.Car_id);
+                numStr.Add(row.Car_id.ToString());
+
+
+            }
+            //string[] array = numStr.ToArray();
+            string numV_str = string.Join(",", numStr.ToArray());
+
+            MultipleDataEntry dataEntry = new MultipleDataEntry(numV_str, rowsNum);
+            dataEntry.Owner = Window.GetWindow(this);
+            dataEntry.ShowDialog();
+
+
+            /*MessageBox.Show(numV_str);
+            foreach(int p in num)
+            {
+                MessageBox.Show(p.ToString());
+            }*/
+        }
+
+        private void verification(ObservableCollection<RowTab> rows) // проверка полноты введенных данных в таблицу
+        {
+            for(int i = 0; i<rows.Count; i++)
+            {
+
+                if(rows[i].Tara_e == 0 || rows[i].Carrying == 0 || rows[i].Consigner ==0 || rows[i].Shipper == 0)
                 {
-                    global.transport.Close();
-                    global.transport.Open();
-                    global.workAfterShutdown();                                        // восстановление после разрыва
-                    connect.Background = global.GreenColorStart;
-                    textConnect.Text = "Соединение установленно";
-                    toolTipConnect.Text = "Соединение с сервером установленно";
-                }
-                catch (Exception ass)
-                {
-                    error.Text = ass.ToString();
+                    allDataEntered = false;
+                    DataIsNotEntered dataIsNot = new DataIsNotEntered(i + 1);
+                    dataIsNot.Owner = Window.GetWindow(this);
+                    dataIsNot.ShowDialog();
+                    return;
                 }
             }
-        }*/
+            allDataEntered = true;
+        }
     }
 }

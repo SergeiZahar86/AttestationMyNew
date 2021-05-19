@@ -57,7 +57,7 @@
                     CornerRadius="10"
                     Background="Gray"
                     BorderThickness="2"
-                    BorderBrush="DarkSlateGray"
+                    BorderBrush="#FF37474F"
                     />
             </Canvas>
             <TextBlock
@@ -81,7 +81,7 @@
                     CornerRadius="10"
                     Background="Gray"
                     BorderThickness="2"
-                    BorderBrush="DarkSlateGray"
+                    BorderBrush="#FF37474F"
                     />
             </Canvas>
             <TextBlock
@@ -105,7 +105,7 @@
                     CornerRadius="10"
                     Background="Gray"
                     BorderThickness="2"
-                    BorderBrush="DarkSlateGray"
+                    BorderBrush="#FF37474F"
                     />
             </Canvas>
             <TextBlock
@@ -191,15 +191,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             
-            <TextBlock
-                Text="Идентификатор партии:"
-                Grid.Row="0"
-                FontSize="16" 
-                TextAlignment="Center"
-                FontFamily="Calibry"
-                Foreground="Black"
-                HorizontalAlignment="Left"
-                />
+            
         </Grid>
         <Grid 
             x:Name="grid_5"
@@ -214,13 +206,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock 
-                x:Name="part_idTextBlock"
-                Grid.Row="0"
-                FontSize="16"
-                TextAlignment="Center"
-                HorizontalAlignment="Left"
-                />
+            
             <ScrollViewer
                 Grid.Row="1"
                 Grid.RowSpan="3"
@@ -350,22 +336,23 @@
             Width="1870"
             BorderThickness="0"
             Loaded="DataGridMain_Loaded"
-            SelectionMode="Single"
+            SelectionMode="Extended"
             CanUserAddRows="False"
-            AlternatingRowBackground="#FFD0DEE4"
+            AlternatingRowBackground="#FFE0EEF5"
             BorderBrush="White"
             Background="White" 
             GridLinesVisibility="Horizontal"
             HorizontalGridLinesBrush="#FFB0B0B0"
             Margin="0,0,10,0"
             MouseDoubleClick="DataGridMain_MouseDoubleClick"
+            MouseRightButtonDown="DataGridMain_MouseRightButtonDown"
             >
 
             
             <DataGrid.Resources>
                 <SolidColorBrush
                     x:Key="{x:Static SystemColors.HighlightBrushKey}" 
-                    Color="#AAFF0000"
+                    Color="#FF9EBBC9"
                     />
             </DataGrid.Resources>
             <!-- ========================== Стиль строки ======================= -->
@@ -374,10 +361,10 @@
                     <Setter Property="Background" Value="White" />
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="Foreground" Value="#FF891515"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="Foreground" Value="#FF891515"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
