@@ -22,9 +22,9 @@ namespace Attestation
             signIn.ShowDialog();
             label_fio.Content = Global.ShortName(global.user);
             label_login.Content = global.Login;
-            signIn = new SignIn();
+            /*signIn = new SignIn();
             signIn.Owner = Window.GetWindow(this);
-            signIn.ShowDialog();
+            signIn.ShowDialog();*/
 
             /*if (!global.transport.IsOpen) // проверяем соединение
             {

@@ -13,7 +13,7 @@ namespace Attestation
         private List<Shippers> shippersVal;
         private List<Consigners> consignersVal;
         private List<mat_t> matsVal;
-        private List<String> isOk_Val;
+        private List<string> isOk_Val;
         private List<cause_t> Cause;
 
 
@@ -128,7 +128,7 @@ namespace Attestation
                     3, MidpointRounding.AwayFromZero);
 
                 /////////////////////////////////////////
-                String car = textboxCarrying.Text;
+                string car = textboxCarrying.Text;
                 string carRepl = car.Replace(".", ",");
                 if (carRepl.Length > 0)
                 {
