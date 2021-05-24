@@ -22,24 +22,8 @@ namespace Attestation
             signIn.ShowDialog();
             label_fio.Content = Global.ShortName(global.user);
             label_login.Content = global.Login;
-            /*signIn = new SignIn();
-            signIn.Owner = Window.GetWindow(this);
-            signIn.ShowDialog();*/
 
-            /*if (!global.transport.IsOpen) // проверяем соединение
-            {
-                try
-                {
-                    global.transport.Close();
-                    global.transport.Open();
-                    MessageBox.Show("Соединение с сервером восстановлено");
-                }
-                catch (Exception ass)
-                {
-                    ExClose exClose = new ExClose(ass.ToString());
-                    exClose.ShowDialog();
-                }
-            }*/
+            
             if (global.user.Length > 0)
             {
                 global.workAfterShutdown(); // восстановление после разрыва
