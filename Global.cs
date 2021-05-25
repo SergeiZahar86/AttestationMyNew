@@ -134,7 +134,7 @@ namespace Attestation
             IdMat = null;         // Инициализация для проверки на  Null
 
             photo = new photo_t();
-            user = "";                 // имя пользователя
+            user = "qqqq";                 // имя пользователя
             MatName = "";              // Название материал
             PartId = "";               // Номер партии вагонов для страницы Аттестации
             Shipper = "";              // Грузоотправитель
@@ -447,6 +447,7 @@ namespace Attestation
                 cause = client.getCauses();               // Запрос справочника причин неаттестации
                 contractors = client.getContractors();    // Запрос справочника контрагентов
                 mats = client.getMat();                   // Запрос справочника материалов
+                mats.Sort();
                 GetConsignees(contractors);                      // получение справочника Грузополучателя
                 GetShippers(contractors);                        // получение справочника Грузоотправителей
                 GetZonas();                                             // получение справочника Зоны вагонов
@@ -477,28 +478,26 @@ namespace Attestation
         public void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
         {
             shippers = new List<Shippers>();
-            int i = 1;
             foreach (contractor_t contractor_ in contr)
             {
                 if (contractor_.Shipper)
                 {
-                    shippers.Add(new Shippers(i, contractor_.Name));
+                    shippers.Add(new Shippers(contractor_.Id, contractor_.Name));
                 }
-                i++;
             }
+            //shippers.Sort();
         }
         public void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
         {
             consigners = new List<Consigners>();
-            int i = 1;
             foreach (contractor_t contractor_ in contr)
             {
                 if (contractor_.Consigner)
                 {
-                    consigners.Add(new Consigners(i, contractor_.Name));
+                    consigners.Add(new Consigners(contractor_.Id, contractor_.Name));
                 }
-                i++;
             }
+            //consigners.Sort();
         }
         public void GetZonas() // получение справочника Зоны вагонов
         {

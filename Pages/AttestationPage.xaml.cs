@@ -440,6 +440,7 @@ namespace Attestation
                     {
                         return;
                     }
+                    CountRow = 100;
                     checkIsOpen.Stop();
                    
                     //////////// Установка времени ///////////////////////////////////////////////////////
@@ -577,7 +578,7 @@ namespace Attestation
             {
                 global.Idx = DataGridMain.SelectedIndex;
                 global.photo = global.getPhoto(global.part.Part_id, global.ROWS[global.Idx].Car_id);
-                if (global.photo.Left != null & global.photo.Right != null & global.photo.Top != null)
+                if (global.photo.Left != null || global.photo.Right != null || global.photo.Top != null)
                 {
                     ShowPhotos showPhotos = new ShowPhotos();
                     showPhotos.Owner = Window.GetWindow(this);

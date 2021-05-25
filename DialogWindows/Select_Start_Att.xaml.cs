@@ -30,6 +30,7 @@ namespace Attestation.DialogWindows
             if(check_att.IsChecked == true)
             {
                 global.normal_att = true;
+                global.getStartAtt = true;
                 Close();
             }
             else

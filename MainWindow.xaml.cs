@@ -17,13 +17,15 @@ namespace Attestation
         }
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
-            signIn = new SignIn();
+            //==========================================================================================================
+            /*signIn = new SignIn();
             signIn.Owner = Window.GetWindow(this);
             signIn.ShowDialog();
             label_fio.Content = Global.ShortName(global.user);
-            label_login.Content = global.Login;
+            label_login.Content = global.Login;*/
+            //==========================================================================================================
 
-            
+
             if (global.user.Length > 0)
             {
                 global.workAfterShutdown(); // восстановление после разрыва

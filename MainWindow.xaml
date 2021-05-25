@@ -31,6 +31,7 @@
                 </Button.ToolTip>
             </Button>
 
+            <!--
             <Button x:Name="passwordButton"   Click="changePassword_Click"  DockPanel.Dock="Right" Style="{StaticResource RedButtonMainWindow}"
                     fa5:Awesome.Content="Solid_Key"  Width="50"  Margin="4,0,80,0">
                 <Button.ToolTip>
@@ -43,6 +44,7 @@
                     <ToolTip Content="Выйти из учётной записи" FontSize="16" Foreground="Black" Background="White"/>
                 </Button.ToolTip>
             </Button>
+            -->
 
             <!-- .................................    Логотип ............................ -->
             <Image Width="30" Margin="8,4,0,4" Source="Resources/logo-img2-light.png"/>

@@ -238,6 +238,7 @@
     <Compile Include="DialogWindows\Waiting_Sign_in.xaml.cs">
       <DependentUpon>Waiting_Sign_in.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MatComparer.cs" />
     <Compile Include="Pages\AttestationPage.xaml.cs">
       <DependentUpon>AttestationPage.xaml</DependentUpon>
     </Compile>

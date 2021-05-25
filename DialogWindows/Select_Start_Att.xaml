@@ -13,6 +13,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip"
         AllowsTransparency="true" 
+        Topmost="True"
         >
     <Border
         Background="#EEEEEE"
