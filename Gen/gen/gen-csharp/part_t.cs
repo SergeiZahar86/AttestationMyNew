@@ -24,8 +24,8 @@ public partial class part_t : TBase
   private string _part_id;
   private string _oper;
   private List<car_t> _cars;
-  private string _start_time;
-  private string _end_time;
+  private string _start_time_att;
+  private string _end_time_att;
 
   public string Part_id
   {
@@ -66,29 +66,29 @@ public partial class part_t : TBase
     }
   }
 
-  public string Start_time
+  public string Start_time_att
   {
     get
     {
-      return _start_time;
+      return _start_time_att;
     }
     set
     {
-      __isset.start_time = true;
-      this._start_time = value;
+      __isset.start_time_att = true;
+      this._start_time_att = value;
     }
   }
 
-  public string End_time
+  public string End_time_att
   {
     get
     {
-      return _end_time;
+      return _end_time_att;
     }
     set
     {
-      __isset.end_time = true;
-      this._end_time = value;
+      __isset.end_time_att = true;
+      this._end_time_att = value;
     }
   }
 
@@ -101,8 +101,8 @@ public partial class part_t : TBase
     public bool part_id;
     public bool oper;
     public bool cars;
-    public bool start_time;
-    public bool end_time;
+    public bool start_time_att;
+    public bool end_time_att;
   }
 
   public part_t() {
@@ -157,14 +157,14 @@ public partial class part_t : TBase
             break;
           case 7:
             if (field.Type == TType.String) {
-              Start_time = iprot.ReadString();
+              Start_time_att = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 8:
             if (field.Type == TType.String) {
-              End_time = iprot.ReadString();
+              End_time_att = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -221,20 +221,20 @@ public partial class part_t : TBase
         }
         oprot.WriteFieldEnd();
       }
-      if (Start_time != null && __isset.start_time) {
-        field.Name = "start_time";
+      if (Start_time_att != null && __isset.start_time_att) {
+        field.Name = "start_time_att";
         field.Type = TType.String;
         field.ID = 7;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Start_time);
+        oprot.WriteString(Start_time_att);
         oprot.WriteFieldEnd();
       }
-      if (End_time != null && __isset.end_time) {
-        field.Name = "end_time";
+      if (End_time_att != null && __isset.end_time_att) {
+        field.Name = "end_time_att";
         field.Type = TType.String;
         field.ID = 8;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(End_time);
+        oprot.WriteString(End_time_att);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -267,17 +267,17 @@ public partial class part_t : TBase
       __sb.Append("Cars: ");
       __sb.Append(Cars);
     }
-    if (Start_time != null && __isset.start_time) {
+    if (Start_time_att != null && __isset.start_time_att) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Start_time: ");
-      __sb.Append(Start_time);
+      __sb.Append("Start_time_att: ");
+      __sb.Append(Start_time_att);
     }
-    if (End_time != null && __isset.end_time) {
+    if (End_time_att != null && __isset.end_time_att) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("End_time: ");
-      __sb.Append(End_time);
+      __sb.Append("End_time_att: ");
+      __sb.Append(End_time_att);
     }
     __sb.Append(")");
     return __sb.ToString();

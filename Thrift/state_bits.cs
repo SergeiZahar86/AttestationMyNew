@@ -21,20 +21,34 @@ using Thrift.Transport;
 #endif
 public partial class state_bits : TBase
 {
-  private int _att;
+  private int _task;
+  private int _inspection;
   private int _weight;
   private int _load;
 
-  public int Att
+  public int Task
   {
     get
     {
-      return _att;
+      return _task;
     }
     set
     {
-      __isset.att = true;
-      this._att = value;
+      __isset.task = true;
+      this._task = value;
+    }
+  }
+
+  public int Inspection
+  {
+    get
+    {
+      return _inspection;
+    }
+    set
+    {
+      __isset.inspection = true;
+      this._inspection = value;
     }
   }
 
@@ -70,7 +84,8 @@ public partial class state_bits : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool att;
+    public bool task;
+    public bool inspection;
     public bool weight;
     public bool load;
   }
@@ -95,19 +110,26 @@ public partial class state_bits : TBase
         {
           case 1:
             if (field.Type == TType.I32) {
-              Att = iprot.ReadI32();
+              Task = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
             if (field.Type == TType.I32) {
-              Weight = iprot.ReadI32();
+              Inspection = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 3:
+            if (field.Type == TType.I32) {
+              Weight = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
             if (field.Type == TType.I32) {
               Load = iprot.ReadI32();
             } else { 
@@ -135,18 +157,26 @@ public partial class state_bits : TBase
       TStruct struc = new TStruct("state_bits");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (__isset.att) {
-        field.Name = "att";
+      if (__isset.task) {
+        field.Name = "task";
         field.Type = TType.I32;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Att);
+        oprot.WriteI32(Task);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.inspection) {
+        field.Name = "inspection";
+        field.Type = TType.I32;
+        field.ID = 2;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32(Inspection);
         oprot.WriteFieldEnd();
       }
       if (__isset.weight) {
         field.Name = "weight";
         field.Type = TType.I32;
-        field.ID = 2;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Weight);
         oprot.WriteFieldEnd();
@@ -154,7 +184,7 @@ public partial class state_bits : TBase
       if (__isset.load) {
         field.Name = "load";
         field.Type = TType.I32;
-        field.ID = 3;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Load);
         oprot.WriteFieldEnd();
@@ -171,11 +201,17 @@ public partial class state_bits : TBase
   public override string ToString() {
     StringBuilder __sb = new StringBuilder("state_bits(");
     bool __first = true;
-    if (__isset.att) {
+    if (__isset.task) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Att: ");
-      __sb.Append(Att);
+      __sb.Append("Task: ");
+      __sb.Append(Task);
+    }
+    if (__isset.inspection) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Inspection: ");
+      __sb.Append(Inspection);
     }
     if (__isset.weight) {
       if(!__first) { __sb.Append(", "); }

@@ -47,9 +47,9 @@ namespace Attestation
         public int idx;                                             // индекс строки
         private Global global;
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
-        System.Windows.Threading.DispatcherTimer dispatcherTimer;   // Таймер аттестации
-        System.Windows.Threading.DispatcherTimer timerConnect;
-        System.Windows.Threading.DispatcherTimer checkIsOpen;
+        DispatcherTimer dispatcherTimer;   // Таймер аттестации
+        DispatcherTimer timerConnect;
+        DispatcherTimer checkIsOpen;
         MqttClient client;
         RowTab row;
         private bool is_Num_close_att;                              // флаг количества цифр в номерах вагонов
@@ -60,59 +60,76 @@ namespace Attestation
 
         private void SetRedStatusAtt() // установка красного цвета для трёх индикаторов статуса аттестации
         {
-            att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
-            tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
-            load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+            task_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+            inspection_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+            weight_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+            load_canva.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
         }
 
         private void GetCollorStatusAtt(state_bits state) // установка цветов трёх индикаторов статуса аттестации
         {
-            int att = state.Att;
-            int tara = state.Weight;
+            int task = state.Task;
+            int inst = state.Inspection;
+            int weight = state.Weight;
             int load = state.Load;
-            switch (att)
+            switch (task)
             {
                 case 0:
-                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
+                    task_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
                     break;
                 case 1:
-                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
+                    task_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
                     break;
                 case 2:
-                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
+                    task_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
                     break;
                 case 3:
-                    att_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+                    task_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
                     break;
             }
-            switch (tara)
+            switch (inst)
             {
                 case 0:
-                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
+                    inspection_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
                     break;
                 case 1:
-                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
+                    inspection_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
                     break;
                 case 2:
-                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
+                    inspection_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
                     break;
                 case 3:
-                    tara_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+                    inspection_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+                    break;
+            }
+            switch (weight)
+            {
+                case 0:
+                    weight_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
+                    break;
+                case 1:
+                    weight_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
+                    break;
+                case 2:
+                    weight_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
+                    break;
+                case 3:
+                    weight_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
                     break;
             }
             switch (load)
             {
                 case 0:
-                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
+                    load_canva.Background = new SolidColorBrush(Color.FromRgb(r_Grey, g_Grey, b_Grey));
                     break;
                 case 1:
-                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
+                    load_canva.Background = new SolidColorBrush(Color.FromRgb(r_GreenE, g_GreenE, b_GreenE));
                     break;
                 case 2:
-                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
+                    load_canva.Background = new SolidColorBrush(Color.FromRgb(r_Yellow, g_Yellow, b_Yellow));
                     break;
                 case 3:
-                    load_canvas.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
+                    load_canva.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
                     break;
             }
         }
@@ -144,7 +161,7 @@ namespace Attestation
                     timer.Tag = t;
                     await t;
                     global.part = t.Result;
-                    global.startTimeStr = global.part.Start_time;
+                    global.startTimeStr = global.part.Start_time_att;
                     timeStart.Text = global.startTimeStr;
 
 
@@ -318,6 +335,21 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
 
+            //label_going_att.Visibility = Visibility.Hidden;
+            if (global.ArmAttestation)
+            {
+                NewTask.Visibility = Visibility.Hidden;
+                CancelTask.Visibility = Visibility.Hidden;
+                CloseProg.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                EndAtt.Visibility = Visibility.Hidden;
+            }
+
+
+
+
             allDataEntered = true;
             CountRow = 100;                                                        // для сравнения списков с целью выявления изменений
             is_Num_close_att = true;                                            
@@ -370,8 +402,9 @@ namespace Attestation
             if (!global.isColor)
             {
                 global.mainButtonAttestation = "Закончить";
-                startRow_1.Text = global.mainButtonAttestation;           // текст в кнопке аттестации
-                StartAttestation.Background = global.RedColorEnd;         // красный
+                //================================================================================================================
+                //startRow_1.Text = global.mainButtonAttestation;           // текст в кнопке аттестации
+                //StartAttestation.Background = global.RedColorEnd;         // красный
                 while (checkIsOpen.IsEnabled == true)
                 {
                     checkIsOpen.Stop();
@@ -469,11 +502,12 @@ namespace Attestation
                     {
                         global.PartId = global.part.Part_id.ToString();              // Номер партии
                         //part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
-
-                        StartAttestation.Background = global.RedColorEnd;            // красный
+                        //=======================================================================================================
+                        //StartAttestation.Background = global.RedColorEnd;            // красный
 
                         global.mainButtonAttestation = "Закончить";
-                        startRow_1.Text = global.mainButtonAttestation;
+                        //=======================================================================================================
+                        //startRow_1.Text = global.mainButtonAttestation;
 
                         DataGridMain.ItemsSource = null;
                         DataGridMain.ItemsSource = global.ROWS;     // Привязка вагонов к datagrid
@@ -540,11 +574,12 @@ namespace Attestation
                                                                                        для дальнейшей записи в объект car_t и передачи на сервер*/
                             global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
                             global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
-
-                            StartAttestation.Background = global.GreenColorStart;             // зеленый
+                            //==================================================================================================
+                            //StartAttestation.Background = global.GreenColorStart;             // зеленый
 
                             global.mainButtonAttestation = "Начать";
-                            startRow_1.Text = global.mainButtonAttestation;
+                            //=====================================================================================================
+                            //startRow_1.Text = global.mainButtonAttestation;
 
                             global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
                             global.isEnabled = false;                                         // флаг кликабельности datagrid

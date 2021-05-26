@@ -18,25 +18,8 @@ namespace Attestation
 {
     class Global : INotifyPropertyChanged
     {
-        [DllImport("WinScard.dll")]
-        public static extern int SCardEstablishContext(uint dwScope, IntPtr notUsed1, IntPtr notUsed2, out IntPtr phContext);
 
-        [DllImport("WinScard.dll")]
-        public static extern int SCardConnect(IntPtr hContext, string cReaderName,
-            uint dwShareMode, uint dwPrefProtocol, ref IntPtr hCard, ref IntPtr ActiveProtocol);
-
-        [DllImport("WinScard.dll")]
-        public static extern int SCardDisconnect(IntPtr hCard, int Disposition);
-
-        [DllImport("WinScard.dll")]
-        public static extern int SCardTransmit(IntPtr hCard, ref HiDWinscard.SCARD_IO_REQUEST pioSendRequest,
-            Byte[] SendBuff, int SendBuffLen, ref HiDWinscard.SCARD_IO_REQUEST pioRecvRequest, Byte[] RecvBuff, ref int RecvBuffLen);
-
-        [DllImport("WinScard.dll")]
-        public static extern int SCardReleaseContext(IntPtr phContext);
-
-        //public bool isLoadAttestation; // флаг для загрузки страницы аттестации
-
+        public bool ArmAttestation;                                          // разграничение работы армов
         public bool getStartAtt;                                             // можно ли начинать аттестацию
         public bool isColor;                                                 // флаг для кнопки начала и завершения аттестации
         public string OldPart;                                               // результат вызова метода getOldPart()
@@ -155,7 +138,7 @@ namespace Attestation
 
         public void GetGlobalPart(string user) // Получение партии вагонов перед Началом аттестации 
         {
-            part = beginAtt(user);
+            //part = beginAtt(user);
             DATA = part.Cars;        // серверный список вагонов
             ROWS = GetRows();        // внутренний список вагонов
         }
@@ -168,14 +151,6 @@ namespace Attestation
         public ObservableCollection<RowTab> GetRows() // внутренний список вагонов 
         {
             ObservableCollection<RowTab> rows = new ObservableCollection<RowTab>();
-            
-            /*for(int i = 0; i<25; i++)
-            {
-                double Tar = 33.3;
-                double Tar_e = 43.3;
-                double Tar_delta = Math.Round((Tar - Tar_e), 3, MidpointRounding.AwayFromZero);
-                rows.Add(new RowTab("hello", i+1, (34556644 +i*8).ToString(),1, "",1, "",1, "", 1, "", Tar+i*7, Tar_e + i * 7, Tar_delta, 1, "", 1, "", 55, ""));
-            }*/
             
             foreach (car_t cars in DATA)
             {
@@ -267,14 +242,6 @@ namespace Attestation
             
             return rows;
         }
-        public byte[] ImageToByteArray(System.Drawing.Image imageIn) // преобразует картинку в массив байтов
-        {
-            using (var ms = new MemoryStream())
-            {
-                imageIn.Save(ms, imageIn.RawFormat);
-                return ms.ToArray();
-            }
-        }
         public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет передавать картинки в виде
                                                                        * массивов байт в объект Image окна*/
         {
@@ -300,27 +267,11 @@ namespace Attestation
             }
         }
         /// ////////////////////////////////////////// Запрос данных ///////////////////////////////////////////////////////////////////////////////
-        public part_t getPart(string part_id) // Запрос партии вагонов
-        {
-            return this.client.getPart(part_id);
-        }
         public photo_t getPhoto(string part_id, int car_id) // Получение фотографий вагона
         {
             return this.client.getPhoto(part_id, car_id);
         }
-        public String getUser(String Login, String Password, String Emple_id) // Получение имени пользователя
-        {
-            return this.client.getUser(Login, Password, Emple_id);
-        }
         ///////////////////////////////////////////////// запись значений ////////////////////////////////////////////////////////////////////////////////
-        public bool setNum(string part_id, int car_id, string num) // Корректировка номера вагона	
-        {
-            return this.client.setNum( part_id, car_id, num);
-        }
-        public bool setAtt(string part_id, int car_id, int att_code) // Корректировка признака аттестации
-        {
-            return this.client.setAtt(part_id, car_id, att_code);
-        }
         public bool setUser(string part_id, string user) // запись имени оператора
         {
             return this.client.setUser(part_id, user); 
@@ -329,78 +280,6 @@ namespace Attestation
         public bool exitAtt(string part_id) // Завершение аттестации
         {
             return this.client.endAtt(part_id);
-        }
-        public part_t beginAtt( string user) // Начало аттестации и получение партии вагонов
-        {
-            if (normal_att)
-                return this.client.startAtt(user);
-            else
-                return this.client.startAttEmergency(user,how_many_wagons);
-        }
-        public bool changePass(string login, string oldPass, string newPass, string newEmpl_id) // Смена данных учетной записи 
-        {
-            return this.client.changePass(login, oldPass, newPass, newEmpl_id);
-        }
-        public string getNumberCard() // Работы считывателя карты, возвращает номер карты
-        {
-            int retval;                                            //Return Value
-            IntPtr hContext;                                       //Context Handle value
-            IntPtr hCard = IntPtr.Zero;                            //Card handle
-            IntPtr protocol = IntPtr.Zero;                         //Protocol used currently
-            Byte[] sendBuffer = new Byte[255];                     //Send Buffer in SCardTransmit
-            Byte[] receiveBuffer = new Byte[255];                  //Receive Buffer in SCardTransmit
-            int sendbufferlen, receivebufferlen;                   //Send and Receive Buffer length in SCardTransmit
-            Byte bcla;                                             //Class Byte
-            Byte bins;                                             //Instruction Byte
-            Byte bp1;                                              //Parameter Byte P1
-            Byte bp2;                                              //Parameter Byte P2
-            Byte len;                                              //Lc/Le Byte
-            Byte[] data = new Byte[255];                           //Data Bytes
-            HiDWinscard.SCARD_READERSTATE ReaderState;             //Object of SCARD_READERSTATE
-            uint dwscope;                                          //Scope of the resource manager context
-            string code = null;
-            dwscope = 2;
-            retval = SCardEstablishContext(dwscope, IntPtr.Zero, IntPtr.Zero, out hContext);
-            retval = SCardConnect(hContext, "HID OMNIKEY 5427 CK CL 0", HiDWinscard.SCARD_SHARE_SHARED, HiDWinscard.SCARD_PROTOCOL_T1,
-                                 ref hCard, ref protocol);       //Command to connect the card ,protocol T=1
-            if (retval == 0)
-            {
-                bcla = 0xFF;
-                bins = 0xCA;
-                bp1 = 0x00;
-                bp2 = 0x00;
-                len = 0x00;
-                sendBuffer[0] = bcla;
-                sendBuffer[1] = bins;
-                sendBuffer[2] = bp1;
-                sendBuffer[3] = bp2;
-                sendBuffer[4] = len;
-                HiDWinscard.SCARD_IO_REQUEST sioreq;
-                sioreq.dwProtocol = 0x2;
-                sioreq.cbPciLength = 8;
-                HiDWinscard.SCARD_IO_REQUEST rioreq;
-                rioreq.cbPciLength = 8;
-                rioreq.dwProtocol = 0x2;
-                sendbufferlen = 0x5;
-                receivebufferlen = 8;
-                retval = SCardTransmit(hCard, ref sioreq, sendBuffer, sendbufferlen, ref rioreq, receiveBuffer, ref receivebufferlen);
-                if (retval == 0)
-                {
-                    if ((receiveBuffer[receivebufferlen - 2] == 0x90) && (receiveBuffer[receivebufferlen - 1] == 0))
-                    {
-                        //Console.WriteLine(BitConverter.ToString(receiveBuffer, (receivebufferlen - 2), 1) + " " + BitConverter.ToString(receiveBuffer, (receivebufferlen - 1), 1));
-                        code = BitConverter.ToString(receiveBuffer).Replace("-", string.Empty).Substring(0, (receivebufferlen - 2) * 2);
-                        Console.WriteLine(code);
-                        Console.ReadLine();
-                    }
-                }
-                retval = SCardDisconnect(hCard, HiDWinscard.SCARD_UNPOWER_CARD); //Command to disconnect the card
-            }
-            else
-            {
-            }
-            retval = SCardReleaseContext(hContext);
-            return code;
         }
         public bool checkSum(string number) // проверка номера вагона на правдивость
         {
@@ -433,11 +312,6 @@ namespace Attestation
 
         // для интерфейса INotifyPropertyChanged /////////////////////
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
         public void workAfterShutdown()
         {
             try
@@ -458,7 +332,7 @@ namespace Attestation
                 if (OldPart.Length > 0)
                 {
                     part = client.getPart(OldPart);                 // получаем незавершенную партию
-                    startTimeStr = part.Start_time;                        // получение времени начала аттестации
+                    startTimeStr = part.Start_time_att;                        // получение времени начала аттестации
                     PartId = part.Part_id;                                 // получение номера партии
                     isColor = false;                                              // для кнопки начала и завершения аттестации 
                     //ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации

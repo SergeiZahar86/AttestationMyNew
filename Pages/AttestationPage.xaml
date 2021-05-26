@@ -38,17 +38,19 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.4*"/>
                 <ColumnDefinition Width="0.25*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.6*"/>
                 <ColumnDefinition Width="0.25*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.6*"/>
                 <ColumnDefinition Width="0.25*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Canvas
                 Grid.Column="1"
                 >
                 <Border
-                    x:Name="att_canvas"
+                    x:Name="task_canvas"
                     Width="20"
                     Height="20"
                     Canvas.Top="10"
@@ -62,7 +64,7 @@
             </Canvas>
             <TextBlock
                 Grid.Column="2"
-                Text="аттестация"
+                Text="задание"
                 Padding="5,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="14"
@@ -72,7 +74,7 @@
                 Grid.Column="3"
                 >
                 <Border
-                    x:Name="tara_canvas"
+                    x:Name="inspection_canvas"
                     Width="20"
                     Height="20"
                     Canvas.Top="10"
@@ -86,7 +88,7 @@
             </Canvas>
             <TextBlock
                 Grid.Column="4"
-                Text="тара"
+                Text="осмотр"
                 Padding="5,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="14"
@@ -96,7 +98,7 @@
                 Grid.Column="5"
                 >
                 <Border
-                    x:Name="load_canvas"
+                    x:Name="weight_canvas"
                     Width="20"
                     Height="20"
                     Canvas.Top="10"
@@ -110,6 +112,30 @@
             </Canvas>
             <TextBlock
                 Grid.Column="6"
+                Text="тара"
+                Padding="5,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                
+                />
+            <Canvas
+                Grid.Column="7"
+                >
+                <Border
+                    x:Name="load_canva"
+                    Width="20"
+                    Height="20"
+                    Canvas.Top="10"
+                    Canvas.Left="5"
+                    VerticalAlignment="Bottom"
+                    CornerRadius="10"
+                    Background="Gray"
+                    BorderThickness="2"
+                    BorderBrush="#FF37474F"
+                    />
+            </Canvas>
+            <TextBlock
+                Grid.Column="8"
                 Text="погрузка"
                 Padding="5,0,0,0"
                 VerticalAlignment="Center"
@@ -117,9 +143,6 @@
                 
                 />
         </Grid>
-        <!--
-        <Button x:Name="ss" Grid.Row="1"  Click="ggggg" Background="Red"/>
-        -->
         <Grid
             x:Name="grid_2"
             Grid.Row="0"
@@ -235,23 +258,25 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
         </Grid>
-        <Grid
-            x:Name="grid_7"
-            Grid.Row="0"
-            Grid.Column="8"
-            Background="#EEEEEE"
-            >
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <TextBlock x:Name="shippersTextBlock" Grid.Row="0" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="consigneesTextBlock" Grid.Row="1" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left"/>
-        </Grid>
+
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="9"
+            x:Name="label_going_att"
+            Content="Идёт аттестация!"
+            VerticalAlignment="Stretch"
+            FontSize="24"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            HorizontalAlignment="Stretch"
+            FontFamily="Calibry"
+            Foreground="DarkRed"
+            Margin="0"
+            />
+        
         <Button
-            x:Name="StartAttestation"
-            Click="StartAttestation_Click"
+            x:Name="NewTask"
             Grid.Column="0"
             Grid.Row="0"
             Height="44"
@@ -262,14 +287,78 @@
             >
             <Grid>
                 <TextBlock
-                    x:Name="startRow_1"
+                    x:Name="NewTaskRow_1"
                     Grid.Row="0"
-                    Text="Начать"
+                    Text="Новое"
                     Padding="2,2,2,0"
                     HorizontalAlignment="Center"
                     />
                 <TextBlock
-                    x:Name="startRow_2"
+                    x:Name="NewTaskRow_2"
+                    Grid.Row="1"
+                    Text="задание"  
+                    Padding="2,0,2,5"
+                    HorizontalAlignment="Center"
+                    />
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Button>
+        <Button
+            x:Name="CancelTask"
+            Grid.Column="0"
+            Grid.Row="0"
+            Height="44"
+            Width="90" 
+            Style="{StaticResource startAttestation}"
+            Background="#DE6760"
+            HorizontalAlignment="Left"
+            Margin="150,0,0,0"
+            >
+            <Grid>
+                <TextBlock
+                    x:Name="CancelTaskRow_1"
+                    Grid.Row="0"
+                    Text="Отменить"
+                    Padding="2,2,2,0"
+                    HorizontalAlignment="Center"
+                    />
+                <TextBlock
+                    x:Name="CancelTaskRow_2"
+                    Grid.Row="1"
+                    Text="задание"  
+                    Padding="2,0,2,5"
+                    HorizontalAlignment="Center"
+                    />
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Button>
+       
+        <Button
+            x:Name="EndAtt"
+            Grid.Column="0"
+            Grid.Row="0"
+            Height="44"
+            Width="90" 
+            Style="{StaticResource startAttestation}"
+            HorizontalAlignment="Left"
+            Margin="25,0,0,0"
+            >
+            <Grid>
+                <TextBlock
+                    x:Name="EndAttRow_1"
+                    Grid.Row="0"
+                    Text="Завершить"
+                    Padding="2,2,2,0"
+                    HorizontalAlignment="Center"
+                    />
+                <TextBlock
+                    x:Name="EndAttRow_2"
                     Grid.Row="1"
                     Text="аттестацию"  
                     Padding="2,0,2,5"
@@ -281,7 +370,39 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Button>
-        
+        <Button
+            x:Name="CloseProg"
+            Grid.Column="8"
+            Grid.Row="0"
+            Height="44"
+            Width="90" 
+            Style="{StaticResource startAttestation}"
+            Background="#999999"
+            HorizontalAlignment="Right"
+            Margin="0,0,25,0"
+            >
+            <Grid>
+                <TextBlock
+                    x:Name="CloseProgRow_1"
+                    Grid.Row="0"
+                    Text="Закрыть"
+                    Padding="2,2,2,0"
+                    HorizontalAlignment="Center"
+                    />
+                <TextBlock
+                    x:Name="CloseProgRow_2"
+                    Grid.Row="1"
+                    Text="программу"  
+                    Padding="2,0,2,5"
+                    HorizontalAlignment="Center"
+                    />
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Button>
+
 
         <!-- ========================== DataGrid ======================= -->
         <DataGrid

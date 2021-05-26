@@ -16,9 +16,10 @@ struct cause_t {
 }
 # состояние процессов позрузки, взвешивания и аттестации
 struct state_bits {
-  1:int job,      
-  2:int weight,
-  3:int load   
+  1:int task,   
+  2:int inspection,    
+  3:int weight,
+  4:int load   
 }
 
 # Справочник контрагентов
@@ -74,19 +75,18 @@ struct Status_Att{         # Статус аттестации
 
 service DataProviderService
 {
-      # Справочники
+    # Справочники
     list<cause_t> getCauses() throws (1:DataProviderException ex),                                          # Запрос справочника причин неаттестации
     list<contractor_t> getContractors() throws (1:DataProviderException ex),                                # Запрос справочника контрагентов
     list<mat_t> getMat() throws (1:DataProviderException ex),                                               # Запрос справочника материалов
       
-      # Запрос данных	  
-    photo_t getPhoto(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                   # Получение фотографий вагона
-    part_t getPart(1:string part_id) throws (1:DataProviderException ex),                                   # Запрос партии вагонов   
-	string getNum(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                      # Получение номера вагона
+    # Запрос данных	  
+   	photo_t getPhoto(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                   # Получение фотографий вагона
+   	part_t getPart(1:string part_id) throws (1:DataProviderException ex),                     		                # Запрос партии вагонов   
 	string getOldPart() throws (1:DataProviderException ex),                                                # Получение номера последней незакрытой партии
-    state_bits getStatusBits()  throws (1:DataProviderException ex),                                        # состояние процессов позрузки, взвешивания и аттестации                                               
+	state_bits getStatusBits()  throws (1:DataProviderException ex),                                        # состояние процессов                                               
     
-	  # запись значенией
+	# запись значенией
   	bool setNum(1:string part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	
     bool setAtt(1:string part_id, 2:int car_id, 3:int att_code) throws (1:DataProviderException ex),           # Корректировка признака аттестации
 	bool setUser(1:string part_id,2:string user) throws (1:DataProviderException ex),                          # запись имени оператора
@@ -100,19 +100,14 @@ service DataProviderService
 	bool setCause(1:string part_id,2:int car_id, 3:int cause_id) throws (1:DataProviderException ex),          # корректировка причины неаттестации
 	
 	# Сервисные функции 
-	#part_t startAtt(1:string user) throws (1:DataProviderException ex),	# Начало аттестации 
-	bool endAtt(1:string user) throws (1:DataProviderException ex),			# Завершение аттестации
+	#part_t startAtt(1:string userLogin) throws (1:DataProviderException ex),	# Начало аттестации 
+	bool endAtt(1:string userLogin) throws (1:DataProviderException ex),			# Завершение аттестации
 	  
-	void reiterativeAtt(1:string user) throws (1:DataProviderException ex),	# Повтор аттестации
-	  
-	void createTask(1:string user) throws (1:DataProviderException ex),		# Создать задание
-	void endTask(1:string user) throws (1:DataProviderException ex),		# Закрыть задание
-	
-	# Мусор
-	bool changePass(1:string login, 2:string oldPass, 3:string newPass, 4:string newEmpl_id) throws (1:DataProviderException ex),   # Смена данных учетной записи 
-	string getUser(1:string login, 2:string password, 3:string empl_id) throws (1:DataProviderException ex),						# Получение имени пользователя
-	part_t startAttEmergency(1:string user,2:int colWagons) throws (1:DataProviderException ex)                                     #СОЗДАНИЕ ПАРТИИ В АВАРИЙНОМ РЕЖИМЕ
-	Status_Att getStatusAtt(),                                                                                                      # Запрос статуса начала или завершения аттестации
+	void createTask(1:string userLogin) throws (1:DataProviderException ex),		# Создать задание 
+	void endTask(1:string userLogin) throws (1:DataProviderException ex),		# Закрыть задание
+
+	void removeTask(1:string userLogin) throws (1:DataProviderException ex),	# Удалить задание
+
 }
 
 

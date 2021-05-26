@@ -6,91 +6,195 @@
         xmlns:local="clr-namespace:Attestation"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        mc:Ignorable="d"  Title="" Height="1080" Width="1980"  WindowState="Maximized"
-        WindowStyle="None"  WindowStartupLocation="CenterScreen"
-        Loaded="GlobalWindow_Loaded">
+        mc:Ignorable="d"
+        Title=""
+        Height="1080"
+        Width="1980"
+        WindowState="Maximized"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Loaded="GlobalWindow_Loaded"
+        >
 
 
-    <DockPanel x:Name="RootWindow">
-        <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#FF37474F" Height="40px">
-
-            <!--  .............................. Кнопки панели управления .........................................-->
-
-            <Button x:Name="CloseButton" fa5:Awesome.Content="Solid_Times"  Click="CloseButton_Click"   DockPanel.Dock="Right"
-                    Style="{StaticResource RedButtonMainWindow}"  Width="40"  IsCancel="True">
+    <DockPanel
+        x:Name="RootWindow"
+        >
+        <DockPanel
+            x:Name="TitleBar"
+            DockPanel.Dock="Top"
+            Background="#FF37474F"
+            Height="40px"
+            >
+            <Button
+                x:Name="CloseButton"
+                fa5:Awesome.Content="Solid_Times"
+                Click="CloseButton_Click"
+                DockPanel.Dock="Right"
+                Style="{StaticResource RedButtonMainWindow}"
+                Width="40"
+                IsCancel="True"
+                >
                 <Button.ToolTip>
-                    <ToolTip Content="Закончить работу" FontSize="16" Foreground="Black" Background="White"/>
+                    <ToolTip
+                        Content="Закончить работу"
+                        FontSize="16"
+                        Foreground="Black"
+                        Background="White"
+                        />
                 </Button.ToolTip>
             </Button>
 
 
-            <Button x:Name="MinButton"   fa5:Awesome.Content="Solid_Minus"  Click="MinButton_Click"  DockPanel.Dock="Right"
-                    Style="{StaticResource RedButtonMainWindow}"   Width="40">
+            <Button
+                x:Name="MinButton"
+                fa5:Awesome.Content="Solid_Minus"
+                Click="MinButton_Click"
+                DockPanel.Dock="Right"
+                Style="{StaticResource RedButtonMainWindow}"
+                Width="40"
+                >
                 <Button.ToolTip>
-                    <ToolTip Content="Свернуть окно" FontSize="16" Foreground="Black" Background="White"/>
+                    <ToolTip
+                        Content="Свернуть окно"
+                        FontSize="16"
+                        Foreground="Black"
+                        Background="White"
+                        />
                 </Button.ToolTip>
             </Button>
 
-            <!--
-            <Button x:Name="passwordButton"   Click="changePassword_Click"  DockPanel.Dock="Right" Style="{StaticResource RedButtonMainWindow}"
-                    fa5:Awesome.Content="Solid_Key"  Width="50"  Margin="4,0,80,0">
+            <Button
+                x:Name="passwordButton"
+                Click="changePassword_Click"
+                DockPanel.Dock="Right"
+                Style="{StaticResource RedButtonMainWindow}"
+                fa5:Awesome.Content="Solid_Key"
+                Width="50"
+                Margin="4,0,80,0"
+                >
                 <Button.ToolTip>
-                    <ToolTip Content="Смена пароля" FontSize="16" Foreground="Black" Background="White"/>
+                    <ToolTip
+                        Content="Смена пароля"
+                        FontSize="16"
+                        Foreground="Black"
+                        Background="White"
+                        />
                 </Button.ToolTip>
             </Button>
-            <Button x:Name="exitLoginButton" DockPanel.Dock="Right" Style="{StaticResource RedButtonMainWindow}"
-                    fa5:Awesome.Content="Solid_SignOutAlt"  Width="50"  Margin="4,0,5,0" Click="signIn_Click">
+            <Button
+                x:Name="exitLoginButton"
+                DockPanel.Dock="Right"
+                Style="{StaticResource RedButtonMainWindow}"
+                fa5:Awesome.Content="Solid_SignOutAlt"
+                Width="50"
+                Margin="4,0,5,0"
+                Click="signIn_Click"
+                >
                 <Button.ToolTip>
-                    <ToolTip Content="Выйти из учётной записи" FontSize="16" Foreground="Black" Background="White"/>
+                    <ToolTip
+                        Content="Выйти из учётной записи"
+                        FontSize="16"
+                        Foreground="Black"
+                        Background="White"
+                        />
                 </Button.ToolTip>
             </Button>
-            -->
-
-            <!-- .................................    Логотип ............................ -->
-            <Image Width="30" Margin="8,4,0,4" Source="Resources/logo-img2-light.png"/>
-            <TextBlock HorizontalAlignment="Right" Foreground="#DC0000" FontFamily="Impact"
-                       FontSize="24" Margin="4,4,15,4" Text="Indas Cube"/>
-
-            <!--  .............................  Меню ....................................................................-->
-            <Border BorderThickness="0 0 0 6" BorderBrush="#CC0000" x:Name="BorderAttestation" Cursor="Hand" >
-                <TextBlock HorizontalAlignment="Center"  Foreground="White"  PreviewMouseDown="Attestation_Click"
-                           FontFamily="Calibry" FontSize="16" Margin="30,10,15,4">Аттестация</TextBlock>
+            <Image
+                Width="30"
+                Margin="8,4,0,4"
+                Source="Resources/logo-img2-light.png"
+                />
+            <TextBlock
+                HorizontalAlignment="Right"
+                Foreground="#DC0000"
+                FontFamily="Impact"
+                FontSize="24"
+                Margin="4,4,15,4"
+                Text="Indas Cube"
+                />
+            <!--  
+            <Border
+                BorderThickness="0 0 0 6"
+                BorderBrush="#CC0000"
+                x:Name="BorderAttestation"
+                Cursor="Hand" 
+                >
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="White"
+                    PreviewMouseDown="Attestation_Click"
+                    FontFamily="Calibry"
+                    FontSize="16"
+                    Margin="30,10,15,4"
+                    >
+                    Аттестация
+                </TextBlock>
             </Border>
-            <!--
-            <Border BorderThickness="0 0 0 6" BorderBrush="#37474F" x:Name="BorderReport" Cursor="Hand">
-                <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Report_Click"
-                           FontFamily="Calibry"
-                           FontSize="16" Margin="15,10,15,4">Отчеты</TextBlock>
-            </Border>
-            -->
-            <!--
-            <Border BorderThickness="0 0 0 6" BorderBrush="#37474F" x:Name="BorderArchive" Cursor="Hand">
-                <TextBlock HorizontalAlignment="Center" Foreground="White" PreviewMouseDown="Archive_Click"
-                           FontFamily="Calibry"
-                           FontSize="16" Margin="15,10,15,4">Архив</TextBlock>
-            </Border>
-            -->
+-->
 
-            <Label x:Name="label_login" Content="{Binding SomeValueString}"  Height="30" Width="400"
-                   VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Right"
-                   VerticalContentAlignment="Center" HorizontalAlignment="Right"
-                   FontFamily="Calibry" Foreground="White" Background="#FF37474F" Margin="550,0,0,0" Padding="5,5,15,5"/>
+            <Label
+                x:Name="Title"
+                Content="Задание на погрузку"
+                Height="30"
+                Width="400"
+                VerticalAlignment="Center"
+                FontSize="25"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Right"
+                FontFamily="Calibry"
+                Foreground="White"
+                Background="#FF37474F"
+                Margin="150,0,0,0"
+                Padding="0"
+                />
+            <Label
+                x:Name="label_login"
+                Content="{Binding SomeValueString}"
+                Height="30"
+                Width="350"
+                VerticalAlignment="Center"
+                FontSize="18"
+                HorizontalContentAlignment="Right"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Right"
+                FontFamily="Calibry"
+                Foreground="White"
+                Background="#FF37474F"
+                Margin="150,0,0,0"
+                Padding="5,5,15,5"
+                />
             
-            <Label x:Name="label_fio" Content="{Binding SomeValueString}"  Height="30" Width="400"
-                   VerticalAlignment="Center" FontSize="18" HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center" HorizontalAlignment="Right"
-                   FontFamily="Calibry" Foreground="White" Background="#FF37474F" Margin="0" Padding="30,5,5,5"/>
-            <!--
-            <DockPanel HorizontalAlignment="right" Margin="0,0,20,0">
-                <TextBlock HorizontalAlignment="Right" Margin="4,10,15,4" Cursor="Hand"
-                           Style="{StaticResource TextblockHead}">Аттестация вагонов</TextBlock>
-                <TextBlock  x:Name="user" HorizontalAlignment="Right" Margin="4,10,15,4"
-                            Cursor="Hand" Style="{StaticResource TextblockHead}">admin</TextBlock>
-            </DockPanel>
-            -->
+            <Label
+                x:Name="label_fio"
+                Content="{Binding SomeValueString}"
+                Height="30"
+                Width="400"
+                VerticalAlignment="Center"
+                FontSize="18"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Right"
+                FontFamily="Calibry"
+                Foreground="White"
+                Background="#FF37474F"
+                Margin="0,0,20,0"
+                Padding="30,5,5,5"
+                />
+            
         </DockPanel>
-        <Border Background="#EEEEEE">
-            <Frame x:Name="MainFrame"  Height="1020" Margin="0,10,0,0" VerticalAlignment="Top" Width="1920" NavigationUIVisibility="Hidden"/>
+        <Border
+            Background="#EEEEEE"
+            >
+            <Frame 
+                x:Name="MainFrame"
+                Height="1020"
+                Margin="0,10,0,0"
+                VerticalAlignment="Top"
+                Width="1920"
+                NavigationUIVisibility="Hidden"
+                />
         </Border>
     </DockPanel>
 </Window>

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Attestation
 {
@@ -14,15 +11,27 @@ namespace Attestation
         {
             InitializeComponent();
             global = Global.getInstance();
+            if (!global.ArmAttestation)
+            {
+                CloseButton.Visibility = Visibility.Hidden;
+                MinButton.Visibility = Visibility.Hidden;
+                passwordButton.Visibility = Visibility.Hidden;
+                exitLoginButton.Visibility = Visibility.Hidden;
+                label_fio.Content = global.user;
+                label_login.Content = global.Login;
+            }
         }
         private void GlobalWindow_Loaded(object sender, RoutedEventArgs e) // начальная загрузка
         {
             //==========================================================================================================
-            /*signIn = new SignIn();
-            signIn.Owner = Window.GetWindow(this);
-            signIn.ShowDialog();
-            label_fio.Content = Global.ShortName(global.user);
-            label_login.Content = global.Login;*/
+            if (global.ArmAttestation)
+            {
+                signIn = new SignIn();
+                signIn.Owner = Window.GetWindow(this);
+                signIn.ShowDialog();
+                label_fio.Content = Global.ShortName(global.user);
+                label_login.Content = global.Login;
+            }
             //==========================================================================================================
 
 
@@ -33,7 +42,6 @@ namespace Attestation
             AttestationPage p = new AttestationPage();
             MainFrame.Navigate(p);
         }
-        // Обработка события кнопок
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         { 
             Application.Current.Shutdown(); // выход из программы
@@ -53,14 +61,6 @@ namespace Attestation
         { 
             this.WindowState = WindowState.Minimized;
         }
-        private void Attestation_Click(object sender, MouseButtonEventArgs e) // страница аттестации
-        {
-            var converter = new System.Windows.Media.BrushConverter();
-            BorderAttestation.BorderBrush = (Brush)converter.ConvertFromString("#CC0000");
-            AttestationPage p = new AttestationPage();
-            MainFrame.Navigate(p);
-        }
-        
         private void signIn_Click(object sender, RoutedEventArgs e) // кнопка авторизации
         {
             signIn = new SignIn();
