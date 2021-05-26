@@ -345,6 +345,10 @@ namespace Attestation
             else
             {
                 EndAtt.Visibility = Visibility.Hidden;
+                textBlock_time_start.Visibility = Visibility.Hidden;
+                textBlock_time_duration.Visibility = Visibility.Hidden;
+                timeStart.Visibility = Visibility.Hidden;
+                timeSpend.Visibility = Visibility.Hidden;
             }
 
 

@@ -156,7 +156,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock
-                Text="Время начала аттестации:"
+                x:Name="textBlock_time_start"
+                Text="Начало аттестации:"
                 Grid.Row="0"
                 FontSize="16" 
                 TextAlignment="Center"
@@ -165,6 +166,7 @@
                 HorizontalAlignment="Left"
                 />
             <TextBlock
+                x:Name="textBlock_time_duration"
                 Text="Продолжительность аттестации:"
                 Grid.Row="1"
                 FontSize="16" 
