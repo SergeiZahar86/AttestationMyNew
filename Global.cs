@@ -5,18 +5,15 @@ using Thrift.Transport;
 using Thrift.Protocol;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using System.Configuration;
 using System.Text;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using Attestation.DialogWindows;
 
 namespace Attestation
 {
-    class Global : INotifyPropertyChanged
+    class Global
     {
 
         public bool ArmAttestation;                                          // разграничение работы армов
@@ -24,8 +21,10 @@ namespace Attestation
         public bool isColor;                                                 // флаг для кнопки начала и завершения аттестации
         public string OldPart;                                               // результат вызова метода getOldPart()
         public string mainButtonAttestation;                                 // для кнопки начала и завершения аттестации
-        public System.Windows.Media.SolidColorBrush GreenColorStart;         // цвет для кнопки начала и завершения аттестации
-        public System.Windows.Media.SolidColorBrush RedColorEnd;             // цвет для кнопки начала и завершения аттестации
+        public SolidColorBrush GreenColor;                              // цвет для кнопки начала и завершения аттестации
+        public SolidColorBrush RedColor;                                  // цвет для кнопки начала и завершения аттестации
+        public SolidColorBrush GreyColor;                              // цвет для кнопки начала и завершения аттестации
+        public SolidColorBrush YellowColor;                              // цвет для кнопки начала и завершения аттестации
         public bool isEnabled;                                               // флаг кликабельности datagrid
         public bool is_ok_close_att;                                         // проверка при закрытии аттестации
         public bool normal_att;                                              // нормальный режим аттестации
@@ -75,15 +74,11 @@ namespace Attestation
         public string Mqtt_password;
 
 
-        /// для соединения с сервером ///////////////////////////////////////////////////////
         public TTransport transport;
         public DataProviderService.Client client; // DataProviderService - Название заглушки
-
         int Port;
         string Host;
-
         Waiting_Download_data waiting_;
-        /// /////////////////////////////////////////////////////
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
 
         private Global()
@@ -126,10 +121,9 @@ namespace Attestation
             /////////////////////////////////////////////////////////////////////////////////////////////
             isColor = true;                      // для кнопки начала и завершения аттестации
             mainButtonAttestation = "Начать";    // для кнопки начала и завершения аттестации
-            GreenColorStart = new SolidColorBrush(System.Windows.Media.Color.FromRgb(4, 158, 129));  /*зеленый, для кнопки
-                                                                                                 * начала и завершения аттестации */
-            RedColorEnd = new SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 33, 23)); /* красный, для кнопки
-                                                                                                     * начала и завершения аттестации*/
+            GreenColor = new SolidColorBrush(Color.FromRgb(4, 158, 129)); 
+            RedColor = new SolidColorBrush(Color.FromRgb(222, 102, 96));
+            GreyColor = new SolidColorBrush(Color.FromRgb(98, 107, 111));
             ///////////////////////////////////////////////////////////////////////////////////////////////
             ///
             normal_att = true;          // нормальный режим аттестации
@@ -242,8 +236,7 @@ namespace Attestation
             
             return rows;
         }
-        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) /* позволяет передавать картинки в виде
-                                                                       * массивов байт в объект Image окна*/
+        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray) //позволяет передавать картинки в виде массивов байт в объект Image окна
         {
             MemoryStream stream = new MemoryStream(byteArray);
             BitmapImage bitmapImage = new BitmapImage();
@@ -266,17 +259,14 @@ namespace Attestation
                 return null;
             }
         }
-        /// ////////////////////////////////////////// Запрос данных ///////////////////////////////////////////////////////////////////////////////
         public photo_t getPhoto(string part_id, int car_id) // Получение фотографий вагона
         {
             return this.client.getPhoto(part_id, car_id);
         }
-        ///////////////////////////////////////////////// запись значений ////////////////////////////////////////////////////////////////////////////////
         public bool setUser(string part_id, string user) // запись имени оператора
         {
             return this.client.setUser(part_id, user); 
         }
-        //////////////////////////////////////////////////// Функции  //////////////////////////////////////////////////////////////////////////
         public bool exitAtt(string part_id) // Завершение аттестации
         {
             return this.client.endAtt(part_id);
@@ -309,10 +299,7 @@ namespace Attestation
                 return false;
             }
         }
-
-        // для интерфейса INotifyPropertyChanged /////////////////////
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void workAfterShutdown()
+        public void workAfterShutdown() // возобновление работы после закрытия программы
         {
             try
             {
@@ -328,16 +315,10 @@ namespace Attestation
                 IsOk_Val = GetIsOk_Val();                        // справочник итогов аттестации
                 Att_codeFonts = GetAtt_codeFonts();              // справочник элементов шрифта для итогов аттестации
 
-                OldPart = client.getOldPart();                   // проверяем наличие незавершенных аттестаций(метод с сервера)
-                if (OldPart.Length > 0)
-                {
-                    part = client.getPart(OldPart);                 // получаем незавершенную партию
-                    startTimeStr = part.Start_time_att;                        // получение времени начала аттестации
-                    PartId = part.Part_id;                                 // получение номера партии
-                    isColor = false;                                              // для кнопки начала и завершения аттестации 
-                    //ContinuationOfAttestation ofAttestation = new ContinuationOfAttestation();      // окно напоминания о незавершенной аттестации
-                    //ofAttestation.ShowDialog();
-                }
+                //part = client.getPart();                 // получаем незавершенную партию
+                //startTimeStr = part.Start_time_att;                        // получение времени начала аттестации
+                //PartId = part.Part_id;                                 // получение номера партии
+                //isColor = false;                                              // для кнопки начала и завершения аттестации 
                 waiting_.Close();
             }
             catch (Exception ss)
@@ -348,7 +329,6 @@ namespace Attestation
                 waiting_.Close();*/
             }
         }
-
         public void GetShippers(List<contractor_t> contr) // получение справочника Грузоотправителей
         {
             shippers = new List<Shippers>();
@@ -398,17 +378,42 @@ namespace Attestation
             //fonts.Add("Asterisk");
             return fonts;
         }
-        public void GetSignIn() // Авторизация
+
+        // новые функции ==========================================================================================================
+        public bool EndAtt(string user_login) // вызов функции endAtt
         {
-            SignIn signIn = new SignIn();
-            signIn.ShowDialog();
-            try
-            {
-                //label_fio.Content = Global.ShortName(global.user);
-            }
-            catch
-            {
-            }
+
+            return true;
         }
+        public string CreateTask(string user_login) // вызов функции createTask
+        {
+            return "newTask";
+        }
+        public void EndTask(string user_login) // вызов функции endTask
+        {
+            //throw new Exception("Не получилось завершить задание");
+        }
+        public void RemoveTask(string user_login) // вызов функции removeTask
+        {
+            //throw new Exception("Не получилось удалить задание");
+        }
+        public state_bits GetStatusBits() // вызов функции getStatusBits
+        {
+            //throw new Exception("Сломались лампочки");
+            return new state_bits() { Task = 2, Inspection = 0, Weight = 0, Load = 0 };
+        }
+        public part_t GetPart() // вызов функции getPart
+        {
+            //throw new Exception("Не получилось удалить задание");
+            part_t part_ = new part_t();
+            car_t car_ = new car_t();
+            List<car_t> car_s = new List<car_t>();
+            car_s.Add(car_);
+            part_.Cars = car_s;
+            part_.Start_time_att = "e";
+            part_.End_time_att = "e";
+            return part_;
+        }
+
     }
 }

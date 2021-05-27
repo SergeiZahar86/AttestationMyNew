@@ -22,7 +22,6 @@ using Thrift.Transport;
 public partial class part_t : TBase
 {
   private string _part_id;
-  private string _oper;
   private List<car_t> _cars;
   private string _start_time_att;
   private string _end_time_att;
@@ -37,19 +36,6 @@ public partial class part_t : TBase
     {
       __isset.part_id = true;
       this._part_id = value;
-    }
-  }
-
-  public string Oper
-  {
-    get
-    {
-      return _oper;
-    }
-    set
-    {
-      __isset.oper = true;
-      this._oper = value;
     }
   }
 
@@ -99,7 +85,6 @@ public partial class part_t : TBase
   #endif
   public struct Isset {
     public bool part_id;
-    public bool oper;
     public bool cars;
     public bool start_time_att;
     public bool end_time_att;
@@ -131,13 +116,6 @@ public partial class part_t : TBase
             }
             break;
           case 2:
-            if (field.Type == TType.String) {
-              Oper = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 6:
             if (field.Type == TType.List) {
               {
                 Cars = new List<car_t>();
@@ -155,14 +133,14 @@ public partial class part_t : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 7:
+          case 3:
             if (field.Type == TType.String) {
               Start_time_att = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 8:
+          case 4:
             if (field.Type == TType.String) {
               End_time_att = iprot.ReadString();
             } else { 
@@ -198,18 +176,10 @@ public partial class part_t : TBase
         oprot.WriteString(Part_id);
         oprot.WriteFieldEnd();
       }
-      if (Oper != null && __isset.oper) {
-        field.Name = "oper";
-        field.Type = TType.String;
-        field.ID = 2;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Oper);
-        oprot.WriteFieldEnd();
-      }
       if (Cars != null && __isset.cars) {
         field.Name = "cars";
         field.Type = TType.List;
-        field.ID = 6;
+        field.ID = 2;
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, Cars.Count));
@@ -224,7 +194,7 @@ public partial class part_t : TBase
       if (Start_time_att != null && __isset.start_time_att) {
         field.Name = "start_time_att";
         field.Type = TType.String;
-        field.ID = 7;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(Start_time_att);
         oprot.WriteFieldEnd();
@@ -232,7 +202,7 @@ public partial class part_t : TBase
       if (End_time_att != null && __isset.end_time_att) {
         field.Name = "end_time_att";
         field.Type = TType.String;
-        field.ID = 8;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         oprot.WriteString(End_time_att);
         oprot.WriteFieldEnd();
@@ -254,12 +224,6 @@ public partial class part_t : TBase
       __first = false;
       __sb.Append("Part_id: ");
       __sb.Append(Part_id);
-    }
-    if (Oper != null && __isset.oper) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Oper: ");
-      __sb.Append(Oper);
     }
     if (Cars != null && __isset.cars) {
       if(!__first) { __sb.Append(", "); }

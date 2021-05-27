@@ -56,10 +56,9 @@ struct car_t {
 #данные по партии
 struct part_t {
   1:string part_id,        # Номер партии
-  2:string oper,           # ФИО оператора ОТК 
-  6:list<car_t> cars,      # Вагоны партии 
-  7:string start_time_att,     # Начало аттестации партии вагонов
-  8:string end_time_att        # Окончание атткстации
+  2:list<car_t> cars,      # Вагоны партии 
+  3:string start_time_att,     # Начало аттестации партии вагонов
+  4:string end_time_att        # Окончание атткстации
 }
 
 struct photo_t {           # Массив фотографий
@@ -82,13 +81,12 @@ service DataProviderService
       
     # Запрос данных	  
    	photo_t getPhoto(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                   # Получение фотографий вагона
-   	part_t getPart(1:string part_id) throws (1:DataProviderException ex),                     		                # Запрос партии вагонов   
-	string getOldPart() throws (1:DataProviderException ex),                                                # Получение номера последней незакрытой партии
+   	part_t getPart() throws (1:DataProviderException ex),                     		                # Запрос партии вагонов   
 	state_bits getStatusBits()  throws (1:DataProviderException ex),                                        # состояние процессов                                               
     
 	# запись значенией
   	bool setNum(1:string part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	
-    bool setAtt(1:string part_id, 2:int car_id, 3:int att_code) throws (1:DataProviderException ex),           # Корректировка признака аттестации
+	bool setAtt(1:string part_id, 2:int car_id, 3:int att_code) throws (1:DataProviderException ex),           # Корректировка признака аттестации
 	bool setUser(1:string part_id,2:string user) throws (1:DataProviderException ex),                          # запись имени оператора
 	bool setTara(1:string part_id,2:int car_id,3:double tara) throws (1:DataProviderException ex),             # корректировка тары по Этран
 	bool setZone(1:string part_id,2:int car_id,3:int zone) throws (1:DataProviderException ex),                # корректировка зоны по Этран
@@ -103,7 +101,7 @@ service DataProviderService
 	#part_t startAtt(1:string userLogin) throws (1:DataProviderException ex),	# Начало аттестации 
 	bool endAtt(1:string userLogin) throws (1:DataProviderException ex),			# Завершение аттестации
 	  
-	void createTask(1:string userLogin) throws (1:DataProviderException ex),		# Создать задание 
+	string createTask(1:string userLogin) throws (1:DataProviderException ex),		# Создать задание 
 	void endTask(1:string userLogin) throws (1:DataProviderException ex),		# Закрыть задание
 
 	void removeTask(1:string userLogin) throws (1:DataProviderException ex),	# Удалить задание

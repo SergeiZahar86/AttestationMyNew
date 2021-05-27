@@ -6,14 +6,16 @@
       xmlns:fa="http://schemas.fontawesome.io/icons/"
       xmlns:local="clr-namespace:Attestation"
       xmlns:fa5="http://schemas.fontawesome.com/icons/"
-      mc:Ignorable="d" d:DesignHeight="1200" d:DesignWidth="1980"
-      Title="AttestationPage">
+      mc:Ignorable="d"
+      d:DesignHeight="1200"
+      d:DesignWidth="1980"
+      Title="AttestationPage"
+      >
     <Page.Resources>
         <local:NameToBrushConverter x:Key="NameToBrushConverter"/>
     </Page.Resources>
 
     <Grid x:Name="gridMain" >
-        <!--  Разметка грида  -->
         <Grid.RowDefinitions>
             <RowDefinition Height="0.10*"/>
             <RowDefinition Height="0.04*" />
@@ -30,6 +32,7 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <!-- Лампочки =================================================================-->
         <Grid
             Grid.Row="1"
             Grid.Column="0"
@@ -143,6 +146,7 @@
                 
                 />
         </Grid>
+        <!-- Текстовые поля =================================================================-->
         <Grid
             x:Name="grid_2"
             Grid.Row="0"
@@ -176,6 +180,7 @@
                 HorizontalAlignment="Left"
                 />
         </Grid>
+        <!-- Текстовые поля =================================================================-->
         <Grid
             x:Name="grid_3"
             Grid.Row="0"
@@ -203,21 +208,7 @@
                 HorizontalAlignment="Left" Margin="20,0,0,0"
                 />
         </Grid>
-
-        <Grid
-            x:Name="grid_4"
-            Grid.Row="0"
-            Grid.Column="4"
-            Background="#EEEEEE"
-            >
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            
-            
-        </Grid>
+        <!-- Текстовые поля для вывода ошибок =================================================================-->
         <Grid 
             x:Name="grid_5"
             Grid.Row="0"
@@ -247,20 +238,7 @@
                     Padding="8"/>
             </ScrollViewer>
         </Grid>
-
-        <Grid
-            x:Name="grid_6"
-            Grid.Row="0"
-            Grid.Column="7"
-            Background="#EEEEEE"
-            >
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-        </Grid>
-
+        <!-- Надпись "Идёт аттестация!" =================================================================-->
         <Label
             Grid.Row="1"
             Grid.Column="0"
@@ -276,7 +254,7 @@
             Foreground="DarkRed"
             Margin="0"
             />
-        
+        <!-- Кнопка "Новое задание" =================================================================-->
         <Button
             x:Name="NewTask"
             Grid.Column="0"
@@ -285,13 +263,13 @@
             Width="90" 
             Style="{StaticResource startAttestation}"
             HorizontalAlignment="Left"
-            Margin="25,0,0,0"
+            Margin="25,0,0,0" Click="NewTask_Click"
             >
             <Grid>
                 <TextBlock
                     x:Name="NewTaskRow_1"
                     Grid.Row="0"
-                    Text="Новое"
+                    Text="Создать"
                     Padding="2,2,2,0"
                     HorizontalAlignment="Center"
                     />
@@ -308,6 +286,7 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Button>
+        <!-- Кнопка "Отменить задание" =================================================================-->
         <Button
             x:Name="CancelTask"
             Grid.Column="0"
@@ -340,7 +319,7 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Button>
-       
+        <!-- Кнопка "Завершить аттестацию" =================================================================-->
         <Button
             x:Name="EndAtt"
             Grid.Column="0"
@@ -372,6 +351,7 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Button>
+        <!-- Кнопка "Закрыть программу" =================================================================-->
         <Button
             x:Name="CloseProg"
             Grid.Column="8"
@@ -379,9 +359,8 @@
             Height="44"
             Width="90" 
             Style="{StaticResource startAttestation}"
-            Background="#999999"
             HorizontalAlignment="Right"
-            Margin="0,0,25,0"
+            Margin="0,0,25,0" Click="CloseProg_Click"
             >
             <Grid>
                 <TextBlock
@@ -406,7 +385,7 @@
         </Button>
 
 
-        <!-- ========================== DataGrid ======================= -->
+        <!-- ========================== DataGridMain ======================= -->
         <DataGrid
             x:Name="DataGridMain"
             Grid.Row="2"

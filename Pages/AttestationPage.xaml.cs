@@ -4,13 +4,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 using uPLibrary.Networking.M2Mqtt;
@@ -133,7 +130,14 @@ namespace Attestation
                     break;
             }
         }
-        private async void OnTimedEvent(Object source, EventArgs e)      // Получение вагонов с сервера по таймеру
+        public void UpdateDataGrid() // обновление таблицы
+        {
+            global.DATA = global.part.Cars;                        // получаем серверный список вагонов
+            global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
+            DataGridMain.ItemsSource = null;
+            DataGridMain.ItemsSource = global.ROWS;
+        }
+        private async void OnTimedEvent(object source, EventArgs e)      // Получение вагонов с сервера по таймеру
         {
             DispatcherTimer timer = (DispatcherTimer)source;
             if (null != timer.Tag)
@@ -145,87 +149,166 @@ namespace Attestation
             {
                 part_t get_part()
                 {
-                    state = global.client.getStatusBits();
-                    this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                    state = global.GetStatusBits();
+                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
-                        GetCollorStatusAtt(state); // установка цветов трёх индикаторов статуса аттестации
+                        GetCollorStatusAtt(state); // установка цветов индикаторов статуса 
                         var fff = (DateTime.Now - global.startTime);
                         timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
                     });
 
-                    return global.client.getPart(global.PartId);
-                }
-                if (global.transport.IsOpen) // проверяем соединение
-                {
-                    Task<part_t> t = Task<JObject>.Run(get_part);
-                    timer.Tag = t;
-                    await t;
-                    global.part = t.Result;
-                    global.startTimeStr = global.part.Start_time_att;
-                    timeStart.Text = global.startTimeStr;
+                    part_t part_ = new part_t();
+                    car_t car_ = new car_t();
+                    List<car_t> car_s = new List<car_t>();
+                    car_s.Add(car_);
+                    part_.Cars = car_s;
 
-
-                    if (global.part != null)
+                    if (state.Task == 2)
                     {
-                        if (global.part.Cars.Count == 1 && CountRow != global.part.Cars.Count)
-                        {
-                            global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                            global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                                   //observable = global.ROWS;
-                            DataGridMain.ItemsSource = null;
-                            DataGridMain.ItemsSource = global.ROWS;
-                            CountRow = 1;
-                        }
-                        else if (CountRow != global.part.Cars.Count)
-                        {
-                            global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                            global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                                   //observable = global.ROWS;
-                            DataGridMain.ItemsSource = null;
-                            DataGridMain.ItemsSource = global.ROWS;
+                        part_ = global.GetPart();
 
-                            CountRow = global.ROWS.Count;
-                        }
-                        else
+                        Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
-                            for (int i = 0; i < global.part.Cars.Count; i++)
+                            if (part_.Start_time_att.Length < 1)
                             {
-                                if (global.DATA != null)
+                                label_going_att.Visibility = Visibility.Hidden;
+
+                                NewTask.IsEnabled = false;
+                                CancelTask.IsEnabled = true;
+                                NewTaskRow_1.Text = "Сохранить";
+                                NewTask.Background = global.GreenColor;
+                                CancelTask.Background = global.RedColor;
+                            }
+                            else
+                            {
+                                if (part_.End_time_att.Length > 0)
                                 {
-                                    for (int p = 0; p < global.DATA.Count; p++)
-                                    {
-                                        if (i == p)
-                                        {
-                                            var c1 = Math.Round(global.part.Cars[i].Tara, 3).ToString();
-                                            var c2 = Math.Round(global.DATA[p].Tara, 3).ToString();
+                                    label_going_att.Visibility = Visibility.Hidden;
 
-
-                                            if (c1 != c2 || global.part.Cars[i].Zone_e.ToString() != global.DATA[p].Zone_e.ToString()
-                                                || global.part.Cars[i].Tara_e.ToString() != global.DATA[p].Tara_e.ToString())
-                                            {
-                                                global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                                                global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                                                       //observable = global.ROWS;
-                                                DataGridMain.ItemsSource = null;
-                                                DataGridMain.ItemsSource = global.ROWS;
-                                                break;
-                                            }
-                                        }
-                                    }
+                                    NewTask.IsEnabled = true;
+                                    CancelTask.IsEnabled = true;
+                                    NewTaskRow_1.Text = "Сохранить";
+                                    NewTask.Background = global.GreenColor;
+                                    CancelTask.Background = global.RedColor;
                                 }
                                 else
                                 {
-                                    global.DATA = global.part.Cars;                        // получаем серверный список вагонов
-                                    global.ROWS = global.GetRows();                        // получаем внутренний список вагонов
-                                                                                           //observable = global.ROWS;
-                                    DataGridMain.ItemsSource = null;
-                                    DataGridMain.ItemsSource = global.ROWS;
-                                    CountRow = global.ROWS.Count;
+                                    NewTask.IsEnabled = false;
+                                    CancelTask.IsEnabled = true;
+                                    NewTaskRow_1.Text = "Сохранить";
+                                    NewTask.Background = global.GreyColor;
+                                    CancelTask.Background = global.RedColor;
+
+                                    label_going_att.Visibility = Visibility.Visible;
+                                }
+                            }
+                        });
+
+                    }
+                    else if(state.Task == 0)
+                    {
+                        Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                        {
+                            NewTask.IsEnabled = true;
+                            CancelTask.IsEnabled = false;
+                            NewTaskRow_1.Text = "Создать";
+                            NewTask.Background = global.GreenColor;
+                            CancelTask.Background = global.GreyColor;
+                            label_going_att.Visibility = Visibility.Hidden;
+                        });
+                        
+                    }
+                    else if(state.Task == 1)
+                    {
+                        Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                        {
+                            NewTask.IsEnabled = false;
+                            CancelTask.IsEnabled = false;
+                            NewTaskRow_1.Text = "Создать";
+                            NewTask.Background = global.GreyColor;
+                            CancelTask.Background = global.GreyColor;
+                            label_going_att.Visibility = Visibility.Hidden;
+                        });
+                    }
+                    else if (state.Task == 3)
+                    {
+                        Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                        {
+                            NewTask.IsEnabled = false;
+                            CancelTask.IsEnabled = false;
+                            NewTask.Background = global.GreyColor;
+                            CancelTask.Background = global.GreyColor;
+                            error.Text = "Нет связи с контроллером (очередью)";
+                            label_going_att.Visibility = Visibility.Hidden;
+                        });
+                    }
+
+
+                    return part_;
+                }
+                if (global.transport.IsOpen) // проверяем соединение
+                {
+                    Task<part_t> t = Task.Run(get_part);
+                    timer.Tag = t;
+                    await t;
+
+                    if (state.Task == 2)
+                    {
+                        global.part = t.Result;
+                        global.startTimeStr = global.part.Start_time_att;
+                        timeStart.Text = global.startTimeStr;
+
+
+                        if (global.part != null)
+                        {
+                            if (global.part.Cars.Count == 1 && CountRow != global.part.Cars.Count)
+                            {
+                                //UpdateDataGrid();
+                                CountRow = 1;
+                            }
+                            else if (CountRow != global.part.Cars.Count)
+                            {
+                                //UpdateDataGrid();
+                                CountRow = global.ROWS.Count;
+                            }
+                            else
+                            {
+                                for (int i = 0; i < global.part.Cars.Count; i++)
+                                {
+                                    if (global.DATA != null)
+                                    {
+                                        for (int p = 0; p < global.DATA.Count; p++)
+                                        {
+                                            if (i == p)
+                                            {
+                                                var c1 = Math.Round(global.part.Cars[i].Tara, 3).ToString();
+                                                var c2 = Math.Round(global.DATA[p].Tara, 3).ToString();
+
+
+                                                if (c1 != c2 || global.part.Cars[i].Zone_e.ToString() != global.DATA[p].Zone_e.ToString()
+                                                    || global.part.Cars[i].Tara_e.ToString() != global.DATA[p].Tara_e.ToString())
+                                                {
+                                                    //UpdateDataGrid();
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //UpdateDataGrid();
+                                        //CountRow = global.ROWS.Count;
+                                    }
                                 }
                             }
                         }
+                        error.Text = "";
                     }
-                    error.Text = "";
+                    else if(state.Task != 3)
+                    {
+                        error.Text = "";
+                    }
+                    
                 }
                 else
                 {
@@ -245,7 +328,7 @@ namespace Attestation
             }
         }
 
-        private async void check_is_open(Object source, EventArgs e) // метод таймера при закрытой аттестации
+        private async void check_is_open(object source, EventArgs e) // метод таймера при закрытой аттестации
         {
             state_bits GetState_bits()
             {
@@ -292,7 +375,7 @@ namespace Attestation
             }
         }
 
-        private async void ConnectTimer(Object source, EventArgs e)      // таймер проверки соединения с сервером
+        private async void ConnectTimer(object source, EventArgs e)      // таймер проверки соединения с сервером
         {
             DispatcherTimer timer = (DispatcherTimer)source;
             if (null != timer.Tag)
@@ -335,7 +418,7 @@ namespace Attestation
             InitializeComponent();
             global = Global.getInstance();
 
-            //label_going_att.Visibility = Visibility.Hidden;
+            label_going_att.Visibility = Visibility.Hidden;
             if (global.ArmAttestation)
             {
                 NewTask.Visibility = Visibility.Hidden;
@@ -349,6 +432,8 @@ namespace Attestation
                 textBlock_time_duration.Visibility = Visibility.Hidden;
                 timeStart.Visibility = Visibility.Hidden;
                 timeSpend.Visibility = Visibility.Hidden;
+                NewTask.IsEnabled = false;
+                CancelTask.IsEnabled = false;
             }
 
 
@@ -356,77 +441,28 @@ namespace Attestation
 
             allDataEntered = true;
             CountRow = 100;                                                        // для сравнения списков с целью выявления изменений
-            is_Num_close_att = true;                                            
+            is_Num_close_att = true;                                               // флаг количества цифр в номерах вагонов      
             // Таймеры ///////////////////////////////////////
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
 
-            checkIsOpen = new System.Windows.Threading.DispatcherTimer();
+
+
+
+
+
+
+            checkIsOpen = new DispatcherTimer();
             checkIsOpen.Tick += new EventHandler(check_is_open);
             checkIsOpen.Interval = new TimeSpan(0, 0, 1);
 
-            timerConnect = new System.Windows.Threading.DispatcherTimer();
+            timerConnect = new DispatcherTimer();
             timerConnect.Tick += new EventHandler(ConnectTimer);
             timerConnect.Interval = new TimeSpan(0, 0, 2);
-            if (!global.transport.IsOpen) // проверяем соединение
-            {
-                //connect.Background = global.RedColorEnd;
-                //textConnect.Text = "Восстановить соединение";
-                //toolTipConnect.Text = "Нажмите чтобы восстановить соединение с сервером";
-            }
-            else
-            {
-                //connect.Background = global.GreenColorStart;
-                //textConnect.Text = "Соединение установленно";
-                //toolTipConnect.Text = "Соединение с сервером установленно";
-                
-            }
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            isVerification = false;                                       // флаг для подтверждения окончания аттестации
-            DataGridMain.IsEnabled = global.isEnabled;                    // флаг кликабельности datagrid
-            //////// MQTT ///////////////////////////
-            ///
-            try
-            {
-                /*client = new MqttClient(global.Mqtt_host, 1883, false, null, null, MqttSslProtocols.None); // подключение к серверу ИндасХолдинг у Коли
-                client.MqttMsgPublishReceived += client_MqttMsgPublishReceived; // этот код запускается при получении сообщения
-                client.Connect("ArmOTK", global.Mqtt_user, global.Mqtt_password); // подключение к серверу ИндасХолдинг у Коли
-                string Topic = global.PLC_topic;
-                client.Subscribe(new string[] { Topic }, new byte[] { 0 });*/
-            }
-            catch (Exception ass)
-            {
-                /*ExClose exClose = new ExClose(ass.ToString());
-                exClose.Owner = Window.GetWindow(this);
-                exClose.ShowDialog();*/
-            }
-
-            if (!global.isColor)
-            {
-                global.mainButtonAttestation = "Закончить";
-                //================================================================================================================
-                //startRow_1.Text = global.mainButtonAttestation;           // текст в кнопке аттестации
-                //StartAttestation.Background = global.RedColorEnd;         // красный
-                while (checkIsOpen.IsEnabled == true)
-                {
-                    checkIsOpen.Stop();
-                    Thread.Sleep(100);
-                }
-                dispatcherTimer.Start();                                  // Стартуем таймер
-            }
-            else
-            {
-                while (dispatcherTimer.IsEnabled == true)
-                {
-                    dispatcherTimer.Stop();
-                    Thread.Sleep(100);
-                }
-                checkIsOpen.Start();
-            }
-            timeStart.Text = global.startTimeStr;                         // время начала
-            //part_idTextBlock.Text = global.PartId;                        // Номер партии
+            
 
         }
         void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)  // этот код запускается при получении сообщения от mqtt
@@ -821,7 +857,7 @@ namespace Attestation
             catch { }
         }
 
-        private void DataGridMain_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DataGridMain_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)  // обработчик множественного ввода
         {
             List<int> num = new List<int>();
             List<string> numStr = new List<string>();
@@ -865,6 +901,162 @@ namespace Attestation
                 }
             }
             allDataEntered = true;
+        }
+
+        private void NewTask_Click(object sender, RoutedEventArgs e) // Кнопка создания нового задания
+        {
+            allDataEntered = true;
+            try
+            {
+
+                if (global.isColor) // проверяем флаг
+                {
+                    Select_Start_Att select_Start = new Select_Start_Att();
+                    select_Start.Owner = Window.GetWindow(this);
+                    select_Start.ShowDialog();
+                    if (!global.getStartAtt)
+                    {
+                        return;
+                    }
+                    CountRow = 100;
+                    checkIsOpen.Stop();
+
+                    //////////// Установка времени ///////////////////////////////////////////////////////
+                    global.startTime = DateTime.Now;                       // Запись текущего времени
+                    global.startTimeStr = null;                            // Начало аттестации партии вагонов для страницы Аттестации
+                    global.endTimeStr = null;                              // Окончание аттестации для страницы Аттестации
+                    global.deltaTimeStr = null;                            // Продолжительность прохождения аттестации для страницы Аттестации 
+                                                                           //global.startTimeStr = global.startTime.ToString();     // Время начала аттестации (глобал)
+                                                                           //timeStart.Text = global.startTimeStr;                  // Время начала аттестации (вверху страницы)
+                                                                           ///////////////////////////////////////////////////////////////////////
+
+                    isVerification = false;                              // флаг для подтверждения окончания аттестации
+                    global.isEnabled = true;                               // флаг кликабельности datagrid
+                    DataGridMain.IsEnabled = global.isEnabled;             // разрешаю кликабельность в datagrid
+
+
+                    /* Запрос партии вагонов */
+                    Start_Att start = new Start_Att();
+                    start.Owner = Window.GetWindow(this);
+                    start.ShowDialog();
+                    if (global.part == null)
+                    {
+                        return;
+                    }
+                    try
+                    {
+                        global.PartId = global.part.Part_id.ToString();              // Номер партии
+                        //part_idTextBlock.Text = global.part.Part_id.ToString();      // Номер партии
+                        //=======================================================================================================
+                        //StartAttestation.Background = global.RedColorEnd;            // красный
+
+                        global.mainButtonAttestation = "Закончить";
+                        //=======================================================================================================
+                        //startRow_1.Text = global.mainButtonAttestation;
+
+                        DataGridMain.ItemsSource = null;
+                        DataGridMain.ItemsSource = global.ROWS;     // Привязка вагонов к datagrid
+
+                        global.IdConsigner = null;                  // id Грузополучателя для диалогового окна input_Of_Initial_Data при начале аттестации
+                        global.IdShipper = null;                    // id Грузоотправителя  для диалогового окна input_Of_Initial_Data при начале аттестации
+                        global.IdMat = null;                        // id материала для диалогового окна input_Of_Initial_Data при начале аттестации
+
+                        global.isColor = false;                     // флаг для кнопки начала и завершения аттестации
+
+                        while (checkIsOpen.IsEnabled == true)
+                        {
+                            Thread.Sleep(100);
+                        }
+                        dispatcherTimer.Start();                    // Стартуем таймер
+
+                    }
+                    catch (Exception sss)
+                    {
+                        MessageBox.Show(sss.Message);
+                    }
+                }
+
+                else
+                {
+                    verification(global.ROWS);
+                    if (allDataEntered)
+                    {
+                        is_Num_close_att = true;
+                        VerificationEndAttestation ver = new VerificationEndAttestation();    // окно подтверждения окончания аттестации
+                        ver.Owner = Window.GetWindow(this);
+                        ver.ShowDialog();
+                        if (isVerification)
+                        {
+                            bool ok = true;
+                            foreach (RowTab ff in global.ROWS)
+                            {
+                                if (ff.Num.Length != 8) // делаем проверку длины номера вагона
+                                {
+                                    is_Num_close_att = false;
+                                    MessageBox.Show("Номера вагонов должны состоять из восьми цифр (АРМ)");
+                                    ok = false;
+                                    break;
+                                }
+                            }
+                            if (ok)
+                            {
+                                while (dispatcherTimer.IsEnabled == true)
+                                {
+                                    dispatcherTimer.Stop();                                           // Останавливает таймер
+                                    Thread.Sleep(100);
+                                }
+                                Close_Att close = new Close_Att(); // внутри отправка данных на сервер
+                                close.Owner = Window.GetWindow(this);
+                                close.ShowDialog();
+                            }
+                        }
+                        if (global.is_ok_close_att && is_Num_close_att)            // метод bool exitAtt() подтверждение окончания аттестации
+                        {
+
+                            global.endTime = DateTime.Now;                                    // Окончание аттестации 
+                            global.endTimeStr = null;                                         // Окончание аттестации (String) для страницы Аттестации
+                            global.endTimeStr = global.endTime.ToString();                    /* Перезапись времени окончания в Глобал в виде строки 
+                                                                                       для дальнейшей записи в объект car_t и передачи на сервер*/
+                            global.deltaTime = global.endTime.Subtract(global.startTime);     // Подсчёт продолжительности аттестации
+                            global.deltaTimeStr = global.deltaTime.ToString(@"hh\:mm\:ss");   // затраченное время записывается в Глобал
+                            //==================================================================================================
+                            //StartAttestation.Background = global.GreenColorStart;             // зеленый
+
+                            global.mainButtonAttestation = "Начать";
+                            //=====================================================================================================
+                            //startRow_1.Text = global.mainButtonAttestation;
+
+                            global.isColor = true;                                            // флаг для кнопки начала и завершения аттестации
+                            global.isEnabled = false;                                         // флаг кликабельности datagrid
+                            DataGridMain.IsEnabled = global.isEnabled;                        // убирается кликабельность с datagrid
+                            timeSpend.Text = "";
+                            timeStart.Text = "";
+                            //part_idTextBlock.Text = "";
+
+                            global.ROWS = null;
+                            DataGridMain.ItemsSource = null;
+                            DataGridMain.ItemsSource = global.ROWS;
+
+                            checkIsOpen.Start();
+                        }
+                        else
+                        {
+                            dispatcherTimer.Start(); // если не смогли закрыть аттестацию 
+                            MessageBox.Show("Ошибка при отправки данных в DataProvider");
+                        }
+                    }
+                }
+            }
+            catch (Exception ass)
+            {
+                error.Text = $"Ошибка при обмене данными с DataProvider    {ass}";
+            }
+        }
+
+        private void CloseProg_Click(object sender, RoutedEventArgs e) // выход из программы
+        {
+            Application.Current.Shutdown(); 
+            Environment.Exit(0);
         }
     }
 }
