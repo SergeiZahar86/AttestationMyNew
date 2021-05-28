@@ -5,27 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Attestation.DialogWindows"
         mc:Ignorable="d"
-        Height="290" Width="344.031" WindowStyle="None" WindowStartupLocation="CenterScreen" Top="-200"
+        Height="290"
+        Width="344.031"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Top="-200"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        ResizeMode="CanResizeWithGrip" AllowsTransparency="true"  >
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="true" 
+        >
 
-    <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >
+    <Border
+        Background="#EEEEEE"
+        BorderThickness="1"
+        BorderBrush="gray"
+        >
         <Grid>
-            <TextBlock  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" FontSize="16" Text="Ожидается ответ от службы DSAccessAgent." 
-                          TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
-            <!--
-            <Button x:Name="Ok" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" Style="{StaticResource GreenButton}"
-                        Width="95"  ToolTip="Выход" Click="Ok_Click" IsDefault="True" Margin="0,20,0,0">Применить</Button>
-            
-            <Button x:Name="Close" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" Style="{StaticResource RedButton}"
-                        Click="Close_Click" Width="95" ToolTip="Выход" IsCancel="True" Margin="0,20,0,0">Закрыть</Button>
-
--->
-            <DockPanel x:Name="TitleBar" Grid.Row="0" Grid.ColumnSpan="6" DockPanel.Dock="Top" Background="#B22222"
-                               Height="30" Width="343" VerticalAlignment="Top">
-                <TextBlock HorizontalAlignment="Left" Foreground="White" FontFamily="Calibry" FontSize="16" 
-                                Margin="8,6,15,4">Окно ожидания</TextBlock>
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="4"
+                FontSize="16"
+                Text="Ожидается ответ от службы DSAccessAgent." 
+                TextWrapping="Wrap"
+                HorizontalAlignment="Center"
+                TextAlignment="Center"
+                />
+            <DockPanel
+                x:Name="TitleBar"
+                Grid.Row="0"
+                Grid.ColumnSpan="6"
+                DockPanel.Dock="Top"
+                Background="#B22222"
+                Height="30"
+                Width="343"
+                VerticalAlignment="Top"
+                >
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    Foreground="White"
+                    FontFamily="Calibry"
+                    FontSize="16" 
+                    Margin="8,6,15,4"
+                    >
+                    Окно ожидания
+                </TextBlock>
             </DockPanel>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

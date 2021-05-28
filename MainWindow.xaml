@@ -17,7 +17,16 @@
         >
 
 
-    <DockPanel
+    <Grid x:Name="gridMain" >
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+    
+
+        <DockPanel
         x:Name="RootWindow"
         >
         <DockPanel
@@ -194,4 +203,71 @@
                 />
         </Border>
     </DockPanel>
+        <Grid x:Name="gridDialog" x:FieldModifier="public">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Row="1"
+                Grid.Column="2"
+                BorderThickness="1"
+                BorderBrush="gray"
+                Background="White"
+                >
+                <Grid>
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="4"
+                        FontSize="16"
+                        Text="Пожалуйста, дождитесь окончания операции." 
+                        TextWrapping="Wrap"
+                        HorizontalAlignment="Center"
+                        TextAlignment="Center"
+                        />
+                    <DockPanel
+                        x:Name="TitleB"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="6"
+                        DockPanel.Dock="Top"
+                        Background="#B22222"
+                        Height="30"
+                        VerticalAlignment="Top"
+                        >
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            Foreground="White"
+                            FontFamily="Calibry"
+                            FontSize="16" 
+                            Margin="8,6,15,4"
+                            >
+                            Окно ожидания
+                        </TextBlock>
+                    </DockPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1.8*"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
 </Window>

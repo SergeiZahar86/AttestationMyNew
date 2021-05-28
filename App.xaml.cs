@@ -15,7 +15,7 @@ namespace TestWPF
             {
 				global.ArmAttestation = false;
 				global.Login = e.Args[0].ToString();
-				global.user = e.Args[1].ToString();
+				global.user = Global.ShortName(e.Args[1].ToString());
 				//MessageBox.Show("Now opening file: \n\n" + e.Args[0].ToString() + e.Args[1].ToString());
 			}
 			MainWindow wnd = new MainWindow();

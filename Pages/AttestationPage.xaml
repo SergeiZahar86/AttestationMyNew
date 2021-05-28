@@ -263,7 +263,9 @@
             Width="90" 
             Style="{StaticResource startAttestation}"
             HorizontalAlignment="Left"
-            Margin="25,0,0,0" Click="NewTask_Click"
+            Margin="25,0,0,0"
+            Click="NewTask_Click"
+            IsEnabled="False"
             >
             <Grid>
                 <TextBlock
@@ -297,6 +299,8 @@
             Background="#DE6760"
             HorizontalAlignment="Left"
             Margin="150,0,0,0"
+            Click="CancelTask_Click"
+            IsEnabled="False"
             >
             <Grid>
                 <TextBlock
@@ -329,6 +333,8 @@
             Style="{StaticResource startAttestation}"
             HorizontalAlignment="Left"
             Margin="25,0,0,0"
+            Click="EndAtt_Click"
+            IsEnabled="False"
             >
             <Grid>
                 <TextBlock

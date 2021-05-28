@@ -76,8 +76,8 @@ namespace Attestation
 
         public TTransport transport;
         public DataProviderService.Client client; // DataProviderService - Название заглушки
-        int Port;
-        string Host;
+        public int Port;
+        public string Host;
         Waiting_Download_data waiting_;
         public int Idx { set; get; } // для получения номера строки datagrid и combobox
 
@@ -251,8 +251,12 @@ namespace Attestation
             {
                 string[] str = new string[3];
                 str = fio.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                //if (str.Length != 3)  throw new ArgumentException("ФИО задано в неверно формате");
-                return string.Format("{0} {1}. {2}.", str[0], str[1][0], str[2][0]);
+                if (str.Length == 3)
+                {
+                    //if (str.Length != 3)  throw new ArgumentException("ФИО задано в неверно формате");
+                    return string.Format("{0} {1}. {2}.", str[0], str[1][0], str[2][0]);
+                }
+                return fio;
             }
             catch
             {
@@ -308,7 +312,7 @@ namespace Attestation
                 cause = client.getCauses();               // Запрос справочника причин неаттестации
                 contractors = client.getContractors();    // Запрос справочника контрагентов
                 mats = client.getMat();                   // Запрос справочника материалов
-                mats.Sort();
+                //mats.Sort();
                 GetConsignees(contractors);                      // получение справочника Грузополучателя
                 GetShippers(contractors);                        // получение справочника Грузоотправителей
                 GetZonas();                                             // получение справочника Зоны вагонов
@@ -383,36 +387,40 @@ namespace Attestation
         public bool EndAtt(string user_login) // вызов функции endAtt
         {
 
-            return true;
+            return client.endAtt(user_login);
         }
         public string CreateTask(string user_login) // вызов функции createTask
         {
-            return "newTask";
+            return client.createTask(user_login);
         }
         public void EndTask(string user_login) // вызов функции endTask
         {
             //throw new Exception("Не получилось завершить задание");
+            client.endTask(user_login);
         }
         public void RemoveTask(string user_login) // вызов функции removeTask
         {
             //throw new Exception("Не получилось удалить задание");
+            client.removeTask(user_login);
         }
         public state_bits GetStatusBits() // вызов функции getStatusBits
         {
             //throw new Exception("Сломались лампочки");
-            return new state_bits() { Task = 2, Inspection = 0, Weight = 0, Load = 0 };
+            //return new state_bits() { Task = 2, Inspection = 0, Weight = 0, Load = 0 };
+            return client.getStatusBits();
         }
         public part_t GetPart() // вызов функции getPart
         {
             //throw new Exception("Не получилось удалить задание");
-            part_t part_ = new part_t();
+            /*part_t part_ = new part_t();
             car_t car_ = new car_t();
             List<car_t> car_s = new List<car_t>();
             car_s.Add(car_);
             part_.Cars = car_s;
             part_.Start_time_att = "e";
             part_.End_time_att = "e";
-            return part_;
+            return part_;*/
+            return client.getPart();
         }
 
     }

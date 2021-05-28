@@ -10,6 +10,7 @@ namespace Attestation
         public MainWindow()
         {
             InitializeComponent();
+            gridDialog.Visibility = Visibility.Hidden;
             global = Global.getInstance();
             if (!global.ArmAttestation)
             {
