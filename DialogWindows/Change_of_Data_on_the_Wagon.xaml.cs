@@ -22,9 +22,22 @@ namespace Attestation
         {
             global = Global.getInstance();
             InitializeComponent();
-
+            if (global.ArmAttestation)
+            {
+                textboxTara.IsEnabled = false;
+                textboxCarrying.IsEnabled = false;
+                shipper_Value.IsEnabled = false;
+                consigner_Value.IsEnabled = false;
+                mat_Value.IsEnabled = false;
+            }
+            else
+            {
+                textboxVag.IsEnabled = false;
+                isOk_Value.IsEnabled = false;
+                cause_Value.IsEnabled = false;
+            }
             zona_Val = global.zonas;
-            zona_Value.ItemsSource = zona_Val;
+            //zona_Value.ItemsSource = zona_Val;
 
             shippersVal = global.shippers;
             shipper_Value.ItemsSource = shippersVal;
@@ -75,8 +88,8 @@ namespace Attestation
         }
         private void zona_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор зоны из справочника
         {
-            global.rowTab.Zone_e = global.zonas[zona_Value.SelectedIndex].Id-1;
-            global.rowTab.Zone_eString = global.zonas[zona_Value.SelectedIndex].Name;
+            /*global.rowTab.Zone_e = global.zonas[zona_Value.SelectedIndex].Id-1;
+            global.rowTab.Zone_eString = global.zonas[zona_Value.SelectedIndex].Name;*/
 
         }
         private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор Грузоотправитель из справочника
@@ -139,14 +152,14 @@ namespace Attestation
                 bool a1 = global.client.setNum(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Num);
                 bool a2 = global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Tara_e);
                 bool a3 = global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Carrying);
-                bool a4 = global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e);
+                //bool a4 = global.client.setZone(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Zone_e);
                 bool a5 = global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Shipper);
                 bool a6 = global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Consigner);
                 bool a7 = global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat);
                 bool a8 = global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Att_code);
                 bool a9 = global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id);
 
-                if (a1 && a2 && a3 && a4 && a5 && a6 && a7 && a8 && a9)
+                if (a1 && a2 && a3 && a5 && a6 && a7 && a8 && a9)
                 {
                     if ((textboxVag.Text.Length > 0 && textboxVag.Text.Length == 8) || textboxVag.Text.Length == 0)
                     {

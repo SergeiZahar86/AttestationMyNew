@@ -638,6 +638,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
+                <!--
                 <DataGridTemplateColumn x:Name="Zona" Header="Зона" Width="40"
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     
@@ -684,7 +685,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     
                 </DataGridTemplateColumn>
-                
+                -->
                 <DataGridTemplateColumn x:Name="shipper" Header="Грузоотправитель" 
                                         HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate >

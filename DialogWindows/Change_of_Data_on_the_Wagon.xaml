@@ -135,6 +135,7 @@
                 Style="{StaticResource LabelChangeData_Head}"
                 Content="Грузоподъемность"
                 />
+            <!--
             <Label
                 Grid.Row="7"
                 Grid.Column="0"
@@ -142,36 +143,37 @@
                 Style="{StaticResource LabelChangeData_Head}"
                 Content="Зона"
                 />
+            -->
             <Label
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Style="{StaticResource LabelChangeData_Head}"
                 Content="Грузоотправитель"
                 />
             <Label
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Style="{StaticResource LabelChangeData_Head}"
                 Content="Грузополучатель"
                 />
             <Label
-                Grid.Row="10"
+                Grid.Row="9"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Style="{StaticResource LabelChangeData_Head}"
                 Content="Вид материалов"
                 />
             <Label
-                Grid.Row="11"
+                Grid.Row="10"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Style="{StaticResource LabelChangeData_Head}"
                 Content="Итог аттестации"
                 />
             <Label
-                Grid.Row="12"
+                Grid.Row="11"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Style="{StaticResource LabelChangeData_Head}"
@@ -228,6 +230,7 @@
                 Grid.ColumnSpan="4"
                 Style="{StaticResource LabelChangeData}"
                 />
+            <!--
             <Label
                 x:Name="old_zona"
                 Grid.Row="7"
@@ -235,37 +238,38 @@
                 Grid.ColumnSpan="4"
                 Style="{StaticResource LabelChangeData}"
                 />
+            -->
             <Label
                 x:Name="old_shipper"
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="2"
                 Grid.ColumnSpan="4"
                 Style="{StaticResource LabelChangeData}"
                 />
             <Label
                 x:Name="old_consigner"
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="2"
                 Grid.ColumnSpan="4"
                 Style="{StaticResource LabelChangeData}"
                 />
             <Label
                 x:Name="old_mat"
-                Grid.Row="10"
+                Grid.Row="9"
                 Grid.Column="2"
                 Grid.ColumnSpan="4"
                 Style="{StaticResource LabelChangeData}"
                 />
             <Label
                 x:Name="old_isOk"
-                Grid.Row="11"
+                Grid.Row="10"
                 Grid.Column="2"
                 Grid.ColumnSpan="4"
                 Style="{StaticResource LabelChangeData}"
                 />
             <Label
                 x:Name="old_cause"
-                Grid.Row="12"
+                Grid.Row="11"
                 Grid.Column="2"
                 Grid.ColumnSpan="4"
                 Style="{StaticResource LabelChangeData}"
@@ -300,6 +304,7 @@
                 PreviewKeyDown="point_PreviewKeyDown"
                 Style="{StaticResource textBoxChangeData}"
                 />
+            <!--
             <ComboBox
                 x:Name="zona_Value"
                 Grid.Row="7"
@@ -312,9 +317,10 @@
                 SelectedValue="{Binding Path=Zona}"
                 Style="{StaticResource comboBoxChangeData}"
                 />
+            -->
             <ComboBox
                 x:Name="shipper_Value"
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="6"
                 Grid.ColumnSpan="6"
                 SelectionChanged="shipper_Value_SelectionChanged"
@@ -326,7 +332,7 @@
                 />
             <ComboBox 
                 x:Name="consigner_Value"
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="6"
                 Grid.ColumnSpan="6" 
                 SelectionChanged="consigner_Value_SelectionChanged"
@@ -338,7 +344,7 @@
                 />
             <ComboBox
                 x:Name="mat_Value"
-                Grid.Row="10"
+                Grid.Row="9"
                 Grid.Column="6"
                 Grid.ColumnSpan="6" 
                 SelectionChanged="mat_Value_SelectionChanged"
@@ -350,7 +356,7 @@
                 />
             <ComboBox
                 x:Name="isOk_Value"
-                Grid.Row="11"
+                Grid.Row="10"
                 Grid.Column="6"
                 Grid.ColumnSpan="6" 
                 SelectionChanged="isOk_Value_SelectionChanged"
@@ -359,7 +365,7 @@
                 />
             <ComboBox 
                 x:Name="cause_Value"
-                Grid.Row="12"
+                Grid.Row="11"
                 Grid.Column="6"
                 Grid.ColumnSpan="6"
                 SelectionChanged="cause_Value_SelectionChanged"

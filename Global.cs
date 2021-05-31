@@ -102,8 +102,8 @@ namespace Attestation
             }
             catch(Exception sa)
             {
-                ExClose exClose = new ExClose(sa.ToString());
-                exClose.ShowDialog();
+                /*ExClose exClose = new ExClose(sa.ToString());
+                exClose.ShowDialog();*/
             }
             ///////////////////////////////////////////////////////////////////////////////
 
@@ -310,8 +310,14 @@ namespace Attestation
                 waiting_ = new Waiting_Download_data();
                 waiting_.Show();
                 cause = client.getCauses();               // Запрос справочника причин неаттестации
+                cause.Insert(0, new cause_t() { Id = 0, Name = "" });
+                cause.Sort(delegate (cause_t c1, cause_t c2) { return c1.Name.CompareTo(c2.Name); });
+
                 contractors = client.getContractors();    // Запрос справочника контрагентов
+
                 mats = client.getMat();                   // Запрос справочника материалов
+                mats.Insert(0, new mat_t() { Id = 0, Name = "" });
+                mats.Sort(delegate (mat_t c1, mat_t c2) { return c1.Name.CompareTo(c2.Name); });
                 //mats.Sort();
                 GetConsignees(contractors);                      // получение справочника Грузополучателя
                 GetShippers(contractors);                        // получение справочника Грузоотправителей
@@ -343,7 +349,8 @@ namespace Attestation
                     shippers.Add(new Shippers(contractor_.Id, contractor_.Name));
                 }
             }
-            //shippers.Sort();
+            shippers.Insert(0, new Shippers(0, ""));
+            shippers.Sort(delegate (Shippers c1, Shippers c2) { return c1.Name.CompareTo(c2.Name); });
         }
         public void GetConsignees(List<contractor_t> contr) // получение справочника Грузополучателя
         {
@@ -355,7 +362,8 @@ namespace Attestation
                     consigners.Add(new Consigners(contractor_.Id, contractor_.Name));
                 }
             }
-            //consigners.Sort();
+            consigners.Insert(0, new Consigners(0, ""));
+            consigners.Sort(delegate (Consigners c1, Consigners c2) { return c1.Name.CompareTo(c2.Name); });
         }
         public void GetZonas() // получение справочника Зоны вагонов
         {

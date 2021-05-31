@@ -167,6 +167,23 @@ namespace Attestation
 
                     if (state.Task == 2)
                     {
+                        if (global.ArmAttestation)
+                        {
+                            if (state.Inspection == 1 || state.Inspection == 2)
+                            {
+                                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                                {
+                                    DataGridMain.IsEnabled = true;
+                                });
+                            }
+                            else
+                            {
+                                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                                {
+                                    DataGridMain.IsEnabled = false;
+                                });
+                            }
+                        }
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
                             if (state.Inspection == 0)
@@ -198,7 +215,10 @@ namespace Attestation
 
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
-                            DataGridMain.IsEnabled = true;
+                            if (!global.ArmAttestation)
+                            {
+                                DataGridMain.IsEnabled = true;
+                            }
                             if (part_.Start_time_att != null)
                             {
                                 if (part_.End_time_att != null)
@@ -301,7 +321,7 @@ namespace Attestation
                         timeStart.Text = global.startTimeStr;
 
 
-                        if (global.part != null)
+                        if (global.part != null && global.part.Cars != null)
                         {
                             if (global.part.Cars.Count == 1 && CountRow != global.part.Cars.Count)
                             {
@@ -476,6 +496,7 @@ namespace Attestation
                 NewTask.Visibility = Visibility.Hidden;
                 CancelTask.Visibility = Visibility.Hidden;
                 CloseProg.Visibility = Visibility.Hidden;
+
             }
             else
             {
@@ -551,81 +572,96 @@ namespace Attestation
         }
         private void Change_VagNum(object sender, RoutedEventArgs e)            // Изменение номера вагона
         {
-            try
+            if (global.ArmAttestation)
             {
-                ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
-                showChange_VagNum.Owner = Window.GetWindow(this);
-                global.Idx = DataGridMain.SelectedIndex;
-                showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
-                showChange_VagNum.Number.Text =$"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
-                showChange_VagNum.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                try
+                {
+                    ShowChange_VagNum showChange_VagNum = new ShowChange_VagNum();
+                    showChange_VagNum.Owner = Window.GetWindow(this);
+                    global.Idx = DataGridMain.SelectedIndex;
+                    showChange_VagNum.oldVagNum.Content = global.ROWS[global.Idx].Num;
+                    showChange_VagNum.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
+                    showChange_VagNum.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
         }
         private void Change_isOk(object sender, RoutedEventArgs e)              // Изменение итогов аттестации
         {
-            ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
-            showChange_IsOk.Owner = Window.GetWindow(this);
-            global.Idx = DataGridMain.SelectedIndex;
-            showChange_IsOk.Number.Text = $"вагон №  {global.ROWS[global.Idx].Car_id.ToString()}";
-            try
+            if (global.ArmAttestation)
             {
-                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
-                showChange_IsOk.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                ShowChange_isOk showChange_IsOk = new ShowChange_isOk();
+                showChange_IsOk.Owner = Window.GetWindow(this);
+                global.Idx = DataGridMain.SelectedIndex;
+                showChange_IsOk.Number.Text = $"вагон №  {global.ROWS[global.Idx].Car_id.ToString()}";
+                try
+                {
+                    global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                    showChange_IsOk.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
         }
         private void CauseButton_Click (object sender, RoutedEventArgs e)       // Установить причину неаттестации
         {
-            ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
-            showChange_Cause_T.Owner = Window.GetWindow(this);
-            global.Idx = DataGridMain.SelectedIndex;
-            showChange_Cause_T.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
-            try
+            if (global.ArmAttestation)
             {
-                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
-                showChange_Cause_T.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                ShowChange_cause_t showChange_Cause_T = new ShowChange_cause_t();
+                showChange_Cause_T.Owner = Window.GetWindow(this);
+                global.Idx = DataGridMain.SelectedIndex;
+                showChange_Cause_T.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
+                try
+                {
+                    global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                    showChange_Cause_T.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
         }
         private void Change_Tara_e(object sender, RoutedEventArgs e)            // изменение Тара НСИ
         {
-            try
+            if (!global.ArmAttestation)
             {
-                ShowChange_Tara_e showChange_Tara_e = new ShowChange_Tara_e();
-                showChange_Tara_e.Owner = Window.GetWindow(this);
-                global.Idx = DataGridMain.SelectedIndex;
-                showChange_Tara_e.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
-                showChange_Tara_e.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
-                showChange_Tara_e.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                try
+                {
+                    ShowChange_Tara_e showChange_Tara_e = new ShowChange_Tara_e();
+                    showChange_Tara_e.Owner = Window.GetWindow(this);
+                    global.Idx = DataGridMain.SelectedIndex;
+                    showChange_Tara_e.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;
+                    showChange_Tara_e.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
+                    showChange_Tara_e.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
         }
         private void Change_Carrying(object sender, RoutedEventArgs e)          // изменение Грузоподъемность
         {
-            ShowChange_Carrying showChange_Carrying = new ShowChange_Carrying();
-            showChange_Carrying.Owner = Window.GetWindow(this);
-            global.Idx = DataGridMain.SelectedIndex;
-            try
+            if (!global.ArmAttestation)
             {
-                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
-                showChange_Carrying.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";            // порядковый номер вагона в шапке окна
-                showChange_Carrying.oldCarrying.Content = global.ROWS[global.Idx].Carrying;
-                showChange_Carrying.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                ShowChange_Carrying showChange_Carrying = new ShowChange_Carrying();
+                showChange_Carrying.Owner = Window.GetWindow(this);
+                global.Idx = DataGridMain.SelectedIndex;
+                try
+                {
+                    global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                    showChange_Carrying.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";            // порядковый номер вагона в шапке окна
+                    showChange_Carrying.oldCarrying.Content = global.ROWS[global.Idx].Carrying;
+                    showChange_Carrying.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
         }
-        private void Change_Zone_eString(object sender, RoutedEventArgs e)      // изменение Зоны вагонов
+        /*private void Change_Zone_eString(object sender, RoutedEventArgs e)      // изменение Зоны вагонов
         {
             ShowChange_Zone_eString showChange_Zone_eString = new ShowChange_Zone_eString();
             showChange_Zone_eString.Owner = Window.GetWindow(this);
@@ -639,52 +675,60 @@ namespace Attestation
                 DataGridMain.ItemsSource = global.ROWS;
             }
             catch { }
-        }
+        }*/
         private void shipperButton_Click(object sender, RoutedEventArgs e)      // изменение Грузоотправителя
         {
-            ShowChange_Shipper_String Change_Shipper_String = new ShowChange_Shipper_String();
-            Change_Shipper_String.Owner = Window.GetWindow(this);
-            global.Idx = DataGridMain.SelectedIndex;
-            Change_Shipper_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
-            try
+            if (!global.ArmAttestation)
             {
-                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
-                Change_Shipper_String.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                ShowChange_Shipper_String Change_Shipper_String = new ShowChange_Shipper_String();
+                Change_Shipper_String.Owner = Window.GetWindow(this);
+                global.Idx = DataGridMain.SelectedIndex;
+                Change_Shipper_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
+                try
+                {
+                    global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                    Change_Shipper_String.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
-
         }
         private void consignerButton_Click(object sender, RoutedEventArgs e)    // изменение Грузополучателя
         {
-            ShowChange_Consigner_String Change_Consigner_String = new ShowChange_Consigner_String();
-            Change_Consigner_String.Owner = Window.GetWindow(this);
-            global.Idx = DataGridMain.SelectedIndex;
-            Change_Consigner_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
-            try
+            if (!global.ArmAttestation)
             {
-                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
-                Change_Consigner_String.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                ShowChange_Consigner_String Change_Consigner_String = new ShowChange_Consigner_String();
+                Change_Consigner_String.Owner = Window.GetWindow(this);
+                global.Idx = DataGridMain.SelectedIndex;
+                Change_Consigner_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
+                try
+                {
+                    global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                    Change_Consigner_String.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
         }
         private void matButton_Click(object sender, RoutedEventArgs e)          // изменение материала 
         {
-            ShowChange_Mat_String Change_Mat_String = new ShowChange_Mat_String();
-            Change_Mat_String.Owner = Window.GetWindow(this);
-            global.Idx = DataGridMain.SelectedIndex;
-            Change_Mat_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
-            try
+            if (!global.ArmAttestation)
             {
-                global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
-                Change_Mat_String.ShowDialog();
-                DataGridMain.ItemsSource = null;
-                DataGridMain.ItemsSource = global.ROWS;
+                ShowChange_Mat_String Change_Mat_String = new ShowChange_Mat_String();
+                Change_Mat_String.Owner = Window.GetWindow(this);
+                global.Idx = DataGridMain.SelectedIndex;
+                Change_Mat_String.Number.Text = $"вагон № {global.ROWS[global.Idx].Car_id.ToString()}";
+                try
+                {
+                    global.rowTab = (RowTab)((Button)e.Source).DataContext;  // получение объекта вагона ко клику
+                    Change_Mat_String.ShowDialog();
+                    DataGridMain.ItemsSource = null;
+                    DataGridMain.ItemsSource = global.ROWS;
+                }
+                catch { }
             }
-            catch { }
         }
         private void DataGridMain_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) // изменение значений строки по двойному клику
         {
@@ -710,7 +754,7 @@ namespace Attestation
                 change_Of_Data.oldTara_e.Content = global.ROWS[global.Idx].Tara_e;                 // прежний вес тары НСИ
                 change_Of_Data.oldTara_delta.Content = global.ROWS[global.Idx].Tara_delta;         // дельта тары
                 change_Of_Data.oldCarrying.Content = global.ROWS[global.Idx].Carrying;             // прежняя грузоподъемность
-                change_Of_Data.old_zona.Content = global.ROWS[global.Idx].Zone_eString;            // прежнее значение "зона"
+                //change_Of_Data.old_zona.Content = global.ROWS[global.Idx].Zone_eString;            // прежнее значение "зона"
                 change_Of_Data.old_shipper.Content = global.ROWS[global.Idx].Shipper_String;       // прежнее значение Грузоотправитель
                 change_Of_Data.old_consigner.Content = global.ROWS[global.Idx].Consigner_String;   // прежнее значение Грузополучателя
                 change_Of_Data.old_mat.Content = global.ROWS[global.Idx].Mat_String;               // прежнее значение материала
@@ -720,8 +764,8 @@ namespace Attestation
                         change_Of_Data.old_isOk.Content = "Аттестован"; break;
                     case "WindowClose":
                         change_Of_Data.old_isOk.Content = "Не аттестован"; break;
-                    case "Asterisk":
-                        change_Of_Data.old_isOk.Content = "Условно аттестован"; break;
+                    //case "Asterisk":
+                        //change_Of_Data.old_isOk.Content = "Условно аттестован"; break;
                 }
                 change_Of_Data.old_cause.Content = global.ROWS[global.Idx].Cause_idString;         // прежнее значение причины неаттестации
 
@@ -766,7 +810,23 @@ namespace Attestation
             for(int i = 0; i<rows.Count; i++)
             {
 
-                if(rows[i].Tara_e == 0 || rows[i].Carrying == 0 || rows[i].Consigner ==0 || rows[i].Shipper == 0)
+                if(rows[i].Tara_e == 0 || rows[i].Carrying == 0 || rows[i].Consigner ==0 || rows[i].Shipper == 0 || rows[i].Mat == 0)
+                {
+                    allDataEntered = false;
+                    DataIsNotEntered dataIsNot = new DataIsNotEntered(i + 1);
+                    dataIsNot.Owner = Window.GetWindow(this);
+                    dataIsNot.ShowDialog();
+                    return;
+                }
+            }
+            allDataEntered = true;
+        }
+        private void verificationAtt(ObservableCollection<RowTab> rows) // проверка полноты введенных данных в таблицу
+        {
+            for (int i = 0; i < rows.Count; i++)
+            {
+
+                if (!global.checkSum(rows[i].Num) || (rows[i].Att_code == 0 && rows[i].Cause_id == 0) )
                 {
                     allDataEntered = false;
                     DataIsNotEntered dataIsNot = new DataIsNotEntered(i + 1);
@@ -787,8 +847,12 @@ namespace Attestation
             }
             else
             {
-                Thread myThread = new Thread(new ThreadStart(EndTaskFunction));
-                myThread.Start(); 
+                verification(global.ROWS);
+                if (allDataEntered)
+                {
+                    Thread myThread = new Thread(new ThreadStart(EndTaskFunction));
+                    myThread.Start();
+                }
             }
         }
         private void NewTaskFunction() // Функция для Кнопки создания нового задания
@@ -798,7 +862,7 @@ namespace Attestation
                 blockBatton();
                 showDialogMainWindow();
             });
-            global.CreateTask(global.Login);
+            CallFunctionThrift("createTask");
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 hideDialogMainWindow();
@@ -811,7 +875,7 @@ namespace Attestation
                 blockBatton();
                 showDialogMainWindow();
             });
-            global.EndTask(global.Login);
+            CallFunctionThrift("endTask");
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 hideDialogMainWindow();
@@ -834,7 +898,7 @@ namespace Attestation
                 blockBatton();
                 showDialogMainWindow();
             });
-            global.RemoveTask(global.Login);
+            CallFunctionThrift("removeTask");
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 hideDialogMainWindow();
@@ -863,7 +927,7 @@ namespace Attestation
         }
         private void EndAtt_Click(object sender, RoutedEventArgs e) // Кнопка завершения аттестации
         {
-            verification(global.ROWS);
+            verificationAtt(global.ROWS);
             if (allDataEntered)
             {
                 Thread myThread = new Thread(new ThreadStart(EndAttFunction));
@@ -873,25 +937,42 @@ namespace Attestation
         private void EndAttFunction() // Функция для Кнопки завершения аттестации
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
-            {
+            { 
                 EndAtt.IsEnabled = false;
                 EndAtt.Background = global.GreyColor;
                 showDialogMainWindow();
             });
-
-
+            CallFunctionThrift("endAtt");
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                hideDialogMainWindow();
+            });
+        }
+        private void CallFunctionThrift(string funcName) // создание соединения и вызов функции
+        {
             TTransport transport = new TSocket(global.Host, global.Port);
             TProtocol proto = new TBinaryProtocol(transport);
             DataProviderService.Client client = new DataProviderService.Client(proto);
             try
             {
                 transport.Open();
-                client.endAtt(global.Login);
+                if (funcName == "endAtt")
+                    client.endAtt(global.Login);
+                else if (funcName == "createTask")
+                    client.createTask(global.Login);
+                else if (funcName == "endTask")
+                    client.endTask(global.Login);
+                else if (funcName == "removeTask")
+                    client.removeTask(global.Login);
             }
             catch (Exception sa)
             {
-                ExClose exClose = new ExClose(sa.ToString());
-                exClose.ShowDialog();
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                {
+                    ExClose exClose = new ExClose(sa.ToString());
+                    exClose.ShowDialog();
+                });
+                
             }
             finally
             {
@@ -901,13 +982,6 @@ namespace Attestation
                 }
                 catch { }
             }
-
-
-            //global.EndAtt(global.Login);
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
-            {
-                hideDialogMainWindow();
-            });
         }
     }
 }
