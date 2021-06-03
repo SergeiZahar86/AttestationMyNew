@@ -60,7 +60,7 @@
                     Canvas.Left="5"
                     VerticalAlignment="Bottom"
                     CornerRadius="10"
-                    Background="Gray"
+                    Background="Black"
                     BorderThickness="2"
                     BorderBrush="#FF37474F"
                     />
@@ -84,7 +84,7 @@
                     Canvas.Left="5"
                     VerticalAlignment="Bottom"
                     CornerRadius="10"
-                    Background="Gray"
+                    Background="Black"
                     BorderThickness="2"
                     BorderBrush="#FF37474F"
                     />
@@ -108,7 +108,7 @@
                     Canvas.Left="5"
                     VerticalAlignment="Bottom"
                     CornerRadius="10"
-                    Background="Gray"
+                    Background="Black"
                     BorderThickness="2"
                     BorderBrush="#FF37474F"
                     />
@@ -132,7 +132,7 @@
                     Canvas.Left="5"
                     VerticalAlignment="Bottom"
                     CornerRadius="10"
-                    Background="Gray"
+                    Background="Black"
                     BorderThickness="2"
                     BorderBrush="#FF37474F"
                     />
@@ -198,14 +198,16 @@
                 Grid.Row="0"
                 FontSize="16"
                 TextAlignment="Center"
-                HorizontalAlignment="Left" Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                Margin="20,0,0,0"
                 />
             <TextBlock
                 x:Name="timeSpend"
                 Grid.Row="1"
                 FontSize="16"
                 TextAlignment="Center"
-                HorizontalAlignment="Left" Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                Margin="20,0,0,0"
                 />
         </Grid>
         <!-- Текстовые поля для вывода ошибок =================================================================-->

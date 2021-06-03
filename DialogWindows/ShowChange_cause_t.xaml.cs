@@ -8,6 +8,9 @@ namespace Attestation
     {
         private Global global;
         private List<cause_t> Cause;
+        private int Cause_id;
+        private string Cause_idString;
+
         public ShowChange_cause_t()
         {
             InitializeComponent();
@@ -18,9 +21,9 @@ namespace Attestation
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             try {
-                if (global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Cause_id))
+                if (global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, Cause_id))
                 {
-                    global.ROWS[global.Idx].Cause_idString = global.rowTab.Cause_idString;
+                    global.ROWS[global.Idx].Cause_idString = Cause_idString;
                     this.Close();
                 }
             }
@@ -35,8 +38,8 @@ namespace Attestation
         }
         private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор причины неаттестации
         {
-            global.rowTab.Cause_id = Cause[cause_Value.SelectedIndex].Id;
-            global.rowTab.Cause_idString = Cause[cause_Value.SelectedIndex].Name;
+            Cause_id = Cause[cause_Value.SelectedIndex].Id;
+            Cause_idString = Cause[cause_Value.SelectedIndex].Name;
         }
     }
 }

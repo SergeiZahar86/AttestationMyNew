@@ -8,6 +8,8 @@ namespace Attestation
     {
         private Global global;
         private List<mat_t> matsVal;
+        private int Mat;
+        private string Mat_String;
 
         public ShowChange_Mat_String()
         {
@@ -20,9 +22,9 @@ namespace Attestation
         {
             try
             {
-                if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Mat))
+                if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, Mat))
                 {
-                    global.ROWS[global.Idx].Mat_String = global.rowTab.Mat_String;
+                    global.ROWS[global.Idx].Mat_String = Mat_String;
                     this.Close();
                 }
             }
@@ -37,8 +39,11 @@ namespace Attestation
         }
         private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.rowTab.Mat = global.mats[mat_Value.SelectedIndex].Id;
-            global.rowTab.Mat_String = global.mats[mat_Value.SelectedIndex].Name;
+            Mat = global.mats[mat_Value.SelectedIndex].Id;
+            Mat_String = global.mats[mat_Value.SelectedIndex].Name;
+
+            /*global.rowTab.Mat = global.mats[mat_Value.SelectedIndex].Id;
+            global.rowTab.Mat_String = global.mats[mat_Value.SelectedIndex].Name;*/
 
         }
     }

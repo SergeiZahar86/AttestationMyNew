@@ -8,6 +8,8 @@ namespace Attestation
     {
         private Global global;
         private List<Consigners> consignersVal;
+        private int Consigner;
+        private string Consigner_String;
 
         public ShowChange_Consigner_String()
         {
@@ -20,9 +22,9 @@ namespace Attestation
         {
             try
             {
-                if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Consigner))
+                if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, Consigner))
                 {
-                    global.ROWS[global.Idx].Consigner_String = global.rowTab.Consigner_String;
+                    global.ROWS[global.Idx].Consigner_String = Consigner_String;
                     this.Close();
                 }
             }
@@ -37,8 +39,8 @@ namespace Attestation
         }
         private void consigner_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.rowTab.Consigner = global.consigners[consigner_Value.SelectedIndex].Id;
-            global.rowTab.Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
+            Consigner = global.consigners[consigner_Value.SelectedIndex].Id;
+            Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
 
         }
     }

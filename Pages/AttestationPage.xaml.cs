@@ -155,8 +155,8 @@ namespace Attestation
                     Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
                         GetCollorStatusAtt(state); // установка цветов индикаторов статуса 
-                        var fff = (DateTime.Now - global.startTime);
-                        timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
+                        //var fff = (DateTime.Now - global.startTime);
+                        //timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
                     });
 
                     part_t part_ = new part_t();
@@ -209,12 +209,11 @@ namespace Attestation
                         });
 
 
-
-
                         part_ = global.GetPart();
 
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
+
                             if (!global.ArmAttestation)
                             {
                                 DataGridMain.IsEnabled = true;
@@ -255,7 +254,7 @@ namespace Attestation
                         });
 
                     }
-                    else if(state.Task == 0)
+                    if (state.Task == 0)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
@@ -270,9 +269,9 @@ namespace Attestation
                             EndAtt.Background = global.GreyColor;
                             DataGridMain.IsEnabled = false;
                         });
-                        
+
                     }
-                    else if(state.Task == 1)
+                    else if (state.Task == 1)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
@@ -317,9 +316,32 @@ namespace Attestation
                     if (state.Task == 2)
                     {
                         global.part = t.Result;
-                        global.startTimeStr = global.part.Start_time_att;
-                        timeStart.Text = global.startTimeStr;
-
+                        if (state.Inspection == 2 || state.Inspection == 1)
+                        {
+                            global.startTimeStr = global.part.Start_time_att;
+                            DateTime startTime = Convert.ToDateTime(global.startTimeStr);
+                            timeStart.Text = global.startTimeStr;
+                            var fff = (DateTime.Now - startTime);
+                            timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
+                        }
+                        if (state.Inspection == 0)
+                        {
+                            if (global.part.Start_time_att != null)
+                            {
+                                global.startTimeStr = global.part.Start_time_att;
+                                DateTime startTime = Convert.ToDateTime(global.startTimeStr);
+                                global.endTimeStr = global.part.End_time_att;
+                                DateTime endTime = Convert.ToDateTime(global.endTimeStr);
+                                timeStart.Text = global.startTimeStr;
+                                var fff = (startTime - endTime);
+                                timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
+                            }
+                        }
+                        if (state.Inspection == 3)
+                        {
+                            global.startTimeStr = "";
+                            global.endTimeStr = "";
+                        }
 
                         if (global.part != null && global.part.Cars != null)
                         {
@@ -346,9 +368,36 @@ namespace Attestation
                                                 var c1 = Math.Round(global.part.Cars[i].Tara, 3).ToString();
                                                 var c2 = Math.Round(global.DATA[p].Tara, 3).ToString();
 
+                                                var c3 = Math.Round(global.part.Cars[i].Tara_e, 3).ToString();
+                                                var c4 = Math.Round(global.DATA[p].Tara_e, 3).ToString();
 
-                                                if (c1 != c2 || global.part.Cars[i].Zone_e.ToString() != global.DATA[p].Zone_e.ToString()
-                                                    || global.part.Cars[i].Tara_e.ToString() != global.DATA[p].Tara_e.ToString())
+                                                var c5 = Math.Round(global.part.Cars[i].Carrying_e, 3).ToString();
+                                                var c6 = Math.Round(global.DATA[p].Carrying_e, 3).ToString();
+
+                                                var c7 = global.part.Cars[i].Num.ToString();
+                                                var c8 = global.DATA[p].Num.ToString();
+
+                                                var c9 = global.part.Cars[i].Consigner.ToString();
+                                                var c10 = global.DATA[p].Consigner.ToString();
+
+                                                var c11 = global.part.Cars[i].Shipper.ToString();
+                                                var c12 = global.DATA[p].Shipper.ToString();
+
+                                                var c13 = global.part.Cars[i].Mat.ToString();
+                                                var c14 = global.DATA[p].Mat.ToString();
+
+                                                var c15 = global.part.Cars[i].Att_code.ToString();
+                                                var c16 = global.DATA[p].Att_code.ToString();
+
+                                                var c17 = global.part.Cars[i].Cause_id.ToString();
+                                                var c18 = global.DATA[p].Cause_id.ToString();
+
+                                                var c19 = global.part.Cars[i].Car_id.ToString();
+                                                var c20 = global.DATA[p].Car_id.ToString();
+
+
+                                                if (c1 != c2 || c3 != c4 || c5 != c6 || c7 != c8 || c9 != c10 || c11 != c12 
+                                                    || c13 != c14 || c15 != c16 || c17 != c18 || c19 != c20)
                                                 {
                                                     UpdateDataGrid();
                                                     break;
@@ -366,14 +415,38 @@ namespace Attestation
                         }
                         error.Text = "";
                     }
-                    else if(state.Task == 0)
+                    if (state.Task == 0)
                     {
                         DataGridMain.ItemsSource = null;
+                        global.startTimeStr = "";
+                        global.endTimeStr = "";
 
                     }
-                    if(state.Task != 3)
+                    if (state.Task != 3)
                     {
                         error.Text = "";
+                    }
+                    if (state.Task == 3)
+                    {
+                        timeStart.Text = "";
+                        timeSpend.Text = "";
+                        NewTask.IsEnabled = false;
+                        CancelTask.IsEnabled = false;
+                        NewTask.Background = global.GreyColor;
+                        CancelTask.Background = global.GreyColor;
+                        EndAtt.IsEnabled = false;
+                        EndAtt.Background = global.GreyColor;
+                    }
+                    if (state.Task == 1)
+                    {
+                        global.startTimeStr = global.part.Start_time_att;
+                        DateTime startTime = Convert.ToDateTime(global.startTimeStr);
+                        global.endTimeStr = global.part.End_time_att;
+                        DateTime endTime = Convert.ToDateTime(global.endTimeStr);
+                        timeStart.Text = global.startTimeStr;
+                        var fff = (startTime - endTime);
+                        timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
+                        DataGridMain.IsEnabled = false;
                     }
 
 
@@ -455,20 +528,29 @@ namespace Attestation
                 try
                 {
                     global.transport.Close();
-                    Task<String> t = Task<String>.Run(() => { global.transport.Open(); return "OK"; });
+                    Task<string> t = Task<String>.Run(() => { global.transport.Open(); return "OK"; });
                     timer.Tag = t;
                     await t;
                     global.workAfterShutdown();                                        // восстановление после разрыва
                     error.Text = "";
                     timerConnect.Stop();
-                    if(global.isColor)
-                        checkIsOpen.Start();
-                    else dispatcherTimer.Start();
+                    dispatcherTimer.Start();
                 }
                 catch (Exception ass)
                 {
                     SetRedStatusAtt();
                     error.Text = ass.ToString();
+
+                    timeStart.Text = "";
+                    timeSpend.Text = "";
+                    NewTask.IsEnabled = false;
+                    CancelTask.IsEnabled = false;
+                    NewTask.Background = global.GreyColor;
+                    CancelTask.Background = global.GreyColor;
+                    EndAtt.IsEnabled = false;
+                    EndAtt.Background = global.GreyColor;
+                    DataGridMain.IsEnabled = false;
+
                     return;
                 }
                 finally

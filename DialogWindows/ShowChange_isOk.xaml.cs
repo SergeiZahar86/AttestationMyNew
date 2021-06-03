@@ -9,6 +9,8 @@ namespace Attestation
     {
         private Global global;
         private List<String> isOk_Val;
+        private int Att_code;
+        private string Att_codeString;
 
         public ShowChange_isOk()
         {
@@ -21,9 +23,9 @@ namespace Attestation
         {
             try
             {
-                if (global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.rowTab.Att_code))
+                if (global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, Att_code))
                 {
-                    global.ROWS[global.Idx].Att_codeString = global.rowTab.Att_codeString;
+                    global.ROWS[global.Idx].Att_codeString = Att_codeString;
                     this.Close();
                 }
             }
@@ -38,8 +40,8 @@ namespace Attestation
         }
         private void isOk_Value_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            global.rowTab.Att_code = isOk_Value.SelectedIndex;
-            global.rowTab.Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
+            Att_code = isOk_Value.SelectedIndex;
+            Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
         }
     }
 }

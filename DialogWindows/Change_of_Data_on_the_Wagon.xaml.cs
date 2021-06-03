@@ -16,6 +16,18 @@ namespace Attestation
         private List<string> isOk_Val;
         private List<cause_t> Cause;
 
+        private int Shipper;
+        private string Shipper_String;
+        private int Consigner;
+        private string Consigner_String;
+        private int Mat;
+        private string Mat_String;
+        private int Att_code;
+        private string Att_codeString;
+        private int Cause_id;
+        private string Cause_idString;
+
+
 
 
         public Change_of_Data_on_the_Wagon()
@@ -94,31 +106,47 @@ namespace Attestation
         }
         private void shipper_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор Грузоотправитель из справочника
         {
-            global.rowTab.Shipper = global.shippers[shipper_Value.SelectedIndex].Id;
-            global.rowTab.Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
+            Shipper = global.shippers[shipper_Value.SelectedIndex].Id;
+            Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
+
+
+            /*global.rowTab.Shipper = global.shippers[shipper_Value.SelectedIndex].Id;
+            global.rowTab.Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;*/
 
         }
         private void consigner_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор Грузополучателя из справочника
         {
-            global.rowTab.Consigner = global.consigners[consigner_Value.SelectedIndex].Id;
-            global.rowTab.Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
+            Consigner = global.consigners[consigner_Value.SelectedIndex].Id;
+            Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
+
+            /*global.rowTab.Consigner = global.consigners[consigner_Value.SelectedIndex].Id;
+            global.rowTab.Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;*/
 
         }
         private void mat_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор вида материала из справочника
         {
-            global.rowTab.Mat = global.mats[mat_Value.SelectedIndex].Id;
-            global.rowTab.Mat_String = global.mats[mat_Value.SelectedIndex].Name;
+            Mat = global.mats[mat_Value.SelectedIndex].Id;
+            Mat_String = global.mats[mat_Value.SelectedIndex].Name;
+
+            /*global.rowTab.Mat = global.mats[mat_Value.SelectedIndex].Id;
+            global.rowTab.Mat_String = global.mats[mat_Value.SelectedIndex].Name;*/
 
         }
         private void isOk_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор итогов аттестации
         {
-            global.rowTab.Att_code = isOk_Value.SelectedIndex;
-            global.rowTab.Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
+            Att_code = isOk_Value.SelectedIndex;
+            Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
+
+            /*global.rowTab.Att_code = isOk_Value.SelectedIndex;
+            global.rowTab.Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];*/
         }
         private void cause_Value_SelectionChanged(object sender, SelectionChangedEventArgs e) // выбор причины неаттестации
         {
-            global.rowTab.Cause_id = Cause[cause_Value.SelectedIndex].Id;
-            global.rowTab.Cause_idString = Cause[cause_Value.SelectedIndex].Name;
+            Cause_id = Cause[cause_Value.SelectedIndex].Id;
+            Cause_idString = Cause[cause_Value.SelectedIndex].Name;
+
+            /*global.rowTab.Cause_id = Cause[cause_Value.SelectedIndex].Id;
+            global.rowTab.Cause_idString = Cause[cause_Value.SelectedIndex].Name;*/
         }
 
         private void ok_Click(object sender, RoutedEventArgs e)
@@ -131,7 +159,7 @@ namespace Attestation
                 }
 
                 //////////////////////////////
-                String tar = textboxTara.Text;
+                string tar = textboxTara.Text;
                 string tarRepl = tar.Replace(".", ",");
                 if (tarRepl.Length > 0)
                 {
@@ -163,6 +191,21 @@ namespace Attestation
                 {
                     if ((textboxVag.Text.Length > 0 && textboxVag.Text.Length == 8) || textboxVag.Text.Length == 0)
                     {
+                        global.rowTab.Shipper = Shipper;
+                        global.rowTab.Shipper_String = Shipper_String;
+
+                        global.rowTab.Consigner = Consigner;
+                        global.rowTab.Consigner_String = Consigner_String;
+
+                        global.rowTab.Mat = Mat;
+                        global.rowTab.Mat_String = Mat_String;
+
+                        global.rowTab.Att_code = Att_code;
+                        global.rowTab.Att_codeString = Att_codeString;
+
+                        global.rowTab.Cause_id = Cause_id;
+                        global.rowTab.Cause_idString = Cause_idString;
+
                         global.ROWS[global.Idx] = global.rowTab;
                         this.Close();
                     }
@@ -177,6 +220,7 @@ namespace Attestation
                 TextInput.Text = "Ошибка отправки на сервер";
             }
         }
+
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
