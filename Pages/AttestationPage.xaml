@@ -168,6 +168,7 @@
                 FontFamily="Calibry"
                 Foreground="Black"
                 HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 />
             <TextBlock
                 x:Name="textBlock_time_duration"
@@ -178,6 +179,7 @@
                 FontFamily="Calibry"
                 Foreground="Black"
                 HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 />
         </Grid>
         <!-- Текстовые поля =================================================================-->
@@ -201,14 +203,24 @@
                 HorizontalAlignment="Left"
                 Margin="20,0,0,0"
                 />
-            <TextBlock
-                x:Name="timeSpend"
+            <Border
+                x:Name="border_timeSpend"
                 Grid.Row="1"
-                FontSize="16"
-                TextAlignment="Center"
+                BorderThickness="2"
+                BorderBrush="Transparent"
                 HorizontalAlignment="Left"
-                Margin="20,0,0,0"
-                />
+                Width="110"
+                >
+                <TextBlock
+                    x:Name="timeSpend"
+                    FontSize="16"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="20,0,0,0"
+                    />
+            </Border>
+            
         </Grid>
         <!-- Текстовые поля для вывода ошибок =================================================================-->
         <Grid 

@@ -335,12 +335,24 @@ namespace Attestation
                                 timeStart.Text = global.startTimeStr;
                                 var fff = (startTime - endTime);
                                 timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
+
+                                if (global.ArmAttestation)
+                                {
+                                    if (global.part.End_time_att == null)
+                                        border_timeSpend.BorderBrush = Brushes.Transparent;
+                                    else border_timeSpend.BorderBrush = global.GreenColor;
+                                }
                             }
+                            /*if (global.part.End_time_att != null)
+                            {
+                                border_timeSpend.Background = global.GreenColor;
+                            }*/
                         }
                         if (state.Inspection == 3)
                         {
                             global.startTimeStr = "";
                             global.endTimeStr = "";
+                            border_timeSpend.Background = Brushes.Transparent;
                         }
 
                         if (global.part != null && global.part.Cars != null)
@@ -420,6 +432,7 @@ namespace Attestation
                         DataGridMain.ItemsSource = null;
                         global.startTimeStr = "";
                         global.endTimeStr = "";
+                        border_timeSpend.BorderBrush = Brushes.Transparent;
 
                     }
                     if (state.Task != 3)
@@ -436,6 +449,7 @@ namespace Attestation
                         CancelTask.Background = global.GreyColor;
                         EndAtt.IsEnabled = false;
                         EndAtt.Background = global.GreyColor;
+                        border_timeSpend.BorderBrush = Brushes.Transparent;
                     }
                     if (state.Task == 1)
                     {
