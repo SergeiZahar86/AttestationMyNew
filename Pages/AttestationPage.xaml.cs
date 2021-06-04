@@ -432,6 +432,8 @@ namespace Attestation
                         DataGridMain.ItemsSource = null;
                         global.startTimeStr = "";
                         global.endTimeStr = "";
+                        timeStart.Text = "";
+                        timeSpend.Text = "";
                         border_timeSpend.BorderBrush = Brushes.Transparent;
 
                     }

@@ -12,6 +12,7 @@ namespace Attestation
         {
             InitializeComponent();
             global = Global.getInstance();
+            FocusManager.SetFocusedElement(this, textboxVag);     // set logical focus
         }
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e) // Валидация ввода, можно только цифры
         {

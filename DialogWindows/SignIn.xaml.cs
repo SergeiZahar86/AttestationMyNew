@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Attestation
@@ -100,10 +101,10 @@ namespace Attestation
             dispatcherTimer.Tick += new EventHandler(OnTimedEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,500);
             dispatcherTimer.Start();
-            
+
             ///////////////////////////////////
             ///
-
+            FocusManager.SetFocusedElement(this, tbLogin);     // set logical focus
 
 
 

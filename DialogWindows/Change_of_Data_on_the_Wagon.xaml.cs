@@ -41,12 +41,14 @@ namespace Attestation
                 shipper_Value.IsEnabled = false;
                 consigner_Value.IsEnabled = false;
                 mat_Value.IsEnabled = false;
+                FocusManager.SetFocusedElement(this, textboxVag);     // set logical focus
             }
             else
             {
                 textboxVag.IsEnabled = false;
                 isOk_Value.IsEnabled = false;
                 cause_Value.IsEnabled = false;
+                FocusManager.SetFocusedElement(this, textboxTara);     // set logical focus
             }
             zona_Val = global.zonas;
             //zona_Value.ItemsSource = zona_Val;
