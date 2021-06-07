@@ -10,6 +10,7 @@ namespace Attestation
         private List<Consigners> consignersVal;
         private int Consigner;
         private string Consigner_String;
+        private bool isOk;
 
         public ShowChange_Consigner_String()
         {
@@ -20,17 +21,20 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (isOk)
             {
-                if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, Consigner))
+                try
                 {
-                    global.ROWS[global.Idx].Consigner_String = Consigner_String;
-                    this.Close();
+                    if (global.client.setConsigner(global.part.Part_id, global.ROWS[global.Idx].Car_id, Consigner))
+                    {
+                        global.ROWS[global.Idx].Consigner_String = Consigner_String;
+                        this.Close();
+                    }
                 }
-            }
-            catch
-            {
-                TextInput.Text = "Ошибка отправки на сервер";
+                catch
+                {
+                    TextInput.Text = "Ошибка отправки на сервер";
+                }
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -41,7 +45,7 @@ namespace Attestation
         {
             Consigner = global.consigners[consigner_Value.SelectedIndex].Id;
             Consigner_String = global.consigners[consigner_Value.SelectedIndex].Name;
-
+            isOk = true;
         }
     }
 }

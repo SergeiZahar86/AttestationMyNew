@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:Attestation"
-        mc:Ignorable="d"  Height="370" Width="344.031" WindowStyle="None"
-        WindowStartupLocation="CenterScreen" Top="-200"
+        mc:Ignorable="d"
+        Height="370"
+        Width="344.031"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Top="-200"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
-        ResizeMode="CanResizeWithGrip" AllowsTransparency="true"  >
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="true"
+        Topmost="True"
+        >
 
 
     <Border Background="#EEEEEE" BorderThickness="1" BorderBrush="gray" >

@@ -11,7 +11,7 @@ namespace Attestation
         private List<String> isOk_Val;
         private int Att_code;
         private string Att_codeString;
-
+        private bool isOk;
         public ShowChange_isOk()
         {
             InitializeComponent();
@@ -21,17 +21,20 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e) // Корректировка признака аттестации на сервере
         {
-            try
+            if (isOk)
             {
-                if (global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, Att_code))
+                try
                 {
-                    global.ROWS[global.Idx].Att_codeString = Att_codeString;
-                    this.Close();
+                    if (global.client.setAtt(global.part.Part_id, global.ROWS[global.Idx].Car_id, Att_code))
+                    {
+                        global.ROWS[global.Idx].Att_codeString = Att_codeString;
+                        this.Close();
+                    }
                 }
-            }
-            catch
-            {
-                TextInput.Text = "Ошибка отправки на сервер";
+                catch
+                {
+                    TextInput.Text = "Ошибка отправки на сервер";
+                }
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -42,6 +45,7 @@ namespace Attestation
         {
             Att_code = isOk_Value.SelectedIndex;
             Att_codeString = global.Att_codeFonts[isOk_Value.SelectedIndex];
+            isOk = true;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Attestation
         private List<mat_t> matsVal;
         private int Mat;
         private string Mat_String;
+        private bool isOk;
 
         public ShowChange_Mat_String()
         {
@@ -20,17 +21,20 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (isOk)
             {
-                if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, Mat))
+                try
                 {
-                    global.ROWS[global.Idx].Mat_String = Mat_String;
-                    this.Close();
+                    if (global.client.setMat(global.part.Part_id, global.ROWS[global.Idx].Car_id, Mat))
+                    {
+                        global.ROWS[global.Idx].Mat_String = Mat_String;
+                        this.Close();
+                    }
                 }
-            }
-            catch
-            {
-                TextInput.Text = "Ошибка отправки на сервер";
+                catch
+                {
+                    TextInput.Text = "Ошибка отправки на сервер";
+                }
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -41,7 +45,7 @@ namespace Attestation
         {
             Mat = global.mats[mat_Value.SelectedIndex].Id;
             Mat_String = global.mats[mat_Value.SelectedIndex].Name;
-
+            isOk = true;
             /*global.rowTab.Mat = global.mats[mat_Value.SelectedIndex].Id;
             global.rowTab.Mat_String = global.mats[mat_Value.SelectedIndex].Name;*/
 

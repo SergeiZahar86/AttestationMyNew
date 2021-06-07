@@ -10,7 +10,7 @@ namespace Attestation
         private List<Shippers> shippersVal;
         private int Shipper;
         private string Shipper_String;
-
+        private bool isOk;
         public ShowChange_Shipper_String()
         {
             InitializeComponent();
@@ -20,18 +20,21 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (isOk)
             {
-                if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, Shipper))
-                //if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+                try
                 {
-                    global.ROWS[global.Idx].Shipper_String = Shipper_String;
-                    this.Close();
+                    if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, Shipper))
+                    //if (global.client.setShipper(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Shipper))
+                    {
+                        global.ROWS[global.Idx].Shipper_String = Shipper_String;
+                        this.Close();
+                    }
                 }
-            }
-            catch
-            {
-                TextInput.Text = "Ошибка отправки на сервер";
+                catch
+                {
+                    TextInput.Text = "Ошибка отправки на сервер";
+                }
             }
         }
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -42,7 +45,7 @@ namespace Attestation
         {
             Shipper = global.shippers[shipper_Value.SelectedIndex].Id;
             Shipper_String = global.shippers[shipper_Value.SelectedIndex].Name;
-
+            isOk = true;
 
 
             /*global.rowTab.Shipper = global.shippers[shipper_Value.SelectedIndex].Id;

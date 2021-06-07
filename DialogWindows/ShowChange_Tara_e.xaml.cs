@@ -36,7 +36,7 @@ namespace Attestation
             {
                 String tar = textboxVag.Text;
                 string tarRepl = tar.Replace(".", ",");
-                global.ROWS[global.Idx].Tara_e = Convert.ToDouble(tarRepl);
+                global.ROWS[global.Idx].Tara_e = Math.Round(Convert.ToDouble(tarRepl), 3, MidpointRounding.AwayFromZero);
                 global.ROWS[global.Idx].Tara_delta = Math.Round((global.ROWS[global.Idx].Tara - global.ROWS[global.Idx].Tara_e),
                     3, MidpointRounding.AwayFromZero);
                 if (global.client.setTara(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Tara_e))

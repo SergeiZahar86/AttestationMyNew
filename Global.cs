@@ -15,7 +15,7 @@ namespace Attestation
 {
     class Global
     {
-
+        public bool CloseTask;                                               // флаг отмены задания
         public bool ArmAttestation;                                          // разграничение работы армов
         public bool getStartAtt;                                             // можно ли начинать аттестацию
         public bool isColor;                                                 // флаг для кнопки начала и завершения аттестации
@@ -204,7 +204,7 @@ namespace Attestation
                     }
                 
                 double Tara__ = Math.Round( cars.Tara, 3);
-                double Tara_e__ = cars.Tara_e;
+                double Tara_e__ = Math.Round(cars.Tara_e, 3);
                 double Tara_delta__ = Math.Round(Tara__ - Tara_e__,3);
                 int Zone_e__ = cars.Zone_e;
                 string Zone_eString__ = "";
@@ -226,7 +226,7 @@ namespace Attestation
                         }
                     }
                 }
-                double Carrying__ = cars.Carrying_e;
+                double Carrying__ = Math.Round(cars.Carrying_e, 3);
                 string Att_time__ = cars.Att_time;
 
                 rows.Add(new RowTab(Part_id__, Car_id__, Num__, shipper__, shipperString__, consigner__,

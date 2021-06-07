@@ -10,7 +10,7 @@ namespace Attestation
         private List<cause_t> Cause;
         private int Cause_id;
         private string Cause_idString;
-
+        private bool isOk;
         public ShowChange_cause_t()
         {
             InitializeComponent();
@@ -20,18 +20,22 @@ namespace Attestation
         }
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            try {
-                if (global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, Cause_id))
+            if (isOk)
+            {
+                try
                 {
-                    global.ROWS[global.Idx].Cause_idString = Cause_idString;
-                    this.Close();
+                    if (global.client.setCause(global.part.Part_id, global.ROWS[global.Idx].Car_id, Cause_id))
+                    {
+                        global.ROWS[global.Idx].Cause_idString = Cause_idString;
+                        this.Close();
+                    }
+                }
+                catch
+                {
+                    TextInput.Text = "Ошибка отправки на сервер";
                 }
             }
-            catch
-            {
-                TextInput.Text = "Ошибка отправки на сервер";
-            }
-}
+        }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -40,6 +44,7 @@ namespace Attestation
         {
             Cause_id = Cause[cause_Value.SelectedIndex].Id;
             Cause_idString = Cause[cause_Value.SelectedIndex].Name;
+            isOk = true;
         }
     }
 }

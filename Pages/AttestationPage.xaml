@@ -171,6 +171,17 @@
                 VerticalAlignment="Center"
                 />
             <TextBlock
+                x:Name="textBlock_time_end"
+                Text="Время окончания аттестации:"
+                Grid.Row="0"
+                FontSize="16" 
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                />
+            <TextBlock
                 x:Name="textBlock_time_duration"
                 Text="Продолжительность аттестации:"
                 Grid.Row="1"
@@ -197,6 +208,14 @@
             </Grid.RowDefinitions>
             <TextBlock
                 x:Name="timeStart"
+                Grid.Row="0"
+                FontSize="16"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                Margin="20,0,0,0"
+                />
+            <TextBlock
+                x:Name="timeEnd"
                 Grid.Row="0"
                 FontSize="16"
                 TextAlignment="Center"

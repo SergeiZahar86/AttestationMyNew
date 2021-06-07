@@ -157,15 +157,13 @@
                 Margin="670,0,0,0"
                 Padding="0"
                 />
-            <Label
+            <TextBlock
                 x:Name="label_login"
-                Content="{Binding SomeValueString}"
                 Height="30"
                 Width="200"
                 VerticalAlignment="Center"
                 FontSize="18"
-                HorizontalContentAlignment="Right"
-                VerticalContentAlignment="Center"
+                TextAlignment="Right"
                 HorizontalAlignment="Right"
                 FontFamily="Calibry"
                 Foreground="White"

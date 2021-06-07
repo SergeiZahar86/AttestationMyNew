@@ -217,6 +217,19 @@ namespace Attestation
                             if (!global.ArmAttestation)
                             {
                                 DataGridMain.IsEnabled = true;
+                                if (part_.End_time_att != null)
+                                {
+                                    textBlock_time_end.Visibility = Visibility.Visible;
+                                    timeEnd.Visibility = Visibility.Visible;
+                                    timeEnd.Text = part_.End_time_att;
+                                }
+                                else
+                                {
+                                    textBlock_time_end.Visibility = Visibility.Hidden;
+                                    timeEnd.Visibility = Visibility.Hidden;
+                                    timeEnd.Text = "";
+                                }
+
                             }
                             if (part_.Start_time_att != null)
                             {
@@ -226,7 +239,8 @@ namespace Attestation
 
                                     NewTask.IsEnabled = true;
                                     CancelTask.IsEnabled = true;
-                                    NewTaskRow_1.Text = "Сохранить";
+                                    NewTaskRow_1.Text = "Начать";
+                                    NewTaskRow_2.Text = "Погрузку";
                                     NewTask.Background = global.GreenColor;
                                     CancelTask.Background = global.RedColor;
                                 }
@@ -236,7 +250,8 @@ namespace Attestation
 
                                     NewTask.IsEnabled = false;
                                     CancelTask.IsEnabled = true;
-                                    NewTaskRow_1.Text = "Сохранить";
+                                    NewTaskRow_1.Text = "Начать";
+                                    NewTaskRow_2.Text = "погрузку";
                                     NewTask.Background = global.GreyColor;
                                     CancelTask.Background = global.RedColor;
                                 }
@@ -247,12 +262,12 @@ namespace Attestation
 
                                 NewTask.IsEnabled = false;
                                 CancelTask.IsEnabled = true;
-                                NewTaskRow_1.Text = "Сохранить";
+                                NewTaskRow_1.Text = "Начать";
+                                NewTaskRow_2.Text = "погрузку";
                                 NewTask.Background = global.GreyColor;
                                 CancelTask.Background = global.RedColor;
                             }
                         });
-
                     }
                     if (state.Task == 0)
                     {
@@ -261,6 +276,7 @@ namespace Attestation
                             NewTask.IsEnabled = true;
                             CancelTask.IsEnabled = false;
                             NewTaskRow_1.Text = "Создать";
+                            NewTaskRow_2.Text = "задание";
                             NewTask.Background = global.GreenColor;
                             CancelTask.Background = global.GreyColor;
                             label_going_att.Visibility = Visibility.Hidden;
@@ -268,6 +284,13 @@ namespace Attestation
                             EndAtt.IsEnabled = false;
                             EndAtt.Background = global.GreyColor;
                             DataGridMain.IsEnabled = false;
+
+                            if (!global.ArmAttestation)
+                            {
+                                textBlock_time_end.Visibility = Visibility.Hidden;
+                                timeEnd.Visibility = Visibility.Hidden;
+                                timeEnd.Text = "";
+                            }
                         });
 
                     }
@@ -278,6 +301,7 @@ namespace Attestation
                             NewTask.IsEnabled = false;
                             CancelTask.IsEnabled = false;
                             NewTaskRow_1.Text = "Создать";
+                            NewTaskRow_2.Text = "задание";
                             NewTask.Background = global.GreyColor;
                             CancelTask.Background = global.GreyColor;
                             label_going_att.Visibility = Visibility.Hidden;
@@ -285,6 +309,23 @@ namespace Attestation
                             EndAtt.IsEnabled = false;
                             EndAtt.Background = global.GreyColor;
                             DataGridMain.IsEnabled = false;
+
+                            if (!global.ArmAttestation)
+                            {
+                                if (part_.End_time_att != null)
+                                {
+                                    textBlock_time_end.Visibility = Visibility.Visible;
+                                    timeEnd.Visibility = Visibility.Visible;
+                                    timeEnd.Text = part_.End_time_att;
+                                }
+                                else
+                                {
+                                    textBlock_time_end.Visibility = Visibility.Hidden;
+                                    timeEnd.Visibility = Visibility.Hidden;
+                                    timeEnd.Text = "";
+                                }
+
+                            }
                         });
                     }
                     else if (state.Task == 3)
@@ -301,6 +342,13 @@ namespace Attestation
                             EndAtt.IsEnabled = false;
                             EndAtt.Background = global.GreyColor;
                             DataGridMain.IsEnabled = false;
+
+                            if (!global.ArmAttestation)
+                            {
+                                textBlock_time_end.Visibility = Visibility.Hidden;
+                                timeEnd.Visibility = Visibility.Hidden;
+                                timeEnd.Text = "";
+                            }
                         });
                     }
 
@@ -587,6 +635,8 @@ namespace Attestation
             CancelTask.Background = global.GreyColor;
             EndAtt.Background = global.GreyColor;
             DataGridMain.IsEnabled = false;
+            textBlock_time_end.Visibility = Visibility.Hidden;
+            timeEnd.Visibility = Visibility.Hidden;
 
             label_going_att.Visibility = Visibility.Hidden;
             if (global.ArmAttestation)
@@ -651,6 +701,7 @@ namespace Attestation
                 {
                     ShowPhotos showPhotos = new ShowPhotos();
                     showPhotos.Owner = Window.GetWindow(this);
+                    showPhotos.Number.Text = global.ROWS[global.Idx].Car_id.ToString();
                     showPhotos.image1.Source = Global.ByteArraytoBitmap(global.photo.Left);
                     showPhotos.image2.Source = Global.ByteArraytoBitmap(global.photo.Right);
                     showPhotos.image3.Source = Global.ByteArraytoBitmap(global.photo.Top);
@@ -986,8 +1037,15 @@ namespace Attestation
         }
         private void CancelTask_Click(object sender, RoutedEventArgs e) // Кнопка отмены задания
         {
-            Thread myThread = new Thread(new ThreadStart(CancelTaskFunction));
-            myThread.Start(); 
+            VerificationEndTask endTask = new VerificationEndTask();
+            endTask.Owner = Window.GetWindow(this);
+            endTask.ShowDialog();
+            if (global.CloseTask)
+            {
+                Thread myThread = new Thread(new ThreadStart(CancelTaskFunction));
+                myThread.Start();
+            }
+            global.CloseTask = false;
         }
         private void CancelTaskFunction() // Функция для Кнопки отмены задания
         {

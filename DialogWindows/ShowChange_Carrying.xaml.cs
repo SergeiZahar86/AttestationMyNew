@@ -35,7 +35,7 @@ namespace Attestation
             {
                 String car = textboxCarrying.Text;
                 string carRepl = car.Replace(".", ",");
-                global.ROWS[global.Idx].Carrying = Convert.ToDouble(carRepl);
+                global.ROWS[global.Idx].Carrying = Math.Round(Convert.ToDouble(carRepl), 3, MidpointRounding.AwayFromZero);
                 if (global.client.setCarry(global.part.Part_id, global.ROWS[global.Idx].Car_id, global.ROWS[global.Idx].Carrying))
                 {
                     this.Close();
