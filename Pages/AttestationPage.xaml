@@ -192,6 +192,17 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 />
+            <TextBlock
+                x:Name="textBlock_inspection_car"
+                Text="Вагон в зоне осмотра:"
+                Grid.Row="2"
+                FontSize="16" 
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                />
         </Grid>
         <!-- Текстовые поля =================================================================-->
         <Grid
@@ -221,6 +232,15 @@
                 TextAlignment="Center"
                 HorizontalAlignment="Left"
                 Margin="20,0,0,0"
+                />
+            <TextBlock
+                x:Name="vagNam"
+                Grid.Row="2"
+                FontSize="20"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                Margin="20,0,0,0"
+                FontWeight="Bold"
                 />
             <Border
                 x:Name="border_timeSpend"

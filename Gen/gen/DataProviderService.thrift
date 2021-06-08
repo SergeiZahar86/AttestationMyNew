@@ -22,6 +22,12 @@ struct state_bits {
   4:int load   
 }
 
+# Информация дата провайдера
+struct info_dp {
+  1:state_bits state,   
+  2:int active_wagon  
+}
+
 # Справочник контрагентов
 struct contractor_t {
   1:int id,      
@@ -82,7 +88,8 @@ service DataProviderService
     # Запрос данных	  
    	photo_t getPhoto(1:string part_id, 2:int car_id) throws (1:DataProviderException ex),                   # Получение фотографий вагона
    	part_t getPart() throws (1:DataProviderException ex),                     		                # Запрос партии вагонов   
-	state_bits getStatusBits()  throws (1:DataProviderException ex),                                        # состояние процессов                                               
+	state_bits getStatusBits()  throws (1:DataProviderException ex),                                        # состояние процессов  
+	info_dp getInfoDP() throws (1:DataProviderException ex),                                        # информация дата провайдера                                              
     
 	# запись значенией
   	bool setNum(1:string part_id, 2:int car_id, 3:string num) throws (1:DataProviderException ex),             # Корректировка номера вагона	

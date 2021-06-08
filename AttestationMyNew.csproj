@@ -272,6 +272,7 @@
     <Compile Include="DialogWindows\input_Of_Initial_Data.xaml.cs">
       <DependentUpon>input_Of_Initial_Data.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Thrift\info_dp.cs" />
     <Compile Include="Thrift\mat_t.cs" />
     <Compile Include="Thrift\part_t.cs" />
     <Compile Include="Thrift\photo_t.cs" />

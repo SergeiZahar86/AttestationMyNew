@@ -42,7 +42,7 @@ namespace Attestation
         byte b_Red = 104;
 
 
-        state_bits state;                                           // состояние аттестации, передача цветов для индикаторов
+        info_dp state;                                           // состояние аттестации, передача цветов для индикаторов
         public int idx;                                             // индекс строки
         private Global global;
         public static bool isVerification;                          // флаг для подтверждения окончания аттестации
@@ -65,12 +65,12 @@ namespace Attestation
             load_canva.Background = new SolidColorBrush(Color.FromRgb(r_Red, g_Red, b_Red));
         }
 
-        private void GetCollorStatusAtt(state_bits state) // установка цветов трёх индикаторов статуса аттестации
+        private void GetCollorStatusAtt(info_dp state) // установка цветов трёх индикаторов статуса аттестации
         {
-            int task = state.Task;
-            int inst = state.Inspection;
-            int weight = state.Weight;
-            int load = state.Load;
+            int task = state.State.Task;
+            int inst = state.State.Inspection;
+            int weight = state.State.Weight;
+            int load = state.State.Load;
             switch (task)
             {
                 case 0:
@@ -151,7 +151,7 @@ namespace Attestation
             {
                 part_t get_part()
                 {
-                    state = global.GetStatusBits();
+                    state = global.GetInfoDP();
                     Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                     {
                         GetCollorStatusAtt(state); // установка цветов индикаторов статуса 
@@ -165,15 +165,18 @@ namespace Attestation
                     car_s.Add(car_);
                     part_.Cars = car_s;
 
-                    if (state.Task == 2)
+                    if (state.State.Task == 2)
                     {
                         if (global.ArmAttestation)
                         {
-                            if (state.Inspection == 1 || state.Inspection == 2)
+                            if (state.State.Inspection == 1 || state.State.Inspection == 2)
                             {
                                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                                 {
                                     DataGridMain.IsEnabled = true;
+                                    if (state.Active_wagon > 0)
+                                        vagNam.Text = state.Active_wagon.ToString();
+                                    else vagNam.Text = "";
                                 });
                             }
                             else
@@ -181,27 +184,28 @@ namespace Attestation
                                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                                 {
                                     DataGridMain.IsEnabled = false;
+                                    vagNam.Text = "";
                                 });
                             }
                         }
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
-                            if (state.Inspection == 0)
+                            if (state.State.Inspection == 0)
                             {
                                 EndAtt.IsEnabled = false;
                                 EndAtt.Background = global.GreyColor;
                             }
-                            if (state.Inspection == 1)
+                            if (state.State.Inspection == 1)
                             {
                                 EndAtt.IsEnabled = true;
                                 EndAtt.Background = global.GreenColor;
                             }
-                            if (state.Inspection == 2)
+                            if (state.State.Inspection == 2)
                             {
                                 EndAtt.IsEnabled = false;
                                 EndAtt.Background = global.GreyColor;
                             }
-                            if (state.Inspection == 3)
+                            if (state.State.Inspection == 3)
                             {
                                 EndAtt.IsEnabled = false;
                                 EndAtt.Background = global.GreyColor;
@@ -269,10 +273,11 @@ namespace Attestation
                             }
                         });
                     }
-                    if (state.Task == 0)
+                    if (state.State.Task == 0)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
+                            vagNam.Text = "";
                             NewTask.IsEnabled = true;
                             CancelTask.IsEnabled = false;
                             NewTaskRow_1.Text = "Создать";
@@ -294,10 +299,11 @@ namespace Attestation
                         });
 
                     }
-                    else if (state.Task == 1)
+                    else if (state.State.Task == 1)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
+                            vagNam.Text = "";
                             NewTask.IsEnabled = false;
                             CancelTask.IsEnabled = false;
                             NewTaskRow_1.Text = "Создать";
@@ -328,10 +334,11 @@ namespace Attestation
                             }
                         });
                     }
-                    else if (state.Task == 3)
+                    else if (state.State.Task == 3)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
+                            vagNam.Text = "";
                             NewTask.IsEnabled = false;
                             CancelTask.IsEnabled = false;
                             NewTask.Background = global.GreyColor;
@@ -361,10 +368,10 @@ namespace Attestation
                     timer.Tag = t;
                     await t;
 
-                    if (state.Task == 2)
+                    if (state.State.Task == 2)
                     {
                         global.part = t.Result;
-                        if (state.Inspection == 2 || state.Inspection == 1)
+                        if (state.State.Inspection == 2 || state.State.Inspection == 1)
                         {
                             global.startTimeStr = global.part.Start_time_att;
                             DateTime startTime = Convert.ToDateTime(global.startTimeStr);
@@ -372,7 +379,7 @@ namespace Attestation
                             var fff = (DateTime.Now - startTime);
                             timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
                         }
-                        if (state.Inspection == 0)
+                        if (state.State.Inspection == 0)
                         {
                             if (global.part.Start_time_att != null)
                             {
@@ -396,7 +403,7 @@ namespace Attestation
                                 border_timeSpend.Background = global.GreenColor;
                             }*/
                         }
-                        if (state.Inspection == 3)
+                        if (state.State.Inspection == 3)
                         {
                             global.startTimeStr = "";
                             global.endTimeStr = "";
@@ -475,7 +482,7 @@ namespace Attestation
                         }
                         error.Text = "";
                     }
-                    if (state.Task == 0)
+                    if (state.State.Task == 0)
                     {
                         DataGridMain.ItemsSource = null;
                         global.startTimeStr = "";
@@ -485,11 +492,11 @@ namespace Attestation
                         border_timeSpend.BorderBrush = Brushes.Transparent;
 
                     }
-                    if (state.Task != 3)
+                    if (state.State.Task != 3)
                     {
                         error.Text = "";
                     }
-                    if (state.Task == 3)
+                    if (state.State.Task == 3)
                     {
                         timeStart.Text = "";
                         timeSpend.Text = "";
@@ -501,7 +508,7 @@ namespace Attestation
                         EndAtt.Background = global.GreyColor;
                         border_timeSpend.BorderBrush = Brushes.Transparent;
                     }
-                    if (state.Task == 1)
+                    if (state.State.Task == 1)
                     {
                         global.startTimeStr = global.part.Start_time_att;
                         DateTime startTime = Convert.ToDateTime(global.startTimeStr);
@@ -525,53 +532,6 @@ namespace Attestation
             }
             catch (Exception ass)
             {
-                SetRedStatusAtt();
-            }
-            finally
-            {
-                timer.Tag = null;
-            }
-        }
-
-        private async void check_is_open(object source, EventArgs e) // метод таймера при закрытой аттестации
-        {
-            state_bits GetState_bits()
-            {
-                state = global.client.getStatusBits();
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
-                {
-                    GetCollorStatusAtt(state); // установка цветов трёх индикаторов статуса аттестации
-                });
-                return state;
-
-            }
-            DispatcherTimer timer = (DispatcherTimer)source;
-            if (null != timer.Tag)
-            {
-                return;
-            }
-            try
-            {
-                if (global.transport.IsOpen == true)
-                {
-                    //Task<List<mat_t>> t = Task<List<mat_t>>.Run(() => global.mats = global.client.getMat());
-                    Task<state_bits> t = Task<state_bits>.Run(GetState_bits);
-                    timer.Tag = t;
-                    await t;
-                    //global.mats = t.Result;
-                    state = t.Result;
-                }
-                else
-                {
-                    error.Text = "Нет связи с DataProvider \n";
-                    SetRedStatusAtt();
-                    checkIsOpen.Stop();
-                    timerConnect.Start();
-                }
-            }
-            catch (Exception ass)
-            {
-                error.Text = $"Ошибка при обмене данными с DataProvider    {ass}";
                 SetRedStatusAtt();
             }
             finally
@@ -648,6 +608,8 @@ namespace Attestation
             }
             else
             {
+                vagNam.Visibility = Visibility.Hidden;
+                textBlock_inspection_car.Visibility = Visibility.Hidden;
                 EndAtt.Visibility = Visibility.Hidden;
                 textBlock_time_start.Visibility = Visibility.Hidden;
                 textBlock_time_duration.Visibility = Visibility.Hidden;
@@ -670,14 +632,6 @@ namespace Attestation
             dispatcherTimer.Start();
 
 
-
-
-
-
-
-            checkIsOpen = new DispatcherTimer();
-            checkIsOpen.Tick += new EventHandler(check_is_open);
-            checkIsOpen.Interval = new TimeSpan(0, 0, 1);
 
             timerConnect = new DispatcherTimer();
             timerConnect.Tick += new EventHandler(ConnectTimer);
@@ -1139,5 +1093,6 @@ namespace Attestation
                 catch { }
             }
         }
+
     }
 }

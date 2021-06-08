@@ -414,11 +414,11 @@ namespace Attestation
             //throw new Exception("Не получилось удалить задание");
             client.removeTask(user_login);
         }
-        public state_bits GetStatusBits() // вызов функции getStatusBits
+        public info_dp GetInfoDP() // вызов функции getInfoDP
         {
             //throw new Exception("Сломались лампочки");
             //return new state_bits() { Task = 2, Inspection = 0, Weight = 0, Load = 0 };
-            return client.getStatusBits();
+            return client.getInfoDP();
         }
         public part_t GetPart() // вызов функции getPart
         {
