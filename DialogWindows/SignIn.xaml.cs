@@ -162,7 +162,7 @@ namespace Attestation
         }
         private void close_Click(object sender, RoutedEventArgs e) // закрыть программу
         {
-            isCloseProgram = false;
+            /*isCloseProgram = false;
             VerificationCloseProgram closeProgram = new VerificationCloseProgram();
             closeProgram.ShowDialog();
             if (isCloseProgram)
@@ -170,7 +170,10 @@ namespace Attestation
                 dispatcherTimer.Stop(); // остановить таймер
                 Application.Current.Shutdown();
                 Environment.Exit(0);
-            }
+            }*/
+            dispatcherTimer.Stop(); // остановить таймер
+            Application.Current.Shutdown();
+            Environment.Exit(0);
 
         }
 
