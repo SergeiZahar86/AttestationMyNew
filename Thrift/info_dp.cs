@@ -23,6 +23,7 @@ public partial class info_dp : TBase
 {
   private state_bits _state;
   private int _active_wagon;
+  private PusherPosition _position;
 
   public state_bits State
   {
@@ -50,6 +51,19 @@ public partial class info_dp : TBase
     }
   }
 
+  public PusherPosition Position
+  {
+    get
+    {
+      return _position;
+    }
+    set
+    {
+      __isset.position = true;
+      this._position = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -58,6 +72,7 @@ public partial class info_dp : TBase
   public struct Isset {
     public bool state;
     public bool active_wagon;
+    public bool position;
   }
 
   public info_dp() {
@@ -89,6 +104,13 @@ public partial class info_dp : TBase
           case 2:
             if (field.Type == TType.I32) {
               Active_wagon = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 3:
+            if (field.Type == TType.I32) {
+              Position = (PusherPosition)iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -130,6 +152,14 @@ public partial class info_dp : TBase
         oprot.WriteI32(Active_wagon);
         oprot.WriteFieldEnd();
       }
+      if (__isset.position) {
+        field.Name = "position";
+        field.Type = TType.I32;
+        field.ID = 3;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32((int)Position);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -153,6 +183,12 @@ public partial class info_dp : TBase
       __first = false;
       __sb.Append("Active_wagon: ");
       __sb.Append(Active_wagon);
+    }
+    if (__isset.position) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Position: ");
+      __sb.Append(Position);
     }
     __sb.Append(")");
     return __sb.ToString();

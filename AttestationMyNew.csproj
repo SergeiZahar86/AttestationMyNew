@@ -229,6 +229,9 @@
     <Compile Include="DialogWindows\MultipleDataEntry.xaml.cs">
       <DependentUpon>MultipleDataEntry.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DialogWindows\Select_Create_Task.xaml.cs">
+      <DependentUpon>Select_Create_Task.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogWindows\Select_Start_Att.xaml.cs">
       <DependentUpon>Select_Start_Att.xaml</DependentUpon>
     </Compile>
@@ -314,6 +317,7 @@
     <Compile Include="DialogWindows\SignIn.xaml.cs">
       <DependentUpon>SignIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Thrift\PusherPosition.cs" />
     <Compile Include="Thrift\state_bits.cs" />
     <Compile Include="Thrift\Status_Att.cs" />
     <Compile Include="DialogWindows\VerificationCloseProgram .xaml.cs">
@@ -332,6 +336,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DialogWindows\MultipleDataEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogWindows\Select_Create_Task.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

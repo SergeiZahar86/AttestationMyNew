@@ -945,8 +945,12 @@ namespace Attestation
         {
             if (NewTaskRow_1.Text == "Создать")
             {
-                Thread myThread = new Thread(new ThreadStart(NewTaskFunction));
-                myThread.Start(); 
+                if (global.getStartTask)
+                {
+                    Thread myThread = new Thread(new ThreadStart(NewTaskFunction));
+                    myThread.Start();
+                    global.getStartTask = false;
+                }
             }
             else
             {
@@ -965,7 +969,7 @@ namespace Attestation
                 blockBatton();
                 showDialogMainWindow();
             });
-            CallFunctionThrift("createTask");
+            CallFunctionThrift("createTask", global.pusherPosition);
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 hideDialogMainWindow();
@@ -978,7 +982,7 @@ namespace Attestation
                 blockBatton();
                 showDialogMainWindow();
             });
-            CallFunctionThrift("endTask");
+            CallFunctionThrift("endTask", null);
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 hideDialogMainWindow();
@@ -1008,7 +1012,7 @@ namespace Attestation
                 blockBatton();
                 showDialogMainWindow();
             });
-            CallFunctionThrift("removeTask");
+            CallFunctionThrift("removeTask", null);
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 hideDialogMainWindow();
@@ -1052,13 +1056,13 @@ namespace Attestation
                 EndAtt.Background = global.GreyColor;
                 showDialogMainWindow();
             });
-            CallFunctionThrift("endAtt");
+            CallFunctionThrift("endAtt", null);
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 hideDialogMainWindow();
             });
         }
-        private void CallFunctionThrift(string funcName) // создание соединения и вызов функции
+        private void CallFunctionThrift(string funcName, PusherPosition? pos) // создание соединения и вызов функции
         {
             TTransport transport = new TSocket(global.Host, global.Port);
             TProtocol proto = new TBinaryProtocol(transport);
@@ -1069,7 +1073,7 @@ namespace Attestation
                 if (funcName == "endAtt")
                     client.endAtt(global.Login);
                 else if (funcName == "createTask")
-                    client.createTask(global.Login);
+                    client.createTask(global.Login, pos);
                 else if (funcName == "endTask")
                     client.endTask(global.Login);
                 else if (funcName == "removeTask")

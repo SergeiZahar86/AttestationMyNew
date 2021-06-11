@@ -36,7 +36,7 @@ public partial class DataProviderService {
     bool setCar(string part_id, int car_id, car_t car);
     bool setCause(string part_id, int car_id, int cause_id);
     bool endAtt(string userLogin);
-    string createTask(string userLogin);
+    string createTask(string userLogin, PusherPosition position);
     void endTask(string userLogin);
     void removeTask(string userLogin);
   }
@@ -119,7 +119,7 @@ public partial class DataProviderService {
     bool End_endAtt(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_createTask(AsyncCallback callback, object state, string userLogin);
+    IAsyncResult Begin_createTask(AsyncCallback callback, object state, string userLogin, PusherPosition position);
     string End_createTask(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
@@ -1591,9 +1591,9 @@ public partial class DataProviderService {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_createTask(AsyncCallback callback, object state, string userLogin)
+    public IAsyncResult Begin_createTask(AsyncCallback callback, object state, string userLogin, PusherPosition position)
     {
-      return send_createTask(callback, state, userLogin);
+      return send_createTask(callback, state, userLogin, position);
     }
 
     public string End_createTask(IAsyncResult asyncResult)
@@ -1604,24 +1604,25 @@ public partial class DataProviderService {
 
     #endif
 
-    public string createTask(string userLogin)
+    public string createTask(string userLogin, PusherPosition position)
     {
       #if SILVERLIGHT
-      var asyncResult = Begin_createTask(null, null, userLogin);
+      var asyncResult = Begin_createTask(null, null, userLogin, position);
       return End_createTask(asyncResult);
 
       #else
-      send_createTask(userLogin);
+      send_createTask(userLogin, position);
       return recv_createTask();
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_createTask(AsyncCallback callback, object state, string userLogin)
+    public IAsyncResult send_createTask(AsyncCallback callback, object state, string userLogin, PusherPosition position)
     {
       oprot_.WriteMessageBegin(new TMessage("createTask", TMessageType.Call, seqid_));
       createTask_args args = new createTask_args();
       args.UserLogin = userLogin;
+      args.Position = position;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       return oprot_.Transport.BeginFlush(callback, state);
@@ -1629,11 +1630,12 @@ public partial class DataProviderService {
 
     #else
 
-    public void send_createTask(string userLogin)
+    public void send_createTask(string userLogin, PusherPosition position)
     {
       oprot_.WriteMessageBegin(new TMessage("createTask", TMessageType.Call, seqid_));
       createTask_args args = new createTask_args();
       args.UserLogin = userLogin;
+      args.Position = position;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       oprot_.Transport.Flush();
@@ -2532,7 +2534,7 @@ public partial class DataProviderService {
       {
         try
         {
-          result.Success = iface_.createTask(args.UserLogin);
+          result.Success = iface_.createTask(args.UserLogin, args.Position);
         }
         catch (DataProviderException ex)
         {
@@ -8070,6 +8072,7 @@ public partial class DataProviderService {
   public partial class createTask_args : TBase
   {
     private string _userLogin;
+    private PusherPosition _position;
 
     public string UserLogin
     {
@@ -8084,6 +8087,23 @@ public partial class DataProviderService {
       }
     }
 
+    /// <summary>
+    /// 
+    /// <seealso cref="PusherPosition"/>
+    /// </summary>
+    public PusherPosition Position
+    {
+      get
+      {
+        return _position;
+      }
+      set
+      {
+        __isset.position = true;
+        this._position = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -8091,6 +8111,7 @@ public partial class DataProviderService {
     #endif
     public struct Isset {
       public bool userLogin;
+      public bool position;
     }
 
     public createTask_args() {
@@ -8114,6 +8135,13 @@ public partial class DataProviderService {
             case 1:
               if (field.Type == TType.String) {
                 UserLogin = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                Position = (PusherPosition)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -8147,6 +8175,14 @@ public partial class DataProviderService {
           oprot.WriteString(UserLogin);
           oprot.WriteFieldEnd();
         }
+        if (__isset.position) {
+          field.Name = "position";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32((int)Position);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -8164,6 +8200,12 @@ public partial class DataProviderService {
         __first = false;
         __sb.Append("UserLogin: ");
         __sb.Append(UserLogin);
+      }
+      if (__isset.position) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Position: ");
+        __sb.Append(Position);
       }
       __sb.Append(")");
       return __sb.ToString();

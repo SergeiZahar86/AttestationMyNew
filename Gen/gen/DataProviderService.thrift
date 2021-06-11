@@ -25,8 +25,14 @@ struct state_bits {
 # Информация дата провайдера
 struct info_dp {
   1:state_bits state,   
-  2:int active_wagon  
+  2:int active_wagon,
+  3:PusherPosition position
 }
+
+enum PusherPosition {
+  FROM_FRONT
+  FROM_BEHIND  
+} 
 
 # Справочник контрагентов
 struct contractor_t {
@@ -108,7 +114,7 @@ service DataProviderService
 	#part_t startAtt(1:string userLogin) throws (1:DataProviderException ex),	# Начало аттестации 
 	bool endAtt(1:string userLogin) throws (1:DataProviderException ex),			# Завершение аттестации
 	  
-	string createTask(1:string userLogin) throws (1:DataProviderException ex),		# Создать задание 
+	string createTask(1:string userLogin, 2:PusherPosition position) throws (1:DataProviderException ex),		# Создать задание 
 	void endTask(1:string userLogin) throws (1:DataProviderException ex),		# Закрыть задание
 
 	void removeTask(1:string userLogin) throws (1:DataProviderException ex),	# Удалить задание

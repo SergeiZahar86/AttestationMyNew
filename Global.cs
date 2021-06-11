@@ -15,9 +15,10 @@ namespace Attestation
 {
     class Global
     {
+        public PusherPosition pusherPosition;                                // позиция толкателя
         public bool CloseTask;                                               // флаг отмены задания
         public bool ArmAttestation;                                          // разграничение работы армов
-        public bool getStartAtt;                                             // можно ли начинать аттестацию
+        public bool getStartTask;                                             // можно ли начинать задание
         public bool isColor;                                                 // флаг для кнопки начала и завершения аттестации
         public string OldPart;                                               // результат вызова метода getOldPart()
         public string mainButtonAttestation;                                 // для кнопки начала и завершения аттестации
@@ -83,7 +84,7 @@ namespace Attestation
 
         private Global()
         {
-
+            pusherPosition = PusherPosition.FROM_FRONT;
             //////////////////////////////////////////////////////////////////////////
             var appSettings = ConfigurationManager.AppSettings;
             PLC_topic = appSettings["PLC_topic"];
