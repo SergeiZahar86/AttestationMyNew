@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.9*"/>
-            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="0.9*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="0.6*"/>
@@ -162,7 +162,7 @@
             <TextBlock
                 x:Name="textBlock_time_start"
                 Text="Начало аттестации:"
-                Grid.Row="0"
+                Grid.Row="1"
                 FontSize="16" 
                 TextAlignment="Center"
                 FontFamily="Calibry"
@@ -173,7 +173,7 @@
             <TextBlock
                 x:Name="textBlock_time_end"
                 Text="Время окончания аттестации:"
-                Grid.Row="0"
+                Grid.Row="1"
                 FontSize="16" 
                 TextAlignment="Center"
                 FontFamily="Calibry"
@@ -184,7 +184,7 @@
             <TextBlock
                 x:Name="textBlock_time_duration"
                 Text="Продолжительность аттестации:"
-                Grid.Row="1"
+                Grid.Row="2"
                 FontSize="16" 
                 TextAlignment="Center"
                 FontFamily="Calibry"
@@ -195,8 +195,30 @@
             <TextBlock
                 x:Name="textBlock_inspection_car"
                 Text="Вагон в зоне осмотра:"
-                Grid.Row="2"
+                Grid.Row="3"
                 FontSize="16" 
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                />
+            <TextBlock
+                x:Name="textBlock_PusherPosition_start"
+                Text="Толкатель с головы состава"
+                Grid.Row="0"
+                FontSize="20" 
+                TextAlignment="Center"
+                FontFamily="Calibry"
+                Foreground="Black"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                />
+            <TextBlock
+                x:Name="textBlock_PusherPosition_end"
+                Text="Толкатель с хвоста состава"
+                Grid.Row="0"
+                FontSize="20" 
                 TextAlignment="Center"
                 FontFamily="Calibry"
                 Foreground="Black"

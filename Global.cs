@@ -273,7 +273,30 @@ namespace Attestation
         }
         public photo_t getPhoto(string part_id, int car_id) // Получение фотографий вагона
         {
-            return this.client.getPhoto(part_id, car_id);
+            photo_t photo_T = new photo_t();
+            TTransport transport = new TSocket(Host, Port);
+            TProtocol proto = new TBinaryProtocol(transport);
+            DataProviderService.Client client = new DataProviderService.Client(proto);
+            try
+            {
+                transport.Open();
+                photo_T =  client.getPhoto(part_id, car_id);
+            }
+            catch (Exception sa)
+            {
+                photo_T.Left = new byte[0];
+                photo_T.Right = new byte[0];
+                photo_T.Top = new byte[0];
+            }
+            finally
+            {
+                try
+                {
+                    transport.Close();
+                }
+                catch { }
+            }
+            return photo_T;
         }
         public bool setUser(string part_id, string user) // запись имени оператора
         {
@@ -396,25 +419,6 @@ namespace Attestation
         }
 
         // новые функции ==========================================================================================================
-        public bool EndAtt(string user_login) // вызов функции endAtt
-        {
-
-            return client.endAtt(user_login);
-        }
-        public string CreateTask(string user_login) // вызов функции createTask
-        {
-            return client.createTask(user_login);
-        }
-        public void EndTask(string user_login) // вызов функции endTask
-        {
-            //throw new Exception("Не получилось завершить задание");
-            client.endTask(user_login);
-        }
-        public void RemoveTask(string user_login) // вызов функции removeTask
-        {
-            //throw new Exception("Не получилось удалить задание");
-            client.removeTask(user_login);
-        }
         public info_dp GetInfoDP() // вызов функции getInfoDP
         {
             //throw new Exception("Сломались лампочки");

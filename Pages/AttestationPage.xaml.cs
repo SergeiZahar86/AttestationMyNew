@@ -165,6 +165,37 @@ namespace Attestation
                     car_s.Add(car_);
                     part_.Cars = car_s;
 
+                    if (state.State.Task == 2 || state.State.Task == 1)
+                    {
+                        part_ = global.GetPart();
+                        global.part = part_;
+
+                        if(state.Position == PusherPosition.FROM_FRONT)
+                        {
+                            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                            {
+                                textBlock_PusherPosition_start.Visibility = Visibility.Visible;
+                                textBlock_PusherPosition_end.Visibility = Visibility.Hidden;
+                            });
+                        }
+                        else
+                        {
+                            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                            {
+                                textBlock_PusherPosition_start.Visibility = Visibility.Hidden;
+                                textBlock_PusherPosition_end.Visibility = Visibility.Visible;
+                            });
+                        }
+                    }
+                    else
+                    {
+                        Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+                        {
+                            textBlock_PusherPosition_start.Visibility = Visibility.Hidden;
+                            textBlock_PusherPosition_end.Visibility = Visibility.Hidden;
+                        });
+                    }
+
                     if (state.State.Task == 2)
                     {
                         if (global.ArmAttestation)
@@ -213,7 +244,7 @@ namespace Attestation
                         });
 
 
-                        part_ = global.GetPart();
+                        //part_ = global.GetPart();
 
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
@@ -299,7 +330,7 @@ namespace Attestation
                         });
 
                     }
-                    else if (state.State.Task == 1)
+                    if (state.State.Task == 1)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
@@ -334,7 +365,7 @@ namespace Attestation
                             }
                         });
                     }
-                    else if (state.State.Task == 3)
+                    if (state.State.Task == 3)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
                         {
@@ -370,7 +401,7 @@ namespace Attestation
 
                     if (state.State.Task == 2)
                     {
-                        global.part = t.Result;
+                        //global.part = t.Result;
                         if (state.State.Inspection == 2 || state.State.Inspection == 1)
                         {
                             global.startTimeStr = global.part.Start_time_att;
@@ -510,14 +541,17 @@ namespace Attestation
                     }
                     if (state.State.Task == 1)
                     {
-                        global.startTimeStr = global.part.Start_time_att;
-                        DateTime startTime = Convert.ToDateTime(global.startTimeStr);
-                        global.endTimeStr = global.part.End_time_att;
-                        DateTime endTime = Convert.ToDateTime(global.endTimeStr);
-                        timeStart.Text = global.startTimeStr;
-                        var fff = (startTime - endTime);
-                        timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
-                        DataGridMain.IsEnabled = false;
+                        if (global.part.Start_time_att == null)
+                        {
+                            global.startTimeStr = global.part.Start_time_att;
+                            DateTime startTime = Convert.ToDateTime(global.startTimeStr);
+                            global.endTimeStr = global.part.End_time_att;
+                            DateTime endTime = Convert.ToDateTime(global.endTimeStr);
+                            timeStart.Text = global.startTimeStr;
+                            var fff = (startTime - endTime);
+                            timeSpend.Text = fff.ToString(@"hh\:mm\:ss");
+                            DataGridMain.IsEnabled = false;
+                        }
                     }
 
 
@@ -552,7 +586,7 @@ namespace Attestation
                 try
                 {
                     global.transport.Close();
-                    Task<string> t = Task<String>.Run(() => { global.transport.Open(); return "OK"; });
+                    Task<string> t = Task.Run(() => { global.transport.Open(); return "OK"; });
                     timer.Tag = t;
                     await t;
                     global.workAfterShutdown();                                        // восстановление после разрыва
@@ -565,6 +599,8 @@ namespace Attestation
                     SetRedStatusAtt();
                     error.Text = ass.ToString();
 
+                    textBlock_PusherPosition_start.Visibility = Visibility.Hidden;
+                    textBlock_PusherPosition_end.Visibility = Visibility.Hidden;
                     timeStart.Text = "";
                     timeSpend.Text = "";
                     NewTask.IsEnabled = false;
@@ -597,6 +633,9 @@ namespace Attestation
             DataGridMain.IsEnabled = false;
             textBlock_time_end.Visibility = Visibility.Hidden;
             timeEnd.Visibility = Visibility.Hidden;
+
+            textBlock_PusherPosition_start.Visibility = Visibility.Hidden;
+            textBlock_PusherPosition_end.Visibility = Visibility.Hidden;
 
             label_going_att.Visibility = Visibility.Hidden;
             if (global.ArmAttestation)
@@ -945,6 +984,9 @@ namespace Attestation
         {
             if (NewTaskRow_1.Text == "Создать")
             {
+                Select_Create_Task create_Task = new Select_Create_Task();
+                create_Task.Owner = Window.GetWindow(this);
+                create_Task.ShowDialog();
                 if (global.getStartTask)
                 {
                     Thread myThread = new Thread(new ThreadStart(NewTaskFunction));
@@ -1073,7 +1115,7 @@ namespace Attestation
                 if (funcName == "endAtt")
                     client.endAtt(global.Login);
                 else if (funcName == "createTask")
-                    client.createTask(global.Login, pos);
+                    client.createTask(global.Login, (PusherPosition)pos);
                 else if (funcName == "endTask")
                     client.endTask(global.Login);
                 else if (funcName == "removeTask")

@@ -232,9 +232,6 @@
     <Compile Include="DialogWindows\Select_Create_Task.xaml.cs">
       <DependentUpon>Select_Create_Task.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogWindows\Select_Start_Att.xaml.cs">
-      <DependentUpon>Select_Start_Att.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DialogWindows\VerificationEndTask.xaml.cs">
       <DependentUpon>VerificationEndTask.xaml</DependentUpon>
     </Compile>
@@ -340,10 +337,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DialogWindows\Select_Create_Task.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DialogWindows\Select_Start_Att.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

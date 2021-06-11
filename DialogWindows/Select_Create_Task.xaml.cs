@@ -7,8 +7,8 @@ namespace Attestation.DialogWindows
         private Global global;
         public Select_Create_Task()
         {
-            InitializeComponent();
             global = Global.getInstance();
+            InitializeComponent();
         }
 
         private void check_att_Checked(object sender, RoutedEventArgs e)
